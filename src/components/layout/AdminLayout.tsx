@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, theme, Skeleton, Spin } from 'antd'; // Spin 추가
+import { Layout, Menu, theme, Spin } from 'antd'; // Spin 추가
 import { 
   DesktopOutlined, 
   FileAddOutlined, 
@@ -20,7 +20,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const location = useLocation();
   
   // Auth 훅에서 정보 가져오기
-  const { user, isAdmin, loading, error } = useAuth(); // error 상태가 있다고 가정
+  const { user, isAdmin, loading } = useAuth(); // error 상태가 있다고 가정
   const token = localStorage.getItem("accessToken");
 
   // 1. [방어 로직] 토큰이 아예 없으면 로그인 페이지로 강제 이동

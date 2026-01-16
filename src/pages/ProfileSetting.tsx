@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, Card, Avatar, Result, Spin, Divider } from "antd";
+import { Form, Input, Button, Card, Avatar, Result, Spin } from "antd";
 import { UserOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useProfile } from "../hooks/useProfile";
 
