@@ -21,6 +21,7 @@ export const useArtwork = () => {
     } catch (err) {
       console.error("목록 조회 실패:", err);
       message.error("작품 목록을 불러오지 못했습니다.");
+      setError(true); // 🚀 2. 에러 발생 시 상태 변경
     } finally {
       setLoading(false);
     }
@@ -60,6 +61,7 @@ export const useArtwork = () => {
     } catch (err) {
       console.error("작품 등록 실패:", err);
       message.error("저장 중 오류가 발생했습니다.");
+      
       return false;
     } finally {
       setLoading(false);
