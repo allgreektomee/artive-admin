@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { artworkApi } from '../api/artworkApi';
-import { message } from 'antd';
+import { useState } from "react";
+import { artworkApi } from "../api/artworkApi";
+import { message } from "antd";
 // import { useNavigate } from 'react-router-dom';
 
 export const useArtwork = () => {
-
   const [loading, setLoading] = useState(false);
   const [artworks, setArtworks] = useState<any[]>([]); // 목록용
   const [error, setError] = useState(false); // 🚀 이 줄 추가
@@ -37,10 +36,10 @@ export const useArtwork = () => {
     setLoading(true);
     try {
       const [startedAt, finishedAt] = values.workPeriod || [null, null];
-      
+
       const requestData = {
         thumbnailUrl: imageList[0], // 첫 번째 이미지를 대표 이미지로
-        imageUrls: imageList,       // 드래그로 정렬된 전체 리스트
+        imageUrls: imageList, // 드래그로 정렬된 전체 리스트
         medium: values.medium,
         size: values.size,
         status: values.status,
@@ -61,7 +60,7 @@ export const useArtwork = () => {
     } catch (err) {
       console.error("작품 등록 실패:", err);
       message.error("저장 중 오류가 발생했습니다.");
-      
+
       return false;
     } finally {
       setLoading(false);
@@ -81,12 +80,12 @@ export const useArtwork = () => {
 
   return {
     loading,
+    error,
     artworks,
     imageList,
     setImageList,
     fetchArtworks,
     createArtwork,
     deleteArtwork,
-    error,
   };
 };
