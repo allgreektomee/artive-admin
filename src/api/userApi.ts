@@ -6,11 +6,11 @@ import client from "./client";
  */
 export const userApi = {
   // [Auth & Profile] 일반 유저 관련
-  login: (data: any) => client.post("/api/v1/auth/login", data),
+  login: (data: any) => client.post("/auth/login", data),
   
-  getMyProfile: () => client.get("/api/v1/users/profile"),
+  getMyProfile: () => client.get("/users/profile"),
   
-  updateMyProfile: (data: any) => client.put("/api/v1/users/profile", data),
+  updateMyProfile: (data: any) => client.put("/users/profile", data),
 
   // [Admin] 관리자 전용 (기존에 작성하신 코드)
   getUsers: () => client.get("/admin/users"),

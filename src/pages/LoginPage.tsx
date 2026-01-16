@@ -1,9 +1,8 @@
-// src/pages/LoginPage.tsx
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Button, Card, Typography, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import client from "../api/client";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser"; // 🚀 통합 훅 임포트
 
 const { Title } = Typography;
 
@@ -13,37 +12,25 @@ interface LoginPageProps {
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const { login, loading } = useUser(); // 🚀 훅에서 기능 가져오기
 
   const onFinish = async (values: any) => {
-    setLoading(true);
     try {
-      // 백엔드 로그인 API 호출
-      const response = await client.post("/auth/login", {
+      // 훅에 정의된 로그인 로직 실행
+      const success = await login({
         email: values.email,
         password: values.password,
       });
-      // 2. 백엔드 응답에서 토큰 추출 (응답 구조에 따라 response.data.accessToken 등으로 확인)
-      const  accessToken  = response.data.data.accessToken;
-      console.log("추출된 토큰:", accessToken);
-      if (accessToken) {
-        // 3. 로컬 스토리지에 저장 (client.ts에서 'accessToken'이라는 키로 꺼내쓰기로 했으므로 동일하게 설정)
-        localStorage.setItem("accessToken", accessToken);
 
+      if (success) {
         message.success("관리자 인증에 성공했습니다.");
         onLoginSuccess();
-        // 2. 주소창을 대시보드로 강제 이동 (중요!)
         navigate("/admin/dashboard", { replace: true });
       } else {
-        message.error("토큰을 받아오지 못했습니다.");
-        
+        message.error("인증 정보가 올바르지 않습니다.");
       }
-      
     } catch (error: any) {
-      console.error(error);
       message.error("로그인 실패: 이메일 또는 비밀번호를 확인하세요.");
-    } finally {
-      setLoading(false);
     }
   };
 

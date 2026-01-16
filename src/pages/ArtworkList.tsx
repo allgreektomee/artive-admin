@@ -1,57 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Table, Button, Space, Tag, Modal, message, Image, Empty, Result } from "antd";
+import React, { useEffect } from "react";
+import { Table, Button, Space, Tag, Image, Empty, Result } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import client from "../api/client";
+import { useArtwork } from "../hooks/useArtwork"; // 🚀 분리한 훅 임포트
 
 const ArtworkList: React.FC = () => {
-  const [artworks, setArtworks] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
-
-  // 1. 목록 불러오기 (GET /api/v1/artworks)
-  const fetchArtworks = async () => {
-    setLoading(true);
-    setError(false);
-    try {
-      const response = await client.get("/artworks");
-      
-      // 서버 응답 구조가 response.data.data 일 수도 있고 response.data 일 수도 있음
-      const data = response.data?.data || response.data || [];
-      setArtworks(Array.isArray(data) ? data : []);
-      
-    } catch (error) {
-      console.error("Fetch Error:", error);
-      setError(true);
-      message.error("목록을 불러오는 데 실패했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { artworks, loading, error, fetchArtworks, deleteArtwork } = useArtwork();
 
   useEffect(() => {
     fetchArtworks();
   }, []);
-
-  // 2. 삭제 처리 (DELETE /api/v1/artworks/{id})
-  const handleDelete = (id: number) => {
-    Modal.confirm({
-      title: "정말 삭제하시겠습니까?",
-      content: "삭제된 작품은 복구할 수 없습니다.",
-      okText: "삭제",
-      okType: "danger",
-      onOk: async () => {
-        try {
-          await client.delete(`/artworks/${id}`);
-          message.success("삭제되었습니다.");
-          fetchArtworks();
-        } catch (error) {
-          message.error("삭제 실패");
-        }
-      },
-    });
-  };
 
   const columns = [
     {
@@ -64,7 +23,7 @@ const ArtworkList: React.FC = () => {
     },
     {
       title: "제목",
-      dataIndex: "koTitle", // 백엔드 필드명에 따라 title 또는 translations.KO.title 확인 필요
+      dataIndex: "koTitle", // 💡 나중에 다국어 대응 시 언어별로 분기 가능
       key: "koTitle",
     },
     {
@@ -81,13 +40,12 @@ const ArtworkList: React.FC = () => {
       render: (_: any, record: any) => (
         <Space size="middle">
           <Button icon={<EditOutlined />} onClick={() => navigate(`/admin/artworks/edit/${record.id}`)}>수정</Button>
-          <Button danger icon={<DeleteOutlined />} onClick={() => handleDelete(record.id)} />
+          <Button danger icon={<DeleteOutlined />} onClick={() => deleteArtwork(record.id)} />
         </Space>
       ),
     },
   ];
 
-  // 에러 발생 시 UI
   if (error) {
     return (
       <Result

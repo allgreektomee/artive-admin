@@ -1,106 +1,30 @@
-import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Tabs,
-  DatePicker,
-  Select,
-  Switch,
-  Upload,
-  message,
-  Card,
-  Space,
-  Image,
-} from "antd";
-import {
-  InboxOutlined,
-  SaveOutlined,
-  LinkOutlined,
-  PictureOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  MenuOutlined,
-} from "@ant-design/icons";
-// 순서 변경을 위한 dnd-kit import
-import { DndContext, closestCenter , type DragEndEvent} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-  useSortable,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import client from "../api/client";
+import React from "react";
+import { Form, Input, Button, Tabs, DatePicker, Select, Switch, Upload, message, Card, Space } from "antd";
+import { InboxOutlined, SaveOutlined, LinkOutlined, PictureOutlined, PlusOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
+// DND 관련
+import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+
+// 커스텀 훅 및 타입
+import { useArtwork } from "../hooks/useArtwork";
+import { useImageUpload } from "../hooks/useImageUpload";
 import { LanguageCode, WorkStatus, WorkStatusLabels } from "../types";
-import imageCompression from "browser-image-compression";
+import SortableItem from "../components/artwork/SortableItem"; // 별도 분리 권장
 
 const { Dragger } = Upload;
 const { RangePicker } = DatePicker;
 
-// 드래그 가능한 아이템 컴포넌트
-const SortableItem = ({
-  id,
-  url,
-  onRemove,
-}: {
-  id: string;
-  url: string;
-  onRemove: () => void;
-}) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    display: "flex",
-    alignItems: "center",
-    padding: "12px",
-    background: "#fff",
-    border: "1px solid #d9d9d9",
-    borderRadius: "8px",
-    gap: "12px",
-    marginBottom: "8px",
-    cursor: "default",
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes}>
-      <div
-        {...listeners}
-        style={{ cursor: "grab", display: "flex", alignItems: "center" }}
-      >
-        <MenuOutlined style={{ color: "#999" }} />
-      </div>
-      <Image
-        src={url}
-        width={48}
-        height={48}
-        style={{ objectFit: "cover", borderRadius: "4px" }}
-        fallback="Error"
-      />
-      <div
-        style={{
-          flex: 1,
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-          fontSize: "14px",
-        }}
-      >
-        {url}
-      </div>
-      <Button type="text" danger icon={<DeleteOutlined />} onClick={onRemove} />
-    </div>
-  );
-};
-
 const ArtworkPost: React.FC = () => {
   const [form] = Form.useForm();
-  const [imageList, setImageList] = useState<string[]>([]); // 모든 이미지 URL 통합 관리
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  
+  // 🚀 공통 훅 및 작품 훅 사용
+  const { imageList, setImageList, loading: saveLoading, createArtwork } = useArtwork();
+  const { uploadSingleImage, isUploading } = useImageUpload();
 
-  // 드래그 종료 시 순서 변경 처리
+  // 순서 변경 처리
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
@@ -112,7 +36,7 @@ const ArtworkPost: React.FC = () => {
     }
   };
 
-  // URL 추가 핸들러
+  // URL 직접 추가
   const addExternalUrl = () => {
     const url = form.getFieldValue("urlInput");
     if (!url) return;
@@ -120,276 +44,106 @@ const ArtworkPost: React.FC = () => {
     form.setFieldsValue({ urlInput: "" });
   };
 
-  // 파일 업로드 핸들러 (파일을 잡자마자 S3로 보내고 URL 리스트에 추가)
+  // 🚀 공통 업로드 훅 적용
   const handleFileUpload = async (file: File) => {
-    try {
-      const options = {
-        maxSizeMB: 0.5,
-        maxWidthOrHeight: 1600,
-        useWebWorker: true,
-        fileType: "image/webp" as const,
-      };
-      const compressedFile = await imageCompression(file, options);
-      const formData = new FormData();
-      formData.append("file", compressedFile);
-      formData.append("category", "artwork");
-
-      const response = await client.post("/images/upload", formData);
-      const url = Array.isArray(response.data)
-        ? response.data[0]?.imageUrl
-        : response.data?.imageUrl;
-
-      if (url) {
-        setImageList((prev) => [...prev, url]);
-        message.success("이미지가 업로드되었습니다.");
-      }
-    } catch (error) {
-      message.error("업로드 실패");
+    const url = await uploadSingleImage(file, "artwork");
+    if (url) {
+      setImageList((prev) => [...prev, url]);
     }
-    return false; // 기본 업로드 동작 중단
+    return false;
   };
 
   const onFinish = async (values: any) => {
-    if (imageList.length === 0)
-      return message.warning("이미지를 등록해주세요.");
-    setLoading(true);
-    try {
-      const [startedAt, finishedAt] = values.workPeriod || [null, null];
-      const requestData = {
-        thumbnailUrl: imageList[0],
-        imageUrls: imageList, // 변경된 순서 그대로 저장
-        medium: values.medium,
-        size: values.size,
-        status: values.status,
-        startedAt: startedAt?.format("YYYY-MM-DD"),
-        finishedAt: finishedAt?.format("YYYY-MM-DD"),
-        visibility: values.isPublic ? "PUBLIC" : "PRIVATE",
-        translations: {
-          [LanguageCode.KO]: {
-            title: values.koTitle,
-            description: values.koDesc,
-          },
-          [LanguageCode.EN]: {
-            title: values.enTitle,
-            description: values.enDesc,
-          },
-        },
-      };
-      await client.post("/artworks", requestData);
-      message.success("작품이 저장되었습니다!");
-      form.resetFields();
-      setImageList([]);
-    } catch (error) {
-      message.error("저장 실패");
-    } finally {
-      setLoading(false);
+    const success = await createArtwork(values);
+    if (success) {
+      message.success("작품이 성공적으로 등록되었습니다!");
+      navigate("/admin/artworks");
     }
   };
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={onFinish}
-      style={{ maxWidth: 1000, margin: "20px auto" }}
-    >
-      <Card
-        title={
-          <span>
-            <PictureOutlined /> 작품 등록
-          </span>
-        }
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <section>
-            <span
-              style={{
-                display: "block",
-                marginBottom: 12,
-                fontWeight: "bold",
-                fontSize: "16px",
-                textAlign: "center",
-              }}
-            >
-              작품 이미지 등록
-            </span>
+    <Form form={form} layout="vertical" onFinish={onFinish} style={{ maxWidth: 1000, margin: "20px auto" }}>
+      <Card title={<span><PictureOutlined /> 작품 기본 정보</span>}>
+        <section style={{ marginBottom: 32 }}>
+          <span style={{ display: "block", marginBottom: 12, fontWeight: "bold" }}>이미지 등록 (첫 번째 이미지가 썸네일이 됩니다)</span>
+          
+          <Space.Compact style={{ width: "100%", marginBottom: 16 }}>
+            <Form.Item name="urlInput" noStyle>
+              <Input prefix={<LinkOutlined />} placeholder="이미지 URL 직접 입력" />
+            </Form.Item>
+            <Button type="primary" onClick={addExternalUrl} icon={<PlusOutlined />}>추가</Button>
+          </Space.Compact>
 
-            {/* 1. URL 입력 필드 (상단) */}
-            <Space.Compact style={{ width: "100%", marginBottom: 16 }}>
-              <Form.Item name="urlInput" noStyle>
-                <Input
-                  prefix={<LinkOutlined />}
-                  placeholder="이미지 URL을 입력하고 추가를 누르세요"
-                  onPressEnter={(e) => {
-                    e.preventDefault();
-                    addExternalUrl();
-                  }}
-                />
-              </Form.Item>
-              <Button
-                type="primary"
-                onClick={addExternalUrl}
-                icon={<PlusOutlined />}
-              >
-                추가
-              </Button>
-            </Space.Compact>
+          <Dragger beforeUpload={handleFileUpload} showUploadList={false} multiple loading={isUploading}>
+            <p className="ant-upload-drag-icon"><InboxOutlined /></p>
+            <p className="ant-upload-text">클릭하거나 파일을 드래그하여 업로드</p>
+          </Dragger>
 
-            {/* 2. 파일 업로드 Dragger (중간) */}
-            <Dragger
-              beforeUpload={handleFileUpload}
-              showUploadList={false}
-              multiple={true}
-              style={{ marginBottom: 20 }}
-            >
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                클릭하거나 파일을 드래그하여 리스트에 추가
-              </p>
-            </Dragger>
-
-            {/* 3. 통합 이미지 리스트 (하단 - 순서 변경 가능) */}
-            <DndContext
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={imageList}
-                strategy={verticalListSortingStrategy}
-              >
+          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={imageList} strategy={verticalListSortingStrategy}>
+              <div style={{ marginTop: 16 }}>
                 {imageList.map((url, index) => (
-                  <SortableItem
-                    key={url + index}
-                    id={url}
-                    url={url}
-                    onRemove={() =>
-                      setImageList(imageList.filter((_, i) => i !== index))
-                    }
+                  <SortableItem 
+                    key={url} 
+                    id={url} 
+                    url={url} 
+                    onRemove={() => setImageList(imageList.filter((_, i) => i !== index))} 
                   />
                 ))}
-              </SortableContext>
-            </DndContext>
-
-            {imageList.length === 0 && (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "40px",
-                  background: "#f5f5f5",
-                  borderRadius: "8px",
-                  color: "#999",
-                }}
-              >
-                등록된 이미지가 없습니다.
               </div>
-            )}
-          </section>
+            </SortableContext>
+          </DndContext>
+        </section>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "24px",
-            }}
-          >
-            <Form.Item
-              name="status"
-              label="작업 상태"
-              rules={[{ required: true }]}
-            >
-              <Select>
-                {Object.entries(WorkStatus).map(([key, value]) => (
-                  <Select.Option key={key} value={value}>
-                    {WorkStatusLabels[value as keyof typeof WorkStatusLabels]}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item name="workPeriod" label="작업 기간">
-              <RangePicker style={{ width: "100%" }} />
-            </Form.Item>
-            <Form.Item name="medium" label="재료 (Medium)">
-              <Input />
-            </Form.Item>
-            <Form.Item name="size" label="규격 (Size)">
-              <Input />
-            </Form.Item>
-          </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+          <Form.Item name="status" label="작업 상태" rules={[{ required: true }]}>
+            <Select placeholder="상태 선택">
+              {Object.entries(WorkStatus).map(([key, value]) => (
+                <Select.Option key={key} value={value}>{WorkStatusLabels[value as keyof typeof WorkStatusLabels]}</Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="workPeriod" label="작업 기간">
+            <RangePicker style={{ width: "100%" }} />
+          </Form.Item>
+          <Form.Item name="medium" label="재료 (Medium)"><Input placeholder="예: Oil on canvas" /></Form.Item>
+          <Form.Item name="size" label="규격 (Size)"><Input placeholder="예: 60 x 60 cm" /></Form.Item>
         </div>
       </Card>
 
-      {/* 다국어 정보 등 나머지 카드 생략 (기존과 동일) */}
-      <Card title="🌐 다국어 정보" style={{ marginTop: 24 }}>
+      {/* 🌐 다국어 섹션: 향후 JA, CN 탭만 추가하면 끝! */}
+      <Card title="🌐 다국어 정보 관리" style={{ marginTop: 24 }}>
         <Tabs
           type="card"
           items={[
-            {
-              key: LanguageCode.KO,
-              label: "한국어 (KO)",
-              children: (
-                <div style={{ padding: "16px 0" }}>
-                  <Form.Item
-                    name="koTitle"
-                    label="작품 제목"
-                    rules={[{ required: true }]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name="koDesc" label="작품 설명">
-                    <Input.TextArea rows={4} />
-                  </Form.Item>
-                </div>
-              ),
-            },
-            {
-              key: LanguageCode.EN,
-              label: "English (EN)",
-              children: (
-                <div style={{ padding: "16px 0" }}>
-                  <Form.Item
-                    name="enTitle"
-                    label="Title"
-                    rules={[{ required: true }]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name="enDesc" label="Description">
-                    <Input.TextArea rows={4} />
-                  </Form.Item>
-                </div>
-              ),
-            },
+            { key: LanguageCode.KO, label: "한국어 (KO)", children: <LanguageFields prefix="ko" /> },
+            { key: LanguageCode.EN, label: "English (EN)", children: <LanguageFields prefix="en" /> },
           ]}
         />
       </Card>
 
-      <div
-        style={{
-          marginTop: 24,
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          gap: 16,
-        }}
-      >
+      <div style={{ marginTop: 24, display: "flex", justifyContent: "flex-end", gap: 16 }}>
         <Form.Item name="isPublic" valuePropName="checked" noStyle>
-          <Switch checkedChildren="PUBLIC" unCheckedChildren="PRIVATE" />
+          <Switch checkedChildren="공개" unCheckedChildren="비공개" defaultChecked />
         </Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-          loading={loading}
-          icon={<SaveOutlined />}
-          style={{ minWidth: 200 }}
-        >
+        <Button type="primary" htmlType="submit" size="large" loading={saveLoading} icon={<SaveOutlined />} style={{ minWidth: 150 }}>
           작품 등록 완료
         </Button>
       </div>
     </Form>
   );
 };
+
+// 내부 컴포넌트로 분리하여 관리자 가독성 향상
+const LanguageFields = ({ prefix }: { prefix: string }) => (
+  <div style={{ padding: "16px 0" }}>
+    <Form.Item name={`${prefix}Title`} label="작품 제목" rules={[{ required: prefix === 'ko' }]}>
+      <Input placeholder={`${prefix.toUpperCase()} 제목을 입력하세요`} />
+    </Form.Item>
+    <Form.Item name={`${prefix}Desc`} label="작품 설명">
+      <Input.TextArea rows={4} placeholder={`${prefix.toUpperCase()} 설명을 입력하세요`} />
+    </Form.Item>
+  </div>
+);
 
 export default ArtworkPost;

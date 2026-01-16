@@ -1,45 +1,38 @@
-// src/pages/UserManagement.tsx
-import React from "react";
-import { Table, Select, Button, Result } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
-import { useUserManagement } from "../hooks/useUserManagement"; // 여기서 파일을 못 찾았던 것!
+import { useState } from 'react';
+import { userApi } from '../api/userApi';
+import { message } from 'antd';
 
-const UserManagement: React.FC = () => {
-  // 훅에서 데이터와 함수를 빌려옵니다.
-  const { users, loading, error, fetchUsers, updateRole } = useUserManagement();
+export const useAdmin = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [allUsers, setAllUsers] = useState<any[]>([]);
 
-  const columns = [
-    { title: "ID", dataIndex: "id", key: "id" },
-    { title: "이름", dataIndex: "name", key: "name" },
-    { title: "이메일", dataIndex: "email", key: "email" },
-    { 
-      title: "권한", 
-      dataIndex: "role", 
-      key: "role",
-      render: (role: string, record: any) => (
-        <Select 
-          defaultValue={role} 
-          onChange={(val) => updateRole(record.id, val)} 
-          style={{ width: 100 }}
-        >
-          <Select.Option value="USER">USER</Select.Option>
-          <Select.Option value="ADMIN">ADMIN</Select.Option>
-        </Select>
-      )
+  // 전체 유저 목록 가져오기
+  const fetchAllUsers = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await userApi.getUsers();
+      const data = res.data?.data || res.data || [];
+      setAllUsers(data);
+    } catch (err: any) {
+      setError("유저 목록을 불러오지 못했습니다.");
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  if (error) {
-    return (
-      <Result
-        status="warning"
-        title="데이터를 가져올 수 없습니다"
-        extra={<Button type="primary" icon={<ReloadOutlined />} onClick={fetchUsers}>다시 시도</Button>}
-      />
-    );
-  }
+  // 유저 권한 변경 (ADMIN <-> USER)
+  const updateRole = async (userId: number, newRole: string) => {
+    try {
+      // userApi.updateUserRole(userId, newRole)이 있다고 가정
+      await userApi.updateUserRole(userId, newRole);
+      message.success(`권한이 ${newRole}(으)로 변경되었습니다.`);
+      await fetchAllUsers(); // 목록 새로고침
+    } catch (err) {
+      message.error("권한 변경에 실패했습니다.");
+    }
+  };
 
-  return <Table dataSource={users} columns={columns} loading={loading} rowKey="id" />;
+  return { allUsers, loading, error, fetchAllUsers, updateRole };
 };
-
-export default UserManagement;
