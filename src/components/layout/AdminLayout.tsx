@@ -10,7 +10,7 @@ import {
   SettingOutlined 
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useUser } from '../../hooks/useUser';
 
 const { Header, Content, Sider } = Layout;
 
@@ -20,7 +20,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const location = useLocation();
   
   // Auth 훅에서 정보 가져오기
-  const { user, isAdmin, loading } = useAuth(); // error 상태가 있다고 가정
+  const { user, isAdmin, loading } = useUser(); // error 상태가 있다고 가정
   const token = localStorage.getItem("accessToken");
 
   // 1. [방어 로직] 토큰이 아예 없으면 로그인 페이지로 강제 이동
