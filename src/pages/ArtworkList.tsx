@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import client from "../api/client";
 
 const ArtworkList: React.FC = () => {
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();

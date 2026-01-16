@@ -23,7 +23,7 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 // 순서 변경을 위한 dnd-kit import
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, closestCenter , type DragEndEvent} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,

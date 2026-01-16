@@ -4,7 +4,7 @@ import { message } from "antd";
 import * as userApi from "../api/user";
 
 export const useUserManagement = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
