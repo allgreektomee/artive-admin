@@ -4,37 +4,36 @@ import { message } from 'antd';
 
 export const useAdmin = () => {
   const [loading, setLoading] = useState(false);
-  const [stats, setStats] = useState({
-    totalUsers: 0,
-    totalArtworks: 0,
-    pendingTranslations: 0,
-    reports: 0,
-  });
-  const [recentUsers, setRecentUsers] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [allUsers, setAllUsers] = useState<any[]>([]);
 
-  const fetchDashboardData = async () => {
+  // 전체 유저 목록 가져오기
+  const fetchAllUsers = async () => {
     setLoading(true);
+    setError(null);
     try {
-      // 실제로는 Promise.all을 사용하여 병렬로 호출하는 것이 효율적입니다.
-      const userRes = await userApi.getUsers();
-      const allUsers = userRes.data.data || userRes.data;
-      
-      setRecentUsers(allUsers.slice(0, 5));
-      
-      // 통계 가공 (나중에 통계 전용 API가 생기면 여기만 수정하면 됩니다)
-      setStats({
-        totalUsers: allUsers.length,
-        totalArtworks: 85, 
-        pendingTranslations: 12, 
-        reports: 2,
-      });
-    } catch (error) {
-      console.error("대시보드 데이터 로드 실패:", error);
-      message.error("시스템 정보를 가져오는데 실패했습니다.");
+      const res = await userApi.getUsers();
+      const data = res.data?.data || res.data || [];
+      setAllUsers(data);
+    } catch (err: any) {
+      setError("유저 목록을 불러오지 못했습니다.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { stats, recentUsers, loading, fetchDashboardData };
+  // 유저 권한 변경 (ADMIN <-> USER)
+  const updateRole = async (userId: number, newRole: string) => {
+    try {
+      // userApi.updateUserRole(userId, newRole)이 있다고 가정
+      await userApi.updateUserRole(userId, newRole);
+      message.success(`권한이 ${newRole}(으)로 변경되었습니다.`);
+      await fetchAllUsers(); // 목록 새로고침
+    } catch (err) {
+      message.error("권한 변경에 실패했습니다.");
+    }
+  };
+
+  return { allUsers, loading, error, fetchAllUsers, updateRole };
 };
+

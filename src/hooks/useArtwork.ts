@@ -7,11 +7,13 @@ export const useArtwork = () => {
 
   const [loading, setLoading] = useState(false);
   const [artworks, setArtworks] = useState<any[]>([]); // 목록용
+  const [error, setError] = useState(false); // 🚀 이 줄 추가
   const [imageList, setImageList] = useState<string[]>([]); // 등록/수정 시 이미지 순서 관리
 
   // 1. 작품 목록 가져오기
   const fetchArtworks = async () => {
     setLoading(true);
+    setError(false); // 🚀 초기화
     try {
       const res = await artworkApi.getArtworks();
       const data = res.data?.data || res.data || [];
@@ -83,5 +85,6 @@ export const useArtwork = () => {
     fetchArtworks,
     createArtwork,
     deleteArtwork,
+    error,
   };
 };
