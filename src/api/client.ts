@@ -1,17 +1,29 @@
 import axios from "axios";
 
+// 🚀 로그 노출 여부 설정 (배포 시 false로 바꾸거나 env 사용)
+const SHOW_API_LOG = true; 
+
 const client = axios.create({
     baseURL: 'https://api.artivefor.me/api/v1',
     withCredentials: true,
 });
 
-// 1. 요청 인터셉터: 토큰 삽입 및 헤더 설정
+// 1. 요청 인터셉터 (Request)
 client.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('accessToken'); // 키 이름 통일
+        const token = localStorage.getItem('accessToken'); 
         
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        // 📝 요청 로그 출력
+        if (SHOW_API_LOG) {
+            console.log(
+                `%c🚀 [REQ] ${config.method?.toUpperCase()} ${config.url}`,
+                "color: #2196F3; font-weight: bold;",
+                config.data || "No Body"
+            );
         }
 
         if (config.data instanceof FormData) {
@@ -25,21 +37,35 @@ client.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// 2. 응답 인터셉터: 서버 에러(403 등) 처리 🚀 🚀 🚀
+// 2. 응답 인터셉터 (Response)
 client.interceptors.response.use(
-    (response) => response, // 정상 응답은 그대로 통과
+    (response) => {
+        // 📝 응답 성공 로그 출력
+        if (SHOW_API_LOG) {
+            console.log(
+                `%c✅ [RES] ${response.status} ${response.config.url}`,
+                "color: #4CAF50; font-weight: bold;",
+                response.data
+            );
+        }
+        return response;
+    },
     (error) => {
         if (error.response) {
-            const { status } = error.response;
+            const { status, config, data } = error.response;
 
-            // 401(인증만료) 또는 403(권한문제) 발생 시
+            // 📝 응답 에러 로그 출력
+            if (SHOW_API_LOG) {
+                console.error(
+                    `%c❌ [ERR] ${status} ${config.url}`,
+                    "color: #F44336; font-weight: bold;",
+                    data
+                );
+            }
+
+            // 401/403 처리 (기존 로직)
             if (status === 401 || status === 403) {
-                console.warn("인증 만료 또는 권한 없음. 로그아웃 처리합니다.");
-                
-                // 로컬스토리지 청소 (키 이름 일치시킴)
                 localStorage.removeItem('accessToken');
-                
-                // 로그인 페이지로 튕기기 (무한 루프 방지를 위해 현재 페이지가 /login이 아닐 때만 실행)
                 if (!window.location.pathname.includes('/login')) {
                     window.location.href = '/login';
                 }
