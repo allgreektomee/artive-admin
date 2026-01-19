@@ -32,11 +32,13 @@ export const useArtwork = () => {
       const res = await artworkApi.getMyArtworks(page);
       if (res.data.success) {
         // ApiResponse<PageResponse<ArtworkListResponse>> 구조에서 데이터 추출
-        setArtworks(res.data.data.content); // 4개의 배열 데이터
-        console.log(res.data.data.content)
-        setTotalElements(res.data.data.totalElements); // 4
-         console.log(res.data.data.totalElements)
+        const fetchedContent = res.data.data.content;
+      
+        setArtworks(fetchedContent); 
+        setTotalElements(res.data.data.totalElements);
         setCurrentPage(res.data.data.number + 1);
+        
+        console.log("State Updated with:", fetchedContent);
       }
     } catch (err) {
       console.error("목록 조회 실패:", err);
