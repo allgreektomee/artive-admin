@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { artworkApi } from "../api/artworkApi";
 import { message } from "antd";
-import type { 
-  ArtworkListResponse, 
-  ArtworkCreate, 
-} from "../types/artwork";
+import type { ArtworkListResponse, ArtworkCreate } from "../types/artwork";
 
 interface ArtworkFormValues {
   koTitle: string;
@@ -21,8 +18,6 @@ export const useArtwork = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(false);
   const [imageList, setImageList] = useState<string[]>([]);
-
-
 
   // 헬퍼: 폼 데이터를 서버 DTO 규격으로 변환
   const convertToRequest = (values: ArtworkFormValues): ArtworkCreate => ({
@@ -59,17 +54,24 @@ export const useArtwork = () => {
     setLoading(true);
     try {
       const res = await artworkApi.getArtworkDetail(id);
-      if (res.data.success) {
+
+      if (res.data?.success) {
         const d = res.data.data;
-        setImageList([d.thumbnailUrl]); // 이미지 미리보기 세팅
-        
-        // 폼 필드 이름에 맞게 매핑해서 리턴
+        setImageList([d.thumbnailUrl]);
+
+        // 🚀 리턴 객체에 모든 필드를 포함시켜야 ArtworkPost.tsx의 에러가 사라집니다.
         return {
           koTitle: d.koTitle,
           enTitle: d.enTitle,
           koDesc: d.koDescription,
           enDesc: d.enDescription,
-          isPublic: d.isPublic,
+          // 백엔드 visibility(ENUM)를 프론트 isPublic(boolean)으로 변환
+          isPublic: d.visibility === "PUBLIC",
+          status: d.status,
+          medium: d.medium,
+          size: d.size,
+          startedAt: d.startedAt, // 👈 이거 빠지면 에러!
+          finishedAt: d.finishedAt, // 👈 이거 빠지면 에러!
         };
       }
     } catch (err) {
@@ -82,7 +84,8 @@ export const useArtwork = () => {
 
   // [3] 작품 등록 실행
   const createArtwork = async (values: ArtworkFormValues) => {
-    if (imageList.length === 0) return message.warning("이미지를 등록해주세요.");
+    if (imageList.length === 0)
+      return message.warning("이미지를 등록해주세요.");
     setLoading(true);
     try {
       const res = await artworkApi.createArtwork(convertToRequest(values));
@@ -130,7 +133,17 @@ export const useArtwork = () => {
   };
 
   return {
-    loading, error, artworks, totalElements, currentPage, imageList,
-    setImageList, fetchArtworks, getArtworkForEdit, createArtwork, updateArtwork, deleteArtwork
+    loading,
+    error,
+    artworks,
+    totalElements,
+    currentPage,
+    imageList,
+    setImageList,
+    fetchArtworks,
+    getArtworkForEdit,
+    createArtwork,
+    updateArtwork,
+    deleteArtwork,
   };
 };
