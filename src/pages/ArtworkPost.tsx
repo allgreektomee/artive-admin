@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Form,
   Input,
@@ -20,7 +20,8 @@ import {
   PictureOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
 // DND 관련
 import { DndContext, closestCenter, type DragEndEvent } from "@dnd-kit/core";
@@ -42,6 +43,8 @@ const { RangePicker } = DatePicker;
 const ArtworkPost: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { id } = useParams(); // 🚀 URL에서 ID 추출
+  const isEdit = !!id; // 수정 모드 여부
 
   // 🚀 공통 훅 및 작품 훅 사용
   const {
@@ -49,9 +52,31 @@ const ArtworkPost: React.FC = () => {
     setImageList,
     loading: saveLoading,
     createArtwork,
+    getArtworkForEdit,
+    updateArtwork,
   } = useArtwork();
+
   const { uploadSingleImage, isUploading } = useImageUpload();
 
+  useEffect(() => {
+    if (isEdit) {
+      const loadDetail = async () => {
+        const data = await getArtworkForEdit(Number(id));
+        if (data) {
+          // Ant Design Form에 데이터 세팅
+          form.setFieldsValue({
+            ...data,
+            // 백엔드 날짜 데이터가 있다면 dayjs로 변환하여 RangePicker에 세팅
+            workPeriod:
+              data.startedAt && data.finishedAt
+                ? [dayjs(data.startedAt), dayjs(data.finishedAt)]
+                : undefined,
+          });
+        }
+      };
+      loadDetail();
+    }
+  }, [id, isEdit, form]);
   // 순서 변경 처리
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -82,170 +107,174 @@ const ArtworkPost: React.FC = () => {
   };
 
   const onFinish = async (values: any) => {
-    const success = await createArtwork(values);
+    const success = isEdit
+      ? await updateArtwork(Number(id), values)
+      : await createArtwork(values);
+
     if (success) {
-      message.success("작품이 성공적으로 등록되었습니다!");
+      message.success(
+        `작품이 성공적으로 ${isEdit ? "수정" : "등록"}되었습니다!`
+      );
       navigate("/admin/artworks");
     }
   };
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={onFinish}
-      style={{ maxWidth: 1000, margin: "20px auto" }}
-    >
-      <Card
-        title={
-          <span>
-            <PictureOutlined /> 작품 기본 정보
-          </span>
-        }
+    <Spin spinning={saveLoading}>
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        style={{ maxWidth: 1000, margin: "20px auto" }}
+        initialValues={{ isPublic: true }} // 기본값
       >
-        <section style={{ marginBottom: 32 }}>
-          <span
-            style={{ display: "block", marginBottom: 12, fontWeight: "bold" }}
-          >
-            이미지 등록 (첫 번째 이미지가 썸네일이 됩니다)
-          </span>
+        <Card
+          title={
+            <span>
+              <PictureOutlined /> {isEdit ? "작품 정보 수정" : "작품 기본 정보"}
+            </span>
+          }
+        >
+          {/* 이미지 섹션 (기존 코드 유지) */}
+          <section style={{ marginBottom: 32 }}>
+            <span
+              style={{ display: "block", marginBottom: 12, fontWeight: "bold" }}
+            >
+              이미지 등록 (첫 번째 이미지가 썸네일이 됩니다)
+            </span>
+            <Space.Compact style={{ width: "100%", marginBottom: 16 }}>
+              <Form.Item name="urlInput" noStyle>
+                <Input
+                  prefix={<LinkOutlined />}
+                  placeholder="이미지 URL 직접 입력"
+                />
+              </Form.Item>
+              <Button
+                type="primary"
+                onClick={addExternalUrl}
+                icon={<PlusOutlined />}
+              >
+                추가
+              </Button>
+            </Space.Compact>
+            <Spin spinning={isUploading} tip="이미지 업로드 중...">
+              <Dragger
+                beforeUpload={handleFileUpload}
+                showUploadList={false}
+                multiple={true}
+              >
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  클릭하거나 파일을 드래그하여 업로드
+                </p>
+              </Dragger>
+            </Spin>
 
-          <Space.Compact style={{ width: "100%", marginBottom: 16 }}>
-            <Form.Item name="urlInput" noStyle>
-              <Input
-                prefix={<LinkOutlined />}
-                placeholder="이미지 URL 직접 입력"
-              />
-            </Form.Item>
-            <Button
-              type="primary"
-              onClick={addExternalUrl}
-              icon={<PlusOutlined />}
+            <DndContext
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
             >
-              추가
-            </Button>
-          </Space.Compact>
-          <Spin spinning={isUploading} tip="이미지 업로드 중...">
-            <Dragger
-              beforeUpload={handleFileUpload}
-              showUploadList={false}
-              multiple={true}
-            >
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                클릭하거나 파일을 드래그하여 업로드
-              </p>
-            </Dragger>
-          </Spin>
+              <SortableContext
+                items={imageList}
+                strategy={verticalListSortingStrategy}
+              >
+                <div style={{ marginTop: 16 }}>
+                  {imageList.map((url, index) => (
+                    <SortableItem
+                      key={url}
+                      id={url}
+                      url={url}
+                      onRemove={() =>
+                        setImageList(imageList.filter((_, i) => i !== index))
+                      }
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          </section>
 
-          <DndContext
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
+          {/* 정보 그리드 섹션 */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "24px",
+            }}
           >
-            <SortableContext
-              items={imageList}
-              strategy={verticalListSortingStrategy}
+            <Form.Item
+              name="status"
+              label="작업 상태"
+              rules={[{ required: true }]}
             >
-              <div style={{ marginTop: 16 }}>
-                {imageList.map((url, index) => (
-                  <SortableItem
-                    key={url}
-                    id={url}
-                    url={url}
-                    onRemove={() =>
-                      setImageList(imageList.filter((_, i) => i !== index))
-                    }
-                  />
+              <Select placeholder="상태 선택">
+                {Object.entries(WorkStatus).map(([key, value]) => (
+                  <Select.Option key={key} value={value}>
+                    {WorkStatusLabels[value as keyof typeof WorkStatusLabels]}
+                  </Select.Option>
                 ))}
-              </div>
-            </SortableContext>
-          </DndContext>
-        </section>
+              </Select>
+            </Form.Item>
+            <Form.Item name="workPeriod" label="작업 기간">
+              <RangePicker style={{ width: "100%" }} />
+            </Form.Item>
+            <Form.Item name="medium" label="재료 (Medium)">
+              <Input placeholder="예: Oil on canvas" />
+            </Form.Item>
+            <Form.Item name="size" label="규격 (Size)">
+              <Input placeholder="예: 60 x 60 cm" />
+            </Form.Item>
+          </div>
+        </Card>
+
+        {/* 다국어 섹션 (기존 유지) */}
+        <Card title="🌐 다국어 정보 관리" style={{ marginTop: 24 }}>
+          <Tabs
+            type="card"
+            items={[
+              {
+                key: LanguageCode.KO,
+                label: "한국어 (KO)",
+                children: <LanguageFields prefix="ko" />,
+              },
+              {
+                key: LanguageCode.EN,
+                label: "English (EN)",
+                children: <LanguageFields prefix="en" />,
+              },
+            ]}
+          />
+        </Card>
 
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "24px",
+            marginTop: 24,
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: 16,
           }}
         >
-          <Form.Item
-            name="status"
-            label="작업 상태"
-            rules={[{ required: true }]}
+          <Form.Item name="isPublic" valuePropName="checked" noStyle>
+            <Switch checkedChildren="공개" unCheckedChildren="비공개" />
+          </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            loading={saveLoading}
+            icon={<SaveOutlined />}
+            style={{ minWidth: 150 }}
           >
-            <Select placeholder="상태 선택">
-              {Object.entries(WorkStatus).map(([key, value]) => (
-                <Select.Option key={key} value={value}>
-                  {WorkStatusLabels[value as keyof typeof WorkStatusLabels]}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="workPeriod" label="작업 기간">
-            <RangePicker style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item name="medium" label="재료 (Medium)">
-            <Input placeholder="예: Oil on canvas" />
-          </Form.Item>
-          <Form.Item name="size" label="규격 (Size)">
-            <Input placeholder="예: 60 x 60 cm" />
-          </Form.Item>
+            {isEdit ? "작품 수정 완료" : "작품 등록 완료"}
+          </Button>
         </div>
-      </Card>
-
-      {/* 🌐 다국어 섹션: 향후 JA, CN 탭만 추가하면 끝! */}
-      <Card title="🌐 다국어 정보 관리" style={{ marginTop: 24 }}>
-        <Tabs
-          type="card"
-          items={[
-            {
-              key: LanguageCode.KO,
-              label: "한국어 (KO)",
-              children: <LanguageFields prefix="ko" />,
-            },
-            {
-              key: LanguageCode.EN,
-              label: "English (EN)",
-              children: <LanguageFields prefix="en" />,
-            },
-          ]}
-        />
-      </Card>
-
-      <div
-        style={{
-          marginTop: 24,
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: 16,
-        }}
-      >
-        <Form.Item name="isPublic" valuePropName="checked" noStyle>
-          <Switch
-            checkedChildren="공개"
-            unCheckedChildren="비공개"
-            defaultChecked
-          />
-        </Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-          loading={saveLoading}
-          icon={<SaveOutlined />}
-          style={{ minWidth: 150 }}
-        >
-          작품 등록 완료
-        </Button>
-      </div>
-    </Form>
+      </Form>
+    </Spin>
   );
 };
 
-// 내부 컴포넌트로 분리하여 관리자 가독성 향상
 const LanguageFields = ({ prefix }: { prefix: string }) => (
   <div style={{ padding: "16px 0" }}>
     <Form.Item

@@ -2,11 +2,12 @@ import client from "./client";
 import type { ApiResponse, PageResponse } from "../types/common";
 import type { 
   ArtworkListResponse, 
-  ArtworkCreateRequest, 
-  ArtworkUpdateRequest,
-  HistoryCreateRequest,
+  ArtworkCreate, 
+  ArtworkUpdateResponse,
+  HistoryCreateResponse,
   HistoryListResponse,
-  LanguageCode
+  LanguageCode,
+  ArtworkDetailResponse,
 } from "../types/artwork";
 
 export const artworkApi = {
@@ -17,12 +18,17 @@ export const artworkApi = {
     client.get<ApiResponse<PageResponse<ArtworkListResponse>>>(`/artworks?page=${page}`),
 
   // 작품 등록
-  createArtwork: (data: ArtworkCreateRequest) =>
+  createArtwork: (data: ArtworkCreate) =>
     client.post<ApiResponse<number>>("/artworks", data),
 
   // 작품 수정
-  updateArtwork: (id: number, data: ArtworkUpdateRequest) =>
+  updateArtwork: (id: number, data: ArtworkUpdateResponse) =>
     client.put<ApiResponse<void>>(`/artworks/${id}`, data),
+
+  getArtworkDetail: (id: number) => {
+    client.get<ApiResponse<ArtworkDetailResponse>>(`/api/v1/artworks/${id}`);
+ 
+  },
 
   // 작품 삭제
   deleteArtwork: (id: number) =>
@@ -31,7 +37,7 @@ export const artworkApi = {
   // --- [히스토리 관련] ---
 
   // 히스토리 추가
-  addHistory: (artworkId: number, data: HistoryCreateRequest) =>
+  addHistory: (artworkId: number, data: HistoryCreateResponse) =>
     client.post<ApiResponse<number>>(`/artworks/${artworkId}/histories`, data),
 
   // 특정 작품의 히스토리 목록 조회 (언어 선택 가능)

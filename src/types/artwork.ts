@@ -14,7 +14,7 @@ export interface ArtworkListResponse {
 }
 
 /** 🚀 작품 생성 요청 (ArtworkCreateRequest.java) */
-export interface ArtworkCreateRequest {
+export interface ArtworkCreate {
   koTitle: string;
   enTitle?: string;
   koDescription?: string;
@@ -24,22 +24,32 @@ export interface ArtworkCreateRequest {
 }
 
 
-export type ArtworkUpdateRequest = ArtworkCreateRequest;
 
-/** 🚀 작품 목록 아이템 DTO */
-export interface ArtworkListResponse {
+export type ArtworkUpdateResponse = ArtworkCreate;
+export interface ArtworkDetailResponse {
   id: number;
   thumbnailUrl: string;
-  title: string;       // koTitle 대신 백엔드가 주는 'title'로 매칭
-  status: string;      // ArtworkStatus (ING, COMPLETED 등)
-  totalHistoryCount: number;
-  createdAt: string;   // 필요시 추가
+  medium?: string;
+  size?: string;
+  status: string;        // IN_PROGRESS, COMPLETED 등 (WorkStatus enum 사용 가능)
+  startedAt?: string;    // ISO Date String
+  finishedAt?: string;   // ISO Date String
+  visibility: "PUBLIC" | "PRIVATE"; // 백엔드 Visibility Enum과 매칭
+  
+  // 다국어 정보 (백엔드 Service에서 Flatten해서 보내주는 구조)
+  koTitle: string;
+  koDescription: string;
+  enTitle?: string;
+  enDescription?: string;
+
+  // 필요 시 추가
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 
-
 /** 🚀 히스토리 관련 DTO (HistoryCreateRequest / HistoryListResponse) */
-export interface HistoryCreateRequest {
+export interface HistoryCreateResponse {
   year: string;  // 진행 연도 등
   koContent: string;
   enContent?: string;
