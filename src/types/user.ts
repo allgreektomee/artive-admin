@@ -60,3 +60,9 @@ export interface AllUserResponse {
 export interface UpdateUserRoleRequest {
   role: UserRole; // 'ADMIN' | 'USER' (string 대신 정의한 타입 사용)
 }
+
+
+export interface AdminUserDetail {
+  userInfo: AllUserResponse; // 에 정의된 유저 정보
+  artworkTitles: string[];   // 유저가 보유한 작품 제목 리스트
+}

@@ -7,10 +7,10 @@ export type LanguageCode = 'KO' | 'EN' | 'JP' | 'CH';
 export interface ArtworkListResponse {
   id: number;
   thumbnailUrl: string;
-  koTitle: string; // 기본 한국어 제목
-  enTitle?: string;
+  title: string;           // 백엔드에서 KO 번역본을 추출해서 주는 필드명
+  status: string;          // ArtworkStatus (ING, COMPLETED 등)
+  totalHistoryCount: number; //
   createdAt: string;
-  isPublic: boolean;
 }
 
 /** 🚀 작품 생성 요청 (ArtworkCreateRequest.java) */

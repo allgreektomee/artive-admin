@@ -88,7 +88,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         }}>
           <span style={{ marginRight: 16 }}>
             {/* user가 없을 때(에러 시)를 대비한 옵셔널 체이닝 */}
-            <b>{user?.profile?.name || '방문객'}</b>님 환영합니다 
+            <b>{user?.nickname || '방문객'}</b>님 환영합니다 
             {user && <small style={{ marginLeft: 8, color: '#888' }}>({user?.role})</small>}
           </span>
         </Header>
