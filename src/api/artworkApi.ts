@@ -25,10 +25,8 @@ export const artworkApi = {
   updateArtwork: (id: number, data: ArtworkUpdateResponse) =>
     client.put<ApiResponse<void>>(`/artworks/${id}`, data),
 
-  getArtworkDetail: (id: number) => {
-    client.get<ApiResponse<ArtworkDetailResponse>>(`/api/v1/artworks/${id}`);
- 
-  },
+  getArtworkDetail: (id: number) =>
+   client.get<ApiResponse<ArtworkDetailResponse>>(`/api/v1/artworks/${id}`),
 
   // 작품 삭제
   deleteArtwork: (id: number) =>
