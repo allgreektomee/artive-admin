@@ -30,6 +30,8 @@ export const useArtwork = () => {
     setError(false);
     try {
       const res = await artworkApi.getMyArtworks(page);
+
+      console.log("State Updated res:", res);
       if (res.data.success) {
         // ApiResponse<PageResponse<ArtworkListResponse>> 구조에서 데이터 추출
         const fetchedContent = res.data.data.content;
