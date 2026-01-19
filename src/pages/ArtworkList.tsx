@@ -51,7 +51,7 @@ const ArtworkList: React.FC = () => {
       <Result
         status="warning"
         title="데이터를 가져올 수 없습니다"
-        extra={<Button type="primary" icon={<ReloadOutlined />} onClick={fetchArtworks}>다시 시도</Button>}
+        extra={<Button type="primary" icon={<ReloadOutlined />} onClick={() => fetchArtworks()}>다시 시도</Button>}
       />
     );
   }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { userApi } from "../api/userApi";
 import { message } from "antd";
 
+import type {  UserRole  } from "../types/user"; 
+
 export const useAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +61,7 @@ export const useAdmin = () => {
 
   const updateRole = async (userId: number, newRole: string) => {
     try {
-      await userApi.updateUserRole(userId, newRole);
+      await userApi.updateUserRole(userId, {role: newRole as UserRole});
       message.success("권한 변경 성공");
       await fetchAllUsers();
     } catch (err) {

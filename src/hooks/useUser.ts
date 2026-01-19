@@ -43,7 +43,7 @@ export const useUser = () => {
       localStorage.setItem("accessToken", accessToken);
       
       // 전역 상태(user) 업데이트 (선택 사항)
-      // setUser(userInfo); 
+      setUser(userInfo); 
       
       return true; 
     }
