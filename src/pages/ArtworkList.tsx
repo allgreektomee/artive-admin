@@ -6,7 +6,7 @@ import { useArtwork } from "../hooks/useArtwork"; // 🚀 분리한 훅 임포�
 
 const ArtworkList: React.FC = () => {
   const navigate = useNavigate();
-  const { artworks, loading, error, fetchArtworks, deleteArtwork } = useArtwork();
+  const { artworks, loading, error, fetchArtworks, deleteArtwork, totalElements,currentPage } = useArtwork();
 
   useEffect(() => {
     fetchArtworks();
@@ -71,6 +71,12 @@ const ArtworkList: React.FC = () => {
         loading={loading}
         rowKey="id"
         locale={{ emptyText: <Empty description="등록된 작품이 없습니다." /> }}
+        pagination={{
+          current: currentPage,
+          total: totalElements,
+          pageSize: 10, // ArtworkConstants.PAGE_SIZE와 일치
+          onChange: (page) => fetchArtworks(page - 1), // 서버로는 -1 해서 보냄
+        }}
       />
     </div>
   );

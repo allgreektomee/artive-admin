@@ -2,15 +2,16 @@ import { useState } from "react";
 import { userApi } from "../api/userApi";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
+import type {  UserProfileDTO, UpdateProfileRequestDTO } from "../types/user"; // 타입 전용
 
 export const useUser = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<any>(null); // userData 대신 user로 명칭 통일
+  const [user, setUser] = useState<UserProfileDTO | null>(null) // userData 대신 user로 명칭 통일
 
-  // 관리자 여부 계산 (Role이 ADMIN인지 확인)
-  const isAdmin = user?.role === "ADMIN" || user?.role === "ROLE_ADMIN";
+
+  
 
   const fetchMyProfile = async () => {
     setLoading(true);
@@ -56,13 +57,14 @@ export const useUser = () => {
     navigate("/login");
   };
 
-  const updateProfile = async (values: any) => {
+  const updateProfile = async (values: UpdateProfileRequestDTO) => {
     setLoading(true);
     try {
       // userApi.updateMyProfile(values)가 있다고 가정
       await userApi.updateMyProfile(values);
       message.success("프로필이 수정되었습니다.");
-      await fetchMyProfile(); // 수정 후 최신 데이터로 갱신
+      setUser(prev => prev ? { ...prev, ...values } : null);
+
       return true;
     } catch (err) {
       console.error("프로필 수정 실패:", err);
@@ -75,7 +77,6 @@ export const useUser = () => {
 
   return {
     user,
-    isAdmin,
     loading,
     error,
     fetchMyProfile,

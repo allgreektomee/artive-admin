@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, Card, Avatar, Result, Spin,Tag } from "antd";
+import { Form, Input, Button, Card, Avatar, Result, Spin, Tag } from "antd";
 import { UserOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useUser } from "../hooks/useUser";
+// 🚀 UpdateProfileRequest 추가 임포트
+import { RoleLabels, type UserRole, type UpdateProfileRequestDTO } from "../types/user";
+
 
 const ProfileSetting: React.FC = () => {
   // 🚀 통합된 훅에서 필요한 상태와 함수를 가져옵니다.
   const { user, loading, error, fetchMyProfile, updateProfile } = useUser();
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<UpdateProfileRequestDTO>();
 
   useEffect(() => {
     fetchMyProfile(); // 페이지 진입 시 내 정보 로드
@@ -22,14 +25,21 @@ const ProfileSetting: React.FC = () => {
     }
   }, [user, form]);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: UpdateProfileRequestDTO) => {
     await updateProfile(values);
   };
 
   // 1. 로딩 중 UI
   if (loading && !user) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "300px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "300px",
+        }}
+      >
         <Spin size="large" tip="프로필을 불러오는 중..." />
       </div>
     );
@@ -43,7 +53,11 @@ const ProfileSetting: React.FC = () => {
         title="문제가 발생했습니다"
         subTitle={error}
         extra={
-          <Button type="primary" icon={<ReloadOutlined />} onClick={fetchMyProfile}>
+          <Button
+            type="primary"
+            icon={<ReloadOutlined />}
+            onClick={fetchMyProfile}
+          >
             다시 시도
           </Button>
         }
@@ -54,7 +68,12 @@ const ProfileSetting: React.FC = () => {
   return (
     <div style={{ maxWidth: 600, margin: "0 auto", padding: "20px" }}>
       <Card title="내 프로필 정보 관리">
-        <Form form={form} layout="vertical" onFinish={onFinish}>
+        <Form 
+          form={form} 
+          layout="vertical" 
+          onFinish={onFinish}
+          initialValues={{ nickname: user?.nickname, bio: user?.bio }}
+        >
           <div style={{ textAlign: "center", marginBottom: 24 }}>
             <Avatar
               size={100}
@@ -64,7 +83,9 @@ const ProfileSetting: React.FC = () => {
             <p style={{ marginTop: 12, fontWeight: "bold", fontSize: "16px" }}>
               {user?.email}
             </p>
-            <Tag color="blue">{user?.role}</Tag>
+            <Tag color={user?.role === "ADMIN" ? "red" : "blue"}>
+              {user?.role ? RoleLabels[user.role as UserRole] : "로딩중..."}
+            </Tag>
           </div>
 
           <Form.Item
@@ -76,10 +97,19 @@ const ProfileSetting: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="bio" label="자기소개">
-            <Input.TextArea rows={4} placeholder="작가 소개 또는 상태 메시지를 입력하세요" />
+            <Input.TextArea
+              rows={4}
+              placeholder="작가 소개 또는 상태 메시지를 입력하세요"
+            />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit" loading={loading} block size="large">
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            block
+            size="large"
+          >
             변경사항 저장
           </Button>
         </Form>

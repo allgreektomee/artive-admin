@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, Row, Col, Statistic, Table, Tag, Button, Alert, Space, Skeleton } from "antd";
+import { Card, Row, Col, Statistic, Table, Tag, Button, Alert, Space, Skeleton,Result } from "antd";
 import {
   UserOutlined,
   PictureOutlined,
@@ -13,7 +13,7 @@ import { useAdmin } from "../hooks/useAdmin"; // 🚀 분리한 훅 사용
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   // 훅에서 데이터와 함수를 가져옵니다.
-  const { stats, recentUsers, loading, fetchDashboardData } = useAdmin();
+  const { stats, recentUsers, loading, fetchDashboardData, error } = useAdmin();
 
   useEffect(() => {
     fetchDashboardData();
@@ -35,6 +35,16 @@ const AdminDashboard: React.FC = () => {
   ];
 
   if (loading && stats.totalUsers === 0) return <Skeleton active style={{ padding: 24 }} />;
+
+  if (error) {
+    return (
+      <Result
+        status="warning"
+        title="데이터를 가져올 수 없습니다"
+        
+      />
+    );
+  }
 
   return (
     <div style={{ padding: "12px" }}>

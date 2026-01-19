@@ -45,3 +45,5 @@ export interface LoginResponse {
   role: string;
   accessToken?: string; // JWT 사용 시
 }
+
+
