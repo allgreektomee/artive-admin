@@ -3,13 +3,13 @@ import { Form, Input, Button, Card, Avatar, Result, Spin, Tag } from "antd";
 import { UserOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useUser } from "../hooks/useUser";
 // 🚀 UpdateProfileRequest 추가 임포트
-import { RoleLabels, type UserRole, type UpdateProfileRequestDTO } from "../types/user";
+import { RoleLabels, type UserRole, type UpdateProfileRequest } from "../types/user";
 
 
 const ProfileSetting: React.FC = () => {
   // 🚀 통합된 훅에서 필요한 상태와 함수를 가져옵니다.
   const { user, loading, error, fetchMyProfile, updateProfile } = useUser();
-  const [form] = Form.useForm<UpdateProfileRequestDTO>();
+  const [form] = Form.useForm<UpdateProfileRequest>();
 
   useEffect(() => {
     fetchMyProfile(); // 페이지 진입 시 내 정보 로드
@@ -25,7 +25,7 @@ const ProfileSetting: React.FC = () => {
     }
   }, [user, form]);
 
-  const onFinish = async (values: UpdateProfileRequestDTO) => {
+  const onFinish = async (values: UpdateProfileRequest) => {
     await updateProfile(values);
   };
 

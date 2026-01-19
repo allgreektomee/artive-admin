@@ -13,7 +13,7 @@ export const artworkApi = {
   // --- [작품 본체 관련] ---
   
   // 내 작품 목록 (페이징)
-  getMyArtworks: (page: number = 0) =>
+ getMyArtworks: (page: number = 0) =>
     client.get<ApiResponse<PageResponse<ArtworkListResponse>>>(`/artworks?page=${page}`),
 
   // 작품 등록

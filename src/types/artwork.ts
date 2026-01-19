@@ -23,6 +23,21 @@ export interface ArtworkCreateRequest {
   isPublic: boolean;
 }
 
+
+export type ArtworkUpdateRequest = ArtworkCreateRequest;
+
+/** 🚀 작품 목록 아이템 DTO */
+export interface ArtworkListResponse {
+  id: number;
+  thumbnailUrl: string;
+  title: string;       // koTitle 대신 백엔드가 주는 'title'로 매칭
+  status: string;      // ArtworkStatus (ING, COMPLETED 등)
+  totalHistoryCount: number;
+  createdAt: string;   // 필요시 추가
+}
+
+
+
 /** 🚀 히스토리 관련 DTO (HistoryCreateRequest / HistoryListResponse) */
 export interface HistoryCreateRequest {
   year: string;  // 진행 연도 등
@@ -36,23 +51,3 @@ export interface HistoryListResponse{
   content: string; // 요청 시 보낸 lang(KO, EN 등)에 따라 백엔드에서 번역해서 준 값
 }
 
-
-export interface ArtworkUpdateRequest {
-  koTitle: string;
-  enTitle?: string;
-  koDescription?: string;
-  enDescription?: string;
-  thumbnailUrl: string;
-  isPublic: boolean;
-  // 수정 시에만 필요한 필드가 있다면 여기에 추가 (예: id 등)
-}
-
-/** 🚀 작품 목록 아이템 DTO */
-export interface ArtworkListResponse {
-  id: number;
-  thumbnailUrl: string;
-  title: string;       // koTitle 대신 백엔드가 주는 'title'로 매칭
-  status: string;      // ArtworkStatus (ING, COMPLETED 등)
-  totalHistoryCount: number;
-  createdAt: string;   // 필요시 추가
-}

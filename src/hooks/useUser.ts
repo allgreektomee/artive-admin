@@ -2,13 +2,13 @@ import { useState } from "react";
 import { userApi } from "../api/userApi";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import type {  UserProfileDTO, UpdateProfileRequestDTO } from "../types/user"; // 타입 전용
+import type {  UserProfile, UpdateProfileRequest } from "../types/user"; // 타입 전용
 
 export const useUser = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<UserProfileDTO | null>(null) // userData 대신 user로 명칭 통일
+  const [user, setUser] = useState<UserProfile | null>(null) // userData 대신 user로 명칭 통일
 
 
   
@@ -57,7 +57,7 @@ export const useUser = () => {
     navigate("/login");
   };
 
-  const updateProfile = async (values: UpdateProfileRequestDTO) => {
+  const updateProfile = async (values: UpdateProfileRequest) => {
     setLoading(true);
     try {
       // userApi.updateMyProfile(values)가 있다고 가정
