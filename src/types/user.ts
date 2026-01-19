@@ -18,7 +18,7 @@ export interface UserProfile {
   role: UserRole; // 🚀 Spring의 Role Enum 값 ('ADMIN' | 'USER')
   bio?: string; // 자기소개
   profileImageUrl?: string;
-  createdAt: string; // ISO Date String
+  createdAt?: string; // ISO Date String
 }
 
 /**
