@@ -33,7 +33,9 @@ export const useArtwork = () => {
       if (res.data.success) {
         // ApiResponse<PageResponse<ArtworkListResponse>> 구조에서 데이터 추출
         setArtworks(res.data.data.content); // 4개의 배열 데이터
+        console.log(res.data.data.content)
         setTotalElements(res.data.data.totalElements); // 4
+         console.log(res.data.data.totalElements)
         setCurrentPage(res.data.data.number + 1);
       }
     } catch (err) {
