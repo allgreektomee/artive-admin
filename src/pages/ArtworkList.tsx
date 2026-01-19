@@ -23,13 +23,13 @@ const ArtworkList: React.FC = () => {
     },
     {
       title: "제목",
-      dataIndex: "koTitle", // 💡 나중에 다국어 대응 시 언어별로 분기 가능
-      key: "koTitle",
+      dataIndex: "title", // 💡 나중에 다국어 대응 시 언어별로 분기 가능
+      key: "title",
     },
     {
       title: "공개 여부",
-      dataIndex: "isPublic",
-      key: "isPublic",
+      dataIndex: "status",
+      key: "status",
       render: (isPublic: boolean) => (
         <Tag color={isPublic ? "blue" : "default"}>{isPublic ? "PUBLIC" : "PRIVATE"}</Tag>
       ),
