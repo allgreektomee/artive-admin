@@ -61,7 +61,7 @@ export const useAdmin = () => {
 
   const updateRole = async (userId: number, newRole: string) => {
     try {
-      await userApi.updateUserRole(userId, {role: newRole as UserRole});
+      await userApi.updateUserRole(userId, newRole as UserRole);
       message.success("권한 변경 성공");
       await fetchAllUsers();
     } catch (err) {
