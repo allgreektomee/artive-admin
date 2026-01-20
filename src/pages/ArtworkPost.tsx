@@ -100,8 +100,13 @@ const ArtworkPost: React.FC = () => {
   // 🚀 공통 업로드 훅 적용
   const handleFileUpload = async (file: File) => {
     const url = await uploadSingleImage(file, "artwork");
+    console.log("업로드된 URL:", url); // 👈 이게 제대로 찍히는지 확인
     if (url) {
-      setImageList((prev) => [...prev, url]);
+      setImageList((prev) => {
+        const newList = [...prev, url];
+        console.log("업데이트될 리스트:", newList); // 👈 데이터가 늘어나는지 확인
+        return newList;
+      });
     }
     return false;
   };
@@ -180,10 +185,20 @@ const ArtworkPost: React.FC = () => {
                 items={imageList}
                 strategy={verticalListSortingStrategy}
               >
-                <div style={{ marginTop: 16 }}>
+                {/* 🚀 minHeight와 패딩을 주어 영역을 확실히 확보하세요 */}
+                <div
+                  style={{
+                    marginTop: 16,
+                    minHeight: "50px",
+                    border:
+                      imageList.length === 0 ? "1px dashed #d9d9d9" : "none",
+                    borderRadius: "8px",
+                    padding: "8px",
+                  }}
+                >
                   {imageList.map((url, index) => (
                     <SortableItem
-                      key={url}
+                      key={`img-${index}-${url.substring(url.length - 10)}`} // 인덱스와 URL 끝자리 조합
                       id={url}
                       url={url}
                       onRemove={() =>
@@ -191,6 +206,17 @@ const ArtworkPost: React.FC = () => {
                       }
                     />
                   ))}
+                  {imageList.length === 0 && (
+                    <p
+                      style={{
+                        textAlign: "center",
+                        color: "#999",
+                        lineHeight: "50px",
+                      }}
+                    >
+                      등록된 이미지가 없습니다.
+                    </p>
+                  )}
                 </div>
               </SortableContext>
             </DndContext>
