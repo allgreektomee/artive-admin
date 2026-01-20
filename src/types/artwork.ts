@@ -20,6 +20,7 @@ export interface ArtworkCreate {
   koDescription?: string;
   enDescription?: string;
   thumbnailUrl: string; // S3 업로드 후 받은 URL
+  images: string[];
   isPublic: boolean;
 }
 
@@ -29,6 +30,7 @@ export type ArtworkUpdateResponse = ArtworkCreate;
 export interface ArtworkDetailResponse {
   id: number;
   thumbnailUrl: string;
+  images: string[];
   medium?: string;
   size?: string;
   status: string;        // IN_PROGRESS, COMPLETED 등 (WorkStatus enum 사용 가능)
