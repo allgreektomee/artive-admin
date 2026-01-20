@@ -26,6 +26,7 @@ export const useArtwork = () => {
     koDescription: values.koDesc,
     enDescription: values.enDesc,
     thumbnailUrl: imageList[0], // 현재 세팅된 이미지 리스트의 첫 번째
+    images: imageList,
     isPublic: values.isPublic ?? true,
   });
 
@@ -57,7 +58,7 @@ export const useArtwork = () => {
 
       if (res.data?.success) {
         const d = res.data.data;
-        setImageList([d.thumbnailUrl]);
+        setImageList(d.images || []);
 
         // 🚀 리턴 객체에 모든 필드를 포함시켜야 ArtworkPost.tsx의 에러가 사라집니다.
         return {

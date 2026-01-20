@@ -57,7 +57,20 @@ const ArtworkList: React.FC = () => {
       title: "히스토리",
       dataIndex: "totalHistoryCount", // 🚀 콘솔에 찍힌 count 필드 추가하면 좋음
       key: "totalHistoryCount",
-      render: (count: number) => `${count}개`,
+      render: (_: any, record: any) => (
+        <Space vertical size={4}>
+          <div style={{ fontWeight: '500' }}>
+            {record.totalHistoryCount || 0}개
+          </div>
+          <Button 
+            size="small" 
+            icon={<PlusOutlined />} 
+            onClick={() => navigate(`/admin/artworks/${record.id}/history/post`)} // 🚀 히스토리 등록 페이지 경로
+          >
+            기록 추가
+          </Button>
+        </Space>
+      ),
     },
     {
       title: "관리",
