@@ -319,7 +319,7 @@ const LanguageFields = ({ prefix }: { prefix: string }) => (
     >
       <Input placeholder={`${prefix.toUpperCase()} 제목을 입력하세요`} />
     </Form.Item>
-    <Form.Item name={`${prefix}Desc`} label="작품 설명">
+    <Form.Item name={`${prefix}Description`} label="작품 설명">
       <Input.TextArea
         rows={4}
         placeholder={`${prefix.toUpperCase()} 설명을 입력하세요`}
