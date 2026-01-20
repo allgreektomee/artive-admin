@@ -3,13 +3,14 @@ import { message } from "antd";
 import imageCompression from "browser-image-compression";
 import { commonApi } from "../api/commonApi";
 
+// useImageUpload.ts
+
 export const useImageUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const uploadSingleImage = async (file: File, category: string = "artwork") => {
     setIsUploading(true);
     try {
-      // 1. 이미지 압축 설정
       const options = {
         maxSizeMB: 0.5,
         maxWidthOrHeight: 1600,
@@ -19,11 +20,21 @@ export const useImageUpload = () => {
 
       const compressedFile = await imageCompression(file, options);
       
-      // 2. 공통 API 호출
-      const result = await commonApi.uploadImage(compressedFile, category);
+      // 1. API 호출 결과 받기
+      const response = await commonApi.uploadImage(compressedFile, category);
       
-      message.success("이미지가 성공적으로 업로드되었습니다.");
-      return result.imageUrl; // 업로드된 URL 반환
+      // 2. 로그 기반 구조 분석: response.data.data가 배열 [ "url" ] 형태임
+      if (response.data && response.data.success) {
+        const imageUrls = response.data.data; // 이것이 Array(1)
+        
+        if (Array.isArray(imageUrls) && imageUrls.length > 0) {
+          message.success("이미지가 성공적으로 업로드되었습니다.");
+          // 🚀 배열의 첫 번째 요소(URL 문자열)를 반환
+          return imageUrls[0]; 
+        }
+      }
+      
+      throw new Error("응답 데이터 형식이 올바르지 않습니다.");
 
     } catch (error) {
       console.error("Upload Error:", error);
