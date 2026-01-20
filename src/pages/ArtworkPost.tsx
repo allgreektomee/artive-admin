@@ -99,17 +99,24 @@ const ArtworkPost: React.FC = () => {
 
   // 🚀 공통 업로드 훅 적용
   const handleFileUpload = async (file: File) => {
+    try {
     const url = await uploadSingleImage(file, "artwork");
-    console.log("업로드된 URL:", url); // 👈 이게 제대로 찍히는지 확인
+    
     if (url) {
-      // 🚀 핵심: (prev) => [...prev, url] 방식을 사용해야 
-    // 여러 장을 동시에 올려도 리스트가 덮어씌워지지 않고 차곡차곡 쌓입니다.
-    setImageList((prev) => {
-      // 중복 방지를 위한 로직 추가 (선택)
-      if (prev.includes(url)) return prev;
-      return [...prev, url];
-    });
+      // 🚀 핵심: (prev) => ... 처럼 이전 상태값을 인자로 받아야 합니다.
+      // 이렇게 하면 리액트가 업데이트 큐를 순차적으로 처리하여 4장 모두 유실 없이 쌓입니다.
+      setImageList((prev) => {
+        // 이미 리스트에 있는 URL인지 중복 체크 (안정성 확보)
+        if (prev.includes(url)) return prev;
+        
+        const nextList = [...prev, url];
+        console.log("현재 업데이트된 이미지 리스트:", nextList);
+        return nextList;
+      });
     }
+  } catch (error) {
+    console.error("파일 업로드 중 에러 발생:", error);
+  }
     return false;
   };
 
