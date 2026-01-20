@@ -102,11 +102,13 @@ const ArtworkPost: React.FC = () => {
     const url = await uploadSingleImage(file, "artwork");
     console.log("업로드된 URL:", url); // 👈 이게 제대로 찍히는지 확인
     if (url) {
-      setImageList((prev) => {
-        const newList = [...prev, url];
-        console.log("업데이트될 리스트:", newList); // 👈 데이터가 늘어나는지 확인
-        return newList;
-      });
+      // 🚀 핵심: (prev) => [...prev, url] 방식을 사용해야 
+    // 여러 장을 동시에 올려도 리스트가 덮어씌워지지 않고 차곡차곡 쌓입니다.
+    setImageList((prev) => {
+      // 중복 방지를 위한 로직 추가 (선택)
+      if (prev.includes(url)) return prev;
+      return [...prev, url];
+    });
     }
     return false;
   };
