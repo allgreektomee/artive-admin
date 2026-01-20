@@ -66,8 +66,8 @@ export const useArtwork = () => {
     if (imageList.length === 0)
       return message.warning("이미지를 등록해주세요.");
     // 1. workPeriod 배열에서 시작일과 종료일 추출 (Antd RangePicker 대응)
-    let startedAt = values.startedAt;
-    let finishedAt = values.finishedAt;
+    let startedAt = "";
+    let finishedAt = "";
 
     if (values.workPeriod && values.workPeriod.length === 2) {
       // dayjs 객체인 경우 format()을 호출하여 "2026-01-20" 형태의 문자열로 변환
