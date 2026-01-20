@@ -21,33 +21,24 @@ export interface ArtworkCreate {
   enDescription?: string;
   thumbnailUrl: string; // S3 업로드 후 받은 URL
   images: string[];
-  isPublic: boolean;
-}
-
-
-
-export type ArtworkUpdateResponse = ArtworkCreate;
-export interface ArtworkDetailResponse {
-  id: number;
-  thumbnailUrl: string;
-  images: string[];
+  visibility: "PUBLIC" | "PRIVATE";
   medium?: string;
   size?: string;
-  status: string;        // IN_PROGRESS, COMPLETED 등 (WorkStatus enum 사용 가능)
+  status?: string; 
   startedAt?: string;    // ISO Date String
   finishedAt?: string;   // ISO Date String
-  visibility: "PUBLIC" | "PRIVATE"; // 백엔드 Visibility Enum과 매칭
-  
-  // 다국어 정보 (백엔드 Service에서 Flatten해서 보내주는 구조)
-  koTitle: string;
-  koDescription: string;
-  enTitle?: string;
-  enDescription?: string;
-
-  // 필요 시 추가
-  createdAt?: string;
-  updatedAt?: string;
 }
+// 폼에서 사용할 타입 (UI용 isPublic 포함)
+export type ArtworkFormValues = Omit<ArtworkCreate, "visibility" | "images" | "thumbnailUrl"> & {
+  isPublic: boolean; 
+};
+
+export interface ArtworkDetailResponse extends ArtworkCreate {
+  id: number;
+
+}
+export type ArtworkUpdateResponse = ArtworkCreate;
+
 
 
 /** 🚀 히스토리 관련 DTO (HistoryCreateRequest / HistoryListResponse) */
