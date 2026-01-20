@@ -25,29 +25,18 @@ export const useImageUpload = () => {
 
       const compressedFile = await imageCompression(file, options);
 
-      // API 호출
+      // API 호출 (현재 result 자체가 [{imageUrl: '...'}] 배열입니다)
       const result = await commonApi.uploadImage(compressedFile, category);
 
-      // 🚀 로그를 찍어서 result의 실체를 확인합니다.
-      console.log("commonApi.uploadImage 결과(result):", result);
+      console.log("실제 데이터 구조 확인:", result);
 
-      // 1. result가 곧바로 서버 응답 본체인 경우 (성공 시 data 배열이 바로 있는 경우)
-      if (result && result.success && Array.isArray(result.data)) {
+      // 🚀 수정된 로직: 배열이고 첫 번째 요소에 imageUrl이 있는지 확인
+      if (Array.isArray(result) && result.length > 0 && result[0].imageUrl) {
         message.success("이미지가 성공적으로 업로드되었습니다.");
-        return result.data[0]; // 배열의 첫 번째 요소인 URL 반환
+        return result[0].imageUrl; // S3 URL 문자열만 반환
       }
 
-      // 2. 만약 result.data 안에 또 data가 있는 구조인 경우 (Axios의 기본 response 객체일 때)
-      if (
-        result.data &&
-        result.data.success &&
-        Array.isArray(result.data.data)
-      ) {
-        message.success("이미지가 성공적으로 업로드되었습니다.");
-        return result.data.data[0];
-      }
-
-      throw new Error("응답 데이터 형식이 올바르지 않습니다.");
+      throw new Error("응답 데이터에 imageUrl이 없습니다.");
     } catch (error) {
       console.error("Upload Error:", error);
       message.error("이미지 업로드에 실패했습니다.");
