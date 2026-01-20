@@ -65,10 +65,20 @@ export const useArtwork = () => {
   const saveArtwork = async (id: number | null, values: ArtworkFormValues) => {
     if (imageList.length === 0)
       return message.warning("이미지를 등록해주세요.");
+    // 1. workPeriod 배열에서 시작일과 종료일 추출 (Antd RangePicker 대응)
+    let startedAt = values.startedAt;
+    let finishedAt = values.finishedAt;
 
+    if (values.workPeriod && values.workPeriod.length === 2) {
+      // dayjs 객체인 경우 format()을 호출하여 "2026-01-20" 형태의 문자열로 변환
+      startedAt = values.workPeriod[0]?.format("YYYY-MM-DD");
+      finishedAt = values.workPeriod[1]?.format("YYYY-MM-DD");
+    }
     // 서버 DTO 규격에 맞춰 스프레드 연산자로 병합
     const payload: ArtworkCreate = {
       ...values,
+      startedAt: startedAt,
+      finishedAt: finishedAt,
       images: imageList,
       thumbnailUrl: imageList[0] || "",
       visibility: values.isPublic ? "PUBLIC" : "PRIVATE",

@@ -31,11 +31,12 @@ export interface ArtworkCreate {
 // 폼에서 사용할 타입 (UI용 isPublic 포함)
 export type ArtworkFormValues = Omit<ArtworkCreate, "visibility" | "images" | "thumbnailUrl"> & {
   isPublic: boolean; 
+  workPeriod?: [any, any] | null;
 };
 
 export interface ArtworkDetailResponse extends ArtworkCreate {
   id: number;
-
+  
 }
 export type ArtworkUpdateResponse = ArtworkCreate;
 
