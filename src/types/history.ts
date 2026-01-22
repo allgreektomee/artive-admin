@@ -4,7 +4,7 @@
 export interface HistoryCreateRequest {
   artworkId: number;
   imageUrl?: string;
-  type: "MANUAL" | "YOUTUBE"|"INSTAGRAM"; // HistoryType Enum
+  type: "MANUAL" | "YOUTUBE"|"IMGURL"; // HistoryType Enum
   visibility: "PUBLIC" | "PRIVATE";
   
   // 다국어 필드 (서버 컨버터가 처리할 수 있도록 평면화)
@@ -24,7 +24,7 @@ export type HistoryFormValues = Omit<HistoryCreateRequest, "imageUrl" | "visibil
 export interface HistoryDetailResponse { 
   id: number;
   imageUrl?: string;
-  type: "MANUAL" | "YOUTUBE"|"INSTAGRAM";
+  type: "MANUAL" | "YOUTUBE"|"IMGURL";
   title:string;
   description: string;
   createdAt: string;
