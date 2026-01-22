@@ -8,6 +8,7 @@ import ArtworkPost from "./pages/ArtworkPost";
 import LoginPage from "./pages/LoginPage";
 import UserManagement from "./pages/UserManagement";
 import ProfileSetting from "./pages/ProfileSetting";
+import HistoryPost from "./pages/HistoryPost";
 
 function App() {
   // 1. 초기값 설정 (localStorage에 토큰이 있으면 true, 없으면 false)
@@ -42,6 +43,7 @@ function App() {
             <Route path="/admin/artworks/post" element={<ArtworkPost />} />
             <Route path="/admin/artworks/edit/:id" element={<ArtworkPost />} />
             <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/artworks/:artworkId/history/post/" element={<HistoryPost />} />
             {/* 잘못된 경로는 대시보드로 */}
             <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
