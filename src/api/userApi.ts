@@ -8,7 +8,7 @@ import type {
   UpdateUserRoleRequest,
   UserRole,
 } from "../types/user";
-import type { ApiResponse } from "../types/common";
+import type { ApiResponse , PageResponse} from "../types/common";
 /**
  * User 관련 API 통합 관리
  * 1단계: API 레이어 (통신 전담)
