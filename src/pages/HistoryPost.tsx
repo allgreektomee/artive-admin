@@ -64,6 +64,11 @@ const HistoryPost: React.FC = () => {
       ...values,
       imageUrl: finalImageUrl,
       visibility: values.isPublic ? "PUBLIC" : "PRIVATE",
+      koTitle: values.koTitle,
+      enTitle: values.enTitle,
+      koContent: values.koContent,
+      enContent: values.enContent,
+      type: values.type,
     };
 
     try {
@@ -88,9 +93,43 @@ const HistoryPost: React.FC = () => {
         onFinish={onFinish}
         initialValues={{ isPublic: true, type: "IMGURL" }}
       >
-        {/* 한국어/영어 입력 필드 (기존과 동일) */}
-        {/* ... (생략) ... */}
+        {/* 한국어 입력 */}
+        <Card
+          size="small"
+          type="inner"
+          title="한국어 정보 (KO)"
+          style={{ marginBottom: 16 }}
+        >
+          <Form.Item
+            name="koTitle"
+            label="기록 제목"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="한국어 제목" />
+          </Form.Item>
+          <Form.Item
+            name="koContent"
+            label="기록 내용"
+            rules={[{ required: true }]}
+          >
+            <Input.TextArea rows={4} placeholder="한국어 내용" />
+          </Form.Item>
+        </Card>
 
+        {/* 영어 입력 */}
+        <Card
+          size="small"
+          type="inner"
+          title="영어 정보 (EN)"
+          style={{ marginBottom: 16 }}
+        >
+          <Form.Item name="enTitle" label="English Title">
+            <Input placeholder="English Title" />
+          </Form.Item>
+          <Form.Item name="enContent" label="English Content">
+            <Input.TextArea rows={4} placeholder="English Content" />
+          </Form.Item>
+        </Card>
         <Divider>기록 상세 설정</Divider>
 
         <div style={{ display: "flex", gap: "16px" }}>
