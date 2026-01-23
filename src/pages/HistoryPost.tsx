@@ -8,13 +8,18 @@ import {
   Card,
   message,
   Divider,
+  Upload,
+  Spin,
 } from "antd";
+import {  PictureOutlined } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import { useHistory } from "../hooks/useHistory";
 import { historyApi } from "../api/historyApi";
 import type { HistoryCreateRequest } from "../types/history";
+import { useImageUpload } from "../hooks/useImageUpload"; // 🚀 업로드 훅 추가
 // ArtworkUpload 컴포넌트가 있다면 import 하세요.
 // import ArtworkUpload from "../components/ArtworkUpload";
+const { Dragger } = Upload;
 
 const HistoryPost: React.FC = () => {
   const { id: artworkId } = useParams<{ id: string }>();
@@ -22,10 +27,27 @@ const HistoryPost: React.FC = () => {
   const { loading } = useHistory();
   const [form] = Form.useForm();
 
+  // 🚀 이미지 업로드 훅 사용
+  const { uploadSingleImage, isUploading } = useImageUpload();
+
   // 현재 선택된 타입을 추적하기 위한 상태 (기본값: IMGURL)
   const historyType = Form.useWatch("type", form);
   const [imageUrl, setImageUrl] = useState<string>("");
 
+  // 🚀 S3 파일 업로드 핸들러 (1개만 처리)
+  const handleFileUpload = async (file: File) => {
+    try {
+      const url = await uploadSingleImage(file, "history"); // 폴더명을 history로 구분
+      if (url) {
+        setImageUrl(url); // S3 URL 저장
+        message.success("이미지가 업로드되었습니다.");
+      }
+    } catch (error) {
+      console.error("업로드 실패:", error);
+      message.error("이미지 업로드에 실패했습니다.");
+    }
+    return false; // 기본 업로드 동작 방지
+  };
 
   const onFinish = async (values: any) => {
     if (!artworkId) return;
@@ -147,20 +169,23 @@ const HistoryPost: React.FC = () => {
           }}
         >
           {historyType === "IMGURL" && (
-            <Form.Item label="작업 이미지 업로드" required>
-              {/* 이미지 업로드 컴포넌트 자리 (기존 ArtworkUpload 재사용 가정) */}
-              {/* <ArtworkUpload onUploadSuccess={(url) => setImageUrl(url)} /> */}
-              <Input
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="이미지 업로드 컴포넌트를 연결하거나 URL을 넣으세요"
-              />
+            <Form.Item label="작업 이미지 업로드 (S3)" required>
+              <Spin spinning={isUploading} tip="업로드 중...">
+                <Dragger beforeUpload={handleFileUpload} showUploadList={false} multiple={false}>
+                  {imageUrl ? (
+                    <img src={imageUrl} alt="업로드 완료" style={{ maxHeight: 200, borderRadius: 8 }} />
+                  ) : (
+                    <>
+                      <p className="ant-upload-drag-icon"><PictureOutlined /></p>
+                      <p className="ant-upload-text">이미지 파일을 드래그하거나 클릭하여 업로드하세요</p>
+                    </>
+                  )}
+                </Dragger>
+              </Spin>
               {imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt="미리보기"
-                  style={{ width: 120, marginTop: 10, borderRadius: 4 }}
-                />
+                <Button danger size="small" onClick={() => setImageUrl("")} style={{ marginTop: 8 }}>
+                  이미지 삭제 후 다시 업로드
+                </Button>
               )}
             </Form.Item>
           )}
