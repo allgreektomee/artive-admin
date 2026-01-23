@@ -10,7 +10,6 @@ import {
   Divider,
   Upload,
   Spin,
-  type DividerProps,
 } from "antd";
 import { PictureOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
