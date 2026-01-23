@@ -48,6 +48,7 @@ const HistoryPost: React.FC = () => {
 
   const onFinish = async (values: any) => {
     console.log("onFinish", values);
+     console.log("artworkId", artworkId);
     if (!artworkId) return;
 
     // 💡 핵심 로직: 타입에 따라 URL 소스 결정
