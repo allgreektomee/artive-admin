@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Table, Button, Space, Tag, Image, Empty, Result } from "antd";
+import { Table, Button, Space, Tag, Image, Empty, Result , Tooltip} from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   PlusOutlined,
   ReloadOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useArtwork } from "../hooks/useArtwork"; // 🚀 분리한 훅 임포트
@@ -58,18 +59,32 @@ const ArtworkList: React.FC = () => {
       dataIndex: "totalHistoryCount", // 🚀 콘솔에 찍힌 count 필드 추가하면 좋음
       key: "totalHistoryCount",
       render: (_: any, record: any) => (
-        <Space vertical size={4}>
-          <div style={{ fontWeight: '500' }}>
-            {record.totalHistoryCount || 0}개
+        <div style={{ textAlign: "center" }}>
+          <div style={{ marginBottom: 4, fontWeight: "bold" }}>
+            {record.historyCount || 0}개
           </div>
-          <Button 
-            size="small" 
-            icon={<PlusOutlined />} 
-            onClick={() => navigate(`/admin/artworks/${record.id}/history/post`)} // 🚀 히스토리 등록 페이지 경로
-          >
-            기록 추가
-          </Button>
-        </Space>
+          <Space>
+            {/* 기록 추가 버튼 */}
+            <Button
+              size="small"
+              icon={<PlusOutlined />}
+              onClick={() =>
+                navigate(`/admin/artworks/${record.id}/history/post`)
+              }
+            >
+              기록 추가
+            </Button>
+
+            {/* 히스토리 목록 보기 아이콘 버튼 */}
+            <Tooltip title="히스토리 목록 보기">
+              <Button
+                size="small"
+                icon={<UnorderedListOutlined />}
+                onClick={() => navigate(`/admin/artworks/${record.id}/history`)}
+              />
+            </Tooltip>
+          </Space>
+        </div>
       ),
     },
     {
