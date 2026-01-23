@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Form,
   Input,
@@ -15,6 +15,8 @@ import { historyApi } from "../api/historyApi";
 import type { HistoryCreateRequest } from "../types/history";
 // ArtworkUpload 컴포넌트가 있다면 import 하세요.
 // import ArtworkUpload from "../components/ArtworkUpload";
+import type { DividerProps } from 'antd';
+
 
 const HistoryPost: React.FC = () => {
   const { id: artworkId } = useParams<{ id: string }>();
@@ -25,6 +27,7 @@ const HistoryPost: React.FC = () => {
   // 현재 선택된 타입을 추적하기 위한 상태 (기본값: IMGURL)
   const historyType = Form.useWatch("type", form);
   const [imageUrl, setImageUrl] = useState<string>("");
+  const myOrientation: DividerProps['orientation'] = "left";
 
   const onFinish = async (values: any) => {
     if (!artworkId) return;
@@ -110,7 +113,7 @@ const HistoryPost: React.FC = () => {
           </Form.Item>
         </Card>
 
-        <Divider orientation="left">기록 상세 설정</Divider>
+        <Divider orientation={myOrientation}>기록 상세 설정</Divider>
 
         <div style={{ display: "flex", gap: "16px" }}>
           <Form.Item name="type" label="기록 유형" style={{ flex: 1 }}>
