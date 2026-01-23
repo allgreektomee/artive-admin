@@ -21,7 +21,7 @@ import type { HistoryCreateRequest } from "../types/history";
 const { Dragger } = Upload;
 
 const HistoryPost: React.FC = () => {
-  const { id: artworkId } = useParams<{ id: string }>();
+  const { artworkId } = useParams<{ artworkId: string }>();
   const navigate = useNavigate();
   const { loading: saveLoading } = useHistory();
   const [form] = Form.useForm();
