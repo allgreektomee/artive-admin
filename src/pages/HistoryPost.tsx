@@ -47,11 +47,7 @@ const HistoryPost: React.FC = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log("버튼 클릭됨! 입력값:", values);
-    if (!artworkId) {
-      console.error("작품 ID가 없습니다.");
-      return;
-    }
+    if (!artworkId) return;
 
     // 💡 핵심 로직: 타입에 따라 URL 소스 결정
     const finalImageUrl = values.type === "IMGURL" ? s3Url : values.imageUrl;
@@ -91,7 +87,6 @@ const HistoryPost: React.FC = () => {
         layout="vertical"
         onFinish={onFinish}
         initialValues={{ isPublic: true, type: "IMGURL" }}
-        onFinishFailed={(errorInfo) => console.log("검증 실패:", errorInfo)}
       >
         {/* 한국어/영어 입력 필드 (기존과 동일) */}
         {/* ... (생략) ... */}
