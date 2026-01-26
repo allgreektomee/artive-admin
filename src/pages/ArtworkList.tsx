@@ -61,7 +61,7 @@ const ArtworkList: React.FC = () => {
       render: (_: any, record: any) => (
         <div style={{ textAlign: "center" }}>
           <div style={{ marginBottom: 4, fontWeight: "bold" }}>
-            {record.historyCount || 0}개
+            {record.totalHistoryCount || 0}개
           </div>
           <Space>
             {/* 기록 추가 버튼 */}
