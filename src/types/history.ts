@@ -26,6 +26,7 @@ export interface HistoryDetailResponse {
   imageUrl?: string;
   type: "MANUAL" | "YOUTUBE"|"IMGURL";
   title:string;
+  content:string;
   description: string;
   createdAt: string;
 }

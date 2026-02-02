@@ -140,7 +140,7 @@ const HistoryList: React.FC = () => {
                         {item.type}
                       </Tag>
                       <Title level={4} style={{ margin: "8px 0" }}>
-                        {item.title}
+                        {item.content}
                       </Title>
                     </Space>
 

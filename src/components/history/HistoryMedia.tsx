@@ -39,12 +39,13 @@ const HistoryMedia: React.FC<HistoryMediaProps> = ({ type, imageUrl, title }) =>
 
     case 'MANUAL':
     default:
-      return (
-        <div style={{ padding: '20px', textAlign: 'center', background: '#f5f5f5', borderRadius: '8px' }}>
-          <a href={imageUrl} target="_blank" rel="noopener noreferrer">
-            🔗 외부 링크 바로가기 ({title || 'Link'})
-          </a>
-        </div>
+     return (
+        <Image
+          src={imageUrl}
+          alt={title}
+          style={{ width: '100%', borderRadius: '8px', objectFit: 'cover' }}
+          fallback="https://via.placeholder.com/400x225?text=No+Image"
+        />
       );
   }
 };
