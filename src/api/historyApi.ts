@@ -22,7 +22,7 @@ export const historyApi = {
 
   // 히스토리 삭제
   deleteHistory: (historyId: number) =>
-    client.delete(`/histories/${historyId}`),
+    client.delete(`/artworks//histories/${historyId}`),
 
   // 히스토리 추가
   addHistory: (artworkId: number, data: HistoryCreateRequest) =>
