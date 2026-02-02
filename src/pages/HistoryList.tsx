@@ -139,9 +139,10 @@ const HistoryList: React.FC = () => {
                       >
                         {item.type}
                       </Tag>
-                      <Title level={4} style={{ margin: "8px 0" }}>
-                        {item.content}
+                       <Title level={4} style={{ margin: "8px 0" }}>
+                        {item.title}
                       </Title>
+                  
                     </Space>
 
                     {/* 등록 날짜 */}
@@ -162,7 +163,7 @@ const HistoryList: React.FC = () => {
                     }}
                   >
                     <Text style={{ whiteSpace: "pre-wrap", color: "#555" }}>
-                      {item.description}
+                      {item.content}
                     </Text>
                   </div>
 
