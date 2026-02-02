@@ -22,11 +22,7 @@ export const historyApi = {
 
   // 히스토리 삭제
   deleteHistory: (historyId: number) =>
-    client.delete(`/artworks//histories/${historyId}`),
+    client.delete(`/artworks/histories/${historyId}`),
 
-  // 히스토리 추가
-  addHistory: (artworkId: number, data: HistoryCreateRequest) =>
-    client.post<ApiResponse<number>>(`/artworks/${artworkId}/histories`, data),
 
-  // 특정 작품의 히스토리 목록 조회 (언어 선택 가능)
 };
