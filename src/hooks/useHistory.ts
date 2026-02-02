@@ -70,7 +70,12 @@ export const useHistory = () => {
       const res = await historyApi.deleteHistory(id);
       if (res.data.success) {
         message.success("삭제되었습니다.");
-        await fetchArtworkHistories(currentPage - 1);
+        // 🚀 현재 리스트의 개수가 1개뿐이었다면 이전 페이지로 이동하거나 1페이지로 초기화
+          if (histories.length === 1 && currentPage > 1) {
+            setCurrentPage(prev => prev - 1);
+          } else {
+            fetchArtworkHistories(currentPage - 1); // 현재 페이지 다시 불러오기
+          }
       }
     } catch (err) {
       message.error("삭제 실패");
