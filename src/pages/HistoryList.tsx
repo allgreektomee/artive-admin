@@ -6,7 +6,6 @@ import {
   Typography,
   Tag,
   Space,
-  Empty,
   Spin,
   message,
 } from "antd";
@@ -103,8 +102,86 @@ const HistoryList: React.FC = () => {
             style: { marginTop: 20 },
           }}
           renderItem={(item) => (
-            <Card style={{ marginBottom: 16, borderRadius: 12 }}>
-              {/* ... 카드 내용 생략 (기존과 동일) ... */}
+            <Card
+              style={{ marginBottom: 16, borderRadius: 12, overflow: "hidden" }}
+              hoverable
+              bodyStyle={{ padding: "20px" }}
+            >
+              <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+                {/* 1. 왼쪽 미디어 영역 (300px 고정) */}
+                <div style={{ flex: "0 0 300px", minWidth: 300 }}>
+                  <HistoryMedia
+                    type={item.type}  
+                    imageUrl={item.imageUrl || ""}
+                    title={item.title}
+                  />
+                </div>
+
+                {/* 2. 오른쪽 정보 영역 (남은 공간 모두 차지) */}
+                <div style={{ flex: 1, minWidth: "300px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Space direction="vertical" size={4}>
+                      {/* 타입별 태그 표시 */}
+                      <Tag
+                        color={
+                          item.type === "YOUTUBE"
+                            ? "red"
+                            : item.type === "IMGURL"
+                              ? "blue"
+                              : "orange"
+                        }
+                      >
+                        {item.type}
+                      </Tag>
+                      <Title level={4} style={{ margin: "8px 0" }}>
+                        {item.title}
+                      </Title>
+                    </Space>
+
+                    {/* 등록 날짜 */}
+                    <Text type="secondary" style={{ fontSize: "13px" }}>
+                      <ClockCircleOutlined style={{ marginRight: 4 }} />
+                      {dayjs(item.createdAt).format("YYYY-MM-DD HH:mm")}
+                    </Text>
+                  </div>
+
+                  {/* 상세 내용 박스 */}
+                  <div
+                    style={{
+                      marginTop: 16,
+                      padding: "16px",
+                      background: "#f8f9fa",
+                      borderRadius: "8px",
+                      border: "1px solid #f0f0f0",
+                    }}
+                  >
+                    <Text style={{ whiteSpace: "pre-wrap", color: "#555" }}>
+                      {item.description}
+                    </Text>
+                  </div>
+
+                  {/* 하단 버튼 (수정/삭제 등 추가 시) */}
+                  <div style={{ marginTop: 16, textAlign: "right" }}>
+                    <Button
+                      type="link"
+                      size="small"
+                      onClick={() =>
+                        navigate(
+                          `/admin/artworks/${artworkId}/history/edit/${item.id}`,
+                        )
+                      }
+                    >
+                      수정하기
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </Card>
           )}
         />
