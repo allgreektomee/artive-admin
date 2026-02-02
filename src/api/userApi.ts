@@ -27,5 +27,7 @@ export const userApi = {
   getUsers: () => client.get<ApiResponse<AllUserResponse[]>>("/admin/users"),
 
   updateUserRole: (userId: number, role: UserRole) =>
-    client.patch<ApiResponse<AllUserResponse>>(`/admin/users/${userId}/role`, { role } as UpdateUserRoleRequest),
+    client.patch<ApiResponse<AllUserResponse>>(`/admin/users/${userId}/role`, {
+      role,
+    } as UpdateUserRoleRequest),
 };
