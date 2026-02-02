@@ -39,7 +39,7 @@ const HistoryList: React.FC = () => {
         // API 호출 시 언어설정과 페이지 번호 전달 (백엔드 구조에 맞춰)
         const res = await historyApi.getArtworkHistories(
           Number(artworkId),
-          "ko",
+          "KO",
           page,
         );
 
