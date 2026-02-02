@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   List,
   Card,
@@ -7,59 +7,58 @@ import {
   Tag,
   Space,
   Spin,
-  message,
+  Result,
 } from "antd";
 import {
   ArrowLeftOutlined,
   PlusOutlined,
   ClockCircleOutlined,
+  DeleteOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { historyApi } from "../api/historyApi";
+import { useHistory } from "../hooks/useHistory";
+
 import HistoryMedia from "../components/history/HistoryMedia"; // 이전에 만든 미디어 렌더러
-import type { HistoryDetailResponse } from "../types/history";
+
 const { Title, Text } = Typography;
 
 const HistoryList: React.FC = () => {
   const { artworkId } = useParams<{ artworkId: string }>();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [histories, setHistories] = useState<HistoryDetailResponse[]>([]);
 
-  // 2. 페이징 상태 추가 (선택 사항)
-  const [total, setTotal] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    loading,
+    fetchArtworkHistories,
+    error,
+    deleteHistory,
+    histories,
+    currentPage,
+    total,
+  } = useHistory();
 
   useEffect(() => {
-    const fetchHistories = async (page = 0) => {
-      if (!artworkId) return;
-      setLoading(true);
-      try {
-        // API 호출 시 언어설정과 페이지 번호 전달 (백엔드 구조에 맞춰)
-        const res = await historyApi.getArtworkHistories(
-          Number(artworkId),
-          "KO",
-          page,
-        );
+    fetchArtworkHistories(Number(artworkId));
+  }, []);
 
-        if (res.data.success) {
-          // 🚀 PageResponse 구조에 따라 접근
-          // 보통 res.data.data.content 에 실제 리스트가 들어있습니다.
-          const pageData = res.data.data;
-          setHistories(pageData.content);
-          setTotal(pageData.totalElements || 0); // 페이징용 전체 개수
+  if (error) {
+    return (
+      <Result
+        status="warning"
+        title="데이터를 가져올 수 없습니다"
+        extra={
+          <Button
+            type="primary"
+            icon={<ReloadOutlined />}
+            onClick={() => fetchArtworkHistories(Number(artworkId))}
+          >
+            다시 시도
+          </Button>
         }
-      } catch (err) {
-        console.error(err);
-        message.error("히스토리를 불러오는 데 실패했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHistories(currentPage - 1); // 백엔드 페이지는 보통 0부터 시작
-  }, [artworkId, currentPage]);
+      />
+    );
+  }
 
   return (
     <div style={{ padding: "24px", maxWidth: 1000, margin: "0 auto" }}>
@@ -97,7 +96,7 @@ const HistoryList: React.FC = () => {
             current: currentPage,
             total: total,
             pageSize: 10,
-            onChange: (page) => setCurrentPage(page),
+            onChange: (page) => fetchArtworkHistories(Number(artworkId), page),
             align: "center",
             style: { marginTop: 20 },
           }}
@@ -111,7 +110,7 @@ const HistoryList: React.FC = () => {
                 {/* 1. 왼쪽 미디어 영역 (300px 고정) */}
                 <div style={{ flex: "0 0 300px", minWidth: 300 }}>
                   <HistoryMedia
-                    type={item.type}  
+                    type={item.type}
                     imageUrl={item.imageUrl || ""}
                     title={item.title}
                   />
@@ -139,10 +138,9 @@ const HistoryList: React.FC = () => {
                       >
                         {item.type}
                       </Tag>
-                       <Title level={4} style={{ margin: "8px 0" }}>
+                      <Title level={4} style={{ margin: "8px 0" }}>
                         {item.title}
                       </Title>
-                  
                     </Space>
 
                     {/* 등록 날짜 */}
@@ -170,16 +168,10 @@ const HistoryList: React.FC = () => {
                   {/* 하단 버튼 (수정/삭제 등 추가 시) */}
                   <div style={{ marginTop: 16, textAlign: "right" }}>
                     <Button
-                      type="link"
-                      size="small"
-                      onClick={() =>
-                        navigate(
-                          `/admin/artworks/${artworkId}/history/edit/${item.id}`,
-                        )
-                      }
-                    >
-                      수정하기
-                    </Button>
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => deleteHistory(item.id)}
+                    />
                   </div>
                 </div>
               </div>
