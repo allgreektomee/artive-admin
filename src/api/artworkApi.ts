@@ -4,9 +4,6 @@ import type {
   ArtworkListResponse, 
   ArtworkCreate, 
   ArtworkUpdateResponse,
-  HistoryCreateResponse,
-  HistoryListResponse,
-  LanguageCode,
   ArtworkDetailResponse,
 } from "../types/artwork";
 
@@ -34,17 +31,5 @@ export const artworkApi = {
 
   // --- [히스토리 관련] ---
 
-  // 히스토리 추가
-  addHistory: (artworkId: number, data: HistoryCreateResponse) =>
-    client.post<ApiResponse<number>>(`/artworks/${artworkId}/histories`, data),
 
-  // 특정 작품의 히스토리 목록 조회 (언어 선택 가능)
-  getArtworkHistories: (artworkId: number, lang: LanguageCode = 'KO', page: number = 0) =>
-    client.get<ApiResponse<HistoryListResponse[]>>(
-      `/artworks/${artworkId}/histories?lang=${lang}&page=${page}`
-    ),
-
-  // 히스토리 삭제
-  deleteHistory: (historyId: number) =>
-    client.delete<ApiResponse<void>>(`/artworks/histories/${historyId}`),
 };

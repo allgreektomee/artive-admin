@@ -51,7 +51,9 @@ export interface HistoryCreateResponse {
 
 export interface HistoryListResponse{
   id: number;
-  year: string;
-  content: string; // 요청 시 보낸 lang(KO, EN 등)에 따라 백엔드에서 번역해서 준 값
+  imageUrl: string;
+  type: "IMGURL" | "YOUTUBE" | "MANUAL";
+  title: string;
+  content: string;
+  createdAt: string;
 }
-
