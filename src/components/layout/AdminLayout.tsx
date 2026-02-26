@@ -33,7 +33,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   // 2. 권한별 메뉴 구성
   const menuItems = [
     { key: "/admin/dashboard", icon: <DesktopOutlined />, label: "대시보드" },
-    { key: "/profile", icon: <UserOutlined />, label: "내 프로필" },
+    { key: "/admin/profile", icon: <UserOutlined />, label: "내 프로필" },
     { key: "/admin/artworks", icon: <UnorderedListOutlined />, label: "작품 목록" },
     { key: "/admin/artworks/post", icon: <FileAddOutlined />, label: "작품 등록" },
     
