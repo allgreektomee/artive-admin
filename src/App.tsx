@@ -18,6 +18,9 @@ import ProfileSetting from './pages/ProfileSetting';
 import MagazineHome from './pages/MagazineHome';
 import WorkDetail from './pages/WorkDetail';
 import About from './pages/About';
+import GalleryPage from "./pages/GalleryPage"; // 추가
+import ReportPage from "./pages/ReportPage"; // 추가
+import CriticPage from "./pages/CriticPage"; // 추가
 
 // Standalone Pages
 import LoginPage from './pages/LoginPage';
@@ -41,7 +44,10 @@ const App: React.FC = () => {
         <Route element={<PublicLayout />}>
           <Route index element={<MagazineHome />} />
           <Route path="work/:artworkId" element={<WorkDetail />} />
-          <Route path="about" element={<About />} />
+          <Route path="report" element={<ReportPage />} />
+          <Route path="critic" element={<CriticPage />} />
+          <Route path="gallery" element={<GalleryPage />} />
+          <Route path="office" element={<About />} />
         </Route>
 
         {/* =========================================

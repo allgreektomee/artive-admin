@@ -1,21 +1,56 @@
 import React from "react";
-import { Layout, Menu } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Layout, Menu, Row, Col } from "antd";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const PublicLayout: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 메뉴 아이템 정의
+  const menuItems = [
+    { key: "/report", label: "ARTIVE REPORT" },
+    { key: "/critic", label: "CRITIC & VIEW" },
+    { key: "/gallery", label: "THE GALLERY" },
+    { key: "/office", label: "EDITOR'S OFFICE" },
+  ];
+
   return (
-    <Layout>
-      <Header>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['/']} onClick={({key}) => navigate(key)}>
-          <Menu.Item key="/">Home</Menu.Item>
-          <Menu.Item key="/about">About</Menu.Item>
-        </Menu>
+    <Layout style={{ backgroundColor: "#F9F9F7" }}>
+      <Header
+        style={{
+          background: "#F9F9F7",
+          padding: "0 50px",
+          borderBottom: "1px solid #e8e8e8",
+          height: 'auto',
+          lineHeight: 'normal'
+        }}
+      >
+        <Row justify="space-between" align="middle">
+          <Col>
+            <div
+              onClick={() => navigate("/")}
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                fontSize: "24px",
+                fontWeight: 700,
+                cursor: "pointer",
+                padding: '16px 0'
+              }}
+            >
+              ARTIVE
+            </div>
+          </Col>
+          <Col>
+            <Menu theme="light" mode="horizontal" selectedKeys={[location.pathname]} onClick={({ key }) => navigate(key)} items={menuItems} style={{ background: 'transparent', borderBottom: 'none', fontFamily: 'serif', fontSize: '16px' }} />
+          </Col>
+        </Row>
       </Header>
-      <Content style={{ padding: '50px', minHeight: 'calc(100vh - 184px)' }}><Outlet /></Content>
-      <Footer style={{ textAlign: 'center' }}>Just Art ©2024 Created by Artive</Footer>
+      <Content style={{ padding: '0 50px', minHeight: 'calc(100vh - 184px)', background: '#F9F9F7' }}>
+        <Outlet />
+      </Content>
+      <Footer style={{ textAlign: 'center', background: '#F9F9F7' }}>Artive Media ©2024</Footer>
     </Layout>
   );
 };
