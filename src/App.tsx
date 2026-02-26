@@ -1,106 +1,65 @@
-import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
-import { Spin } from "antd";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
-// Hooks
-import { useUser } from "./hooks/useUser";
-
-// Layouts (신규 생성)
-import AdminLayout from "./pages/AdminLayout";
-import PublicLayout from "./pages/PublicLayout";
+// Layouts
+import AdminLayout from './components/layout/AdminLayout';
 
 // Admin Pages
-import LoginPage from "./pages/LoginPage";
-import AdminDashboard from "./pages/AdminDashboard";
-import UserManagement from "./pages/UserManagement";
-import ArtworkList from "./pages/ArtworkList";
-import ArtworkPost from "./pages/ArtworkPost";
-import HistoryList from "./pages/HistoryList";
-import HistoryPost from "./pages/HistoryPost";
-import ProfileSetting from "./pages/ProfileSetting";
+import AdminDashboard from './pages/AdminDashboard';
+import HistoryList from './pages/HistoryList';
+import ProfileSetting from './pages/ProfileSetting';
+// import UserManagement from './pages/UserManagement'; // 파일이 있다면 import
 
-// Public Pages (신규 생성)
-import MagazineHome from "./pages/MagazineHome";
-import WorkDetail from "./pages/WorkDetail";
-import About from "./pages/About";
-import NotFound from "./pages/NotFound";
-
-/**
- * 관리자 전용 라우트를 보호하는 컴포넌트입니다.
- * useUser 훅을 사용하여 인증 상태를 확인하고,
- * 로그인되어 있지 않으면 로그인 페이지로 리디렉션합니다.
- */
-const AdminRoute: React.FC = () => {
-  // useUser 훅이 초기 사용자 정보를 가져오는 동안 loading 상태를 관리한다고 가정합니다.
-  const { user, loading } = useUser();
-  const location = useLocation();
-
-  if (loading && !user) {
-    return <Spin fullscreen tip="인증 정보를 확인 중입니다..." />;
-  }
-
-  if (!user) {
-    return <Navigate to="/admin/login" state={{ from: location }} replace />;
-  }
-
-  return <Outlet />;
-};
+// Public Pages (Magazine)
+import MagazineHome from './pages/MagazineHome';
+import WorkDetail from './pages/WorkDetail';
+import About from './pages/About';
+import Login from './pages/Login'; // 로그인 페이지가 있다고 가정
 
 const App: React.FC = () => {
+  // 로그아웃 핸들러 (AdminLayout에 전달)
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    window.location.href = '/login';
+  };
+
   return (
     <BrowserRouter>
       <Routes>
-        {/* =================================================================
-         * 1. 사용자용 공개 라우트 (Public Routes)
-         * ================================================================= */}
-        <Route element={<PublicLayout />}>
-          <Route path="/" element={<MagazineHome />} />
-          <Route path="/work/:artworkId" element={<WorkDetail />} />
-          <Route path="/about" element={<About />} />
+        {/* =========================================
+            1. 사용자 매거진 영역 (Public)
+            - 별도의 로그인 없이 접근 가능
+            - 잡지처럼 깔끔한 UI 제공
+           ========================================= */}
+        <Route path="/" element={<Outlet />}>
+          <Route index element={<MagazineHome />} />
+          <Route path="work/:artworkId" element={<WorkDetail />} />
+          <Route path="about" element={<About />} />
+          <Route path="login" element={<Login />} />
         </Route>
 
-        {/* =================================================================
-         * 2. 관리자 전용 라우트 (Admin Routes)
-         * ================================================================= */}
-        <Route path="/admin/login" element={<LoginPage />} />
-
-        {/* /admin 경로 하위의 모든 라우트는 AdminRoute에 의해 보호됩니다. */}
-        <Route element={<AdminRoute />}>
-          <Route element={<AdminLayout />}>
-            <Route
-              path="/admin"
-              element={<Navigate to="/admin/dashboard" replace />}
-            />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/users" element={<UserManagement />} />
-            <Route path="/admin/profile" element={<ProfileSetting />} />
-
-            {/* 작품 관리 */}
-            <Route path="/admin/artworks" element={<ArtworkList />} />
-            <Route path="/admin/artworks/post" element={<ArtworkPost />} />
-            <Route path="/admin/artworks/edit/:id" element={<ArtworkPost />} />
-
-            {/* 히스토리 관리 */}
-            <Route
-              path="/admin/artworks/:artworkId/history"
-              element={<HistoryList />}
-            />
-            <Route
-              path="/admin/artworks/:artworkId/history/post"
-              element={<HistoryPost />}
-            />
-          </Route>
+        {/* =========================================
+            2. 관리자 영역 (Admin)
+            - /admin 프리픽스 사용
+            - AdminLayout이 로그인 여부를 체크하여 리다이렉트 처리
+           ========================================= */}
+        <Route path="/admin" element={<AdminLayout onLogout={handleLogout} />}>
+          {/* /admin 접속 시 대시보드로 이동 */}
+          <Route index element={<Navigate to="dashboard" replace />} />
+          
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="settings" element={<ProfileSetting />} />
+          
+          {/* 작품 히스토리 관리 */}
+          <Route path="history/:artworkId" element={<HistoryList />} />
+          
+          {/* 유저 관리 (파일이 있다면 연결) */}
+          {/* <Route path="users" element={<UserManagement />} /> */}
         </Route>
 
-        {/* 404 Not Found */}
-        <Route path="*" element={<NotFound />} />
+        {/* 404 처리: 없는 페이지는 메인으로 */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
