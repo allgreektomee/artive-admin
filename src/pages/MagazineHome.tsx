@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useArtwork } from '../hooks/useArtwork';
-import { List, Card, Spin } from 'antd';
-import { Link } from 'react-router-dom';
+import { Spin } from 'antd';
 
 const MagazineHome: React.FC = () => {
   // 🚀 useArtwork 훅을 사용하여 작품 목록을 가져옵니다.
-  const { artworks, loading, fetchArtworks } = useArtwork();
+  const { loading, fetchArtworks } = useArtwork();
 
   useEffect(() => {
     fetchArtworks();

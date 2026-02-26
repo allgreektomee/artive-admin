@@ -13,8 +13,8 @@ import { Spin } from "antd";
 import { useUser } from "./hooks/useUser";
 
 // Layouts (신규 생성)
-import AdminLayout from "./pages/layout/AdminLayout";
-import PublicLayout from "./pages/layout/PublicLayout";
+import AdminLayout from "./pages/AdminLayout";
+import PublicLayout from "./pages/PublicLayout";
 
 // Admin Pages
 import LoginPage from "./pages/LoginPage";
