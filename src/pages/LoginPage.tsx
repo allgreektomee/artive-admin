@@ -6,11 +6,7 @@ import { useUser } from "../hooks/useUser"; // 🚀 통합 훅 임포트
 
 const { Title } = Typography;
 
-interface LoginPageProps {
-  onLoginSuccess: () => void;
-}
-
-const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
+const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { login, loading } = useUser(); // 🚀 훅에서 기능 가져오기
 
@@ -24,7 +20,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
 
       if (success) {
         message.success("관리자 인증에 성공했습니다.");
-        onLoginSuccess();
         navigate("/admin/dashboard", { replace: true });
       } else {
         message.error("인증 정보가 올바르지 않습니다.");
