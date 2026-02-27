@@ -1,102 +1,130 @@
 import React from 'react';
-import { Typography, Row, Col, Card, Button } from 'antd';
-import { ArrowRightOutlined } from '@ant-design/icons';
-// import { useArtwork } from '../hooks/useArtwork'; // 추후 연결
+import { Typography, Row, Col, Button, Space } from 'antd';
+import { InstagramOutlined, YoutubeOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
-const { Title, Paragraph } = Typography;
-
-// --- Mock Data ---
-const mockArticles = [
-  {
-    category: 'Review',
-    title: '바(Bar)에서 마주한 고독의 층위',
-    lead: '고요한 공간 속, 작가 김민준이 포착한 도시인의 내면 풍경. 그의 신작은 단순한 풍경화를 넘어 우리 시대의 자화상을 그린다.',
-    imageUrl: 'https://images.unsplash.com/photo-1514432324626-a423b4a5b5b6?q=80&w=2070&auto=format&fit=crop',
-    link: '/work/1'
-  },
-  {
-    category: 'Insight',
-    title: '2026 미술 시장의 색채 트렌드',
-    lead: '팬톤이 선정한 올해의 컬러를 넘어, 미술계는 지금 어떤 색에 주목하고 있는가? 데이터로 분석한 상반기 옥션 결과.',
-    imageUrl: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1887&auto=format&fit=crop',
-    link: '/work/2'
-  },
-  {
-    category: 'Artist',
-    title: '흙으로 빚어낸 시간, 도예가 이지은',
-    lead: '전통과 현대를 아우르는 그녀의 작업실에서 나눈 대화. 흙 한 줌이 예술이 되기까지의 긴 호흡을 담았다.',
-    imageUrl: 'https://images.unsplash.com/photo-1565333239312-58549c78a262?q=80&w=1887&auto=format&fit=crop',
-    link: '/work/3'
-  }
-];
+const { Title, Paragraph, Text } = Typography;
 
 const MagazineHome: React.FC = () => {
-  // const { artworks } = useArtwork(); 
+  // SNS 링크
+  const snsLinks = {
+    instagram: "https://www.instagram.com/artivefor.me",
+    youtube: "https://www.youtube.com/@artiveforme"
+  };
 
   return (
-    <div style={{ paddingTop: '60px', paddingBottom: '60px' }}>
-      {/* 1. 히어로 섹션 */}
-      <section style={{ marginBottom: 80, position: 'relative', height: '60vh', background: '#1a1a1a' }}>
-        <img 
-          src="https://images.unsplash.com/photo-1549492423-4002122c3983?q=80&w=1928&auto=format&fit=crop"
-          alt="웅장한 설치 컷"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }}
-        />
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', textAlign: 'center', width: '80%' }}>
-          <Typography.Text style={{ color: '#EAA221', fontSize: '1rem', letterSpacing: '1px' }}>[FEATURE]</Typography.Text>
-          <Title level={1} style={{ color: 'white', fontFamily: 'serif', fontSize: '3.5rem', margin: '10px 0' }}>
-            그리움이 머무는 공간
-          </Title>
-          <Paragraph style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.2rem' }}>
-            작가 박재영의 시선으로 기록한 2026 아트페어 현장 리포트. 공간과 감정의 서사.
-          </Paragraph>
-          <Button type="link" style={{ color: '#EAA221', marginTop: 20, fontSize: '1rem' }}>
-            READ MORE <ArrowRightOutlined />
-          </Button>
+    <div style={{ background: '#fff', color: '#000', fontFamily: 'serif' }}>
+      
+      {/* 1. HERO 섹션: 전시 타이틀 */}
+      <section style={{ 
+        height: '100vh', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        textAlign: 'center',
+        padding: '0 20px'
+      }}>
+        <Text style={{ letterSpacing: '8px', fontSize: '0.9rem', marginBottom: '20px', fontWeight: 'bold' }}>
+          JUST ART EXHIBITION 2026
+        </Text>
+        <Title level={1} style={{ 
+          fontSize: 'clamp(3.5rem, 12vw, 8rem)', 
+          fontWeight: 900, 
+          lineHeight: 1, 
+          margin: 0,
+          letterSpacing: '-2px'
+        }}>
+          그리움이<br />머무는 공간
+        </Title>
+        <Paragraph style={{ fontSize: '1.2rem', marginTop: '40px', maxWidth: '600px', fontWeight: 300 }}>
+          기록되지 못한 기억을 아카이빙하다. <br />
+          보통 사람들의 날것 그대로의 기록, 저스트아트.
+        </Paragraph>
+        <div style={{ marginTop: '50px' }}>
+          <ArrowDownOutlined style={{ fontSize: '2rem', animation: 'bounce 2s infinite' }} />
         </div>
       </section>
 
-      {/* 2. 최신 기사 그리드 */}
-      <section style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <Title level={2} style={{ fontFamily: 'serif', marginBottom: 40, textAlign: 'center' }}>Latest Articles</Title>
-        <Row gutter={[48, 48]}>
-          {mockArticles.map((article, index) => (
-            <Col span={24} key={index}>
-              <Card bordered={false} style={{ background: 'transparent' }}>
-                <Row gutter={32} align="middle">
-                  <Col xs={24} md={10}>
-                    <div style={{
-                      width: '100%',
-                      paddingBottom: '65%', /* 3:2 Aspect Ratio */
-                      background: `url(${article.imageUrl}) center center / cover no-repeat`,
-                      borderRadius: '4px'
-                    }} />
-                  </Col>
-                  <Col xs={24} md={14}>
-                    <Typography.Text style={{ color: '#3D0E61', fontWeight: 'bold' }}>[{article.category}]</Typography.Text>
-                    <Title level={3} style={{ fontFamily: 'serif', marginTop: 8, marginBottom: 16 }}>
-                      {article.title}
-                    </Title>
-                    <Paragraph type="secondary" style={{ fontSize: '1rem', marginBottom: 24 }}>
-                      {article.lead}
-                    </Paragraph>
-                    <Button type="text" href={article.link} style={{ fontWeight: 'bold' }}>
-                      기사 전문 보기 <ArrowRightOutlined />
-                    </Button>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-          ))}
+      {/* 2. GALLERY 섹션: 이미지 3개 목업 */}
+      <section style={{ padding: '0 20px 100px 20px' }}>
+        <Row gutter={[0, 150]} justify="center">
+          
+          {/* 작품 1: 강렬한 내면 (image_0.png) */}
+          <Col span={24} style={{ maxWidth: '1000px' }}>
+            <img 
+              src="https://path-to-your-s3/image_0.png" // 실제 S3 주소나 로컬 경로로 교체
+              alt="그리움 1"
+              style={{ width: '100%', marginBottom: '30px' }}
+            />
+            <div style={{ textAlign: 'left' }}>
+              <Title level={2} style={{ fontSize: '2.5rem', fontWeight: 800 }}>타오르는 그리움</Title>
+              <Paragraph style={{ fontSize: '1.1rem', color: '#666' }}>
+                가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들. 
+                그때의 우리는 무엇을 그토록 갈망했을까.
+              </Paragraph>
+            </div>
+          </Col>
+
+          {/* 작품 2: 쌓인 시간 (image_1.png) */}
+          <Col span={24} style={{ maxWidth: '1000px' }}>
+            <img 
+              src="https://path-to-your-s3/image_1.png" 
+              alt="그리움 2"
+              style={{ width: '100%', marginBottom: '30px' }}
+            />
+            <div style={{ textAlign: 'right' }}>
+              <Title level={2} style={{ fontSize: '2.5rem', fontWeight: 800 }}>쌓인 시간의 층위</Title>
+              <Paragraph style={{ fontSize: '1.1rem', color: '#666' }}>
+                겹겹이 쌓인 질감 속에 갇힌 어제의 우리. 
+                시간은 흘러도 그리움은 단단한 층이 되어 남는다.
+              </Paragraph>
+            </div>
+          </Col>
+
+          {/* 작품 3: 흩어지는 기억 (image_2.png) */}
+          <Col span={24} style={{ maxWidth: '1000px' }}>
+            <img 
+              src="https://path-to-your-s3/image_2.png" 
+              alt="그리움 3"
+              style={{ width: '100%', marginBottom: '30px' }}
+            />
+            <div style={{ textAlign: 'left' }}>
+              <Title level={2} style={{ fontSize: '2.5rem', fontWeight: 800 }}>흩어지는 기억의 끝</Title>
+              <Paragraph style={{ fontSize: '1.1rem', color: '#666' }}>
+                결국은 부드럽게 흩어지는, 그러나 결코 잊히지 않는 순간들. 
+                그리움이 머무는 마지막 공간.
+              </Paragraph>
+            </div>
+          </Col>
+
         </Row>
       </section>
 
-      {/* 3. 이슈 넘버 섹션 (푸터 위) */}
-      <div style={{ textAlign: 'center', marginTop: 80, borderTop: '1px solid #e8e8e8', paddingTop: 40 }}>
-        <Typography.Text style={{ fontSize: '1.5rem', fontFamily: 'serif', color: '#888' }}>
-          ISSUE NO. 60
-        </Typography.Text>
-      </div>
+      {/* 3. FOOTER 섹션: SNS & 공간 정보 */}
+      <footer style={{ 
+        padding: '120px 20px', 
+        background: '#000', 
+        color: '#fff', 
+        textAlign: 'center' 
+      }}>
+        <Title level={2} style={{ color: '#fff', marginBottom: '40px', fontWeight: 800 }}>ARTIVE: 1층 상가 아지트</Title>
+        <Space size="large" style={{ marginBottom: '50px' }}>
+          <Button type="link" href={snsLinks.instagram} target="_blank" icon={<InstagramOutlined />} style={{ color: '#fff', fontSize: '1.2rem' }}> artivefor.me</Button>
+          <Button type="link" href={snsLinks.youtube} target="_blank" icon={<YoutubeOutlined />} style={{ color: '#fff', fontSize: '1.2rem' }}> artiveforme</Button>
+        </Space>
+        <div style={{ borderTop: '1px solid #333', paddingTop: '40px' }}>
+          <Text style={{ color: '#555' }}>© 2026 JUST ART EXHIBITION. ALL RIGHTS RESERVED.</Text>
+        </div>
+      </footer>
+
+      {/* 단순 애니메이션용 스타일 */}
+      <style>{`
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+          40% {transform: translateY(-10px);}
+          60% {transform: translateY(-5px);}
+        }
+      `}</style>
     </div>
   );
 };
