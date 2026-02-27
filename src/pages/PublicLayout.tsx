@@ -1,23 +1,11 @@
 import React from "react";
-import { Layout, Menu, Row, Col } from "antd";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-// import { Layout,Row, Col } from "antd";
-// import { Outlet, useNavigate } from "react-router-dom";
+import { Layout, Row, Col } from "antd";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const PublicLayout: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // 메뉴 아이템 정의
-  const menuItems = [
-    { key: "/profile", label: "작가소개" },
-    // { key: "/report", label: "ARTIVE REPORT" },
-    // { key: "/critic", label: "CRITIC & VIEW" },
-    // { key: "/gallery", label: "THE GALLERY" },
-    // { key: "/office", label: "EDITOR'S OFFICE" },
-  ];
 
   return (
     <Layout style={{ backgroundColor: "#fff" }}>
@@ -25,9 +13,12 @@ const PublicLayout: React.FC = () => {
         style={{
           background: "#fff",
           padding: "0 20px",
-          borderBottom: "1px solid #e8e8e8",
+          borderBottom: "1px solid #f0f0f0",
           height: 'auto',
-          lineHeight: 'normal'
+          lineHeight: 'normal',
+          position: 'sticky', // 상단 고정 (선택 사항)
+          top: 0,
+          zIndex: 1000
         }}
       >
         <Row justify="space-between" align="middle">
@@ -36,24 +27,43 @@ const PublicLayout: React.FC = () => {
               onClick={() => navigate("/")}
               style={{
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                fontSize: "24px",
-                fontWeight: 700,
+                fontSize: "22px",
+                fontWeight: 800,
                 cursor: "pointer",
-                padding: '16px 0'
+                padding: '15px 0',
+                letterSpacing: '-0.5px'
               }}
             >
               ARTIVE
             </div>
           </Col>
           <Col>
-            <Menu theme="light" mode="horizontal" selectedKeys={[location.pathname]} onClick={({ key }) => navigate(key)} items={menuItems} style={{ background: 'transparent', borderBottom: 'none', fontFamily: 'serif', fontSize: '16px' }} />
+            {/* Menu 컴포넌트 대신 직접 텍스트 배치 */}
+            <div 
+              onClick={() => navigate("/profile")}
+              style={{ 
+                fontFamily: 'serif', 
+                fontSize: '16px', 
+                fontWeight: 500,
+                cursor: 'pointer',
+                padding: '10px 5px',
+                color: '#333'
+              }}
+            >
+              작가소개
+            </div>
           </Col>
         </Row>
       </Header>
-      <Content style={{ padding: '0', minHeight: 'calc(100vh - 184px)', background: '#fff' }}>
+      
+      {/* MagazineHome에서 이미 여백을 조절했으므로 padding은 0 유지 */}
+      <Content style={{ minHeight: 'calc(100vh - 120px)', background: '#fff' }}>
         <Outlet />
       </Content>
-      <Footer style={{ textAlign: 'center', background: '#fff' }}>Park Jae Young ©2026</Footer>
+
+      {/* MagazineHome 내부에 이미 푸터를 만드셨으므로, 
+          레이아웃 중복 방지를 위해 여기 푸터는 제거하거나 아주 간단히 유지합니다. */}
+      <Footer style={{ textAlign: 'center', background: '#fff', padding: '20px 0' }}>Park Jae Young ©2026</Footer>
     </Layout>
   );
 };
