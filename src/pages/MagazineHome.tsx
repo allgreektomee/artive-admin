@@ -132,14 +132,14 @@ const MagazineHome: React.FC = () => {
 
       </Row>
       </section>
-      
+
     <section style={{ 
         padding: '80px 20px', 
         textAlign: 'center', 
         background: '#fff' 
       }}>
         <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-          <Paragraph style={{ fontSize: '1.1rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
+          <Paragraph style={{ fontSize: '1.3rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
             슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
           </Paragraph>
 
@@ -169,7 +169,7 @@ const MagazineHome: React.FC = () => {
             <Text style={{ 
               display: 'block', 
               letterSpacing: '5px', 
-              fontSize: '0.8rem', 
+              fontSize: '1.5rem', 
               fontWeight: 900,
               marginBottom: '20px',
               color: 'inherit'
@@ -178,7 +178,7 @@ const MagazineHome: React.FC = () => {
             </Text>
             
             <Title level={3} style={{ 
-              fontSize: '1.5rem', 
+              fontSize: '1.2rem', 
               fontWeight: 800, 
               lineHeight: 1.5, 
               margin: 0,
@@ -186,8 +186,7 @@ const MagazineHome: React.FC = () => {
               wordBreak: 'keep-all',
               fontFamily: 'serif'
             }}>
-              낮에는 직장인으로, 밤에는 화가로 마주한 <br />
-              치유의 시간들
+              낮에는 직장인으로, <br /> 밤에는 화가로.. 
             </Title>
 
             {/* 화살표로 "다음"을 암시 */}
@@ -201,7 +200,7 @@ const MagazineHome: React.FC = () => {
             marginTop: '30px', 
             fontSize: '0.9rem', 
             letterSpacing: '5px', 
-            color: '#ccc',
+            color: '#666',
             fontWeight: 'bold'
           }}>
             PARK JAE YOUNG
