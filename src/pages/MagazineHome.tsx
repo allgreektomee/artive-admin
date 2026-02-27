@@ -77,7 +77,7 @@ const MagazineHome: React.FC = () => {
           <img src={images.work1} alt="작별의 시작" style={{ width: '100%', display: 'block' }} />
           {/* 1. 이미지 바로 아래 오른쪽 정렬 규격 */}
           <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '12px', color: '#111111', fontWeight: 300 }}>
-            Trace of Yellow, 130.3 x 89.4 cm (60P), Acrylic on canvas
+            Trace of Yellow, 60P, Acrylic on canvas
           </div>
           
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
@@ -99,7 +99,7 @@ const MagazineHome: React.FC = () => {
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work2} alt="기억의 공간" style={{ width: '100%', display: 'block' }} />
           <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '12px', color: '#111111', fontWeight: 300 }}>
-            Shadow of Purple, 130.3 x 89.4 cm (60P), Acrylic on canvas
+            Shadow of Purple, 60P, Acrylic on canvas
           </div>
 
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
@@ -117,7 +117,7 @@ const MagazineHome: React.FC = () => {
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work3} alt="극복의 꽃" style={{ width: '100%', display: 'block' }} />
           <div style={{ textAlign: 'right', marginTop: '10px',fontSize: '12px', color: '#111111', fontWeight: 300 }}>
-           Still Half, 130.3 x 89.4 cm (60P), Acrylic on canvas
+           Still Half, 60P, Acrylic on canvas
           </div>
 
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
