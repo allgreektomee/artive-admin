@@ -11,10 +11,17 @@ const MagazineHome: React.FC = () => {
     youtube: "https://www.youtube.com/@artiveforme"
   };
 
+  // 이미지 경로 (보내주신 S3 링크 적용)
+  const images = {
+    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_0261.HEIC", // 보내주신 링크
+    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_0264.HEIC", // 나머지 이미지 경로로 수정
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_9977.JPG"  // 나머지 이미지 경로로 수정
+  };
+
   return (
-    <div style={{ background: '#fff', color: '#000', fontFamily: 'serif' }}>
+    <div style={{ background: '#fff', color: '#000', fontFamily: "'Noto Serif KR', serif" }}>
       
-      {/* 1. HERO 섹션: 전시 타이틀 */}
+      {/* 1. HERO 섹션 */}
       <section style={{ 
         height: '100vh', 
         display: 'flex', 
@@ -24,75 +31,63 @@ const MagazineHome: React.FC = () => {
         textAlign: 'center',
         padding: '0 20px'
       }}>
-        <Text style={{ letterSpacing: '8px', fontSize: '0.9rem', marginBottom: '20px', fontWeight: 'bold' }}>
+        <Text style={{ letterSpacing: '8px', fontSize: '0.9rem', marginBottom: '20px', fontWeight: 'bold', color: '#333' }}>
           JUST ART EXHIBITION 2026
         </Text>
         <Title level={1} style={{ 
           fontSize: 'clamp(3.5rem, 12vw, 8rem)', 
           fontWeight: 900, 
-          lineHeight: 1, 
+          lineHeight: 1.1, 
           margin: 0,
-          letterSpacing: '-2px'
+          letterSpacing: '-3px'
         }}>
           그리움이<br />머무는 공간
         </Title>
-        <Paragraph style={{ fontSize: '1.2rem', marginTop: '40px', maxWidth: '600px', fontWeight: 300 }}>
-          기록되지 못한 기억을 아카이빙하다. <br />
-          보통 사람들의 날것 그대로의 기록, 저스트아트.
+        <Paragraph style={{ fontSize: '1.2rem', marginTop: '40px', maxWidth: '600px', fontWeight: 300, color: '#555' }}>
+          보통 사람들의 날것 그대로의 기록. <br />
+          우리가 지나온 시간과 그 속에 머문 감정들을 아카이빙합니다.
         </Paragraph>
-        <div style={{ marginTop: '50px' }}>
-          <ArrowDownOutlined style={{ fontSize: '2rem', animation: 'bounce 2s infinite' }} />
+        <div style={{ marginTop: '60px', animation: 'bounce 2s infinite' }}>
+          <ArrowDownOutlined style={{ fontSize: '2rem' }} />
         </div>
       </section>
 
-      {/* 2. GALLERY 섹션: 이미지 3개 목업 */}
-      <section style={{ padding: '0 20px 100px 20px' }}>
-        <Row gutter={[0, 150]} justify="center">
+      {/* 2. 작품 전시 섹션 (이미지 3개 목업) */}
+      <section style={{ padding: '0 20px 150px 20px' }}>
+        <Row gutter={[0, 180]} justify="center">
           
-          {/* 작품 1: 강렬한 내면 (image_0.png) */}
-          <Col span={24} style={{ maxWidth: '1000px' }}>
-            <img 
-              src="https://path-to-your-s3/image_0.png" // 실제 S3 주소나 로컬 경로로 교체
-              alt="그리움 1"
-              style={{ width: '100%', marginBottom: '30px' }}
-            />
-            <div style={{ textAlign: 'left' }}>
-              <Title level={2} style={{ fontSize: '2.5rem', fontWeight: 800 }}>타오르는 그리움</Title>
-              <Paragraph style={{ fontSize: '1.1rem', color: '#666' }}>
-                가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들. 
-                그때의 우리는 무엇을 그토록 갈망했을까.
+          {/* 작품 1 */}
+          <Col span={24} style={{ maxWidth: '1100px' }}>
+            <img src={images.work1} alt="그리움 1" style={{ width: '100%', filter: 'grayscale(0.1)' }} />
+            <div style={{ marginTop: '40px', textAlign: 'left' }}>
+              <Title level={2} style={{ fontSize: '3rem', fontWeight: 800, fontFamily: 'serif' }}>타오르는 그리움</Title>
+              <Paragraph style={{ fontSize: '1.2rem', color: '#444', lineHeight: 1.8 }}>
+                가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들. <br />
+                기록되지 못한 찰나의 순간이 예술이 되어 머뭅니다.
               </Paragraph>
             </div>
           </Col>
 
-          {/* 작품 2: 쌓인 시간 (image_1.png) */}
-          <Col span={24} style={{ maxWidth: '1000px' }}>
-            <img 
-              src="https://path-to-your-s3/image_1.png" 
-              alt="그리움 2"
-              style={{ width: '100%', marginBottom: '30px' }}
-            />
-            <div style={{ textAlign: 'right' }}>
-              <Title level={2} style={{ fontSize: '2.5rem', fontWeight: 800 }}>쌓인 시간의 층위</Title>
-              <Paragraph style={{ fontSize: '1.1rem', color: '#666' }}>
-                겹겹이 쌓인 질감 속에 갇힌 어제의 우리. 
-                시간은 흘러도 그리움은 단단한 층이 되어 남는다.
+          {/* 작품 2 */}
+          <Col span={24} style={{ maxWidth: '1100px' }}>
+            <img src={images.work2} alt="그리움 2" style={{ width: '100%', filter: 'grayscale(0.1)' }} />
+            <div style={{ marginTop: '40px', textAlign: 'right' }}>
+              <Title level={2} style={{ fontSize: '3rem', fontWeight: 800, fontFamily: 'serif' }}>쌓인 시간의 층위</Title>
+              <Paragraph style={{ fontSize: '1.2rem', color: '#444', lineHeight: 1.8 }}>
+                겹겹이 쌓인 질감 속에 갇힌 어제의 우리. <br />
+                시간은 흘러도 그리움은 단단한 기록이 되어 이곳에 남습니다.
               </Paragraph>
             </div>
           </Col>
 
-          {/* 작품 3: 흩어지는 기억 (image_2.png) */}
-          <Col span={24} style={{ maxWidth: '1000px' }}>
-            <img 
-              src="https://path-to-your-s3/image_2.png" 
-              alt="그리움 3"
-              style={{ width: '100%', marginBottom: '30px' }}
-            />
-            <div style={{ textAlign: 'left' }}>
-              <Title level={2} style={{ fontSize: '2.5rem', fontWeight: 800 }}>흩어지는 기억의 끝</Title>
-              <Paragraph style={{ fontSize: '1.1rem', color: '#666' }}>
-                결국은 부드럽게 흩어지는, 그러나 결코 잊히지 않는 순간들. 
-                그리움이 머무는 마지막 공간.
+          {/* 작품 3 */}
+          <Col span={24} style={{ maxWidth: '1100px' }}>
+            <img src={images.work3} alt="그리움 3" style={{ width: '100%', filter: 'grayscale(0.1)' }} />
+            <div style={{ marginTop: '40px', textAlign: 'left' }}>
+              <Title level={2} style={{ fontSize: '3rem', fontWeight: 800, fontFamily: 'serif' }}>흩어지는 기억의 끝</Title>
+              <Paragraph style={{ fontSize: '1.2rem', color: '#444', lineHeight: 1.8 }}>
+                결국은 부드럽게 흩어지는, 그러나 결코 잊히지 않는 순간들. <br />
+                저스트아트가 제안하는 그리움의 마지막 기록.
               </Paragraph>
             </div>
           </Col>
@@ -100,29 +95,30 @@ const MagazineHome: React.FC = () => {
         </Row>
       </section>
 
-      {/* 3. FOOTER 섹션: SNS & 공간 정보 */}
+      {/* 3. 푸터 섹션 */}
       <footer style={{ 
-        padding: '120px 20px', 
+        padding: '150px 20px', 
         background: '#000', 
         color: '#fff', 
         textAlign: 'center' 
       }}>
-        <Title level={2} style={{ color: '#fff', marginBottom: '40px', fontWeight: 800 }}>ARTIVE: 1층 상가 아지트</Title>
-        <Space size="large" style={{ marginBottom: '50px' }}>
-          <Button type="link" href={snsLinks.instagram} target="_blank" icon={<InstagramOutlined />} style={{ color: '#fff', fontSize: '1.2rem' }}> artivefor.me</Button>
-          <Button type="link" href={snsLinks.youtube} target="_blank" icon={<YoutubeOutlined />} style={{ color: '#fff', fontSize: '1.2rem' }}> artiveforme</Button>
+        <Title level={2} style={{ color: '#fff', marginBottom: '40px', fontWeight: 900, letterSpacing: '-1px' }}>
+          ARTIVE: 1층 상가 아지트
+        </Title>
+        <Space size="large" style={{ marginBottom: '60px' }}>
+          <Button type="link" href={snsLinks.instagram} target="_blank" icon={<InstagramOutlined />} style={{ color: '#fff', fontSize: '1.1rem' }}> artivefor.me</Button>
+          <Button type="link" href={snsLinks.youtube} target="_blank" icon={<YoutubeOutlined />} style={{ color: '#fff', fontSize: '1.1rem' }}> artiveforme</Button>
         </Space>
-        <div style={{ borderTop: '1px solid #333', paddingTop: '40px' }}>
-          <Text style={{ color: '#555' }}>© 2026 JUST ART EXHIBITION. ALL RIGHTS RESERVED.</Text>
+        <div style={{ borderTop: '1px solid #333', paddingTop: '50px', opacity: 0.5 }}>
+          <Text style={{ color: '#fff' }}>© 2026 JUST ART. ALL RIGHTS RESERVED.</Text>
         </div>
       </footer>
 
-      {/* 단순 애니메이션용 스타일 */}
       <style>{`
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-          40% {transform: translateY(-10px);}
-          60% {transform: translateY(-5px);}
+          40% {transform: translateY(-15px);}
+          60% {transform: translateY(-7px);}
         }
       `}</style>
     </div>
