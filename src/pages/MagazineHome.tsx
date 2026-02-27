@@ -11,9 +11,9 @@ const MagazineHome: React.FC = () => {
   };
 
   const images = {
-    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.jpg", 
-    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.jpg", 
-    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.jpg"
+    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
+    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png"
   };
 
   return (
@@ -131,7 +131,7 @@ const MagazineHome: React.FC = () => {
             icon={<InstagramOutlined style={{ fontSize: '1.8rem' }} />} // 아이콘 크기 키움
             style={{ color: '#fff', display: 'flex', alignItems: 'center' }}
           >
-            <span style={{ marginLeft: '8px', fontSize: '1rem' }}>Insta</span>
+            <span style={{ marginLeft: '8px', fontSize: '1rem' }}>Instagram</span>
           </Button>
           <Button 
             type="link" 

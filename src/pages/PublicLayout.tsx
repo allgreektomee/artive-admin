@@ -23,7 +23,7 @@ const PublicLayout: React.FC = () => {
       <Header
         style={{
           background: "#F9F9F7",
-          padding: "0 10px",
+          padding: "0 20px",
           borderBottom: "1px solid #e8e8e8",
           height: 'auto',
           lineHeight: 'normal'
