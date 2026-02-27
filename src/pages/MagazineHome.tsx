@@ -126,8 +126,9 @@ const MagazineHome: React.FC = () => {
               꽃이 되었습니다.
             </Title>
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
-              
+              시들지 않는 그리음으로 그려낸 마지막 작별인사. 
               이제 당신은 캔버스 위에서 영원히 시들지 않는 안식이 되었습니다.<br />
+              잘가요.
             </Paragraph>
           </div>
         </Col>
@@ -193,7 +194,7 @@ const MagazineHome: React.FC = () => {
               <ArrowRightOutlined />
             </div>
           </div>
-          <Paragraph style={{ fontSize: '1.3rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
+          <Paragraph style={{marginTop: '25px', fontSize: '1.3rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
             슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
           </Paragraph>
 
