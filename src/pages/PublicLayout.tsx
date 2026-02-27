@@ -11,12 +11,13 @@ const PublicLayout: React.FC = () => {
   // const location = useLocation();
 
   // 메뉴 아이템 정의
-  // const menuItems = [
-  //   { key: "/report", label: "ARTIVE REPORT" },
-  //   { key: "/critic", label: "CRITIC & VIEW" },
-  //   { key: "/gallery", label: "THE GALLERY" },
-  //   { key: "/office", label: "EDITOR'S OFFICE" },
-  // ];
+  const menuItems = [
+    { key: "/profile", label: "작가소개" },
+    // { key: "/report", label: "ARTIVE REPORT" },
+    // { key: "/critic", label: "CRITIC & VIEW" },
+    // { key: "/gallery", label: "THE GALLERY" },
+    // { key: "/office", label: "EDITOR'S OFFICE" },
+  ];
 
   return (
     <Layout style={{ backgroundColor: "#fff" }}>
@@ -44,9 +45,9 @@ const PublicLayout: React.FC = () => {
               ARTIVE
             </div>
           </Col>
-          {/* <Col>
+          <Col>
             <Menu theme="light" mode="horizontal" selectedKeys={[location.pathname]} onClick={({ key }) => navigate(key)} items={menuItems} style={{ background: 'transparent', borderBottom: 'none', fontFamily: 'serif', fontSize: '16px' }} />
-          </Col> */}
+          </Col>
         </Row>
       </Header>
       <Content style={{ padding: '0', minHeight: 'calc(100vh - 184px)', background: '#fff' }}>
