@@ -1,20 +1,22 @@
 import React from "react";
-import { Layout, Menu, Row, Col } from "antd";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+// import { Layout, Menu, Row, Col } from "antd";
+// import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Layout,Row, Col } from "antd";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const PublicLayout: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
   // 메뉴 아이템 정의
-  const menuItems = [
-    { key: "/report", label: "ARTIVE REPORT" },
-    { key: "/critic", label: "CRITIC & VIEW" },
-    { key: "/gallery", label: "THE GALLERY" },
-    { key: "/office", label: "EDITOR'S OFFICE" },
-  ];
+  // const menuItems = [
+  //   { key: "/report", label: "ARTIVE REPORT" },
+  //   { key: "/critic", label: "CRITIC & VIEW" },
+  //   { key: "/gallery", label: "THE GALLERY" },
+  //   { key: "/office", label: "EDITOR'S OFFICE" },
+  // ];
 
   return (
     <Layout style={{ backgroundColor: "#F9F9F7" }}>
@@ -42,9 +44,9 @@ const PublicLayout: React.FC = () => {
               ARTIVE
             </div>
           </Col>
-          <Col>
+          {/* <Col>
             <Menu theme="light" mode="horizontal" selectedKeys={[location.pathname]} onClick={({ key }) => navigate(key)} items={menuItems} style={{ background: 'transparent', borderBottom: 'none', fontFamily: 'serif', fontSize: '16px' }} />
-          </Col>
+          </Col> */}
         </Row>
       </Header>
       <Content style={{ padding: '0 50px', minHeight: 'calc(100vh - 184px)', background: '#F9F9F7' }}>
