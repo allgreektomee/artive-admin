@@ -136,26 +136,44 @@ const MagazineHome: React.FC = () => {
       </Row>
       </section>
 
+    네, 에필로그 섹션의 정보 계층 구조를 다시 설계하여 시각적으로 더 균형감 있고 'EPILOGUE'라는 타이틀이 확실히 강조되도록 수정했습니다.
+
+말씀하신 대로 [상단 문구 -> 메인 버튼(EPILOGUE + 보조 문구) -> 하단 작가명] 순으로 배치하여 시선의 흐름을 자연스럽게 만들었습니다.
+
+🏛️ 에필로그 섹션 레이아웃 수정
+TypeScript
     <section style={{ 
-        padding: '80px 20px', 
+        padding: '100px 20px', 
         textAlign: 'center', 
         background: '#fff' 
       }}>
         <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-        
-          {/* 확실한 버튼 효과를 준 박스 */}
+          
+          {/* 1. 상단 문구: 작고 차분하게 배치 */}
+          <Paragraph style={{ 
+            fontSize: '1.05rem', 
+            color: '#666', 
+            marginBottom: '40px', 
+            wordBreak: 'keep-all',
+            lineHeight: 1.6,
+            fontWeight: 300
+          }}>
+            슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
+          </Paragraph>
+
+          {/* 2. 메인 버튼: EPILOGUE 강조 버전 */}
           <div 
-            onClick={() => navigate('/profile')} // 🚀 얼럿 없이 바로 /profile로 이동
+            onClick={() => navigate('/profile')}
             style={{ 
               border: '2.5px solid #000', 
-              padding: '50px 20px', 
+              padding: '60px 20px', 
               cursor: 'pointer',
               transition: 'all 0.2s ease-in-out',
               background: '#fff',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.05)' // 버튼처럼 보이기 위한 은은한 그림자
+              boxShadow: '0 4px 20px rgba(0,0,0,0.06)' 
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = '#000';
@@ -166,45 +184,46 @@ const MagazineHome: React.FC = () => {
               e.currentTarget.style.color = '#000';
             }}
           >
+            {/* 타이틀 크게 강조 */}
             <Text style={{ 
               display: 'block', 
-              letterSpacing: '5px', 
-              fontSize: '1.5rem', 
+              letterSpacing: '8px', 
+              fontSize: '2.2rem', // 글자 크기를 키워 존재감 부여
               fontWeight: 900,
-              marginBottom: '20px',
+              marginBottom: '15px',
               color: 'inherit'
             }}>
               EPILOGUE
             </Text>
             
-            <Title level={3} style={{ 
-              fontSize: '1.2rem', 
-              fontWeight: 800, 
+            {/* 보조 설명은 상대적으로 작게 */}
+            <Title level={4} style={{ 
+              fontSize: '1rem', 
+              fontWeight: 500, 
               lineHeight: 1.5, 
               margin: 0,
               color: 'inherit',
+              opacity: 0.8,
               wordBreak: 'keep-all',
               fontFamily: 'serif'
             }}>
-              낮에는 직장인으로, <br /> 밤에는 화가로.. 
+              낮에는 직장인으로, 밤에는 화가로.. 
             </Title>
 
-            {/* 화살표로 "다음"을 암시 */}
-            <div style={{ marginTop: '25px', fontSize: '1.5rem', color: 'inherit' }}>
+            <div style={{ marginTop: '30px', fontSize: '1.2rem', color: 'inherit' }}>
               <ArrowRightOutlined />
             </div>
           </div>
-          <Paragraph style={{marginTop: '25px', fontSize: '1.3rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
-            슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
-          </Paragraph>
 
+          {/* 3. 하단 작가명: 다시 작고 세련되게 */}
           <Text style={{ 
             display: 'block', 
-            marginTop: '30px', 
-            fontSize: '0.9rem', 
-            letterSpacing: '5px', 
-            color: '#666',
-            fontWeight: 'bold'
+            marginTop: '40px', 
+            fontSize: '0.85rem', 
+            letterSpacing: '6px', 
+            color: '#999',
+            fontWeight: 'bold',
+            textTransform: 'uppercase'
           }}>
             PARK JAE YOUNG
           </Text>
