@@ -126,7 +126,7 @@ const MagazineHome: React.FC = () => {
               꽃이 되었습니다.
             </Title>
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
-              시들지 않는 그리음으로 그려낸 마지막 작별인사. 
+              시들지 않는 그리움으로 그려낸 마지막 작별인사. 
               이제 당신은 캔버스 위에서 영원히 시들지 않는 안식이 되었습니다.<br />
               잘가요.
             </Paragraph>
