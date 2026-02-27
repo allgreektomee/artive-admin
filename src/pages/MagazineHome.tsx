@@ -88,9 +88,9 @@ const MagazineHome: React.FC = () => {
             {/* 3. 3줄 소개 */}
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
               쏟아진 슬픔을 주워 담는 대신 붓을 들었습니다.<br />
-              캔버스에 채워 넣은 색채들은<br />
-              멈춰버린 일상을 다시 움직이게 하는 <br />
-              첫 번째 숨 고르기였습니다.
+              캔버스에 채워 넣은 색채들은 멈춰버린 <br />
+              일상을 다시 움직이게 하였습니다. 
+             
             </Paragraph>
           </div>
         </Col>
@@ -136,12 +136,7 @@ const MagazineHome: React.FC = () => {
       </Row>
       </section>
 
-    네, 에필로그 섹션의 정보 계층 구조를 다시 설계하여 시각적으로 더 균형감 있고 'EPILOGUE'라는 타이틀이 확실히 강조되도록 수정했습니다.
-
-말씀하신 대로 [상단 문구 -> 메인 버튼(EPILOGUE + 보조 문구) -> 하단 작가명] 순으로 배치하여 시선의 흐름을 자연스럽게 만들었습니다.
-
-🏛️ 에필로그 섹션 레이아웃 수정
-TypeScript
+  
     <section style={{ 
         padding: '100px 20px', 
         textAlign: 'center', 
