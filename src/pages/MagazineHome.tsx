@@ -119,7 +119,7 @@ const MagazineHome: React.FC = () => {
           }}>
             서울아트페어 (SAF)
           </Title>
-          <Space direction="vertical" size={2} style={{ fontSize: '0.85rem', opacity: 0.7 }}>
+          <Space direction="vertical" size={2} style={{ fontSize: '1.0rem', opacity: 0.8 }}>
             <Text style={{ color: '#fff' }}>양재동 세텍(SETEC)</Text>
             <Text style={{ color: '#fff' }}>2026. 05. 14 — 05. 17</Text>
           </Space>
@@ -158,11 +158,6 @@ const MagazineHome: React.FC = () => {
           </Button>
         </div>
         
-        <div style={{ borderTop: '1px solid #222', paddingTop: '20px' }}>
-          <Text style={{ color: '#fff', fontSize: '0.75rem', opacity: 0.4 }}>
-            Park Jae Young © 2026
-          </Text>
-        </div>
       </footer>
 
       <style>{`
