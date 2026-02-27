@@ -43,7 +43,7 @@ const MagazineHome: React.FC = () => {
           letterSpacing: '-3px',
           color: '#000',
           textTransform: 'uppercase' ,// 대문자로 시크하게
-           marginBottom: '15px'
+           marginBottom: '20px'
         }}>
           Farewell
         
@@ -59,8 +59,8 @@ const MagazineHome: React.FC = () => {
             marginBottom: '15px'
           }}>
             그리움은 물감이 되고,<br />
-            당신은 캔버스의 아름다운 꽃이 되었습니다.
-            이곳에 남긴 순간들이 당신의 안식이 되기를.
+            그녀는 캔버스의<br />
+            아름다운 꽃이 되었습니다.
           </Paragraph>
           
         </div>
