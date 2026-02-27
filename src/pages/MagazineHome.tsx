@@ -42,33 +42,27 @@ const MagazineHome: React.FC = () => {
           margin: '10px 0',
           letterSpacing: '-3px',
           color: '#000',
-          textTransform: 'uppercase' // 대문자로 시크하게
+          textTransform: 'uppercase' ,// 대문자로 시크하게
+           marginBottom: '15px'
         }}>
           Farewell
+        
         </Title>
        
         <div style={{ marginBottom: '50px' }}>
           <Paragraph style={{ 
-            fontSize: '1.25rem', 
+            fontSize: '1rem', 
             fontWeight: 500, 
             lineHeight: 1.8, 
-            color: '#1a1a1a',
+            color: '#615f5f',
             wordBreak: 'keep-all',
             marginBottom: '15px'
           }}>
             그리움은 물감이 되고,<br />
             당신은 캔버스의 아름다운 꽃이 되었습니다.
-          </Paragraph>
-          
-          <Paragraph style={{ 
-            fontSize: '1rem', 
-            fontWeight: 300, 
-            lineHeight: 1.6, 
-            color: '#888',
-            wordBreak: 'keep-all'
-          }}>
             이곳에 남긴 순간들이 당신의 안식이 되기를.
           </Paragraph>
+          
         </div>
 
         <div style={{ marginTop: '50px', animation: 'bounce 2s infinite' }}>
@@ -89,16 +83,7 @@ const MagazineHome: React.FC = () => {
                 가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들.
               </Paragraph>
             </div>
-            <div style={{ 
-            fontSize: '12px', 
-            fontWeight: 300, 
-            color: '#999', 
-            letterSpacing: '0.5px',
-            lineHeight: '1.5'
-          }}>
-            130.3 x 89.4 cm (60P)<br />
-            Acrylic on canvas
-          </div>
+   
           </Col>
 
           {/* 작품 2: 모바일에서도 자연스럽게 보이도록 좌측 정렬 유지 추천 */}
