@@ -32,7 +32,7 @@ const MagazineHome: React.FC = () => {
 
       }}>
         <Text style={{ letterSpacing: '4px', fontSize: '0.8rem', marginBottom: '15px', fontWeight: 'bold' }}>
-          JUST ART 2026
+          RECORD OF RECOVERY 
         </Text>
         <Title level={1} style={{ 
           fontFamily: "'Helvetica Neue', Arial, sans-serif", 
@@ -46,7 +46,6 @@ const MagazineHome: React.FC = () => {
            marginBottom: '20px'
         }}>
           Farewell
-        
         </Title>
        
         <div style={{ marginBottom: '50px' }}>
@@ -68,43 +67,70 @@ const MagazineHome: React.FC = () => {
       </section>
 
       {/* 2. GALLERY 섹션: 이미지 간격 및 여백 조정 */}
-      <section style={{ padding: '0 25px 100px 25px' }}> {/* 전체 좌우 여백 확보 */}
-        <Row gutter={[0, 100]} justify="center">
+      <section style={{ padding: '0 25px 100px 25px' }}>
+      <Row gutter={[0, 120]} justify="center"> {/* 작품 간 간격을 120으로 넓혀 여유 부여 */}
+        
+        {/* 작품 1 (IMG_0261: 노란 배경) */}
+        <Col span={24} style={{ maxWidth: '1000px' }}>
+          <img src={images.work1} alt="작별의 시작" style={{ width: '100%', display: 'block' }} />
+          {/* 1. 이미지 바로 아래 오른쪽 정렬 규격 */}
+          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '11px', color: '#999', fontWeight: 300 }}>
+            130.3 x 89.4 cm (60P), Acrylic on canvas
+          </div>
           
-          {/* 작품 1 */}
-          <Col span={24} style={{ maxWidth: '1000px' }}>
-            <img src={images.work1} alt="그리움 1" style={{ width: '100%', display: 'block' }} />
-            <div style={{ marginTop: '25px',padding: '0 5px' }}>
-              <Title level={2} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px' }}>타오르는 그리움</Title>
-              <Paragraph style={{ fontSize: '0.95rem', color: '#444', wordBreak: 'keep-all' }}>
-                가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들.
-              </Paragraph>
-            </div>
-   
-          </Col>
+          <div style={{ marginTop: '20px', padding: '0 5px' }}>
+            {/* 2. 제목 */}
+            <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
+              그리움은 물감이 되고
+            </Title>
+            {/* 3. 3줄 소개 */}
+            <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
+              쏟아진 슬픔을 주워 담는 대신 붓을 들었습니다.<br />
+              마음의 병을 마주하며 캔버스에 채워 넣은 색채들은<br />
+              멈춰버린 일상을 다시 움직이게 하는 첫 번째 숨 고르기였습니다.
+            </Paragraph>
+          </div>
+        </Col>
 
-          {/* 작품 2: 모바일에서도 자연스럽게 보이도록 좌측 정렬 유지 추천 */}
-          <Col span={24} style={{ maxWidth: '1000px' }}>
-            <img src={images.work2} alt="그리움 2" style={{ width: '100%', display: 'block' }} />
-            <div style={{ marginTop: '25px', padding: '0 5px' , textAlign: 'left' }}> 
-              <Title level={2} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px' }}>쌓인 시간의 층위</Title>
-              <Paragraph style={{ fontSize: '0.95rem', color: '#444', wordBreak: 'keep-all' }}>
-                겹겹이 쌓인 질감 속에 갇힌 어제의 우리.
-              </Paragraph>
-            </div>
-          </Col>
+        {/* 작품 2 (IMG_0264: 바 내부 전경) */}
+        <Col span={24} style={{ maxWidth: '1000px' }}>
+          <img src={images.work2} alt="기억의 공간" style={{ width: '100%', display: 'block' }} />
+          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '11px', color: '#999', fontWeight: 300 }}>
+            130.3 x 89.4 cm (60P), Acrylic on canvas
+          </div>
 
-          {/* 작품 3 */}
-          <Col span={24} style={{ maxWidth: '1000px' }}>
-            <img src={images.work3} alt="그리움 3" style={{ width: '100%', display: 'block' }} />
-            <div style={{ marginTop: '25px',padding: '0 5px' }}>
-              <Title level={2} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px' }}>흩어지는 기억의 끝</Title>
-              <Paragraph style={{ fontSize: '0.95rem', color: '#444', wordBreak: 'keep-all' }}>
-                부드럽게 흩어지는, 결코 잊히지 않는 순간들.
-              </Paragraph>
-            </div>
-          </Col>
-        </Row>
+          <div style={{ marginTop: '20px', padding: '0 5px' }}>
+            <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
+              시간의 층위, 겹쳐진 순간
+            </Title>
+            <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
+              평범하게 살던 직장인의 시선에 맺힌 익숙한 풍경들.<br />
+              그 풍경 속에 스며있는 당신의 흔적을 겹겹이 쌓아 올립니다.<br />
+              이곳에 남긴 모든 순간이 당신에게 평온한 안식이 되기를 바랍니다.
+            </Paragraph>
+          </div>
+        </Col>
+
+        {/* 작품 3 (IMG_9977: 보라색 배경) */}
+        <Col span={24} style={{ maxWidth: '1000px' }}>
+          <img src={images.work3} alt="극복의 꽃" style={{ width: '100%', display: 'block' }} />
+          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '11px', color: '#999', fontWeight: 300 }}>
+            130.3 x 89.4 cm (60P), Acrylic on canvas
+          </div>
+
+          <div style={{ marginTop: '20px', padding: '0 5px' }}>
+            <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
+              안식의 꽃으로 피어나다
+            </Title>
+            <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
+              가장 아픈 곳에서 비로소 가장 아름다운 꽃이 피어납니다.<br />
+              이제 당신은 캔버스 위에서 영원히 시들지 않는 아름다움이 되었습니다.<br />
+              그림으로 슬픔을 건너온 한 남자의 마지막 작별 인사입니다.
+            </Paragraph>
+          </div>
+        </Col>
+
+      </Row>
       </section>
 
       {/* 3. FOOTER 섹션: 너비 100% 및 아이콘 가시성 극대화 */}
