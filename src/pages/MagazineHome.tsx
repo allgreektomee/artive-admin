@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Row, Col, Button, Space } from 'antd';
-import { InstagramOutlined, YoutubeOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { InstagramOutlined, YoutubeOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -65,9 +65,6 @@ const MagazineHome: React.FC = () => {
           
         </div>
 
-        <div style={{ marginTop: '50px', animation: 'bounce 2s infinite' }}>
-          <ArrowDownOutlined style={{ fontSize: '1.5rem' }} />
-        </div>
       </section>
 
       {/* 2. GALLERY 섹션: 이미지 간격 및 여백 조정 */}
