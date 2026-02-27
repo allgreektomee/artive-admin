@@ -100,49 +100,69 @@ const MagazineHome: React.FC = () => {
         </Row>
       </section>
 
-      {/* 3. FOOTER 섹션: 높이 축소 및 아이콘 확대 */}
+      {/* 3. FOOTER 섹션: 너비 100% 및 아이콘 가시성 극대화 */}
       <footer style={{ 
-        padding: '50px 30px', // 상하 여백을 80px -> 50px로 줄여 높이 축소
+        width: '100%',        // 푸터가 화면 가로를 꽉 채우도록 설정
+        padding: '40px 20px', // 상하 여백을 더 줄여 슬림하게 조절
         background: '#000', 
         color: '#fff', 
-        textAlign: 'center' 
+        textAlign: 'center',
+        boxSizing: 'border-box'
       }}>
         <div style={{ marginBottom: '30px' }}>
           <Title level={3} style={{ 
             color: '#fff', 
             fontWeight: 800, 
             marginBottom: '10px', 
-            fontSize: '1.3rem' // 제목 크기 살짝 조정
+            fontSize: '1.2rem',
+            letterSpacing: '-0.5px'
           }}>
             서울아트페어 (SAF)
           </Title>
-          <Space direction="vertical" size={0} style={{ fontSize: '0.85rem', opacity: 0.8 }}>
+          <Space direction="vertical" size={2} style={{ fontSize: '0.85rem', opacity: 0.7 }}>
             <Text style={{ color: '#fff' }}>양재동 세텍(SETEC)</Text>
             <Text style={{ color: '#fff' }}>2026. 05. 14 — 05. 17</Text>
           </Space>
         </div>
 
-        {/* 인스타, 유튭 아이콘 크기 확대 */}
-        <Space size={40} style={{ marginBottom: '30px' }}>
+        {/* SNS 버튼: justifyCenter 오타 수정 및 레이아웃 정리 */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', // justifyCenter -> justifyContent로 수정
+          gap: '50px',              // 아이콘 사이 간격을 더 넓게 (모바일 클릭 최적화)
+          marginBottom: '30px',
+          width: '100%'
+        }}>
           <Button 
             type="link" 
             href={snsLinks.instagram} 
             target="_blank" 
-            icon={<InstagramOutlined style={{ fontSize: '1.8rem' }} />} // 아이콘 크기 키움
-            style={{ color: '#fff', display: 'flex', alignItems: 'center' }}
+            style={{ color: '#fff', padding: 0, height: 'auto' }}
           >
-            <span style={{ marginLeft: '8px', fontSize: '1rem' }}>Instagram</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <InstagramOutlined style={{ fontSize: '2.2rem' }} />
+              <span style={{ fontSize: '0.85rem', marginTop: '8px', fontWeight: 300 }}>Instagram</span>
+            </div>
           </Button>
+          
           <Button 
             type="link" 
             href={snsLinks.youtube} 
             target="_blank" 
-            icon={<YoutubeOutlined style={{ fontSize: '1.8rem' }} />} // 아이콘 크기 키움
-            style={{ color: '#fff', display: 'flex', alignItems: 'center' }}
+            style={{ color: '#fff', padding: 0, height: 'auto' }}
           >
-            <span style={{ marginLeft: '8px', fontSize: '1rem' }}>Youtube</span>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <YoutubeOutlined style={{ fontSize: '2.2rem' }} />
+              <span style={{ fontSize: '0.85rem', marginTop: '8px', fontWeight: 300 }}>Youtube</span>
+            </div>
           </Button>
-        </Space>
+        </div>
+        
+        <div style={{ borderTop: '1px solid #222', paddingTop: '20px' }}>
+          <Text style={{ color: '#fff', fontSize: '0.75rem', opacity: 0.4 }}>
+            Park Jae Young © 2026
+          </Text>
+        </div>
       </footer>
 
       <style>{`
