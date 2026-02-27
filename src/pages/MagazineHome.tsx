@@ -77,7 +77,7 @@ const MagazineHome: React.FC = () => {
           <img src={images.work1} alt="작별의 시작" style={{ width: '100%', display: 'block' }} />
           {/* 1. 이미지 바로 아래 오른쪽 정렬 규격 */}
           <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '12px', color: '#111111', fontWeight: 300 }}>
-            Trace of Yellow, 60P, Acrylic on canvas
+            Trace of Yellow. 60P. Acrylic on canvas.
           </div>
           
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
@@ -99,16 +99,17 @@ const MagazineHome: React.FC = () => {
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work2} alt="기억의 공간" style={{ width: '100%', display: 'block' }} />
           <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '12px', color: '#111111', fontWeight: 300 }}>
-            Shadow of Purple, 60P, Acrylic on canvas
+            Shadow of Purple. 60P. Acrylic on canvas.
           </div>
 
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
             <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
-              그녀는 캔버스의
+              그녀는 캔버스의 아름다운
             </Title>
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
-              익숙한 공간의 공기를 붓질로 층층이 쌓아 올립니다. <br />
-              보라색 잔상 속에 스며있는 당신의 흔적을 재구성하는 시간<br />
+              익숙한 공간의 공기를 붓질로 층층이 쌓아<br />
+              보라색 잔상 속에 스며있는 그녀의 흔적을 <br />
+              찾아가는 시간입니다.
             </Paragraph>
           </div>
         </Col>
@@ -117,14 +118,15 @@ const MagazineHome: React.FC = () => {
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work3} alt="극복의 꽃" style={{ width: '100%', display: 'block' }} />
           <div style={{ textAlign: 'right', marginTop: '10px',fontSize: '12px', color: '#111111', fontWeight: 300 }}>
-           Still Half, 60P, Acrylic on canvas
+           Still Half. 60P. Acrylic on canvas.
           </div>
 
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
             <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
-              아름다운 꽃이 되었습니다.
+              꽃이 되었습니다.
             </Title>
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
+              
               이제 당신은 캔버스 위에서 영원히 시들지 않는 안식이 되었습니다.<br />
             </Paragraph>
           </div>
