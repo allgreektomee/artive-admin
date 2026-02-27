@@ -156,14 +156,7 @@ const MagazineHome: React.FC = () => {
           마지막 작별 인사.
         </p>
         
-        <div style={{ 
-          marginTop: '40px', 
-          fontSize: '0.9rem', 
-          color: '#999',
-          letterSpacing: '2px'
-        }}>
-          PARK JAE YOUNG
-        </div>
+       
       </div>
 
         <div style={{ textAlign: 'center', marginTop: '80px', marginBottom: '100px' }}>
@@ -175,11 +168,9 @@ const MagazineHome: React.FC = () => {
           transition: 'all 0.4s ease'
         }}>
           <span style={{ display: 'block', fontSize: '15px', fontWeight: 800, letterSpacing: '2px', color: '#111' }}>
-            EPILOGUE
+            EPILOGUE : 낮에는 직장인으로, 밤에는 화가로 
           </span>
-          <span style={{ display: 'block', fontSize: '11px', fontWeight: 300, color: '#777', marginTop: '8px', letterSpacing: '0.5px' }}>
-            낮에는 직장인으로, 밤에는 화가로 마주한 치유의 시간들
-          </span>
+        
         </button>
         </div>
       </section>
