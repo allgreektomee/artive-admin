@@ -14,7 +14,7 @@ const MagazineHome: React.FC = () => {
   const images = {
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
-    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.jpg"
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png"
   };
 
   return (
