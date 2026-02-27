@@ -19,10 +19,10 @@ const PublicLayout: React.FC = () => {
   // ];
 
   return (
-    <Layout style={{ backgroundColor: "#F9F9F7" }}>
+    <Layout style={{ backgroundColor: "#fff" }}>
       <Header
         style={{
-          background: "#F9F9F7",
+          background: "#fff",
           padding: "0 20px",
           borderBottom: "1px solid #e8e8e8",
           height: 'auto',
@@ -49,10 +49,10 @@ const PublicLayout: React.FC = () => {
           </Col> */}
         </Row>
       </Header>
-      <Content style={{ padding: '0', minHeight: 'calc(100vh - 184px)', background: '#F9F9F7' }}>
+      <Content style={{ padding: '0', minHeight: 'calc(100vh - 184px)', background: '#fff' }}>
         <Outlet />
       </Content>
-      <Footer style={{ textAlign: 'center', background: '#F9F9F7' }}>Park Jae Young ©2026</Footer>
+      <Footer style={{ textAlign: 'center', background: '#fff' }}>Park Jae Young ©2026</Footer>
     </Layout>
   );
 };

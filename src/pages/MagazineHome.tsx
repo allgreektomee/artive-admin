@@ -21,7 +21,7 @@ const MagazineHome: React.FC = () => {
       
       {/* 1. HERO 섹션: 폰트 크기 유동적 조절 */}
       <section style={{ 
-        height: '100vh', 
+        height: '75vh', 
         display: 'flex', 
         flexDirection: 'column', 
         justifyContent: 'center', 
