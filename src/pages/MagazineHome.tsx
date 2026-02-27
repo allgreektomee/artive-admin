@@ -139,10 +139,7 @@ const MagazineHome: React.FC = () => {
         background: '#fff' 
       }}>
         <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-          <Paragraph style={{ fontSize: '1.3rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
-            슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
-          </Paragraph>
-
+        
           {/* 확실한 버튼 효과를 준 박스 */}
           <div 
             onClick={() => navigate('/profile')} // 🚀 얼럿 없이 바로 /profile로 이동
@@ -194,6 +191,9 @@ const MagazineHome: React.FC = () => {
               <ArrowRightOutlined />
             </div>
           </div>
+          <Paragraph style={{ fontSize: '1.3rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
+            슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
+          </Paragraph>
 
           <Text style={{ 
             display: 'block', 
