@@ -27,7 +27,9 @@ const MagazineHome: React.FC = () => {
         justifyContent: 'center', 
         alignItems: 'center',
         textAlign: 'center',
-        padding: '0 30px' // 여백을 20에서 30으로 늘림
+        padding: '0 15px ' ,
+        width: '100%',
+
       }}>
         <Text style={{ letterSpacing: '4px', fontSize: '0.8rem', marginBottom: '15px', fontWeight: 'bold' }}>
           JUST ART 2026
@@ -48,7 +50,8 @@ const MagazineHome: React.FC = () => {
           maxWidth: '500px', 
           fontWeight: 300,
           lineHeight: 1.6,
-          wordBreak: 'keep-all'
+          wordBreak: 'keep-all',
+          padding: '0 10px' // 본문만 살짝 더 여백
         }}>
           보통 사람들의 날것 그대로의 기록, 저스트아트.<br />
           서울아트페어(SAF) 특별 아카이브 전시.
@@ -65,7 +68,7 @@ const MagazineHome: React.FC = () => {
           {/* 작품 1 */}
           <Col span={24} style={{ maxWidth: '1000px' }}>
             <img src={images.work1} alt="그리움 1" style={{ width: '100%', display: 'block' }} />
-            <div style={{ marginTop: '25px' }}>
+            <div style={{ marginTop: '25px',padding: '0 5px' }}>
               <Title level={2} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px' }}>타오르는 그리움</Title>
               <Paragraph style={{ fontSize: '0.95rem', color: '#444', wordBreak: 'keep-all' }}>
                 가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들.
@@ -76,7 +79,7 @@ const MagazineHome: React.FC = () => {
           {/* 작품 2: 모바일에서도 자연스럽게 보이도록 좌측 정렬 유지 추천 */}
           <Col span={24} style={{ maxWidth: '1000px' }}>
             <img src={images.work2} alt="그리움 2" style={{ width: '100%', display: 'block' }} />
-            <div style={{ marginTop: '25px', textAlign: 'left' }}> 
+            <div style={{ marginTop: '25px', padding: '0 5px' , textAlign: 'left' }}> 
               <Title level={2} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px' }}>쌓인 시간의 층위</Title>
               <Paragraph style={{ fontSize: '0.95rem', color: '#444', wordBreak: 'keep-all' }}>
                 겹겹이 쌓인 질감 속에 갇힌 어제의 우리.
@@ -87,7 +90,7 @@ const MagazineHome: React.FC = () => {
           {/* 작품 3 */}
           <Col span={24} style={{ maxWidth: '1000px' }}>
             <img src={images.work3} alt="그리움 3" style={{ width: '100%', display: 'block' }} />
-            <div style={{ marginTop: '25px' }}>
+            <div style={{ marginTop: '25px',padding: '0 5px' }}>
               <Title level={2} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px' }}>흩어지는 기억의 끝</Title>
               <Paragraph style={{ fontSize: '0.95rem', color: '#444', wordBreak: 'keep-all' }}>
                 부드럽게 흩어지는, 결코 잊히지 않는 순간들.
