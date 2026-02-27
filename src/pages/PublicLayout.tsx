@@ -63,7 +63,7 @@ const PublicLayout: React.FC = () => {
 
       {/* MagazineHome 내부에 이미 푸터를 만드셨으므로, 
           레이아웃 중복 방지를 위해 여기 푸터는 제거하거나 아주 간단히 유지합니다. */}
-      <Footer style={{ textAlign: 'center', background: '#fff', padding: '20px 0' }}>Park Jae Young ©2026</Footer>
+      <Footer style={{ textAlign: 'center', background: '#fff', padding: '20px 0' }}>artive for me ©2026</Footer>
     </Layout>
   );
 };

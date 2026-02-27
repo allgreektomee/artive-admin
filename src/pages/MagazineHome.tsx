@@ -1,10 +1,12 @@
 import React from 'react';
 import { Typography, Row, Col, Button, Space } from 'antd';
 import { InstagramOutlined, YoutubeOutlined } from '@ant-design/icons';
-
+import { useNavigate } from "react-router-dom";
 const { Title, Paragraph, Text } = Typography;
 
 const MagazineHome: React.FC = () => {
+  const navigate = useNavigate();
+
   const snsLinks = {
     instagram: "https://www.instagram.com/artivefor.me",
     youtube: "https://www.youtube.com/@artiveforme"
@@ -32,7 +34,7 @@ const MagazineHome: React.FC = () => {
 
       }}>
         <Text style={{ letterSpacing: '4px', fontSize: '0.8rem', marginBottom: '15px', fontWeight: 'bold' }}>
-          RECORD OF RECOVERY 
+          Just Art 2026
         </Text>
         <Title level={1} style={{ 
           fontFamily: "'Helvetica Neue', Arial, sans-serif", 
@@ -74,8 +76,8 @@ const MagazineHome: React.FC = () => {
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work1} alt="작별의 시작" style={{ width: '100%', display: 'block' }} />
           {/* 1. 이미지 바로 아래 오른쪽 정렬 규격 */}
-          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '11px', color: '#999', fontWeight: 300 }}>
-            130.3 x 89.4 cm (60P), Acrylic on canvas
+          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '12px', color: '#111111', fontWeight: 300 }}>
+            Trace of Yellow, 130.3 x 89.4 cm (60P), Acrylic on canvas
           </div>
           
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
@@ -86,8 +88,9 @@ const MagazineHome: React.FC = () => {
             {/* 3. 3줄 소개 */}
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
               쏟아진 슬픔을 주워 담는 대신 붓을 들었습니다.<br />
-              마음의 병을 마주하며 캔버스에 채워 넣은 색채들은<br />
-              멈춰버린 일상을 다시 움직이게 하는 첫 번째 숨 고르기였습니다.
+              캔버스에 채워 넣은 색채들은<br />
+              멈춰버린 일상을 다시 움직이게 하는 <br />
+              첫 번째 숨 고르기였습니다.
             </Paragraph>
           </div>
         </Col>
@@ -95,18 +98,17 @@ const MagazineHome: React.FC = () => {
         {/* 작품 2 (IMG_0264: 바 내부 전경) */}
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work2} alt="기억의 공간" style={{ width: '100%', display: 'block' }} />
-          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '11px', color: '#999', fontWeight: 300 }}>
-            130.3 x 89.4 cm (60P), Acrylic on canvas
+          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '12px', color: '#111111', fontWeight: 300 }}>
+            Shadow of Purple, 130.3 x 89.4 cm (60P), Acrylic on canvas
           </div>
 
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
             <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
-              시간의 층위, 겹쳐진 순간
+              그녀는 캔버스의
             </Title>
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
-              평범하게 살던 직장인의 시선에 맺힌 익숙한 풍경들.<br />
-              그 풍경 속에 스며있는 당신의 흔적을 겹겹이 쌓아 올립니다.<br />
-              이곳에 남긴 모든 순간이 당신에게 평온한 안식이 되기를 바랍니다.
+              익숙한 공간의 공기를 붓질로 층층이 쌓아 올립니다. <br />
+              보라색 잔상 속에 스며있는 당신의 흔적을 재구성하는 시간<br />
             </Paragraph>
           </div>
         </Col>
@@ -114,23 +116,72 @@ const MagazineHome: React.FC = () => {
         {/* 작품 3 (IMG_9977: 보라색 배경) */}
         <Col span={24} style={{ maxWidth: '1000px' }}>
           <img src={images.work3} alt="극복의 꽃" style={{ width: '100%', display: 'block' }} />
-          <div style={{ textAlign: 'right', marginTop: '10px', fontSize: '11px', color: '#999', fontWeight: 300 }}>
-            130.3 x 89.4 cm (60P), Acrylic on canvas
+          <div style={{ textAlign: 'right', marginTop: '10px',fontSize: '12px', color: '#111111', fontWeight: 300 }}>
+           Still Half, 130.3 x 89.4 cm (60P), Acrylic on canvas
           </div>
 
           <div style={{ marginTop: '20px', padding: '0 5px' }}>
             <Title level={2} style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '15px', letterSpacing: '-1px' }}>
-              안식의 꽃으로 피어나다
+              아름다운 꽃이 되었습니다.
             </Title>
             <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.8', wordBreak: 'keep-all' }}>
-              가장 아픈 곳에서 비로소 가장 아름다운 꽃이 피어납니다.<br />
-              이제 당신은 캔버스 위에서 영원히 시들지 않는 아름다움이 되었습니다.<br />
-              그림으로 슬픔을 건너온 한 남자의 마지막 작별 인사입니다.
+              이제 당신은 캔버스 위에서 영원히 시들지 않는 안식이 되었습니다.<br />
             </Paragraph>
           </div>
         </Col>
 
       </Row>
+      </section>
+      {/* 메인 페이지 최하단 섹션 */}
+      <section style={{ 
+      padding: '100px 25px', 
+      textAlign: 'center', 
+      backgroundColor: '#f9f9f9', // 아주 연한 배경색으로 섹션 분리
+      marginTop: '50px' 
+      }}>
+      <div style={{ 
+        maxWidth: '600px', 
+        margin: '0 auto',
+        opacity: 0.8 // 너무 튀지 않게 살짝 투명도 조절
+      }}>
+        <p style={{ 
+          fontSize: '1.1rem', 
+          lineHeight: '2', 
+          color: '#333', 
+          fontWeight: 500,
+          letterSpacing: '0.5px',
+          wordBreak: 'keep-all'
+        }}>
+          슬픔을 건너온 한 남자가 전하는<br />
+          마지막 작별 인사.
+        </p>
+        
+        <div style={{ 
+          marginTop: '40px', 
+          fontSize: '0.9rem', 
+          color: '#999',
+          letterSpacing: '2px'
+        }}>
+          PARK JAE YOUNG
+        </div>
+      </div>
+
+        <div style={{ textAlign: 'center', marginTop: '80px', marginBottom: '100px' }}>
+        <button onClick={() => navigate('/profile')} style={{
+          backgroundColor: 'transparent',
+          border: '1px solid #111',
+          padding: '25px 60px',
+          cursor: 'pointer',
+          transition: 'all 0.4s ease'
+        }}>
+          <span style={{ display: 'block', fontSize: '15px', fontWeight: 800, letterSpacing: '2px', color: '#111' }}>
+            EPILOGUE
+          </span>
+          <span style={{ display: 'block', fontSize: '11px', fontWeight: 300, color: '#777', marginTop: '8px', letterSpacing: '0.5px' }}>
+            낮에는 직장인으로, 밤에는 화가로 마주한 치유의 시간들
+          </span>
+        </button>
+        </div>
       </section>
 
       {/* 3. FOOTER 섹션: 너비 100% 및 아이콘 가시성 극대화 */}
