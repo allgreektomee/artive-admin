@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Row, Col, Button, Space } from 'antd';
-import { InstagramOutlined, YoutubeOutlined } from '@ant-design/icons';
+import { InstagramOutlined, YoutubeOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 const { Title, Paragraph, Text } = Typography;
 
@@ -132,46 +132,80 @@ const MagazineHome: React.FC = () => {
 
       </Row>
       </section>
-      {/* 메인 페이지 최하단 섹션 */}
-      <section style={{ 
-      padding: '100px 25px', 
-      textAlign: 'center', 
-      backgroundColor: '#f9f9f9', // 아주 연한 배경색으로 섹션 분리
-      marginTop: '50px' 
+      
+    <section style={{ 
+        padding: '80px 20px', 
+        textAlign: 'center', 
+        background: '#fff' 
       }}>
-      <div style={{ 
-        maxWidth: '600px', 
-        margin: '0 auto',
-        opacity: 0.8 // 너무 튀지 않게 살짝 투명도 조절
-      }}>
-        <p style={{ 
-          fontSize: '1.1rem', 
-          lineHeight: '2', 
-          color: '#333', 
-          fontWeight: 500,
-          letterSpacing: '0.5px',
-          wordBreak: 'keep-all'
-        }}>
-          슬픔을 건너온 한 남자가 전하는<br />
-          마지막 작별 인사.
-        </p>
-        
-       
-      </div>
+        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+          <Paragraph style={{ fontSize: '1.1rem', color: '#666', marginBottom: '30px', wordBreak: 'keep-all' }}>
+            슬픔을 건너온 한 남자가 전하는 <br /> 마지막 작별 인사.
+          </Paragraph>
 
-        <div style={{ textAlign: 'center', marginTop: '80px', marginBottom: '100px' }}>
-        <button onClick={() => navigate('/profile')} style={{
-          backgroundColor: 'transparent',
-          border: '1px solid #111',
-          padding: '25px 60px',
-          cursor: 'pointer',
-          transition: 'all 0.4s ease'
-        }}>
-          <span style={{ display: 'block', fontSize: '15px', fontWeight: 800, letterSpacing: '2px', color: '#111' }}>
-            EPILOGUE : 낮에는 직장인으로, 밤에는 화가로 
-          </span>
-        
-        </button>
+          {/* 확실한 버튼 효과를 준 박스 */}
+          <div 
+            onClick={() => navigate('/profile')} // 🚀 얼럿 없이 바로 /profile로 이동
+            style={{ 
+              border: '2.5px solid #000', 
+              padding: '50px 20px', 
+              cursor: 'pointer',
+              transition: 'all 0.2s ease-in-out',
+              background: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.05)' // 버튼처럼 보이기 위한 은은한 그림자
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#000';
+              e.currentTarget.style.color = '#fff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#fff';
+              e.currentTarget.style.color = '#000';
+            }}
+          >
+            <Text style={{ 
+              display: 'block', 
+              letterSpacing: '5px', 
+              fontSize: '0.8rem', 
+              fontWeight: 900,
+              marginBottom: '20px',
+              color: 'inherit'
+            }}>
+              EPILOGUE
+            </Text>
+            
+            <Title level={3} style={{ 
+              fontSize: '1.5rem', 
+              fontWeight: 800, 
+              lineHeight: 1.5, 
+              margin: 0,
+              color: 'inherit',
+              wordBreak: 'keep-all',
+              fontFamily: 'serif'
+            }}>
+              낮에는 직장인으로, 밤에는 화가로 마주한 <br />
+              치유의 시간들
+            </Title>
+
+            {/* 화살표로 "다음"을 암시 */}
+            <div style={{ marginTop: '25px', fontSize: '1.5rem', color: 'inherit' }}>
+              <ArrowRightOutlined />
+            </div>
+          </div>
+
+          <Text style={{ 
+            display: 'block', 
+            marginTop: '30px', 
+            fontSize: '0.9rem', 
+            letterSpacing: '5px', 
+            color: '#ccc',
+            fontWeight: 'bold'
+          }}>
+            PARK JAE YOUNG
+          </Text>
         </div>
       </section>
 

@@ -50,7 +50,7 @@ const PublicLayout: React.FC = () => {
                 color: '#333'
               }}
             >
-              작가소개
+              에필로그
             </div>
           </Col>
         </Row>
