@@ -21,7 +21,7 @@ import About from './pages/About';
 import GalleryPage from "./pages/GalleryPage"; // 추가
 import ReportPage from "./pages/ReportPage"; // 추가
 import CriticPage from "./pages/CriticPage"; // 추가
-import ProfilePage from "./pages/testProfile"; // 추가
+import ProfilePage from "./pages/ProfileTest"; // 추가
 
 // Standalone Pages
 import LoginPage from './pages/LoginPage';
