@@ -89,6 +89,16 @@ const MagazineHome: React.FC = () => {
                 가장 깊은 곳에 숨겨두었던 강렬한 감정의 파편들.
               </Paragraph>
             </div>
+            <div style={{ 
+            fontSize: '12px', 
+            fontWeight: 300, 
+            color: '#999', 
+            letterSpacing: '0.5px',
+            lineHeight: '1.5'
+          }}>
+            130.3 x 89.4 cm (60P)<br />
+            Acrylic on canvas
+          </div>
           </Col>
 
           {/* 작품 2: 모바일에서도 자연스럽게 보이도록 좌측 정렬 유지 추천 */}
