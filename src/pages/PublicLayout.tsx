@@ -1,14 +1,14 @@
 import React from "react";
-// import { Layout, Menu, Row, Col } from "antd";
-// import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Layout,Row, Col } from "antd";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Layout, Menu, Row, Col } from "antd";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+// import { Layout,Row, Col } from "antd";
+// import { Outlet, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const PublicLayout: React.FC = () => {
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
 
   // 메뉴 아이템 정의
   const menuItems = [
