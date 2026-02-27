@@ -11,9 +11,9 @@ const MagazineHome: React.FC = () => {
   };
 
   const images = {
-    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_0261.jpg", 
-    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_0264.jpg", 
-    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_9977.jpg"
+    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.jpg", 
+    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.jpg", 
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.jpg"
   };
 
   return (
@@ -143,10 +143,6 @@ const MagazineHome: React.FC = () => {
             <span style={{ marginLeft: '8px', fontSize: '1rem' }}>Youtube</span>
           </Button>
         </Space>
-        
-        <div style={{ borderTop: '1px solid #333', paddingTop: '20px', opacity: 0.3 }}>
-          <Text style={{ color: '#fff', fontSize: '0.7rem' }}>© 2026 JUST ART.</Text>
-        </div>
       </footer>
 
       <style>{`

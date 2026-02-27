@@ -23,7 +23,7 @@ const PublicLayout: React.FC = () => {
       <Header
         style={{
           background: "#F9F9F7",
-          padding: "0 50px",
+          padding: "0 10px",
           borderBottom: "1px solid #e8e8e8",
           height: 'auto',
           lineHeight: 'normal'
@@ -49,10 +49,10 @@ const PublicLayout: React.FC = () => {
           </Col> */}
         </Row>
       </Header>
-      <Content style={{ padding: '0 50px', minHeight: 'calc(100vh - 184px)', background: '#F9F9F7' }}>
+      <Content style={{ padding: '0', minHeight: 'calc(100vh - 184px)', background: '#F9F9F7' }}>
         <Outlet />
       </Content>
-      <Footer style={{ textAlign: 'center', background: '#F9F9F7' }}>Artive Media ©2024</Footer>
+      <Footer style={{ textAlign: 'center', background: '#F9F9F7' }}>Park Jae Young ©2026</Footer>
     </Layout>
   );
 };
