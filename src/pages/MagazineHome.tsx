@@ -12,9 +12,9 @@ const MagazineHome: React.FC = () => {
 
   // 이미지 경로 (패턴에 맞춰 나머지 2개도 수정해서 사용하세요)
   const images = {
-    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/IMG_0261.HEIC", 
-    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/your-image-2.jpg", 
-    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/your-image-3.jpg"
+    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
+    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.jpg"
   };
 
   return (
