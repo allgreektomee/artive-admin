@@ -35,27 +35,42 @@ const MagazineHome: React.FC = () => {
           JUST ART 2026
         </Text>
         <Title level={1} style={{ 
-          fontSize: 'clamp(2.5rem, 10vw, 6rem)', // 모바일 최소 크기를 2.5rem으로 낮춤
+          fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+          fontSize: 'clamp(3rem, 15vw, 8rem)', // 타이틀을 더 압도적으로 키움
           fontWeight: 900, 
-          lineHeight: 1.2, 
-          margin: 0,
-          letterSpacing: '-1.5px',
-          wordBreak: 'keep-all' // 단어 단위 줄바꿈
+          lineHeight: 0.9, 
+          margin: '10px 0',
+          letterSpacing: '-3px',
+          color: '#000',
+          textTransform: 'uppercase' // 대문자로 시크하게
         }}>
-          그리움이<br />머무는 공간
+          Farewell
         </Title>
-        <Paragraph style={{ 
-          fontSize: '1rem', // 모바일에서 읽기 편한 크기
-          marginTop: '30px', 
-          maxWidth: '500px', 
-          fontWeight: 300,
-          lineHeight: 1.6,
-          wordBreak: 'keep-all',
-          padding: '0 10px' // 본문만 살짝 더 여백
-        }}>
-          보통 사람들의 날것 그대로의 기록, 저스트아트.<br />
-          서울아트페어(SAF) 특별 아카이브 전시.
-        </Paragraph>
+       
+        <div style={{ marginBottom: '50px' }}>
+          <Paragraph style={{ 
+            fontSize: '1.25rem', 
+            fontWeight: 500, 
+            lineHeight: 1.8, 
+            color: '#1a1a1a',
+            wordBreak: 'keep-all',
+            marginBottom: '15px'
+          }}>
+            그리움은 물감이 되고,<br />
+            당신은 캔버스의 아름다운 꽃이 되었습니다.
+          </Paragraph>
+          
+          <Paragraph style={{ 
+            fontSize: '1rem', 
+            fontWeight: 300, 
+            lineHeight: 1.6, 
+            color: '#888',
+            wordBreak: 'keep-all'
+          }}>
+            이곳에 남긴 순간들이 당신의 안식이 되기를.
+          </Paragraph>
+        </div>
+
         <div style={{ marginTop: '50px', animation: 'bounce 2s infinite' }}>
           <ArrowDownOutlined style={{ fontSize: '1.5rem' }} />
         </div>
