@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Typography, Row, Col, Space, Tag } from 'antd';
 import { InstagramOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph, Text } = Typography;
 
 const ProfileTest: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const images = {
     studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png", 
     mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/mentor.png", 

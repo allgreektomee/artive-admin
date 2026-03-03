@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Typography, Row, Col, Button, Space } from 'antd';
 import { InstagramOutlined, YoutubeOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 const { Title, Paragraph, Text } = Typography;
 
 const MagazineHome: React.FC = () => {
+  useEffect(() => {
+      window.scrollTo(0, 0);
+   }, []);
+
   const navigate = useNavigate();
 
   const snsLinks = {
