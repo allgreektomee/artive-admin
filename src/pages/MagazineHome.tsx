@@ -136,25 +136,25 @@ const MagazineHome: React.FC = () => {
         <div style={containerStyle}>
           
           {/* 작가 프로필 */}
-          <div style={{ marginBottom: '80px', ...textContentStyle }}>
+          <div style={{ marginBottom: '90px', ...textContentStyle }}>
             <Text style={{ letterSpacing: '8px', fontSize: '0.8rem', color: '#999', fontWeight: 'bold', display: 'block', marginBottom: '25px' }}>
               ARTIST PROFILE
             </Text>
             <Title level={2} style={{ fontFamily: 'serif', fontSize: '2.5rem', fontWeight: 800, marginBottom: '40px' }}>
               박재영 <small style={{ fontSize: '1rem', color: '#888', fontWeight: 400, marginLeft: '10px' }}>Park Jae Young</small>
             </Title>
-            <Paragraph style={{ fontSize: '1.2rem', lineHeight: '2.2', color: '#333', wordBreak: 'keep-all' }}>
+            <Paragraph style={{ fontSize: '1.1rem', lineHeight: '2.2', color: '#333', wordBreak: 'keep-all' }}>
               낮에는 금융 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br /><br />
               상실의 무게를 붓질로 옮기기 시작한 지 1년, <br />
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
-            <Text style={{ fontSize: '1rem', color: '#777', marginTop: '30px', display: 'block' }}>
+            <Text style={{ fontSize: '1rem', color: '#777', marginTop: '50px', display: 'block' }}>
               서울아트페어(SAF)에 소개할 세 점의 작품과 작업실의 기록을 이곳에 남깁니다.
             </Text>
           </div>
 
           {/* 01. Yellow 상세 */}
-          <div style={{ marginBottom: '180px' }}>
+          <div style={{ marginBottom: '130px' }}>
             <div style={{ marginBottom: '40px' }}>
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. TRACE OF YELLOW</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Yellow. 따스한 온기</Title>
@@ -173,7 +173,7 @@ const MagazineHome: React.FC = () => {
           </div>
 
           {/* 02. Purple 상세 */}
-          <div style={{ marginBottom: '180px' }}>
+          <div style={{ marginBottom: '130px' }}>
             <div style={{ marginBottom: '40px' }}>
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>02. SHADOW OF PURPLE</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Purple. 고요한 흔적</Title>
@@ -193,7 +193,7 @@ const MagazineHome: React.FC = () => {
           </div>
 
           {/* 03. Still Half 상세 */}
-          <div style={{ marginBottom: '100px' }}>
+          <div style={{ marginBottom: '50px' }}>
             <div style={{ marginBottom: '40px' }}>
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>03. STILL HALF</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Half. 아름다웠던 꽃 </Title>
