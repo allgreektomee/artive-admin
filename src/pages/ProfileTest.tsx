@@ -58,7 +58,7 @@ const ProfileTest: React.FC = () => {
             <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채웁니다."
           </Title>
           <div style={{ maxWidth: '850px' }}>
-            <Paragraph style={{ fontSize: '1.25rem', lineHeight: '2.1', color: '#333', wordBreak: 'keep-all' }}>
+            <Paragraph style={{ fontSize: '1.1rem', lineHeight: '2.1', color: '#333', wordBreak: 'keep-all' }}>
               낮에는 복잡한 IT 아키텍처를 설계하고 개발 코드로 견고한 성을 쌓습니다. 
               하지만 해가 지고 작업실 조명이 켜지면, 저는 정해진 답이 없는 감각의 세계로 뛰어듭니다. <br /><br />
               이성적인 개발과 감성적인 붓질 사이의 균형, 그것이 제가 정의하는 진짜 '나'다운 삶입니다.
