@@ -135,65 +135,7 @@ const MagazineHome: React.FC = () => {
       </Row>
       </section>
     
-    {/* 3. ART FAIR EXHIBITION 섹션: S3 URL 적용 및 60호 연작 강조 */}
-<section style={{ padding: '100px 25px', background: '#fff' }}>
-  <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-    
-    {/* 섹션 헤더 */}
-    <div style={{ marginBottom: '50px', borderBottom: '1px solid #000', paddingBottom: '15px' }}>
-      <Text style={{ letterSpacing: '5px', fontSize: '0.8rem', fontWeight: 'bold', color: '#000' }}>
-        2026 SEOUL ART FAIR EXHIBITION
-      </Text>
-    </div>
-
-    {/* 1x3 그리드 배치 (S3 URL 적용) */}
-    <Row gutter={[20, 20]}>
-      {[
-        { 
-          url: images.work1, // S3 URL로 교체
-          title: "Trace of Purple", 
-          size: "60P (130.3 x 97.0cm)" 
-        },
-        { 
-          url: images.work2, // S3 URL로 교체
-          title: "Trace of Yellow", 
-          size: "60P (130.3 x 97.0cm)" 
-        },
-        { 
-          url: images.work3, // S3 URL로 교체
-          title: "Still Half", 
-          size: "60P (130.3 x 97.0cm)" 
-        }
-      ].map((item, index) => (
-        <Col xs={24} md={8} key={index}>
-          <div style={{ background: '#f9f9f9', overflow: 'hidden' }}>
-            <img 
-              src={item.url} 
-              alt={item.title} 
-              style={{ width: '100%', display: 'block', aspectRatio: '3/4', objectFit: 'cover' }} 
-            />
-          </div>
-          <div style={{ marginTop: '15px', textAlign: 'left' }}>
-            <Text style={{ display: 'block', fontSize: '13px', fontWeight: 700, letterSpacing: '-0.5px' }}>
-              {item.title}
-            </Text>
-            <Text style={{ fontSize: '11px', color: '#888', fontWeight: 300 }}>
-              {item.size} • Oil on Canvas • 2026
-            </Text>
-          </div>
-        </Col>
-      ))}
-    </Row>
-
-    {/* 아트페어 안내 문구 */}
-    <div style={{ marginTop: '60px', textAlign: 'center' }}>
-      <Paragraph style={{ fontSize: '0.9rem', color: '#555', lineHeight: 1.8, wordBreak: 'keep-all' }}>
-        지난 1년, 낯선 도시의 공기와 개인적인 사유를 담아낸 60호 연작 3점입니다.<br />
-        이번 서울아트페어(SAF)에서 작가 박재영의 시선으로 재해석된 '작별'의 서사를 직접 만나보세요.
-      </Paragraph>
-    </div>
-  </div>
-</section>
+  
 
   
     <section style={{ 
