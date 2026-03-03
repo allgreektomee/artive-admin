@@ -45,7 +45,7 @@ const MagazineHome: React.FC = () => {
         </Text>
         <Title level={1} style={{ 
           fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-          fontSize: 'clamp(3.5rem, 18vw, 9rem)', 
+          fontSize: 'clamp(3.0rem, 18vw, 9rem)', 
           fontWeight: 900, 
           lineHeight: 0.85, 
           margin: '0 0 30px 0',
@@ -73,7 +73,7 @@ const MagazineHome: React.FC = () => {
       {/* 2. GALLERY 섹션: 메인 작품 3점 */}
       <section style={{ padding: '0 0 150px 0' }}>
         <div style={containerStyle}>
-          <Row gutter={[0, 150]} justify="center">
+          <Row gutter={[0, 100]} justify="center">
             
             {/* 작품 1: Yellow */}
             <Col span={24}>
@@ -135,7 +135,7 @@ const MagazineHome: React.FC = () => {
         <div style={containerStyle}>
           
           {/* 작가 프로필 */}
-          <div style={{ marginBottom: '120px', ...textContentStyle }}>
+          <div style={{ marginBottom: '80px', ...textContentStyle }}>
             <Text style={{ letterSpacing: '8px', fontSize: '0.8rem', color: '#999', fontWeight: 'bold', display: 'block', marginBottom: '25px' }}>
               ARTIST PROFILE
             </Text>
@@ -166,7 +166,7 @@ const MagazineHome: React.FC = () => {
                 중심에 앉아있는 남자는 그 시절의 화려한 빛이자 따스한 온기 속에 머물러 있는 저의 모습입니다. <br /><br />
                 그 빛은 가장 화려했던 기억을 의미하기도 하며, 동시에 듬직한 동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도 합니다. <br /><br />
                 그리움을 투영하여 그려낸 나의 첫 번째 자화상이자, 수만 번의 붓질을 통해 과거의 찬란함과 현재의 나를 잇는 정직한 기록입니다. <br /><br />
-                **그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.**
+                그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.
               </Paragraph>
             </div>
           </div>
@@ -195,17 +195,16 @@ const MagazineHome: React.FC = () => {
           <div style={{ marginBottom: '100px' }}>
             <div style={{ marginBottom: '40px' }}>
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>03. STILL HALF</Text>
-              <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Half. 여전히 남겨진, 그러나 시작될</Title>
+              <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Half. 아름다웠던 꽃 </Title>
             </div>
             <img src={images.work3} alt="Still Half" style={{ width: '100%', marginBottom: '50px' }} />
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 남겨진 그대로를 인정하며 마주하는 과정입니다. <br />
                 반쯤 비어있는 캔버스는 다시 채워나가야 할 새로운 공간이기도 합니다. <br /><br />
-                시들지 않는 그리움으로 그려낸 이 마지막 작별 인사는 <br />
-                이제 당신을 캔버스 위 영원한 안식으로 피워내고, <br />
+                시들지 않는 그리움으로 그려낸 이 마지막 작별 인사는
+                이제 당신을 캔버스 위 영원한 안식으로 피워내고, 
                 나는 남겨진 절반의 삶을 비로소 묵묵히 걸어가려 합니다. <br /><br />
-                **잘 가요. 나의 가장 아름다웠던 보라빛 꽃.**
               </Paragraph>
             </div>
           </div>
@@ -263,7 +262,7 @@ const MagazineHome: React.FC = () => {
           <Title level={3} style={{ color: '#fff', fontWeight: 800, marginBottom: '15px', fontSize: '1.3rem', letterSpacing: '1px' }}>
             서울아트페어 (SAF)
           </Title>
-          <Space direction="vertical" size={2} style={{ fontSize: '1rem', opacity: 0.7 }}>
+          <Space direction="vertical" size={2} style={{ fontSize: '1.5rem', opacity: 0.7 }}>
             <Text style={{ color: '#fff' }}>양재동 세텍(SETEC)</Text>
             <Text style={{ color: '#fff' }}>2026. 05. 14 — 05. 17</Text>
           </Space>
