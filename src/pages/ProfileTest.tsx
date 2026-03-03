@@ -34,12 +34,12 @@ const ProfileTest: React.FC = () => {
           
           <div style={{ maxWidth: '700px' }}>
             <Paragraph style={{ fontSize: '1.15rem', lineHeight: '2', color: '#333', wordBreak: 'keep-all' }}>
-              낮에는 금융 서비스를 설계하는 개발자로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
+              낮에는 금융 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br /> <br />
               상실의 무게를 붓질로 옮기기 시작한 지 1년, <br />
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
             <Paragraph style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#666', marginTop: '30px', fontWeight: 300 }}>
-              서울아트페어(SAF) 연작을 포함하여, <br />
+              서울아트페어(SAF) 소개할 3점의 작품, <br />
               낯선 여행지에서의 고독과 작업실에서의 몰입이 담긴 기록들을 이곳에 남깁니다.
             </Paragraph>
           </div>
@@ -47,7 +47,7 @@ const ProfileTest: React.FC = () => {
 
         <Divider style={{ margin: '80px 0', opacity: 0.5 }} />
 
-        {/* 2. 작품 심화 서사 (예: 옐로우 연작 과정) */}
+        {/* 2. 작품 심화 서사 */}
         <section style={{ marginBottom: '150px' }}>
           <div style={{ marginBottom: '40px' }}>
             <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. Yellow, Purple, Half </Text>
@@ -60,9 +60,20 @@ const ProfileTest: React.FC = () => {
               <div style={{ maxWidth: '800px' }}>
                 <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>Yellow. 따스한 온기</Title>
                 <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
-                  노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기였습니다. <br />
-                  60호 캔버스 세 점이 나란히 놓인 작업실에서, 수만 번의 붓질을 통해 그리움의 형상을 찾아가는 과정을 거쳤습니다. 
-                  엘로우의 정교한 몰입은 이 무모한 연작을 끝까지 밀어붙이는 원동력이 되었습니다.
+                  노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며 <br />
+                  가장 찬란했던 순간들을 상징하는 빛의 기억이기도 합니다. <br /><br />
+
+                  중심에 앉아있는 남자는 그 시절의 화려한 빛이자 <br />
+                  따스한 온기 속에 머물러 있는 저의 모습입니다. <br /><br />
+
+                  그 빛은 가장 화려했던 기억을 의미하기도 하며, <br />
+                  동시에 듬직한 동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도 합니다. <br /><br />
+
+                  그리움을 투영하여 그려낸 나의 첫 번째 자화상이자, <br />
+                  수천 번의 붓질을 통해 과거의 찬란함과 현재의 나를 잇는 정직한 기록입니다. <br /><br />
+
+                  **그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.** <br /><br />      
+
                 </Paragraph>
               </div>
             </Col>
