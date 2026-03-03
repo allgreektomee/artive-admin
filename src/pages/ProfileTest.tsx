@@ -39,7 +39,7 @@ const ProfileTest: React.FC = () => {
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
             <Paragraph style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#666', marginTop: '30px', fontWeight: 300 }}>
-              서울아트페어(SAF) 소개할 3점의 작품, <br />
+              서울아트페어(SAF) 소개할 3점의 작품들
               낯선 여행지에서의 고독과 작업실에서의 몰입이 담긴 기록들을 이곳에 남깁니다.
             </Paragraph>
           </div>
@@ -78,9 +78,7 @@ const ProfileTest: React.FC = () => {
               </div>
             </Col>
           </Row>
-        </section>
-
-        <section style={{ marginBottom: '150px' }}>
+     
           <div style={{ marginBottom: '40px' }}>
             <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Shadow of Purple</Title>
           </div>
