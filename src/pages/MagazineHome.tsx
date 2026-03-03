@@ -137,7 +137,12 @@ const MagazineHome: React.FC = () => {
       </Row>
       </section>
     
-        {/* 1. 작가 소개 섹션 (유지) */}
+        
+
+
+        {/* 2. 작품 심화 서사 */}
+        <section style={{ padding: '0 25px 100px 25px' }}>
+          {/* 1. 작가 소개 섹션 (유지) */}
         <div style={{ marginBottom: '100px' }}>
           <Text style={{ letterSpacing: '8px', fontSize: '0.8rem', color: '#999', fontWeight: 'bold', display: 'block', marginBottom: '20px' }}>
             ARTIST PROFILE
@@ -158,10 +163,7 @@ const MagazineHome: React.FC = () => {
             </Paragraph>
           </div>
         </div>
-
-
-        {/* 2. 작품 심화 서사 */}
-        <section style={{ padding: '0 25px 100px 25px' }}>
+        
           <div style={{ marginBottom: '40px' }}>
             <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. Yellow, Purple, Half </Text>
             <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Trace of Yellow</Title>
