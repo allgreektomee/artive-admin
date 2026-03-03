@@ -1,172 +1,140 @@
 import React from 'react';
-import { Typography, Row, Col, Divider } from 'antd';
+import { Typography, Row, Col, Space, Tag } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 
 const ProfileTest: React.FC = () => {
-  // 이미지 데이터 관리 (S3 URL로 교체하세요)
   const images = {
-    // 1. 작품 심화 섹션용
-    yellowProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/yellow-process.png", 
-    purpleProcess:  "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/yellow-process.png", 
-    // 2. 작업실 소개용
-    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
-    // 3. 아카이브 그리드용 (기존 리스트)
+    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png", 
+    mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/mentor.png", 
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
+    work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/789.png",
   };
 
   const archiveList = Object.values(images);
 
   return (
-    <div style={{ background: '#fff', padding: '80px 0', fontFamily: "'Noto Serif KR', serif" }}>
+    <div style={{ background: '#fff', padding: '100px 0', fontFamily: "'Pretendard', -apple-system, sans-serif" }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
         
-        {/* 1. 작가 소개 섹션 (유지) */}
-        <div style={{ marginBottom: '100px' }}>
-          <Text style={{ letterSpacing: '8px', fontSize: '0.8rem', color: '#999', fontWeight: 'bold', display: 'block', marginBottom: '20px' }}>
-            ARTIST PROFILE
-          </Text>
-          <Title level={2} style={{ fontFamily: 'serif', fontSize: '2.5rem', fontWeight: 800, marginBottom: '40px' }}>
-            박재영 <small style={{ fontSize: '1rem', color: '#888', fontWeight: 400, marginLeft: '10px' }}>Park Jae Young</small>
+        {/* 1. HERO 섹션: 듀얼 라이프 강조 */}
+        <div style={{ marginBottom: '120px', textAlign: 'center' }}>
+          <Space size="middle" style={{ marginBottom: '25px' }}>
+            <Tag color="#108ee9" style={{ borderRadius: '4px', padding: '2px 12px', fontWeight: 600 }}>BUILD</Tag>
+            <span style={{ fontWeight: 900, color: '#eee' }}>/</span>
+            <Tag color="#f50" style={{ borderRadius: '4px', padding: '2px 12px', fontWeight: 600 }}>PAINT</Tag>
+          </Space>
+          
+          <Title level={1} style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, margin: '0 0 20px 0', letterSpacing: '-2px' }}>
+            Build by Day,<br />Paint by Night
           </Title>
           
-          <div style={{ maxWidth: '700px' }}>
-            <Paragraph style={{ fontSize: '1.15rem', lineHeight: '2', color: '#333', wordBreak: 'keep-all' }}>
-              낮에는 금융 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br /> <br />
-              상실의 무게를 붓질로 옮기기 시작한 지 1년, <br />
-              그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
-            </Paragraph>
-            <Paragraph style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#666', marginTop: '30px', fontWeight: 300 }}>
-              서울아트페어(SAF) 소개할 3점의 작품들
-              낯선 여행지에서의 고독과 작업실에서의 몰입이 담긴 기록들을 이곳에 남깁니다.
+          <Text style={{ fontSize: '1.2rem', letterSpacing: '4px', color: '#999', fontWeight: 500, textTransform: 'uppercase' }}>
+            The Dual Life of Park Jae Young
+          </Text>
+        </div>
+
+        {/* 2. 인터뷰 스타일 자기소개 */}
+        <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '40px', marginLeft: '10px' }}>
+          <Title level={2} style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '30px' }}>
+            "논리로 세상을 짓고,<br /><span style={{ color: '#f50' }}>감각으로 캔버스를 채웁니다.</span>"
+          </Title>
+          <div style={{ maxWidth: '800px' }}>
+            <Paragraph style={{ fontSize: '1.2rem', lineHeight: '2', color: '#333', wordBreak: 'keep-all' }}>
+              낮에는 복잡한 금융 시스템의 아키텍처를 설계하고 코드로 견고한 성을 쌓습니다. 
+              하지만 해가 지고 작업실 조명이 켜지면, 저는 정해진 답이 없는 색채의 세계로 뛰어듭니다. <br /><br />
+              버그를 해결할 때의 쾌감과 빈 캔버스에 첫 붓질을 할 때의 설렘, 
+              이 두 가지 에너지가 저를 움직이는 원동력입니다. 
+              가장 이성적인 일과 가장 감성적인 일 사이의 균형, 그것이 제가 정의하는 진짜 '나'다운 삶입니다.
             </Paragraph>
           </div>
         </div>
 
-        <Divider style={{ margin: '80px 0', opacity: 0.5 }} />
-
-        {/* 2. 작품 심화 서사 */}
+        {/* 3. 스승 정세화 섹션: 정진의 즐거움 */}
         <section style={{ marginBottom: '150px' }}>
-          <div style={{ marginBottom: '40px' }}>
-            <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. Yellow, Purple, Half </Text>
-            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Trace of Yellow</Title>
-          </div>
-          
-          <Row gutter={[0, 40]}>
-            <Col span={24}>
-              <img src={images.yellowProcess} alt="Yellow Process" style={{ width: '100%', display: 'block', marginBottom: '30px' }} />
-              <div style={{ maxWidth: '800px' }}>
-                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>Yellow. 따스한 온기</Title>
-                <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
-                  노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며
-                  가장 찬란했던 순간들을 상징하는 빛의 기억이기도 합니다. <br /><br />
-
-                  중심에 앉아있는 남자는 그 시절의 화려한 빛이자 
-                  따스한 온기 속에 머물러 있는 저의 모습입니다. <br /><br />
-
-                  그 빛은 가장 화려했던 기억을 의미하기도 하며, 
-                  동시에 듬직한 동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도 합니다. <br /><br />
-
-                  그리움을 투영하여 그려낸 나의 첫 번째 자화상이자,
-                  수천 번의 붓질을 통해 과거의 찬란함과 현재의 나를 잇는 정직한 기록입니다. <br /><br />
-
-                  그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다. <br /><br />      
-
-                </Paragraph>
+          <Row gutter={[60, 40]} align="middle">
+            <Col xs={24} md={12}>
+              <div style={{ position: 'relative' }}>
+                <img src={images.mentorView} alt="Mentor" style={{ width: '100%', borderRadius: '4px', filter: 'grayscale(10%)' }} />
+                <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', background: '#000', color: '#fff', padding: '20px', fontWeight: 800 }}>
+                  MENTOR & ME
+                </div>
               </div>
             </Col>
-          </Row>
-     
-          <div style={{ marginBottom: '40px' }}>
-            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Shadow of Purple</Title>
-          </div>
-          
-          <Row gutter={[0, 40]}>
-            <Col span={24}>
-              {/* 카페에서의 순간이나 퍼플 작품 이미지 S3 URL */}
-              <img src={images.purpleProcess} alt="Purple Process" style={{ width: '100%', display: 'block', marginBottom: '30px' }} />
-              <div style={{ maxWidth: '800px' }}>
-                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>Purple. 고요한 흔적</Title>
-               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
-                보라색으로 물든 카페의 구석 자리는 소란스러운 하루를 마무리하는 나만의 공간이며
-                함께했던 기억이 머무는 마지막 장소였습니다. <br /><br />
-
-                창 너머 쉼 없이 흐르는 사람들의 물결은 무채색의 소음으로 흩어지고,
-                오직 이 공간을 가득 채운 보라색 잔상만이 나를 깊게 감싸 안았습니다. <br /><br />
-
-                때로는 책을 읽고, 때로는 술 한 잔의 온기에 기대어 얻은 평온함을 
-                캔버스 위 짙은 퍼플의 층으로 겹겹이 쌓여갔습니다. <br /><br />
-
-                나에게 보라색은 온 마음을 다해 머물고 싶은 고요한 흔적입니다. <br /><br />
-
-                </Paragraph>
-              </div>
-            </Col>
-          </Row>
-        </section>
-        {/* 3. 작업실 소개 */}
-        <section style={{ marginBottom: '150px' }}>
-          <div style={{ marginBottom: '40px' }}>
-            <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>02. THE ATELIER</Text>
-            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>사유의 공간</Title>
-          </div>
-          <Row gutter={[40, 40]} align="middle">
-            <Col xs={24} md={14}>
-              <img src={images.studioView} alt="Studio" style={{ width: '100%', display: 'block' }} />
-            </Col>
-            <Col xs={24} md={10}>
-              <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
-                밤이 깊어지면 작업실은 오직 캔버스와 나만이 존재하는 정적이 흐릅니다. <br /><br />
-                이곳에서 120호, 100호 대작과 60호 연작들이 탄생했습니다. 
-                물감 냄새 섞인 공기 속에서 시스템 설계자가 아닌 한 사람의 인간으로서 스스로를 마주하며, 
-                지난 1년의 시간을 캔버스 위에 층층이 쌓아 올렸습니다.
+            <Col xs={24} md={12}>
+              <Title level={3} style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '25px' }}>
+                독학의 열정에<br />기본기의 날개를 달다
+              </Title>
+              <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
+                정세화 선생님을 만난 건 제 예술 인생의 '터닝 포인트'였습니다. 
+                그림을 대하는 진지한 태도와 화면을 구성하는 탄탄한 기본기, 
+                무엇보다 캔버스를 끝까지 밀어붙이는 '화가의 근성'을 배웠습니다. <br /><br />
+                선생님의 가르침 덕분에 독학 1년 만에 '입선'이라는 짜릿한 성취도 맛보았죠. 
+                배움의 즐거움을 알게 해주신 선생님께 늘 감사합니다!
               </Paragraph>
             </Col>
           </Row>
         </section>
 
-        {/* 4. 에필로그 아카이브 섹션 (Gritty Grid) */}
-        <div style={{ marginTop: '120px' }}>
-          <div style={{ marginBottom: '30px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
-            <Text style={{ letterSpacing: '4px', fontSize: '0.85rem', color: '#000', fontWeight: 'bold' }}>
-              03. THE DENSITY OF TIME (ARCHIVE)
+        {/* 4. 작업실 섹션: 5분 컷 아지트 */}
+        <section style={{ marginBottom: '180px' }}>
+          <div style={{ background: '#000', padding: '80px 40px', borderRadius: '4px', textAlign: 'center' }}>
+            <Title level={3} style={{ color: '#fff', fontSize: '2.2rem', fontWeight: 900, marginBottom: '20px' }}>
+              STUDIO 5-MIN AWAY
+            </Title>
+            <Text style={{ color: '#666', fontSize: '1rem', display: 'block', marginBottom: '50px', letterSpacing: '2px' }}>
+              화실 바로 앞, 퇴근 후 5분이면 시작되는 나의 두 번째 삶
             </Text>
+            <img src={images.studioView} alt="Studio" style={{ width: '100%', maxWidth: '900px', borderRadius: '2px', border: '10px solid #222' }} />
+            <div style={{ maxWidth: '700px', margin: '50px auto 0 auto' }}>
+              <Paragraph style={{ fontSize: '1.15rem', color: '#ccc', lineHeight: '2' }}>
+                몰입의 흐름을 깨지 않으려 화실 바로 앞에 작업실을 만들었습니다. <br />
+                모니터의 블루라이트가 캔버스의 유채 향기로 바뀌는 순간, <br />
+                120호 대작과 마주하며 저는 다시 태어납니다.
+              </Paragraph>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. 아카이브 섹션: 라이브 기록 */}
+        <div style={{ marginTop: '120px' }}>
+          <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <Title level={4} style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>THE ARCHIVE</Title>
+            <Text style={{ fontWeight: 700, color: '#f50' }}>1 YEAR OF PASSION</Text>
           </div>
           
-          <div style={{ lineHeight: 0 }}> 
-            <Row gutter={[4, 4]}> 
-              {archiveList.map((url, index) => (
-                <Col key={index} xs={12} sm={8} md={6}>
-                  <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', background: '#f9f9f9' }}>
-                    <img 
-                      src={url} 
-                      alt={`archive-${index}`}
-                      style={{ 
-                        width: '100%', height: '100%', objectFit: 'cover',
-                        filter: 'grayscale(15%) contrast(1.05)', transition: 'all 0.4s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.filter = 'grayscale(0%) contrast(1)';
-                        e.currentTarget.style.transform = 'scale(1.08)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.filter = 'grayscale(15%) contrast(1.05)';
-                        e.currentTarget.style.transform = 'scale(1)';
-                      }}
-                    />
-                  </div>
-                </Col>
-              ))}
-            </Row>
-          </div>
+          <Row gutter={[16, 16]}> 
+            {archiveList.map((url, index) => (
+              <Col key={index} xs={12} sm={8} md={6}>
+                <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', position: 'relative' }}>
+                  <img 
+                    src={url} 
+                    alt={`archive-${index}`}
+                    style={{ 
+                      width: '100%', height: '100%', objectFit: 'cover',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)';
+                      e.currentTarget.style.filter = 'brightness(0.7)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.filter = 'brightness(1)';
+                    }}
+                  />
+                </div>
+              </Col>
+            ))}
+          </Row>
         </div>
 
-        {/* 5. 하단 저작권 정보 */}
-        <div style={{ marginTop: '100px', textAlign: 'center', paddingTop: '40px' }}>
-          <Text style={{ fontSize: '0.8rem', letterSpacing: '5px', color: '#ccc', fontWeight: 'bold' }}>
-            PARK JAE YOUNG 
+        {/* 6. 하단 푸터: 쿨한 마무리 */}
+        <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
+          <Text style={{ fontSize: '1rem', letterSpacing: '8px', color: '#000', fontWeight: 900 }}>
+            BUILD BETTER. PAINT DEEPER.
           </Text>
         </div>
 
