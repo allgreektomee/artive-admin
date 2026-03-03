@@ -82,32 +82,20 @@ const ProfileTest: React.FC = () => {
                   style={{ 
                     position: 'absolute', 
                     bottom: '-15px', 
-                    right: '15px',
+                    right: '10px',
                     display: 'inline-flex', 
                     alignItems: 'center', 
                     gap: '8px', 
-                    background: '#fff', // 기본 화이트 배경
-                    color: '#000', // 기본 블랙 텍스트
+                    background: '#000', // 기본 화이트 배경
+                    color: '#fff', // 기본 블랙 텍스트
                     padding: '12px 24px',
                     fontWeight: 800,
                     fontSize: '0.95rem',
-                    borderRadius: '30px', // 둥근 모양
-                    border: '1px solid #000', // 블랙 테두리
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
                     textDecoration: 'none',
                     zIndex: 10
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#000'; // 호버 시 블랙으로 반전
-                    e.currentTarget.style.color = '#fff'; // 호버 시 화이트 텍스트
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#fff';
-                    e.currentTarget.style.color = '#000';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
+                 
                 >
                   <InstagramOutlined style={{ fontSize: '1.3rem' }} />
                   <span style={{ letterSpacing: '1px' }}>Se-hwa Jung</span>
@@ -149,10 +137,10 @@ const ProfileTest: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. 대작 소개 (100호 & 120호) */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
-        <section style={{ marginBottom: '180px' }}>
-          <div style={{ marginBottom: '60px', borderBottom: '2px solid #000', paddingBottom: '20px' }}>
+            {/* 5. 대작 소개 (100호는 기존 유지, 120호만 와이드로 변경) */}
+      <section style={{ marginBottom: '180px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
+          <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '60px' }}>
             <Title level={3} style={{ fontSize: '2rem', fontWeight: 900 }}>GRAND SCALE WORKS</Title>
           </div>
           
@@ -165,72 +153,79 @@ const ProfileTest: React.FC = () => {
               <img src={images.work100_2} alt="100호" style={{ width: '100%', marginBottom: '20px' }} />
               <Title level={4} style={{ fontSize: '1.4rem', fontWeight: 800 }}>100F. 색채의 설계</Title>
             </Col>
-            
-                      {/* 120호 작업 중 섹션: Full Wide Layout */}
-            <Col span={24} style={{ marginTop: '60px' }}>
-            <div style={{ 
-              background: '#f9f9f9', 
-              padding: '40px', // 패딩을 조절해 이미지가 더 커 보이게 함
-              borderRadius: '4px',
-              textAlign: 'center' // 중앙 정렬로 시선 집중
-            }}>
-              {/* 이미지 섹션: 가로폭 100% 활용 */}
-              <div style={{ marginBottom: '50px', position: 'relative' }}>
-                <img 
-                  src={images.work120_process} 
-                  alt="120호 작업중" 
-                  style={{ 
-                    width: '100%', 
-                    maxWidth: '1100px', // 최대폭을 넓게 설정
-                    height: 'auto', 
-                    boxShadow: '0 30px 60px rgba(0,0,0,0.15)', // 대작의 무게감을 주는 그림자
-                    borderRadius: '2px'
-                  }} 
-                />
-                <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
-                  <Tag color={colors.paint} style={{ padding: '5px 15px', fontSize: '1rem', fontWeight: 800 }}>ON PROGRESS</Tag>
-                </div>
-              </div>
-
-              {/* 텍스트 섹션: 이미지 아래에서 묵직하게 받쳐줌 */}
-              <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                <Title level={3} style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '30px' }}>
-                  120호, 새로운 한계를 빌드하다
-                </Title>
-                <Paragraph style={{ fontSize: '1.3rem', color: '#444', lineHeight: '2.2', wordBreak: 'keep-all' }}>
-                  현재 진행 중인 120호 작업은 저에게 가장 큰 도전이자 즐거움입니다. <br />
-                  시스템 설계의 정교함을 캔버스의 압도적 크기로 치환하는 이 과정 자체가 저에겐 또 하나의 거대한 빌드입니다. <br />
-                  비어있는 거대한 화이트 스페이스를 완전히 장악했을 때의 쾌감을 향해, 매일 밤 붓을 멈추지 않습니다.
-                </Paragraph>
-              </div>
-            </div>
-            </Col>
-          </Row>
-        </section>
-
-        {/* 6. 아카이브 섹션 */}
-        <div style={{ marginTop: '120px' }}>
-          <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <Title level={4} style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>THE ARCHIVE</Title>
-            <Text style={{ fontWeight: 700, color: colors.paint }}>1 YEAR OF PASSION</Text>
-          </div>
-          
-          <Row gutter={[16, 16]}> 
-            {archiveList.map((url, index) => (
-              <Col key={index} xs={12} sm={8} md={6}>
-                <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', position: 'relative' }}>
-                  <img 
-                    src={url} 
-                    alt={`archive-${index}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.4s ease' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
-                  />
-                </div>
-              </Col>
-            ))}
           </Row>
         </div>
+
+        {/* 120호 섹션: 여기서부터 꽉 차게 나갑니다 */}
+        <div style={{ 
+          width: '100vw', 
+          marginLeft: '50%', 
+          transform: 'translateX(-50%)', 
+          background: '#f9f9f9', 
+          padding: '120px 0', 
+          marginTop: '100px',
+          textAlign: 'center' 
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
+            {/* 이미지 섹션: 가로폭 1100px까지 확장 */}
+            <div style={{ marginBottom: '60px', position: 'relative', display: 'inline-block', width: '100%' }}>
+              <img 
+                src={images.work120_process} 
+                alt="120호 작업중" 
+                style={{ 
+                  width: '100%', 
+                  maxWidth: '1100px', 
+                  height: 'auto', 
+                  boxShadow: '0 40px 80px rgba(0,0,0,0.12)', 
+                  borderRadius: '2px'
+                }} 
+              />
+              {/* 태그 위치 조정 */}
+              <div style={{ marginTop: '30px' }}>
+                <Tag color={colors.paint} style={{ padding: '6px 20px', fontSize: '1rem', fontWeight: 800 }}>ON PROGRESS</Tag>
+              </div>
+            </div>
+
+            {/* 텍스트 섹션: 여백을 넓게 주어 시원하게 배치 */}
+            <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
+              <Title level={2} style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 900, marginBottom: '40px', letterSpacing: '-1px' }}>
+                120호, 새로운 한계를 빌드하다
+              </Title>
+              <Paragraph style={{ fontSize: '1.35rem', color: '#333', lineHeight: '2.2', wordBreak: 'keep-all' }}>
+                현재 진행 중인 120호 작업은 저에게 가장 큰 도전이자 즐거움입니다. <br />
+                시스템 설계의 정교함을 캔버스의 압도적 크기로 치환하는 이 과정 자체가 <br />
+                저에겐 또 하나의 거대한 빌드입니다. <br /><br />
+                비어있는 거대한 화이트 스페이스를 완전히 장악했을 때의 쾌감을 향해, <br />
+                매일 밤 붓을 멈추지 않습니다.
+              </Paragraph>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. 아카이브 섹션 */}
+      <div style={{ marginTop: '120px' }}>
+        <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <Title level={4} style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>THE ARCHIVE</Title>
+          <Text style={{ fontWeight: 700, color: colors.paint }}>1 YEAR OF PASSION</Text>
+        </div>
+        
+        <Row gutter={[16, 16]}> 
+          {archiveList.map((url, index) => (
+            <Col key={index} xs={12} sm={8} md={6}>
+              <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', position: 'relative' }}>
+                <img 
+                  src={url} 
+                  alt={`archive-${index}`}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.4s ease' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+                />
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
 
         {/* 7. 푸터 */}
         <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
@@ -239,8 +234,10 @@ const ProfileTest: React.FC = () => {
           </Text>
         </div>
 
+
+
       </div>
-    </div>
+    
   );
 };
 
