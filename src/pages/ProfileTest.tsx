@@ -37,8 +37,8 @@ const ProfileTest: React.FC = () => {
           </Space>
           
           <Title level={1} style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, margin: '0 0 20px 0', letterSpacing: '-2px' }}>
-            <span style={{ color: colors.build }}>Build</span> by Day,<br />
-            <span style={{ color: colors.paint }}>Paint</span> by Night
+            Build by Day,<br />
+            Paint by Night
           </Title>
           
           <Text style={{ fontSize: '1.2rem', letterSpacing: '6px', color: '#999', fontWeight: 600, textTransform: 'uppercase' }}>
