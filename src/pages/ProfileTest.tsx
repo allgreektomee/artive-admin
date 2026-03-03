@@ -66,11 +66,52 @@ const ProfileTest: React.FC = () => {
         <section style={{ marginBottom: '150px' }}>
           <Row gutter={[60, 40]} align="middle">
             <Col xs={24} md={12}>
-              <div style={{ position: 'relative' }}>
-                <img src={images.mentorView} alt="Mentor" style={{ width: '100%', borderRadius: '4px' }} />
-                <div style={{ position: 'absolute', bottom: '-20px', right: '-20px', background: '#000', color: '#fff', padding: '20px', fontWeight: 800 }}>
-                  MENTOR & ME
-                </div>
+              <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+                {/* 이미지 */}
+                <img 
+                  src={images.mentorView} 
+                  alt="Mentor" 
+                  style={{ width: '100%', borderRadius: '4px', filter: 'grayscale(10%)' }} 
+                />
+                
+                {/* 인스타그램 블랙 앤 화이트 버튼 (이미지 우측 하단에 겹침) */}
+                <a 
+                  href="https://www.instagram.com/sewhajung" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ 
+                    position: 'absolute', 
+                    bottom: '-15px', 
+                    right: '15px',
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    background: '#fff', // 기본 화이트 배경
+                    color: '#000', // 기본 블랙 텍스트
+                    padding: '12px 24px',
+                    fontWeight: 800,
+                    fontSize: '0.95rem',
+                    borderRadius: '30px', // 둥근 모양
+                    border: '1px solid #000', // 블랙 테두리
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+                    textDecoration: 'none',
+                    zIndex: 10
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#000'; // 호버 시 블랙으로 반전
+                    e.currentTarget.style.color = '#fff'; // 호버 시 화이트 텍스트
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = '#fff';
+                    e.currentTarget.style.color = '#000';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <InstagramOutlined style={{ fontSize: '1.3rem' }} />
+                  <span style={{ letterSpacing: '1px' }}>Se-hwa Jung</span>
+                </a>
               </div>
             </Col>
             <Col xs={24} md={12}>
@@ -84,38 +125,7 @@ const ProfileTest: React.FC = () => {
                 선생님의 가르침 덕분에 '입선'이라는 짜릿한 성취도 맛보았죠. 
                 배움의 즐거움을 알게 해주신 선생님께 늘 감사합니다!
               </Paragraph>
-              {/* 인스타그램 링크 버튼 */}
-              <div style={{ marginTop: '25px' }}>
-              <a 
-                href="https://www.instagram.com/sewhajung" // 실제 아이디로 변경하세요
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ 
-                  display: 'inline-flex', 
-                  alignItems: 'center', 
-                  gap: '8px', 
-                  color: '#8e44ad', // 작가님의 'Paint' 테마 컬러인 퍼플 적용
-                  fontWeight: 700,
-                  fontSize: '1rem',
-                  padding: '8px 16px',
-                  border: '1px solid #eee',
-                  borderRadius: '30px',
-                  transition: 'all 0.3s ease',
-                  background: '#fff'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#f8f4fb';
-                  e.currentTarget.style.borderColor = '#8e44ad';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = '#fff';
-                  e.currentTarget.style.borderColor = '#eee';
-                }}
-              >
-                <InstagramOutlined style={{ fontSize: '1.2rem' }} />
-                <span>Artist Se-hwa Jung</span>
-              </a>
-              </div>
+            
             </Col>
           </Row>
         </section>
