@@ -52,7 +52,7 @@ const ProfileTest: React.FC = () => {
         </div>
 
         {/* 2. 인터뷰 스타일: 노랑(논리) / 보라(감각) */}
-        <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '10px', marginLeft: '10px' }}>
+        <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '25px', marginLeft: '0px' }}>
           <Title level={2} style={{ fontSize: '2.0rem', fontWeight: 900, marginBottom: '35px', lineHeight: 1.4 }}>
             "<span style={{ color: colors.build }}>논리</span>로 세상을 짓고,<br />
             <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채웁니다."
