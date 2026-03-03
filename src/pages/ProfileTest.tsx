@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Row, Col, Space, Tag } from 'antd';
+import { InstagramOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -32,8 +33,8 @@ const ProfileTest: React.FC = () => {
         <div style={{ marginBottom: '120px', textAlign: 'center' }}>
           <Space size="middle" style={{ marginBottom: '25px' }}>
             <Tag color={colors.build} style={{ borderRadius: '4px', padding: '2px 15px', fontWeight: 800, color: '#000' }}>BUILD</Tag>
-            <span style={{ fontWeight: 900, color: '#eee' }}>/</span>
-            <Tag color={colors.paint} style={{ borderRadius: '4px', padding: '2px 15px', fontWeight: 800, color: '#fff' }}>PAINT</Tag>
+            <span style={{ fontWeight: 900, color: '#000' }}>/</span>
+            <Tag color={colors.paint} style={{ borderRadius: '4px', padding: '2px 15px', fontWeight: 800, color: '#000' }}>PAINT</Tag>
           </Space>
           
           <Title level={1} style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: 900, lineHeight: 1.1, margin: '0 0 20px 0', letterSpacing: '-2px' }}>
@@ -48,15 +49,15 @@ const ProfileTest: React.FC = () => {
 
         {/* 2. 인터뷰 스타일: 노랑(논리) / 보라(감각) */}
         <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '40px', marginLeft: '10px' }}>
-          <Title level={2} style={{ fontSize: '2.3rem', fontWeight: 900, marginBottom: '35px', lineHeight: 1.4 }}>
+          <Title level={2} style={{ fontSize: '2.0rem', fontWeight: 900, marginBottom: '35px', lineHeight: 1.4 }}>
             "<span style={{ color: colors.build }}>논리</span>로 세상을 짓고,<br />
             <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채웁니다."
           </Title>
           <div style={{ maxWidth: '850px' }}>
             <Paragraph style={{ fontSize: '1.25rem', lineHeight: '2.1', color: '#333', wordBreak: 'keep-all' }}>
-              낮에는 복잡한 IT 아키텍처를 설계하고 코드로 견고한 성을 쌓습니다. 
-              하지만 해가 지고 작업실 조명이 켜지면, 저는 정해진 답이 없는 <span style={{ color: colors.paint, fontWeight: 700 }}>보라빛 감각의 세계</span>로 뛰어듭니다. <br /><br />
-              <span style={{ color: colors.build, fontWeight: 700 }}>이성적인 노란색 설계</span>와 감성적인 보라색 붓질 사이의 균형, 그것이 제가 정의하는 진짜 '나'다운 삶입니다.
+              낮에는 복잡한 IT 아키텍처를 설계하고 개발 코드로 견고한 성을 쌓습니다. 
+              하지만 해가 지고 작업실 조명이 켜지면, 저는 정해진 답이 없는 감각의 세계로 뛰어듭니다. <br /><br />
+              이성적인 개발과 감성적인 붓질 사이의 균형, 그것이 제가 정의하는 진짜 '나'다운 삶입니다.
             </Paragraph>
           </div>
         </div>
@@ -83,6 +84,38 @@ const ProfileTest: React.FC = () => {
                 선생님의 가르침 덕분에 '입선'이라는 짜릿한 성취도 맛보았죠. 
                 배움의 즐거움을 알게 해주신 선생님께 늘 감사합니다!
               </Paragraph>
+              {/* 인스타그램 링크 버튼 */}
+              <div style={{ marginTop: '25px' }}>
+              <a 
+                href="https://www.instagram.com/sewhajung" // 실제 아이디로 변경하세요
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  color: '#8e44ad', // 작가님의 'Paint' 테마 컬러인 퍼플 적용
+                  fontWeight: 700,
+                  fontSize: '1rem',
+                  padding: '8px 16px',
+                  border: '1px solid #eee',
+                  borderRadius: '30px',
+                  transition: 'all 0.3s ease',
+                  background: '#fff'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#f8f4fb';
+                  e.currentTarget.style.borderColor = '#8e44ad';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#fff';
+                  e.currentTarget.style.borderColor = '#eee';
+                }}
+              >
+                <InstagramOutlined style={{ fontSize: '1.2rem' }} />
+                <span>Artist Se-hwa Jung</span>
+              </a>
+              </div>
             </Col>
           </Row>
         </section>
@@ -123,21 +156,44 @@ const ProfileTest: React.FC = () => {
               <Title level={4} style={{ fontSize: '1.4rem', fontWeight: 800 }}>100F. 색채의 설계</Title>
             </Col>
             
-            <Col span={24} style={{ marginTop: '40px' }}>
-              <div style={{ background: '#f9f9f9', padding: '60px', borderRadius: '4px' }}>
-                <Row gutter={[40, 40]} align="middle">
-                  <Col xs={24} lg={14}>
-                    <img src={images.work120_process} alt="120호" style={{ width: '100%' }} />
-                  </Col>
-                  <Col xs={24} lg={10}>
-                    <Tag color={colors.paint} style={{ marginBottom: '15px' }}>ON PROGRESS</Tag>
-                    <Title level={3} style={{ fontSize: '2.2rem', fontWeight: 900 }}>120호, 새로운 한계를 빌드하다</Title>
-                    <Paragraph style={{ fontSize: '1.15rem', color: '#555', lineHeight: '1.9' }}>
-                      현재 진행 중인 120호 작업은 가장 큰 도전입니다. 시스템 설계의 정교함을 캔버스의 압도적 크기로 치환하는 이 과정 자체가 저에겐 또 하나의 즐거운 빌드입니다.
-                    </Paragraph>
-                  </Col>
-                </Row>
+                      {/* 120호 작업 중 섹션: Full Wide Layout */}
+            <Col span={24} style={{ marginTop: '60px' }}>
+            <div style={{ 
+              background: '#f9f9f9', 
+              padding: '40px', // 패딩을 조절해 이미지가 더 커 보이게 함
+              borderRadius: '4px',
+              textAlign: 'center' // 중앙 정렬로 시선 집중
+            }}>
+              {/* 이미지 섹션: 가로폭 100% 활용 */}
+              <div style={{ marginBottom: '50px', position: 'relative' }}>
+                <img 
+                  src={images.work120_process} 
+                  alt="120호 작업중" 
+                  style={{ 
+                    width: '100%', 
+                    maxWidth: '1100px', // 최대폭을 넓게 설정
+                    height: 'auto', 
+                    boxShadow: '0 30px 60px rgba(0,0,0,0.15)', // 대작의 무게감을 주는 그림자
+                    borderRadius: '2px'
+                  }} 
+                />
+                <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
+                  <Tag color={colors.paint} style={{ padding: '5px 15px', fontSize: '1rem', fontWeight: 800 }}>ON PROGRESS</Tag>
+                </div>
               </div>
+
+              {/* 텍스트 섹션: 이미지 아래에서 묵직하게 받쳐줌 */}
+              <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+                <Title level={3} style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '30px' }}>
+                  120호, 새로운 한계를 빌드하다
+                </Title>
+                <Paragraph style={{ fontSize: '1.3rem', color: '#444', lineHeight: '2.2', wordBreak: 'keep-all' }}>
+                  현재 진행 중인 120호 작업은 저에게 가장 큰 도전이자 즐거움입니다. <br />
+                  시스템 설계의 정교함을 캔버스의 압도적 크기로 치환하는 이 과정 자체가 저에겐 또 하나의 거대한 빌드입니다. <br />
+                  비어있는 거대한 화이트 스페이스를 완전히 장악했을 때의 쾌감을 향해, 매일 밤 붓을 멈추지 않습니다.
+                </Paragraph>
+              </div>
+            </div>
             </Col>
           </Row>
         </section>
