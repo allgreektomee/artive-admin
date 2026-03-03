@@ -71,7 +71,7 @@ const MagazineHome: React.FC = () => {
       </section>
 
       {/* 2. GALLERY 섹션: 이미지 간격 및 여백 조정 */}
-      <section style={{ padding: '0 25px 100px 25px' }}>
+      <section style={{ padding: '0 25px 50px 25px' }}>
       <Row gutter={[0, 120]} justify="center"> {/* 작품 간 간격을 120으로 넓혀 여유 부여 */}
         
         {/* 작품 1 (IMG_0261: 노란 배경) */}
@@ -166,7 +166,7 @@ const MagazineHome: React.FC = () => {
         
           <div style={{ marginBottom: '40px' }}>
             <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. Yellow, Purple, Half </Text>
-            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Trace of Yellow</Title>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Trace of yellow</Title>
           </div>
           
           <Row gutter={[0, 40]}>
@@ -195,7 +195,34 @@ const MagazineHome: React.FC = () => {
           </Row>
      
           <div style={{ marginBottom: '40px' }}>
-            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Shadow of Purple</Title>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Shadow of purple</Title>
+          </div>
+          
+          <Row gutter={[0, 40]}>
+            <Col span={24}>
+              {/* 카페에서의 순간이나 퍼플 작품 이미지 S3 URL */}
+              <img src={images.purpleProcess} alt="Purple Process" style={{ width: '100%', display: 'block', marginBottom: '30px' }} />
+              <div style={{ maxWidth: '800px' }}>
+                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>Purple. 고요한 흔적</Title>
+               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
+                보라색으로 물든 카페의 구석 자리는 소란스러운 하루를 마무리하는 나만의 공간이며
+                함께했던 기억이 머무는 마지막 장소였습니다. <br /><br />
+
+                창 너머 쉼 없이 흐르는 사람들의 물결은 무채색의 소음으로 흩어지고,
+                오직 이 공간을 가득 채운 보라색 잔상만이 나를 깊게 감싸 안았습니다. <br /><br />
+
+                때로는 책을 읽고, 때로는 술 한 잔의 온기에 기대어 얻은 평온함을 
+                캔버스 위 짙은 퍼플의 층으로 겹겹이 쌓여갔습니다. <br /><br />
+
+                나에게 보라색은 온 마음을 다해 머물고 싶은 고요한 흔적입니다. <br /><br />
+
+                </Paragraph>
+              </div>
+            </Col>
+          </Row>
+
+           <div style={{ marginBottom: '40px' }}>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Stil half</Title>
           </div>
           
           <Row gutter={[0, 40]}>
@@ -288,7 +315,9 @@ const MagazineHome: React.FC = () => {
               wordBreak: 'keep-all',
               fontFamily: 'serif'
             }}>
-              낮에는 직장인으로, 밤에는 화가로.. 
+              낮에는 직장인으로, 밤에는 화가로.<br />
+              작업실 소개 및 다른 작품 보기
+
             </Title>
 
             <div style={{ marginTop: '30px', fontSize: '1.2rem', color: 'inherit' }}>
