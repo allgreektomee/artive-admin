@@ -121,7 +121,7 @@ const MagazineHome: React.FC = () => {
                   꽃이 되었습니다.
                 </Title>
                 <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
-                  시들지 않는 그리움으로 그려낸 마지막 작별 인사.<br />
+                  시들지 않는 그리움으로 그려낸 마지막 인사.<br />
                   이제 당신은 캔버스 위에서 영원히 시들지 않는 안식이 되었습니다. 잘 가요.
                 </Paragraph>
               </div>
@@ -144,8 +144,8 @@ const MagazineHome: React.FC = () => {
               박재영 <small style={{ fontSize: '1rem', color: '#888', fontWeight: 400, marginLeft: '10px' }}>Park Jae Young</small>
             </Title>
             <Paragraph style={{ fontSize: '1.1rem', lineHeight: '2.2', color: '#333', wordBreak: 'keep-all' }}>
-              낮에는 금융 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br /><br />
-              상실의 무게를 붓질로 옮기기 시작하였습니다. <br />
+              낮에는 IT 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
+              상실의 무게를 붓질로 옮기기 시작하였습니다. <br /><br />
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
             <Text style={{ fontSize: '1rem', color: '#777', marginTop: '50px', display: 'block' }}>
@@ -164,7 +164,7 @@ const MagazineHome: React.FC = () => {
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며 <br />
                 가장 찬란했던 순간들을 상징하는 빛의 기억이기도 합니다. <br /><br />
-                중심에 앉아있는 남자는 그 시절의 화려한 빛이자 따스한 온기 속에 머물러 있는  '나'의 모습입니다. <br /><br />
+                중심에 앉아있는 남자는 그 시절의 화려한 빛이자 따스한 온기 속에 머물러 있는 '나'의 모습입니다. <br /><br />
                 그 빛은 가장 화려했던 기억을 의미하기도 하며, 동시에 듬직한 동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도 합니다. <br /><br />
                 그리움을 투영하여 그려낸 나의 첫 번째 자화상이자, 수만 번의 붓질을 통해 과거의 찬란함과 현재의 나를 잇는 정직한 기록입니다. <br /><br />
                 그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.
