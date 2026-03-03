@@ -145,7 +145,7 @@ const MagazineHome: React.FC = () => {
             </Title>
             <Paragraph style={{ fontSize: '1.1rem', lineHeight: '2.2', color: '#333', wordBreak: 'keep-all' }}>
               낮에는 금융 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br /><br />
-              상실의 무게를 붓질로 옮기기 시작한 지 1년, <br />
+              상실의 무게를 붓질로 옮기기 시작하였습니다. <br />
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
             <Text style={{ fontSize: '1rem', color: '#777', marginTop: '50px', display: 'block' }}>
@@ -164,7 +164,7 @@ const MagazineHome: React.FC = () => {
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며 <br />
                 가장 찬란했던 순간들을 상징하는 빛의 기억이기도 합니다. <br /><br />
-                중심에 앉아있는 남자는 그 시절의 화려한 빛이자 따스한 온기 속에 머물러 있는 저의 모습입니다. <br /><br />
+                중심에 앉아있는 남자는 그 시절의 화려한 빛이자 따스한 온기 속에 머물러 있는  '나'의 모습입니다. <br /><br />
                 그 빛은 가장 화려했던 기억을 의미하기도 하며, 동시에 듬직한 동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도 합니다. <br /><br />
                 그리움을 투영하여 그려낸 나의 첫 번째 자화상이자, 수만 번의 붓질을 통해 과거의 찬란함과 현재의 나를 잇는 정직한 기록입니다. <br /><br />
                 그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.
@@ -183,9 +183,9 @@ const MagazineHome: React.FC = () => {
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 보라색으로 물든 카페의 구석 자리는 소란스러운 하루를 마무리하는 나만의 공간이며, <br />
                 함께했던 기억이 머무는 마지막 장소였습니다. <br /><br />
-                창 너머 쉼 없이 흐르는 사람들의 물결은 무채색의 소음으로 흩어지고, <br />
+                창 너머 쉼 없이 흐르는 사람들의 물결은 무채색의 소음으로 흩어지고
                 오직 이 공간을 가득 채운 보라색 잔상만이 나를 깊게 감싸 안았습니다. <br /><br />
-                때로는 책을 읽고, 때로는 술 한 잔의 온기에 기대어 얻은 평온함을 <br />
+                때로는 책을 읽고, 때로는 술 한 잔의 온기에 기대어 얻은 평온함을 
                 캔버스 위 짙은 퍼플의 층으로 겹겹이 쌓아 올렸습니다. <br /><br />
                 나에게 보라색은 온 마음을 다해 머물고 싶은 고요한 흔적입니다.
               </Paragraph>
@@ -205,7 +205,7 @@ const MagazineHome: React.FC = () => {
                 반쯤 비어있는 캔버스는 다시 채워나가야 할 새로운 공간이기도 합니다. <br /><br />
                 시들지 않는 그리움으로 그려낸 이 마지막 작별 인사는
                 이제 당신을 캔버스 위 영원한 안식으로 피워내고, 
-                나는 남겨진 절반의 삶을 비로소 묵묵히 걸어가려 합니다. <br /><br />
+                나는 남겨진 절반의 삶을 비로소 묵묵히 걸어가려 합니다. 
               </Paragraph>
             </div>
           </div>
@@ -244,7 +244,7 @@ const MagazineHome: React.FC = () => {
             </Text>
             <Title level={4} style={{ fontSize: '1rem', fontWeight: 500, margin: 0, color: 'inherit', opacity: 0.8, fontFamily: 'serif' }}>
               낮에는 직장인으로, 밤에는 화가로.<br />
-              작업실 소개 및 다른 작품 보기
+              스승님 소개 및 다른 작품 보기
             </Title>
             <div style={{ marginTop: '30px', fontSize: '1.2rem', color: 'inherit' }}>
               <ArrowRightOutlined />

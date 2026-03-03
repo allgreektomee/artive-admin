@@ -48,7 +48,7 @@ const ProfileTest: React.FC = () => {
         </div>
 
         {/* 2. 인터뷰 스타일: 노랑(논리) / 보라(감각) */}
-        <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '40px', marginLeft: '10px' }}>
+        <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '15px', marginLeft: '5px' }}>
           <Title level={2} style={{ fontSize: '2.0rem', fontWeight: 900, marginBottom: '35px', lineHeight: 1.4 }}>
             "<span style={{ color: colors.build }}>논리</span>로 세상을 짓고,<br />
             <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채웁니다."
@@ -110,8 +110,7 @@ const ProfileTest: React.FC = () => {
                 정세화 선생님을 만난 건 제 예술 인생의 '터닝 포인트'였습니다. 
                 그림을 대하는 진지한 태도와 화면을 구성하는 탄탄한 기본기, 
                 무엇보다 캔버스를 끝까지 밀어붙이는 '화가의 근성'을 배웠습니다. <br /><br />
-                선생님의 가르침 덕분에 '입선'이라는 짜릿한 성취도 맛보았죠. 
-                배움의 즐거움을 알게 해주신 선생님께 늘 감사합니다!
+                배움의 즐거움을 알게 해주신 선생님께 늘 감사합니다.
               </Paragraph>
             
             </Col>
@@ -138,73 +137,88 @@ const ProfileTest: React.FC = () => {
       </section>
 
             {/* 5. 대작 소개 (100호는 기존 유지, 120호만 와이드로 변경) */}
-      <section style={{ marginBottom: '180px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
-          <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '60px' }}>
-            <Title level={3} style={{ fontSize: '2rem', fontWeight: 900 }}>GRAND SCALE WORKS</Title>
+     <section style={{ marginBottom: '180px' }}>
+        {/* 5. 대작 소개 (100호 섹션) */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
+        <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '60px' }}>
+          <Title level={3} style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '2px' }}>GRAND SCALE WORKS</Title>
+        </div>
+        
+        <Row gutter={[40, 100]} style={{ marginBottom: '120px' }}>
+          {/* 작품 1: Messenger of Flora */}
+          <Col xs={24} md={12}>
+            <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+              <img src={images.work100_1} alt="Messenger of Flora" style={{ width: '100%' }} />
+            </div>
+            <Title level={4} style={{ marginTop: '30px', fontSize: '1.4rem', fontWeight: 800 }}>
+              100F.
+              <span style={{ fontSize: '0.9rem', color: '#aaa', fontWeight: 500, letterSpacing: '1px', textTransform: 'uppercase' }}>Messenger of Flora</span>
+            </Title>
+            <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
+              부드러운 손길로 생을 축복하는 존재. <br />
+              캔버스를 가득 채운 꽃들은 영원히 시들지 않는 기억의 개화(開花)를 상징하며, 
+              그 찰나의 아름다움을 영원으로 실어 나르는 전령을 담았습니다.
+            </Paragraph>
+          </Col>
+          
+          {/* 작품 2: Val d'Aran */}
+          <Col xs={24} md={12}>
+            <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+              <img src={images.work100_2} alt="Val d'Aran" style={{ width: '100%' }} />
+            </div>
+            <Title level={4} style={{ marginTop: '30px', fontSize: '1.4rem', fontWeight: 800 }}>
+              100F. 
+              <span style={{ fontSize: '0.9rem', color: '#aaa', fontWeight: 500, letterSpacing: '1px', textTransform: 'uppercase' }}>Dawn in Val d'Aran</span>
+            </Title>
+            <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
+              스페인 피레네 산맥의 서늘한 공기, 그 정점에서 마주한 출발선. <br />
+              한계를 넘어선 몰입 직전의 고요한 긴장과 뜨거운 박동을 기록하며, 
+              "나"를 찾아가는 여정의 시작을 그렸습니다.
+            </Paragraph>
+          </Col>
+        </Row>
+      </div>
+      </section>
+
+      {/* 5-1. 120호 섹션 (The Solitude - FULL WIDE) */}
+      <section style={{ 
+        width: '100vw', 
+        background: '#f9f9f9', 
+        padding: '140px 0', 
+        marginBottom: '150px',
+        borderTop: '1px solid #eee'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
+          <div style={{ marginBottom: '70px' }}>
+            <img 
+              src={images.work120_process} 
+              alt="The Solitude" 
+              style={{ 
+                width: '100%', 
+                maxWidth: '1100px', 
+                boxShadow: '0 60px 120px rgba(0,0,0,0.18)',
+                borderRadius: '2px'
+              }} 
+            />
           </div>
           
-          <Row gutter={[40, 60]}>
-            <Col xs={24} md={12}>
-              <img src={images.work100_1} alt="100호" style={{ width: '100%', marginBottom: '20px' }} />
-              <Title level={4} style={{ fontSize: '1.4rem', fontWeight: 800 }}>100F. 정적인 역동</Title>
-            </Col>
-            <Col xs={24} md={12}>
-              <img src={images.work100_2} alt="100호" style={{ width: '100%', marginBottom: '20px' }} />
-              <Title level={4} style={{ fontSize: '1.4rem', fontWeight: 800 }}>100F. 색채의 설계</Title>
-            </Col>
-          </Row>
-        </div>
-
-        {/* 120호 섹션: 여기서부터 꽉 차게 나갑니다 */}
-        <div style={{ 
-          width: '100vw', 
-          marginLeft: '50%', 
-          transform: 'translateX(-50%)', 
-          background: '#f9f9f9', 
-          padding: '120px 0', 
-          marginTop: '100px',
-          textAlign: 'center' 
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
-            {/* 이미지 섹션: 가로폭 1100px까지 확장 */}
-            <div style={{ marginBottom: '60px', position: 'relative', display: 'inline-block', width: '100%' }}>
-              <img 
-                src={images.work120_process} 
-                alt="120호 작업중" 
-                style={{ 
-                  width: '100%', 
-                  maxWidth: '1100px', 
-                  height: 'auto', 
-                  boxShadow: '0 40px 80px rgba(0,0,0,0.12)', 
-                  borderRadius: '2px'
-                }} 
-              />
-              {/* 태그 위치 조정 */}
-              <div style={{ marginTop: '30px' }}>
-                <Tag color={colors.paint} style={{ padding: '6px 20px', fontSize: '1rem', fontWeight: 800 }}>ON PROGRESS</Tag>
-              </div>
-            </div>
-
-            {/* 텍스트 섹션: 여백을 넓게 주어 시원하게 배치 */}
-            <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 20px' }}>
-              <Title level={2} style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 900, marginBottom: '40px', letterSpacing: '-1px' }}>
-                120호, 새로운 한계를 빌드하다
-              </Title>
-              <Paragraph style={{ fontSize: '1.35rem', color: '#333', lineHeight: '2.2', wordBreak: 'keep-all' }}>
-                현재 진행 중인 120호 작업은 저에게 가장 큰 도전이자 즐거움입니다. <br />
-                시스템 설계의 정교함을 캔버스의 압도적 크기로 치환하는 이 과정 자체가 <br />
-                저에겐 또 하나의 거대한 빌드입니다. <br /><br />
-                비어있는 거대한 화이트 스페이스를 완전히 장악했을 때의 쾌감을 향해, <br />
-                매일 밤 붓을 멈추지 않습니다.
-              </Paragraph>
-            </div>
+          <div style={{ maxWidth: '850px', margin: '0 auto' }}>
+            <Tag color={colors.paint} style={{ marginBottom: '35px', padding: '6px 25px', fontSize: '0.9rem', fontWeight: 800, borderRadius: '0' }}>ON PROGRESS</Tag>
+            <Title level={2} style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: 900, marginBottom: '45px', letterSpacing: '-1.5px', wordBreak: 'keep-all', lineHeight: 1.3 }}>
+              함께였던 공간, 이제는 홀로 앉아있는 시간
+            </Title>
+            <Paragraph style={{ fontSize: '1.35rem', color: '#333', lineHeight: '2.5', fontWeight: 400, wordBreak: 'keep-all' }}>
+              "가장 거대한 캔버스는 가장 깊은 고독을 위해 비워두었습니다." <br /><br />
+              온기가 머물던 자리, 그 익숙한 공간에 홀로 앉아있는 인물을 그리는 일은 
+              막막한 부재를 마주하고 스스로를 다시 일으켜 세우는 침묵의 의식입니다. <br />
+              120호의 광활한 여백은 그 상실의 크기이자, 동시에 다시 채워나가야 할 작가의 뒷모습입니다.
+            </Paragraph>
           </div>
         </div>
       </section>
 
       {/* 6. 아카이브 섹션 */}
-      <div style={{ marginTop: '120px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
         <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <Title level={4} style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>THE ARCHIVE</Title>
           <Text style={{ fontWeight: 700, color: colors.paint }}>1 YEAR OF PASSION</Text>
@@ -230,7 +244,8 @@ const ProfileTest: React.FC = () => {
         {/* 7. 푸터 */}
         <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
           <Text style={{ fontSize: '1.1rem', letterSpacing: '8px', color: '#000', fontWeight: 900 }}>
-            <span style={{ color: colors.build }}>BUILD</span> BETTER. <span style={{ color: colors.paint }}>PAINT</span> DEEPER.
+            <span style={{ color: colors.build }}>BUILD</span> BETTER.<br /> 
+            <span style={{ color: colors.paint }}>PAINT</span> DEEPER.
           </Text>
         </div>
 
