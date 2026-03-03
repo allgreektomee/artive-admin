@@ -22,7 +22,7 @@ const MagazineHome: React.FC = () => {
   };
 
   // 공통 레이아웃 스타일
-  const sectionStyle = { padding: '120px 0', width: '100%' };
+  const sectionStyle = { padding: '80px 0', width: '100%' };
   const containerStyle = { maxWidth: '1100px', margin: '0 auto', padding: '0 25px' };
   const textContentStyle = { maxWidth: '850px' }; // 서사 텍스트 가독성을 위한 너비
 
@@ -45,13 +45,14 @@ const MagazineHome: React.FC = () => {
         </Text>
         <Title level={1} style={{ 
           fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-          fontSize: 'clamp(3.0rem, 18vw, 9rem)', 
+          fontSize: 'clamp(3.5rem, 15vw, 8rem)',
           fontWeight: 900, 
           lineHeight: 0.85, 
           margin: '0 0 30px 0',
-          letterSpacing: '-4px',
+          letterSpacing: '-6px',
           color: '#000',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          whiteSpace: 'nowrap'
         }}>
           Farewell
         </Title>
