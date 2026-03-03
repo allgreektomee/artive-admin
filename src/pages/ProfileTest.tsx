@@ -8,6 +8,7 @@ const ProfileTest: React.FC = () => {
   const images = {
     // 1. 작품 심화 섹션용
     yellowProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/yellow-process.png", 
+    purpleProcess:  "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/yellow-process.png", 
     // 2. 작업실 소개용
     studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
     // 3. 아카이브 그리드용 (기존 리스트)
@@ -33,13 +34,13 @@ const ProfileTest: React.FC = () => {
           
           <div style={{ maxWidth: '700px' }}>
             <Paragraph style={{ fontSize: '1.15rem', lineHeight: '2', color: '#333', wordBreak: 'keep-all' }}>
-              낮에는 견고한 금융 시스템을 설계하는 개발자로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
+              낮에는 금융 서비스를 설계하는 개발자로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
               상실의 무게를 붓질로 옮기기 시작한 지 1년, <br />
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
             <Paragraph style={{ fontSize: '1.05rem', lineHeight: '1.8', color: '#666', marginTop: '30px', fontWeight: 300 }}>
-              서울아트페어(SAF) 연작을 포함하여, 낯선 여행지에서의 고독과 <br />
-              작업실에서의 몰입이 담긴 기록들을 이곳에 남깁니다.
+              서울아트페어(SAF) 연작을 포함하여, <br />
+              낯선 여행지에서의 고독과 작업실에서의 몰입이 담긴 기록들을 이곳에 남깁니다.
             </Paragraph>
           </div>
         </div>
@@ -49,25 +50,53 @@ const ProfileTest: React.FC = () => {
         {/* 2. 작품 심화 서사 (예: 옐로우 연작 과정) */}
         <section style={{ marginBottom: '150px' }}>
           <div style={{ marginBottom: '40px' }}>
-            <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. FEATURED SERIES</Text>
-            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>그리움은 물감이 되고 (Yellow Series)</Title>
+            <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. Yellow, Purple, Half </Text>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Trace of Yellow</Title>
           </div>
           
           <Row gutter={[0, 40]}>
             <Col span={24}>
               <img src={images.yellowProcess} alt="Yellow Process" style={{ width: '100%', display: 'block', marginBottom: '30px' }} />
               <div style={{ maxWidth: '800px' }}>
-                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>과정의 기록: 쏟아진 슬픔을 주워 담는 시간</Title>
+                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>Yellow. 따스한 온기</Title>
                 <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
                   노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기였습니다. <br />
                   60호 캔버스 세 점이 나란히 놓인 작업실에서, 수만 번의 붓질을 통해 그리움의 형상을 찾아가는 과정을 거쳤습니다. 
-                  금융 IT 현장의 정교한 몰입은 이 무모한 대작 연작을 끝까지 밀어붙이는 동력이 되었습니다.
+                  엘로우의 정교한 몰입은 이 무모한 연작을 끝까지 밀어붙이는 원동력이 되었습니다.
                 </Paragraph>
               </div>
             </Col>
           </Row>
         </section>
 
+        <section style={{ marginBottom: '150px' }}>
+          <div style={{ marginBottom: '40px' }}>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Shadow of Purple</Title>
+          </div>
+          
+          <Row gutter={[0, 40]}>
+            <Col span={24}>
+              {/* 카페에서의 순간이나 퍼플 작품 이미지 S3 URL */}
+              <img src={images.purpleProcess} alt="Purple Process" style={{ width: '100%', display: 'block', marginBottom: '30px' }} />
+              <div style={{ maxWidth: '800px' }}>
+                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>Purple. 고요한 흔적</Title>
+               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
+                보라색으로 물든 카페의 구석 자리는 소란스러운 하루를 마무리하는 나만의 공간이며 <br />
+                함께했던 기억이 머무는 마지막 장소였습니다. <br /><br />
+
+                창 너머 쉼 없이 흐르는 사람들의 물결은 무채색의 소음으로 흩어지고, <br />
+                오직 이 공간을 가득 채운 보라색 잔상만이 나를 깊게 감싸 안았습니다. <br /><br />
+
+                때로는 책을 읽고, 때로는 술 한 잔의 온기에 기대어 얻은 평온함을 <br />
+                캔버스 위 짙은 퍼플의 층으로 겹겹이 쌓여갔습니다. <br /><br />
+
+                나에게 보라색은 온 마음을 다해 머물고 싶은 고요한 흔적입니다. <br /><br />
+
+                </Paragraph>
+              </div>
+            </Col>
+          </Row>
+        </section>
         {/* 3. 작업실 소개 */}
         <section style={{ marginBottom: '150px' }}>
           <div style={{ marginBottom: '40px' }}>
@@ -81,7 +110,7 @@ const ProfileTest: React.FC = () => {
             <Col xs={24} md={10}>
               <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
                 밤이 깊어지면 작업실은 오직 캔버스와 나만이 존재하는 정적이 흐릅니다. <br /><br />
-                이곳에서 120호 대작과 60호 연작들이 탄생했습니다. 
+                이곳에서 120호, 100호 대작과 60호 연작들이 탄생했습니다. 
                 물감 냄새 섞인 공기 속에서 시스템 설계자가 아닌 한 사람의 인간으로서 스스로를 마주하며, 
                 지난 1년의 시간을 캔버스 위에 층층이 쌓아 올렸습니다.
               </Paragraph>
@@ -128,7 +157,7 @@ const ProfileTest: React.FC = () => {
         {/* 5. 하단 저작권 정보 */}
         <div style={{ marginTop: '100px', textAlign: 'center', paddingTop: '40px' }}>
           <Text style={{ fontSize: '0.8rem', letterSpacing: '5px', color: '#ccc', fontWeight: 'bold' }}>
-            PARK JAE YOUNG © 2026
+            PARK JAE YOUNG 
           </Text>
         </div>
 
