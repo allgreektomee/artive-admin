@@ -161,7 +161,7 @@ const MagazineHome: React.FC = () => {
 
 
         {/* 2. 작품 심화 서사 */}
-        <section style={{ marginBottom: '150px' }}>
+        <section style={{ padding: '0 25px 100px 25px' }}>
           <div style={{ marginBottom: '40px' }}>
             <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. Yellow, Purple, Half </Text>
             <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>Trace of Yellow</Title>
