@@ -1,16 +1,19 @@
 import React from 'react';
-import { Typography, Row, Col } from 'antd';
+import { Typography, Row, Col, Divider } from 'antd';
 
 const { Title, Paragraph, Text } = Typography;
 
 const ProfileTest: React.FC = () => {
-  // S3 URL들을 이곳에 계속 추가하세요.
+  // 이미지 데이터 관리 (S3 URL로 교체하세요)
   const images = {
+    // 1. 작품 심화 섹션용
+    yellowProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/yellow-process.png", 
+    // 2. 작업실 소개용
+    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
+    // 3. 아카이브 그리드용 (기존 리스트)
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
-    // spain100: "https://...", 
-    // studio: "https://...",
   };
 
   const archiveList = Object.values(images);
@@ -19,7 +22,7 @@ const ProfileTest: React.FC = () => {
     <div style={{ background: '#fff', padding: '80px 0', fontFamily: "'Noto Serif KR', serif" }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
         
-        {/* 1. 작가 소개 섹션 */}
+        {/* 1. 작가 소개 섹션 (유지) */}
         <div style={{ marginBottom: '100px' }}>
           <Text style={{ letterSpacing: '8px', fontSize: '0.8rem', color: '#999', fontWeight: 'bold', display: 'block', marginBottom: '20px' }}>
             ARTIST PROFILE
@@ -30,7 +33,7 @@ const ProfileTest: React.FC = () => {
           
           <div style={{ maxWidth: '700px' }}>
             <Paragraph style={{ fontSize: '1.15rem', lineHeight: '2', color: '#333', wordBreak: 'keep-all' }}>
-              낮에는 시스템을 설계하는 개발자로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
+              낮에는 견고한 금융 시스템을 설계하는 개발자로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
               상실의 무게를 붓질로 옮기기 시작한 지 1년, <br />
               그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
             </Paragraph>
@@ -41,11 +44,56 @@ const ProfileTest: React.FC = () => {
           </div>
         </div>
 
-        {/* 2. 에필로그 아카이브 섹션 (Gritty Grid) */}
+        <Divider style={{ margin: '80px 0', opacity: 0.5 }} />
+
+        {/* 2. 작품 심화 서사 (예: 옐로우 연작 과정) */}
+        <section style={{ marginBottom: '150px' }}>
+          <div style={{ marginBottom: '40px' }}>
+            <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. FEATURED SERIES</Text>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>그리움은 물감이 되고 (Yellow Series)</Title>
+          </div>
+          
+          <Row gutter={[0, 40]}>
+            <Col span={24}>
+              <img src={images.yellowProcess} alt="Yellow Process" style={{ width: '100%', display: 'block', marginBottom: '30px' }} />
+              <div style={{ maxWidth: '800px' }}>
+                <Title level={4} style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '20px' }}>과정의 기록: 쏟아진 슬픔을 주워 담는 시간</Title>
+                <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
+                  노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기였습니다. <br />
+                  60호 캔버스 세 점이 나란히 놓인 작업실에서, 수만 번의 붓질을 통해 그리움의 형상을 찾아가는 과정을 거쳤습니다. 
+                  금융 IT 현장의 정교한 몰입은 이 무모한 대작 연작을 끝까지 밀어붙이는 동력이 되었습니다.
+                </Paragraph>
+              </div>
+            </Col>
+          </Row>
+        </section>
+
+        {/* 3. 작업실 소개 */}
+        <section style={{ marginBottom: '150px' }}>
+          <div style={{ marginBottom: '40px' }}>
+            <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>02. THE ATELIER</Text>
+            <Title level={3} style={{ fontSize: '1.8rem', marginTop: '10px', fontWeight: 700 }}>사유의 공간</Title>
+          </div>
+          <Row gutter={[40, 40]} align="middle">
+            <Col xs={24} md={14}>
+              <img src={images.studioView} alt="Studio" style={{ width: '100%', display: 'block' }} />
+            </Col>
+            <Col xs={24} md={10}>
+              <Paragraph style={{ fontSize: '1.05rem', color: '#444', lineHeight: '1.9', wordBreak: 'keep-all' }}>
+                밤이 깊어지면 작업실은 오직 캔버스와 나만이 존재하는 정적이 흐릅니다. <br /><br />
+                이곳에서 120호 대작과 60호 연작들이 탄생했습니다. 
+                물감 냄새 섞인 공기 속에서 시스템 설계자가 아닌 한 사람의 인간으로서 스스로를 마주하며, 
+                지난 1년의 시간을 캔버스 위에 층층이 쌓아 올렸습니다.
+              </Paragraph>
+            </Col>
+          </Row>
+        </section>
+
+        {/* 4. 에필로그 아카이브 섹션 (Gritty Grid) */}
         <div style={{ marginTop: '120px' }}>
           <div style={{ marginBottom: '30px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
             <Text style={{ letterSpacing: '4px', fontSize: '0.85rem', color: '#000', fontWeight: 'bold' }}>
-              EPILOGUE: THE DENSITY OF TIME
+              03. THE DENSITY OF TIME (ARCHIVE)
             </Text>
           </div>
           
@@ -53,21 +101,13 @@ const ProfileTest: React.FC = () => {
             <Row gutter={[4, 4]}> 
               {archiveList.map((url, index) => (
                 <Col key={index} xs={12} sm={8} md={6}>
-                  <div style={{ 
-                    width: '100%', 
-                    aspectRatio: '1/1', 
-                    overflow: 'hidden',
-                    background: '#f9f9f9' 
-                  }}>
+                  <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', background: '#f9f9f9' }}>
                     <img 
                       src={url} 
                       alt={`archive-${index}`}
                       style={{ 
-                        width: '100%', 
-                        height: '100%', 
-                        objectFit: 'cover',
-                        filter: 'grayscale(15%) contrast(1.05)',
-                        transition: 'all 0.4s ease'
+                        width: '100%', height: '100%', objectFit: 'cover',
+                        filter: 'grayscale(15%) contrast(1.05)', transition: 'all 0.4s ease'
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.filter = 'grayscale(0%) contrast(1)';
@@ -85,7 +125,7 @@ const ProfileTest: React.FC = () => {
           </div>
         </div>
 
-        {/* 3. 하단 저작권 정보 */}
+        {/* 5. 하단 저작권 정보 */}
         <div style={{ marginTop: '100px', textAlign: 'center', paddingTop: '40px' }}>
           <Text style={{ fontSize: '0.8rem', letterSpacing: '5px', color: '#ccc', fontWeight: 'bold' }}>
             PARK JAE YOUNG © 2026
