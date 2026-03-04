@@ -164,8 +164,8 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. TRACE OF YELLOW</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Yellow. 따스한 온기</Title>
             </div>
-            <img src={images.yellowProcess} alt="Yellow Process" style={{ width: '100%', marginBottom: '50px' }} />
-            <img src={images.yellow} alt="Yellow Final" style={{ width: '100%', borderRadius: '4px' }} />
+            <img src={images.yellowProcess} alt="Yellow Final" style={{ width: '100%', marginBottom: '50px' }} />
+           
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며 <br />
@@ -176,6 +176,7 @@ const MagazineHome: React.FC = () => {
                 그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.
               </Paragraph>
             </div>
+            <img src={images.yellow} alt="Yellow" style={{ width: '100%'}} />
           </div>
 
           {/* 02. Purple 상세 */}
