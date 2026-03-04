@@ -276,7 +276,7 @@ const ProfileTest: React.FC = () => {
 
           {/* 작품 상세 정보 (연화 섹션과 동일한 포맷) */}
           <div style={{ textAlign: 'right', maxWidth: '1100px', margin: '0 auto 50px', fontSize: '14px', color: '#888', fontStyle: 'italic' }}>
-            작업중. 120F (In Progress). Acrylic on canvas.
+            작업중 (In Progress). 120F. Acrylic on canvas.
           </div>
           
           {/* 서사 영역 */}
@@ -361,9 +361,9 @@ const ProfileTest: React.FC = () => {
             <InstagramOutlined style={{ fontSize: '1.4rem' }} />
             <span style={{ letterSpacing: '1px' }}>VIEW ON INSTAGRAM</span>
           </a>
-          <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginBottom: '10px' }}>
+          <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginTop: '10px', marginBottom: '10px' }}>
               EXPLORE MORE WORKS
-            </Text>
+          </Text>
         </div>
       
       </div>
