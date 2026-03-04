@@ -179,7 +179,7 @@ const ProfileTest: React.FC = () => {
            
      <section style={{ marginBottom: '180px' }}>
         {/* 5. 대작 소개 (100호 섹션) */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 5px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
         <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '60px' }}>
           <Title level={3} style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '2px' }}>GRAND SCALE WORKS</Title>
         </div>
