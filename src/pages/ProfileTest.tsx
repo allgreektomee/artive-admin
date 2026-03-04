@@ -132,9 +132,9 @@ const ProfileTest: React.FC = () => {
         background: '#000', 
         padding: '120px 0', 
         color: '#fff', 
-        marginBottom: '150px' 
+        marginBottom: '100px' 
       }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 5px', textAlign: 'center' }}>
           
           {/* 타이틀을 '장소의 기록' */}
           <Text style={{ color: colors.build, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '3px' }}>
@@ -166,8 +166,8 @@ const ProfileTest: React.FC = () => {
               회현역 인근, 빌딩 숲 사이로 나의 하루는 가장 밀도 있게 흐릅니다. 
               회사와 화실, 그리고 작업실. 이 세 개의 점은 단 1분의 거리 안에 응축되어 있습니다. <br /><br />
               
-              모니터의 열기가 채 식기도 전에 도착한 화실의 문을 열면, 비로소 나의 두 번째 삶이 시작됩니다. 
-              낮에는 논리로 세상을 더 견고하게 짓고 (Build Better), 밤에는 감각으로 캔버스 더 깊은 곳에 몰입합니다. (Paint Deeper). <br /><br />
+              모니터의 열기가 채 식기도 전에 도착한 화실의 문을 열면, 비로소 나의 두 번째 삶이 시작됩니다. <br />
+              낮에는 논리로 세상을 더 견고하게 짓고, 밤에는 감각으로 캔버스 더 깊은 곳에 몰입합니다.<br /><br />
               
               도심의 정적과 몰입이 교차하는 이 1분의 거리에서, 나는 소란스러웠던 하루를 뒤로하고 오직 붓끝에만 집중합니다. 
            
