@@ -12,8 +12,8 @@ const ProfileTest: React.FC = () => {
   const images = {
     studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/111.png", 
     mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg", 
-    work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-1.png", 
-    work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-2.png", 
+    work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png", 
+    work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_2.png", 
     work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
@@ -86,8 +86,8 @@ const ProfileTest: React.FC = () => {
                   rel="noopener noreferrer"
                   style={{ 
                     position: 'absolute', 
-                    bottom: '-15px', 
-                    right: '-5px',
+                    bottom: '-10px', 
+                    right: '-10px',
                     display: 'inline-flex', 
                     alignItems: 'center', 
                     gap: '8px', 
