@@ -166,8 +166,8 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. TRACE OF YELLOW</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Yellow. 따스한 온기</Title>
             </div>
-            <img src={images.yellow} alt="Yellow" style={{ width: '100%', marginBottom: '50px' }} />
-            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            <img src={images.yellow} alt="Yellow" style={{ width: '100%' }} />
+            <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '50px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
                 Trace of Yellow. The 60P Acrylic Process
             </div>
             <div style={textContentStyle}>
@@ -189,8 +189,8 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>02. SHADOW OF PURPLE</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Purple. 고요한 흔적</Title>
             </div>
-            <img src={images.purple} alt="Purple" style={{ width: '100%', marginBottom: '50px' }} />
-            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            <img src={images.purple} alt="Purple" style={{ width: '100%' }} />
+            <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '50px',fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
                 Shadow of Purple: The 60P Acrylic Process
             </div>
             <div style={textContentStyle}>
@@ -212,8 +212,8 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>03. STILL HALF</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Half. 아름다웠던 꽃 </Title>
             </div>
-            <img src={images.half} alt="Still Half" style={{ width: '100%', marginBottom: '50px' }} />
-            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            <img src={images.half} alt="Still Half" style={{ width: '100%' }} />
+            <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '50px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
                 Still half: The 60P Acrylic Process
             </div>
             <div style={textContentStyle}>

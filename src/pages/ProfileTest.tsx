@@ -20,7 +20,7 @@ const ProfileTest: React.FC = () => {
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
     work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/789.png",
     first: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
-    love: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/50.png",
+    love: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/60.png",
   
   };
 
@@ -179,7 +179,7 @@ const ProfileTest: React.FC = () => {
            
      <section style={{ marginBottom: '180px' }}>
         {/* 5. 대작 소개 (100호 섹션) */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 5px' }}>
         <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '60px' }}>
           <Title level={3} style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '2px' }}>GRAND SCALE WORKS</Title>
         </div>
