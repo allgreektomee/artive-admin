@@ -21,9 +21,11 @@ const MagazineHome: React.FC = () => {
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
-    yellowProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", // 실제 노란 작품 이미지
-    yellow: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/y.png", // 실제 노란 작품 이미지
-    purpleProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png"  // 실제 보라 작품 이미지
+    
+    yellow: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/y.png", 
+    purple: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/p.png",
+    half: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/h.png"  
+
   };
 
   // 공통 레이아웃 스타일
@@ -164,7 +166,7 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>01. TRACE OF YELLOW</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Yellow. 따스한 온기</Title>
             </div>
-            <img src={images.yellowProcess} alt="Yellow Final" style={{ width: '100%', marginBottom: '50px' }} />
+            <img src={images.yellow} alt="Yellow" style={{ width: '100%', marginBottom: '50px' }} />
            
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
@@ -176,7 +178,7 @@ const MagazineHome: React.FC = () => {
                 그 화려했던 노란 빛은 이제 캔버스 위에서 새로운 생명으로 흐르기 시작합니다.
               </Paragraph>
             </div>
-            <img src={images.yellow} alt="Yellow" style={{ width: '100%'}} />
+           
           </div>
 
           {/* 02. Purple 상세 */}
@@ -185,7 +187,7 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>02. SHADOW OF PURPLE</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Purple. 고요한 흔적</Title>
             </div>
-            <img src={images.purpleProcess} alt="Purple Process" style={{ width: '100%', marginBottom: '50px' }} />
+            <img src={images.purple} alt="Purple" style={{ width: '100%', marginBottom: '50px' }} />
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 보라색으로 물든 카페의 구석 자리는 소란스러운 하루를 마무리하는 나만의 공간이며, <br />
@@ -205,7 +207,7 @@ const MagazineHome: React.FC = () => {
               <Text style={{ color: '#888', letterSpacing: '2px', fontSize: '0.8rem', fontWeight: 'bold' }}>03. STILL HALF</Text>
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Half. 아름다웠던 꽃 </Title>
             </div>
-            <img src={images.work3} alt="Still Half" style={{ width: '100%', marginBottom: '50px' }} />
+            <img src={images.half} alt="Still Half" style={{ width: '100%', marginBottom: '50px' }} />
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 남겨진 그대로를 인정하며 마주하는 과정입니다. <br />
