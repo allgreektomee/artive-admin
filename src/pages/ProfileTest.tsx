@@ -67,7 +67,7 @@ const ProfileTest: React.FC = () => {
           </div>
         </div>
 
-        {/* 3. 스승 섹션: 워딩 유지 */}
+        {/* 3. 스승 섹션 */}
         <section style={{ marginBottom: '150px' }}>
           <Row gutter={[60, 40]} align="middle">
             <Col xs={24} md={12}>
@@ -87,7 +87,7 @@ const ProfileTest: React.FC = () => {
                   style={{ 
                     position: 'absolute', 
                     bottom: '-15px', 
-                    right: '10px',
+                    right: '-5px',
                     display: 'inline-flex', 
                     alignItems: 'center', 
                     gap: '8px', 
