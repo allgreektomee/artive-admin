@@ -245,6 +245,41 @@ const ProfileTest: React.FC = () => {
             </Paragraph>
           </Col>
         </Row>
+            {/* 더 많은 작품 보기 섹션 */}
+        <div style={{ marginTop: '100px', textAlign: 'center' }}>
+          <div style={{ marginBottom: '30px' }}>
+            <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginBottom: '10px' }}>
+              EXPLORE MORE WORKS
+            </Text>
+            <Title level={2} style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-1px' }}>
+              Jae-young Park
+            </Title>
+          </div>
+
+          <a 
+            href="https://www.instagram.com/artivefor.me" // 실제 인스타 주소로 변경하세요
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '12px', 
+              background: '#000', 
+              color: '#fff', 
+              padding: '18px 40px',
+              borderRadius: '2px',
+              fontWeight: 800,
+              fontSize: '1rem',
+              transition: 'all 0.3s ease',
+              textDecoration: 'none'
+            }}
+          
+          >
+            <InstagramOutlined style={{ fontSize: '1.4rem' }} />
+            <span style={{ letterSpacing: '1px' }}>VIEW ON INSTAGRAM</span>
+          </a>
+        </div>
+        
       </div>
       </section>
 
