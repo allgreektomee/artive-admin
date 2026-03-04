@@ -177,7 +177,7 @@ const ProfileTest: React.FC = () => {
       </section>
 
            
-     <section style={{ marginBottom: '180px' }}>
+     <section style={{ marginBottom: '100px' }}>
         {/* 5. 대작 소개 (100호 섹션) */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
         <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '60px' }}>
@@ -239,9 +239,9 @@ const ProfileTest: React.FC = () => {
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
               첫 그룹전 전시. <br /><br />
-              흐르는 시간 속의 찬란한 시절(年華)과 진흙 속에서도 맑게 피어나는 꽃(蓮華)의 의미를 모두 담아 60F의 캔버스에 담았습니다. <br /> 
-              앞으로 네 삶에 수놓아질 수많은 꽃봉오리들이 하나둘 아름답길 바라는 나의 간절한 기도입니다. <br /> 
-              진흙 속에서도 청초하게 피어나는 연꽃(蓮華)처럼, 언제나 따스한 꽃길로 이어지기를 오빠의 마음을 담아 여동생의 기록을 남깁니다. <br /> 
+              흐르는 시간 속의 찬란한 시절(年華)과 진흙 속에서도 맑게 피어나는 꽃(蓮華)의 의미를 모두 담아 60F의 캔버스에 담았습니다. <br />  <br /> 
+              앞으로 네 삶에 수놓아질 수많은 꽃봉오리들이 하나둘 아름답길 바라는 나의 간절한 기도입니다. <br />  <br /> 
+              진흙 속에서도 청초하게 피어나는 연꽃(蓮華)처럼, 언제나 따스한 꽃길로 이어지기를 
             </Paragraph>
           </Col>
         </Row>
@@ -252,12 +252,12 @@ const ProfileTest: React.FC = () => {
       <section style={{ 
         width: '100vw', 
         background: '#f9f9f9', 
-        padding: '140px 0', 
-        marginBottom: '150px',
+        padding: '100px 0', 
+        marginBottom: '100px',
         borderTop: '1px solid #eee'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
-          <div style={{ marginBottom: '70px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <img 
               src={images.work120_process} 
               alt="The Solitude" 
@@ -271,11 +271,11 @@ const ProfileTest: React.FC = () => {
           </div>
           
           <div style={{ maxWidth: '850px', margin: '0 auto' }}>
-            <Tag color={colors.paint} style={{ marginBottom: '35px', padding: '6px 25px', fontSize: '0.9rem', fontWeight: 800, borderRadius: '0' }}>ON PROGRESS</Tag>
-            <Title level={2} style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: 900, marginBottom: '45px', letterSpacing: '-1.5px', wordBreak: 'keep-all', lineHeight: 1.3 }}>
+            <Tag color={colors.paint} style={{ marginBottom: '20px', padding: '6px 25px', fontSize: '0.9rem', fontWeight: 800, borderRadius: '0' }}>ON PROGRESS</Tag>
+            <Title level={2} style={{ fontSize: 'clamp(1.4rem, 5vw, 2.4rem)', fontWeight: 800, marginBottom: '45px', letterSpacing: '-1.5px', wordBreak: 'keep-all', lineHeight: 1.3 }}>
               함께였던 공간, 이제는 홀로 앉아있는 시간
             </Title>
-            <Paragraph style={{ fontSize: '1.35rem', color: '#333', lineHeight: '2.5', fontWeight: 400, wordBreak: 'keep-all' }}>
+            <Paragraph style={{ fontSize: '1.1rem', color: '#333', lineHeight: '2.5', fontWeight: 400, wordBreak: 'keep-all' }}>
               "가장 거대한 캔버스는 가장 깊은 고독을 위해 비워두었습니다." <br /><br />
               온기가 머물던 자리, 그 익숙한 공간에 홀로 앉아있는 인물을 그리는 일은 
               막막한 부재를 마주하고 스스로를 다시 일으켜 세우는 침묵의 의식입니다. <br />
