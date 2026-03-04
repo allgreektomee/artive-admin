@@ -10,15 +10,17 @@ const ProfileTest: React.FC = () => {
   }, []);
 
   const images = {
-    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/111.png", 
+    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png", 
     mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg", 
     work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png", 
-    work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_2.png", 
+    work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100ss.png", 
     work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
     work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/789.png",
+    first: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
+    love: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/50.png",
   
   };
 
@@ -185,10 +187,9 @@ const ProfileTest: React.FC = () => {
             <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <img src={images.work100_1} alt="Messenger of Flora" style={{ width: '100%' }} />
             </div>
-            <Title level={4} style={{ marginTop: '30px', fontSize: '1.4rem', fontWeight: 800 }}>
-              100F.
-              <span style={{ fontSize: '0.9rem', color: '#aaa', fontWeight: 500, letterSpacing: '1px', textTransform: 'uppercase' }}>Messenger of Flora</span>
-            </Title>
+             <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                Flora. 100F. Acrylic on canvas.
+            </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
               부드러운 손길로 생을 축복하는 존재. <br />
               캔버스를 가득 채운 꽃들은 영원히 시들지 않는 기억의 개화(開花)를 상징하며, 
@@ -201,14 +202,43 @@ const ProfileTest: React.FC = () => {
             <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <img src={images.work100_2} alt="Val d'Aran" style={{ width: '100%' }} />
             </div>
-            <Title level={4} style={{ marginTop: '30px', fontSize: '1.4rem', fontWeight: 800 }}>
-              100F. 
-              <span style={{ fontSize: '0.9rem', color: '#aaa', fontWeight: 500, letterSpacing: '1px', textTransform: 'uppercase' }}>Dawn in Val d'Aran</span>
-            </Title>
+            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                Dawn in Val d'Aran. 100F. Acrylic on canvas.
+            </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
               스페인 피레네 산맥의 서늘한 공기, 그 정점에서 마주한 출발선. <br />
               한계를 넘어선 몰입 직전의 고요한 긴장과 뜨거운 박동을 기록하며, 
               "나"를 찾아가는 여정의 시작을 그렸습니다.
+            </Paragraph>
+          </Col>
+
+          {/* 작품 3:  */}
+          <Col xs={24} md={12}>
+            <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+              <img src={images.first} alt="first" style={{ width: '100%' }} />
+            </div>
+            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                푸른 날의 기억. 30P. Acrylic on canvas.
+            </div>
+            <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
+              첫 공모전 입상작. <br />
+              지금의 아트페어까지 이어지는 '화가의 근성'을 처음으로 인정받았던 소중한 기록입니다.
+            </Paragraph>
+          </Col>
+
+          {/* 작품 4:  */}
+          <Col xs={24} md={12}>
+            <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
+              <img src={images.love} alt="love" style={{ width: '100%' }} />
+            </div>
+            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            연화(年華,蓮華). 60F. Acrylic on canvas.
+            </div>
+            <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
+              첫 그룹전 전시. <br /><br />
+              흐르는 시간 속의 찬란한 시절(年華)과 진흙 속에서도 맑게 피어나는 꽃(蓮華)의 의미를 모두 담아 60F의 캔버스에 담았습니다. <br /> 
+              앞으로 네 삶에 수놓아질 수많은 꽃봉오리들이 하나둘 고운 얼굴을 내밀기를 바라는 나의 간절한 기도입니다. <br /> 
+              진흙 속에서도 청초하게 피어나는 연꽃(蓮華)처럼, 언제나 따스한 꽃길로 이어지기를 오빠의 마음을 담아 여동생의 기록을 남깁니다. <br /> 
             </Paragraph>
           </Col>
         </Row>
