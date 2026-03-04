@@ -137,14 +137,17 @@ const ProfileTest: React.FC = () => {
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
           
           {/* 타이틀을 '장소의 기록' */}
-          <Text style={{ color: colors.build, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '15px' }}>
+          <Text style={{ color: colors.build, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '3px' }}>
            두 세계가 교차하는 가장 짧은 경로
+          </Text>
+          <Text style={{ color: colors.paint, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '10px' }}>
+            ART STUDIO
           </Text>
           <Title level={3} style={{ color: '#fff', fontSize: '2rem', fontWeight: 900, marginBottom: '50px', letterSpacing: '-1px' }}>
              LOG: 01-MIN AWAY
           </Title>
 
-          <div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ marginBottom: '30px', display: 'flex', justifyContent: 'center' }}>
 
             <img 
               src={images.studioView} 
@@ -152,7 +155,6 @@ const ProfileTest: React.FC = () => {
               style={{ 
                 width: '100%', 
                 maxWidth: '1100px', 
-                boxShadow: '0 60px 120px rgba(0,0,0,0.3)',
                 borderRadius: '2px'
               }} 
             />
