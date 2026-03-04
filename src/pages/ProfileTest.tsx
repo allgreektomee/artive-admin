@@ -138,10 +138,10 @@ const ProfileTest: React.FC = () => {
           
           {/* 타이틀을 '장소의 기록' */}
           <Text style={{ color: colors.build, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '15px' }}>
-            LOG: 01-MIN AWAY
+           두 세계가 교차하는 가장 짧은 경로
           </Text>
           <Title level={3} style={{ color: '#fff', fontSize: '2rem', fontWeight: 900, marginBottom: '50px', letterSpacing: '-1px' }}>
-            두 세계가 교차하는 가장 짧은 경로
+             LOG: 01-MIN AWAY
           </Title>
           
           {/* 144*144 이미지 */}
