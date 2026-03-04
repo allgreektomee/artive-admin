@@ -248,7 +248,7 @@ const MagazineHome: React.FC = () => {
             </Text>
             <Title level={4} style={{ fontSize: '1rem', fontWeight: 500, margin: 0, color: 'inherit', opacity: 0.8, fontFamily: 'serif' }}>
               낮에는 직장인으로, 밤에는 화가로.<br />
-              스승님 소개 및 다른 작품 보기
+              다른 작품 보기
             </Title>
             <div style={{ marginTop: '30px', fontSize: '1.2rem', color: 'inherit' }}>
               <ArrowRightOutlined />
