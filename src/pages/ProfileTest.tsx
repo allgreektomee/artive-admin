@@ -143,16 +143,17 @@ const ProfileTest: React.FC = () => {
           <Title level={3} style={{ color: '#fff', fontSize: '2rem', fontWeight: 900, marginBottom: '50px', letterSpacing: '-1px' }}>
              LOG: 01-MIN AWAY
           </Title>
-          
-          {/* 144*144 이미지 */}
+
           <div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'center' }}>
+
             <img 
               src={images.studioView} 
               alt="Studio Miniature" 
               style={{ 
-                borderRadius: '4px',
-                border: '2px solid #333', objectFit: 'cover',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.3)' 
+                width: '100%', 
+                maxWidth: '1100px', 
+                boxShadow: '0 60px 120px rgba(0,0,0,0.3)',
+                borderRadius: '2px'
               }} 
             />
           </div>
@@ -218,7 +219,7 @@ const ProfileTest: React.FC = () => {
               <img src={images.first} alt="first" style={{ width: '100%' }} />
             </div>
             <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
-                푸른 날의 기억. 30P. Acrylic on canvas.
+            푸른 날의 기억. 30P. Acrylic on canvas.
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
               첫 공모전 입상작. <br />
@@ -232,7 +233,7 @@ const ProfileTest: React.FC = () => {
               <img src={images.love} alt="love" style={{ width: '100%' }} />
             </div>
             <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
-            연화(年華,蓮華). 60F. Acrylic on canvas.
+             연화(年華,蓮華). 60F. Acrylic on canvas.
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
               첫 그룹전 전시. <br /><br />
@@ -306,17 +307,15 @@ const ProfileTest: React.FC = () => {
         </Row>
       </div>
 
-        {/* 7. 푸터 */}
-        <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
-          <Text style={{ fontSize: '1.1rem', letterSpacing: '8px', color: '#000', fontWeight: 900 }}>
-            <span style={{ color: colors.build }}>BUILD</span> BETTER.<br /> 
-            <span style={{ color: colors.paint }}>PAINT</span> DEEPER.
-          </Text>
-        </div>
-
-
-
+      {/* 7. 푸터 */}
+      <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
+        <Text style={{ fontSize: '1.1rem', letterSpacing: '8px', color: '#000', fontWeight: 900 }}>
+          <span style={{ color: colors.build }}>BUILD</span> BETTER.<br /> 
+          <span style={{ color: colors.paint }}>PAINT</span> DEEPER.
+        </Text>
       </div>
+
+   </div>
     
   );
 };
