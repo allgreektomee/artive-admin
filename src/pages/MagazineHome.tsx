@@ -167,7 +167,9 @@ const MagazineHome: React.FC = () => {
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Yellow. 따스한 온기</Title>
             </div>
             <img src={images.yellow} alt="Yellow" style={{ width: '100%', marginBottom: '50px' }} />
-           
+            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                Trace of Yellow. The 60P Acrylic Process
+            </div>
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며 <br />
@@ -188,6 +190,9 @@ const MagazineHome: React.FC = () => {
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Purple. 고요한 흔적</Title>
             </div>
             <img src={images.purple} alt="Purple" style={{ width: '100%', marginBottom: '50px' }} />
+            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                Shadow of Purple: The 60P Acrylic Process
+            </div>
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 보라색으로 물든 카페의 구석 자리는 소란스러운 하루를 마무리하는 나만의 공간이며, <br />
@@ -208,6 +213,9 @@ const MagazineHome: React.FC = () => {
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Half. 아름다웠던 꽃 </Title>
             </div>
             <img src={images.half} alt="Still Half" style={{ width: '100%', marginBottom: '50px' }} />
+            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                Still half: The 60P Acrylic Process
+            </div>
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 남겨진 그대로를 인정하며 마주하는 과정입니다. <br />
