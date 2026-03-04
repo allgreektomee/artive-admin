@@ -134,7 +134,7 @@ const ProfileTest: React.FC = () => {
         color: '#fff', 
         marginBottom: '100px' 
       }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 5px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
           
           {/* 타이틀을 '장소의 기록' */}
           <Text style={{ color: colors.build, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '3px' }}>
@@ -245,41 +245,6 @@ const ProfileTest: React.FC = () => {
             </Paragraph>
           </Col>
         </Row>
-            {/* 더 많은 작품 보기 섹션 */}
-        <div style={{ marginTop: '100px', textAlign: 'center' }}>
-          <div style={{ marginBottom: '30px' }}>
-            <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginBottom: '10px' }}>
-              EXPLORE MORE WORKS
-            </Text>
-            <Title level={2} style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-1px' }}>
-              Jae-young Park
-            </Title>
-          </div>
-
-          <a 
-            href="https://www.instagram.com/artivefor.me" // 실제 인스타 주소로 변경하세요
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '12px', 
-              background: '#000', 
-              color: '#fff', 
-              padding: '18px 40px',
-              borderRadius: '2px',
-              fontWeight: 800,
-              fontSize: '1rem',
-              transition: 'all 0.3s ease',
-              textDecoration: 'none'
-            }}
-          
-          >
-            <InstagramOutlined style={{ fontSize: '1.4rem' }} />
-            <span style={{ letterSpacing: '1px' }}>VIEW ON INSTAGRAM</span>
-          </a>
-        </div>
-        
       </div>
       </section>
 
@@ -350,6 +315,42 @@ const ProfileTest: React.FC = () => {
           <span style={{ color: colors.build }}>BUILD</span> BETTER.<br /> 
           <span style={{ color: colors.paint }}>PAINT</span> DEEPER.
         </Text>
+            {/* 더 많은 작품 보기 섹션 */}
+        <div style={{ marginTop: '100px', textAlign: 'center' }}>
+          <div style={{ marginBottom: '30px' }}>
+            <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginBottom: '10px' }}>
+              EXPLORE MORE WORKS
+            </Text>
+            <Title level={2} style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-1px' }}>
+              Jae-young Park
+            </Title>
+          </div>
+
+          <a 
+            href="https://www.instagram.com/artivefor.me" // 실제 인스타 주소로 변경하세요
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '12px', 
+              background: '#000', 
+              color: '#fff', 
+              padding: '18px 40px',
+              borderRadius: '2px',
+              fontWeight: 800,
+              fontSize: '1rem',
+              transition: 'all 0.3s ease',
+              textDecoration: 'none'
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+          >
+            <InstagramOutlined style={{ fontSize: '1.4rem' }} />
+            <span style={{ letterSpacing: '1px' }}>VIEW ON INSTAGRAM</span>
+          </a>
+        </div>
+      
       </div>
 
    </div>
