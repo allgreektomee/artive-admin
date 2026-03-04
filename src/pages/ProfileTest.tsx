@@ -190,7 +190,7 @@ const ProfileTest: React.FC = () => {
             <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <img src={images.work100_1} alt="Messenger of Flora" style={{ width: '100%' }} />
             </div>
-             <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+             <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '15px', fontSize: '14px', color: '#888', fontStyle: 'italic' }}>
                 Flora. 100F. Acrylic on canvas.
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
@@ -205,7 +205,7 @@ const ProfileTest: React.FC = () => {
             <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <img src={images.work100_2} alt="Val d'Aran" style={{ width: '100%' }} />
             </div>
-            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '15px',fontSize: '14px', color: '#888', fontStyle: 'italic' }}>
                 Dawn in Val d'Aran. 100F. Acrylic on canvas.
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
@@ -220,7 +220,7 @@ const ProfileTest: React.FC = () => {
             <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <img src={images.first} alt="first" style={{ width: '100%' }} />
             </div>
-            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '15px',fontSize: '14px', color: '#888', fontStyle: 'italic' }}>
             푸른 날의 기억. 30P. Acrylic on canvas.
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
@@ -234,7 +234,7 @@ const ProfileTest: React.FC = () => {
             <div style={{ overflow: 'hidden', borderRadius: '2px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <img src={images.love} alt="love" style={{ width: '100%' }} />
             </div>
-            <div style={{ textAlign: 'right', marginTop: '15px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            <div style={{ textAlign: 'right', marginTop: '15px', marginBottom: '15px',fontSize: '14px', color: '#888', fontStyle: 'italic' }}>
              연화(年華,蓮華). 60F. Acrylic on canvas.
             </div>
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
