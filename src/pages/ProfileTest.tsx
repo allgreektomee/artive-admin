@@ -10,18 +10,16 @@ const ProfileTest: React.FC = () => {
   }, []);
 
   const images = {
-    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png", 
-    mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/mentor.png", 
+    studioView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/111.png", 
+    mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg", 
     work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-1.png", 
     work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-2.png", 
     work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
-    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
-    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
-    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
-    work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/789.png",
+
+  
   };
 
-  const archiveList = [images.work1, images.work2, images.work3, images.work4];
+
 
   // 핵심 컬러 정의
   const colors = {
@@ -53,7 +51,7 @@ const ProfileTest: React.FC = () => {
 
         {/* 2. 인터뷰 스타일: 노랑(논리) / 보라(감각) */}
         <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '25px', marginLeft: '0px' }}>
-          <Title level={2} style={{ fontSize: '1.7rem', fontWeight: 900, marginBottom: '25px', lineHeight: 1.5, letterSpacing: '-0.02em' }}>
+          <Title level={2} style={{ fontSize: '1.7rem', fontWeight: 700, marginBottom: '25px', lineHeight: 1.5, letterSpacing: '-0.02em' }}>
             "<span style={{ color: colors.build }}>논리</span>로 세상을 짓고,<br />
             <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채우다"
           </Title>
@@ -221,29 +219,6 @@ const ProfileTest: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. 아카이브 섹션 */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
-        <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <Title level={4} style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>THE ARCHIVE</Title>
-          <Text style={{ fontWeight: 700, color: colors.paint }}>1 YEAR OF PASSION</Text>
-        </div>
-        
-        <Row gutter={[16, 16]}> 
-          {archiveList.map((url, index) => (
-            <Col key={index} xs={12} sm={8} md={6}>
-              <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', position: 'relative' }}>
-                <img 
-                  src={url} 
-                  alt={`archive-${index}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.4s ease' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
-                />
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </div>
 
         {/* 7. 푸터 */}
         <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
