@@ -15,11 +15,14 @@ const ProfileTest: React.FC = () => {
     work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-1.png", 
     work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-2.png", 
     work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
-
+    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
+    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
+    work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/789.png",
   
   };
 
-
+  const archiveList = [images.work1, images.work2, images.work3, images.work4];
 
   // 핵심 컬러 정의
   const colors = {
@@ -119,21 +122,51 @@ const ProfileTest: React.FC = () => {
           </Row>
         </section>
       </div>
-
-      {/* 4. 작업실 섹션 (1분 컷 / Full Black) */}
+     {/* 4. 작업실 섹션 (1분 컷 / Full Black) */}
       <section style={{ 
-        width: '100vw', marginLeft: '50%', transform: 'translateX(-50%)', 
-        background: '#000', padding: '150px 0', color: '#fff', marginBottom: '150px' 
+        width: '100vw', 
+        marginLeft: '50%', 
+        transform: 'translateX(-50%)', 
+        background: '#000', 
+        padding: '120px 0', 
+        color: '#fff', 
+        marginBottom: '150px' 
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <Title level={3} style={{ color: '#fff', fontSize: '2.8rem', fontWeight: 900, marginBottom: '20px' }}>
-              STUDIO 1-MIN AWAY
-            </Title>
-            <Text style={{ color: '#666', fontSize: '1rem', display: 'block', marginBottom: '50px', letterSpacing: '2px' }}>
-              화실 바로 앞, 퇴근 후 1분이면 시작되는 나의 두 번째 삶
-            </Text>
-            <img src={images.studioView} alt="Studio" style={{ width: '100%', maxWidth: '1000px', borderRadius: '2px', border: '1px solid #333' }} />
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
+          
+          {/* 타이틀을 '장소의 기록' */}
+          <Text style={{ color: colors.build, letterSpacing: '4px', fontSize: '0.9rem', fontWeight: 800, display: 'block', marginBottom: '15px' }}>
+            LOG: 01-MIN AWAY
+          </Text>
+          <Title level={3} style={{ color: '#fff', fontSize: '2rem', fontWeight: 900, marginBottom: '50px', letterSpacing: '-1px' }}>
+            두 세계가 교차하는 가장 짧은 경로
+          </Title>
+          
+          {/* 144*144 이미지 */}
+          <div style={{ marginBottom: '60px', display: 'flex', justifyContent: 'center' }}>
+            <img 
+              src={images.studioView} 
+              alt="Studio Miniature" 
+              style={{ 
+                width: '144px', height: '144px', borderRadius: '4px',
+                border: '2px solid #333', objectFit: 'cover',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.3)' 
+              }} 
+            />
+          </div>
+
+          {/* 하단 서사: 슬로건을 서사 속으로 녹여냄 */}
+          <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'left', borderTop: '1px solid #333', paddingTop: '40px' }}>
+            <Paragraph style={{ fontSize: '1.05rem', color: '#ccc', lineHeight: '2.1', wordBreak: 'keep-all', fontWeight: 300 }}>
+              회현역 인근, 빌딩 숲 사이로 나의 하루는 가장 밀도 있게 흐릅니다. 
+              회사와 화실, 그리고 작업실. 이 세 개의 점은 단 1분의 거리 안에 응축되어 있습니다. <br /><br />
+              
+              모니터의 열기가 채 식기도 전에 도착한 화실의 문을 열면, 비로소 나의 두 번째 삶이 시작됩니다. 
+              낮에는 논리로 세상을 더 견고하게 짓고(Build Better), 밤에는 감각으로 캔버스 더 깊은 곳에 몰입합니다(Paint Deeper). <br /><br />
+              
+              도심의 정적과 몰입이 교차하는 이 1분의 거리에서, 나는 소란스러웠던 하루를 뒤로하고 오직 붓끝에만 집중합니다. 
+              그 찰나의 순간마다 온전한 '나'의 흔적을 캔버스 위로 겹겹이 박제합니다.
+            </Paragraph>
           </div>
         </div>
       </section>
@@ -219,6 +252,29 @@ const ProfileTest: React.FC = () => {
         </div>
       </section>
 
+      {/* 6. 아카이브 섹션 */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px' }}>
+        <div style={{ borderBottom: '2px solid #000', paddingBottom: '20px', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <Title level={4} style={{ margin: 0, fontSize: '1.6rem', fontWeight: 900 }}>THE ARCHIVE</Title>
+          <Text style={{ fontWeight: 700, color: colors.paint }}>1 YEAR OF PASSION</Text>
+        </div>
+        
+        <Row gutter={[16, 16]}> 
+          {archiveList.map((url, index) => (
+            <Col key={index} xs={12} sm={8} md={6}>
+              <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', position: 'relative' }}>
+                <img 
+                  src={url} 
+                  alt={`archive-${index}`}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.4s ease' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+                />
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
 
         {/* 7. 푸터 */}
         <div style={{ marginTop: '150px', textAlign: 'center', padding: '80px 0', background: '#fafafa' }}>
