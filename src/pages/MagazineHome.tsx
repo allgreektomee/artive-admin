@@ -150,7 +150,7 @@ const MagazineHome: React.FC = () => {
             <Paragraph style={{ fontSize: '1.1rem', lineHeight: '2.2', color: '#333', wordBreak: 'keep-all' }}>
               낮에는 IT 서비스를 개발하는 프로그래머로, 밤에는 감정을 기록하는 화가로 살아갑니다. <br />
               상실의 무게를 붓질로 옮기기 시작하였습니다. <br /><br />
-              그리움은 물감이 되었고 그녀는 캔버스의 영원한 꽃이 되었습니다.
+              그리움은 물감이 되었고 그녀는 캔버스의 아름다운 꽃이 되었습니다.
             </Paragraph>
             <Text style={{ fontSize: '1rem', color: '#777', marginTop: '50px', display: 'block' }}>
               서울아트페어(SAF)에 소개할 세 점의 작품과 작업실의 기록을 이곳에 남깁니다.
