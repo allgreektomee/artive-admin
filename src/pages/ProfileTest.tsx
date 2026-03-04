@@ -14,7 +14,7 @@ const ProfileTest: React.FC = () => {
     mentorView: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/mentor.png", 
     work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-1.png", 
     work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100-2.png", 
-    work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120-process.png",
+    work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
@@ -53,9 +53,9 @@ const ProfileTest: React.FC = () => {
 
         {/* 2. 인터뷰 스타일: 노랑(논리) / 보라(감각) */}
         <div style={{ marginBottom: '150px', borderLeft: '5px solid #000', paddingLeft: '25px', marginLeft: '0px' }}>
-          <Title level={2} style={{ fontSize: '2.0rem', fontWeight: 900, marginBottom: '35px', lineHeight: 1.4 }}>
+          <Title level={2} style={{ fontSize: '1.7rem', fontWeight: 900, marginBottom: '25px', lineHeight: 1.5, letterSpacing: '-0.02em' }}>
             "<span style={{ color: colors.build }}>논리</span>로 세상을 짓고,<br />
-            <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채웁니다."
+            <span style={{ color: colors.paint }}>감각</span>으로 캔버스를 채우다"
           </Title>
           <div style={{ maxWidth: '850px' }}>
             <Paragraph style={{ fontSize: '1.1rem', lineHeight: '2.1', color: '#333', wordBreak: 'keep-all' }}>

@@ -22,6 +22,7 @@ const MagazineHome: React.FC = () => {
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
     yellowProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", // 실제 노란 작품 이미지
+    yellow: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/y.png", // 실제 노란 작품 이미지
     purpleProcess: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png"  // 실제 보라 작품 이미지
   };
 
@@ -164,6 +165,7 @@ const MagazineHome: React.FC = () => {
               <Title level={3} style={{ fontSize: '2rem', marginTop: '10px', fontWeight: 700 }}>Yellow. 따스한 온기</Title>
             </div>
             <img src={images.yellowProcess} alt="Yellow Process" style={{ width: '100%', marginBottom: '50px' }} />
+            <img src={images.yellow} alt="Yellow Final" style={{ width: '100%', borderRadius: '4px' }} />
             <div style={textContentStyle}>
               <Paragraph style={{ fontSize: '1.1rem', color: '#444', lineHeight: '2', wordBreak: 'keep-all' }}>
                 노란색은 단순히 색채가 아닌, 멈춰버린 일상을 다시 움직이게 하는 온기이며 <br />
