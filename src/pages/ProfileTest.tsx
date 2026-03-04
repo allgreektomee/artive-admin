@@ -251,13 +251,17 @@ const ProfileTest: React.FC = () => {
       {/* 5-1. 120호 섹션 (The Solitude - FULL WIDE) */}
       <section style={{ 
         width: '100vw', 
+        marginLeft: '50%',
+        transform: 'translateX(-50%)',
         background: '#f9f9f9', 
-        padding: '100px 0', 
-        marginBottom: '100px',
+        padding: '140px 0', 
+        marginBottom: '150px',
         borderTop: '1px solid #eee'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 25px', textAlign: 'center' }}>
-          <div style={{ marginBottom: '20px' }}>
+          
+          {/* 작품 이미지 영역 */}
+          <div style={{ marginBottom: '40px' }}>
             <img 
               src={images.work120_process} 
               alt="The Solitude" 
@@ -269,16 +273,28 @@ const ProfileTest: React.FC = () => {
               }} 
             />
           </div>
+
+          {/* 작품 상세 정보 (연화 섹션과 동일한 포맷) */}
+          <div style={{ textAlign: 'right', maxWidth: '1100px', margin: '0 auto 50px', fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+            The Solitude. 120F (In Progress). Acrylic on canvas.
+          </div>
           
+          {/* 서사 영역 */}
           <div style={{ maxWidth: '850px', margin: '0 auto' }}>
-            <Tag color={colors.paint} style={{ marginBottom: '20px', padding: '6px 25px', fontSize: '0.9rem', fontWeight: 800, borderRadius: '0' }}>ON PROGRESS</Tag>
-            <Title level={2} style={{ fontSize: 'clamp(1.4rem, 5vw, 2.4rem)', fontWeight: 800, marginBottom: '45px', letterSpacing: '-1.5px', wordBreak: 'keep-all', lineHeight: 1.3 }}>
+            <Tag color={colors.paint} style={{ marginBottom: '35px', padding: '6px 25px', fontSize: '0.9rem', fontWeight: 800, borderRadius: '0' }}>
+              ON PROGRESS
+            </Tag>
+            
+            <Title level={2} style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: 900, marginBottom: '45px', letterSpacing: '-1.5px', wordBreak: 'keep-all', lineHeight: 1.3 }}>
               함께였던 공간, 이제는 홀로 앉아있는 시간
             </Title>
-            <Paragraph style={{ fontSize: '1.1rem', color: '#333', lineHeight: '2.5', fontWeight: 400, wordBreak: 'keep-all' }}>
+            
+            <Paragraph style={{ fontSize: '1.2rem', color: '#333', lineHeight: '2.5', fontWeight: 400, wordBreak: 'keep-all', textAlign: 'left' }}>
               "가장 거대한 캔버스는 가장 깊은 고독을 위해 비워두었습니다." <br /><br />
+              
               온기가 머물던 자리, 그 익숙한 공간에 홀로 앉아있는 인물을 그리는 일은 
               막막한 부재를 마주하고 스스로를 다시 일으켜 세우는 침묵의 의식입니다. <br />
+              
               120호의 광활한 여백은 그 상실의 크기이자, 동시에 다시 채워나가야 할 작가의 뒷모습입니다.
             </Paragraph>
           </div>
@@ -318,9 +334,7 @@ const ProfileTest: React.FC = () => {
             {/* 더 많은 작품 보기 섹션 */}
         <div style={{ marginTop: '100px', textAlign: 'center' }}>
           <div style={{ marginBottom: '30px' }}>
-            <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginBottom: '10px' }}>
-              EXPLORE MORE WORKS
-            </Text>
+            
             <Title level={2} style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-1px' }}>
               Jae-young Park
             </Title>
@@ -349,6 +363,9 @@ const ProfileTest: React.FC = () => {
             <InstagramOutlined style={{ fontSize: '1.4rem' }} />
             <span style={{ letterSpacing: '1px' }}>VIEW ON INSTAGRAM</span>
           </a>
+          <Text style={{ fontSize: '0.9rem', color: '#999', letterSpacing: '4px', display: 'block', marginBottom: '10px' }}>
+              EXPLORE MORE WORKS
+            </Text>
         </div>
       
       </div>
