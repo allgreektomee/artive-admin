@@ -150,7 +150,7 @@ const ProfileTest: React.FC = () => {
               src={images.studioView} 
               alt="Studio Miniature" 
               style={{ 
-                width: '144px', height: '144px', borderRadius: '4px',
+                borderRadius: '4px',
                 border: '2px solid #333', objectFit: 'cover',
                 boxShadow: '0 10px 30px rgba(0,0,0,0.3)' 
               }} 
@@ -237,7 +237,7 @@ const ProfileTest: React.FC = () => {
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
               첫 그룹전 전시. <br /><br />
               흐르는 시간 속의 찬란한 시절(年華)과 진흙 속에서도 맑게 피어나는 꽃(蓮華)의 의미를 모두 담아 60F의 캔버스에 담았습니다. <br /> 
-              앞으로 네 삶에 수놓아질 수많은 꽃봉오리들이 하나둘 고운 얼굴을 내밀기를 바라는 나의 간절한 기도입니다. <br /> 
+              앞으로 네 삶에 수놓아질 수많은 꽃봉오리들이 하나둘 아름답길 바라는 나의 간절한 기도입니다. <br /> 
               진흙 속에서도 청초하게 피어나는 연꽃(蓮華)처럼, 언제나 따스한 꽃길로 이어지기를 오빠의 마음을 담아 여동생의 기록을 남깁니다. <br /> 
             </Paragraph>
           </Col>
