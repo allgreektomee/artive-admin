@@ -173,7 +173,7 @@ const ProfileTest: React.FC = () => {
           <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'left', borderTop: '1px solid #333', paddingTop: '40px' }}>
             <Paragraph style={{ fontSize: '1.05rem', color: '#ccc', lineHeight: '2.1', wordBreak: 'keep-all', fontWeight: 300 }}>
               회현역 인근, 빌딩 숲 사이로 나의 하루는 가장 밀도 있게 흐릅니다. 
-              회사와 화실, 그리고 작업실. 이 세 개의 점은 단 1분의 거리 안에 응축되어 있습니다. <br /><br />
+              회사와 화실, 그리고 작업실. 이 세 개의 점은 단 1분의 거리 안에 있습니다. <br /><br />
               
               모니터의 열기가 채 식기도 전에 도착한 화실의 문을 열면, 비로소 나의 두 번째 삶이 시작됩니다. <br />
               낮에는 논리로 세상을 더 견고하게 짓고, 밤에는 감각으로 캔버스 더 깊은 곳에 몰입합니다.<br /><br />
