@@ -19,19 +19,21 @@ const ProfileTest: React.FC = () => {
     first: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
     love: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/60.png",
 
-     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
+    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
     work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
     work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
+
     work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100s.png",
     work5: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/gg.png",
     work6: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/sss.png",
+
     work7: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/ss.png",
     work8: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
     work9: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
   
   };
 
-  const archiveList = [images.work1, images.work2, images.work3, images.work4];
+  const archiveList = [images.work1, images.work2, images.work3, images.work4, images.work5, images.work6, images.work7, images.work8, images.work9];
 
   // 핵심 컬러 정의
   const colors = {
