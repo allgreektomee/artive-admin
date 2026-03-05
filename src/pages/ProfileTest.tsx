@@ -30,7 +30,7 @@ const ProfileTest: React.FC = () => {
     work7: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/ss.png",
     work8: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
     work9: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
-    work10: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
+    work10: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/home.png",
   
   };
 
