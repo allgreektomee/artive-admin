@@ -15,12 +15,19 @@ const ProfileTest: React.FC = () => {
     work100_1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png", 
     work100_2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100ss.png", 
     work120_process: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
-    work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
-    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
-    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
-    work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/789.png",
+   
     first: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
     love: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/60.png",
+
+     work1: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png", 
+    work2: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png", 
+    work3: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
+    work4: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100s.png",
+    work5: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/gg.png",
+    work6: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/sss.png",
+    work7: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/ss.png",
+    work8: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
+    work9: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
   
   };
 
@@ -288,12 +295,12 @@ const ProfileTest: React.FC = () => {
             </Title>
             
             <Paragraph style={{ color: '#555', fontSize: '1.05rem', lineHeight: '1.9', wordBreak: 'keep-all' }}>
-              "가장 거대한 캔버스는 가장 깊은 고독을 위해 비워두었습니다." <br /><br />
+              "가장 큰 캔버스는 나만의 온전한 휴식을 위해 비워두었습니다." <br /><br />
               
-              온기가 머물던 자리, 그 익숙한 공간에 홀로 앉아있는 인물을 그리는 일은 
-              막막한 부재를 마주하고 스스로를 다시 일으켜 세우는 침묵의 의식입니다. <br /><br />
+              온기가 머물던 자리, 그 익숙한 공간에 홀로 앉아 있는 나를 그리는 시간은
+              나 자신을 들여다보는 평온한 순간입니다. 
               
-              120호의 광활한 여백은 그 상실의 크기이자, 동시에 다시 채워나가야 할 작가의 뒷모습입니다.
+             
             </Paragraph>
           </div>
         </div>
