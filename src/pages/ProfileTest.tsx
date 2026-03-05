@@ -34,7 +34,7 @@ const ProfileTest: React.FC = () => {
   
   };
 
-  const archiveList = [images.work1, images.work2, images.work3, images.work4, images.work5, images.work6, images.work7, images.work8, images.work9];
+  const archiveList = [images.work1, images.work2, images.work3, images.work4, images.work5, images.work6, images.work7, images.work8, images.work9, images.work10];
 
   // 핵심 컬러 정의
   const colors = {
