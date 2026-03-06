@@ -1,37 +1,52 @@
 import { useEffect, useCallback } from "react";
 
-interface NativeResponse {
-  action: string;
-  status: "SUCCESS" | "FAIL" | "CANCEL";
-  id: string;
-  data?: any;
-  message?: string;
-}
+// 성공(resolve)과 실패(reject) 함수를 쌍으로 저장
+const pendingRequests = new Map<
+  string,
+  {
+    resolve: (value: any) => void;
+    reject: (reason: any) => void;
+  }
+>();
 
-export const useNativeBridge = (
-  onResponse?: (response: NativeResponse) => void,
-) => {
+export const useNativeBridge = () => {
   useEffect(() => {
-    // 🚀 네이티브가 호출할 창구 단일화
     (window as any).onNativeCallback = (response: any) => {
-      if (onResponse) onResponse(response);
+      const { id, status } = response;
+
+      if (pendingRequests.has(id)) {
+        const { resolve, reject } = pendingRequests.get(id)!;
+
+        // 🚀 상태에 따라 다른 문으로 내보냅니다.
+        if (status === "SUCCESS") {
+          resolve(response);
+        } else {
+          reject(response); // status가 FAIL이거나 CANCEL이면 에러로 취급
+        }
+
+        pendingRequests.delete(id);
+      }
     };
     return () => {
       (window as any).onNativeCallback = null;
     };
-  }, [onResponse]);
+  }, []);
 
   const sendToNative = useCallback((action: string, params: any = {}) => {
-    const payload = {
-      action: action, // 🚀 1층 (관리자님 스타일)
-      header: {
-        id: Date.now().toString(), // 🚀 헤더 안 (관리자님 스타일)
-        platform: "iOS",
-      },
-      params: params,
-    };
+    return new Promise((resolve, reject) => {
+      // 🚀 resolve와 reject 둘 다 생성!
+      const id = Date.now().toString();
+      pendingRequests.set(id, { resolve, reject });
 
-    window.webkit?.messageHandlers?.iosBridge?.postMessage(payload);
+      const payload = {
+        header: { id, platform: "iOS" },
+        action,
+
+        params,
+      };
+
+      window.webkit?.messageHandlers?.iosBridge?.postMessage(payload);
+    });
   }, []);
 
   return { sendToNative };

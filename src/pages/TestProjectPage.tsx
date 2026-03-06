@@ -5,23 +5,28 @@ import { useNativeBridge } from "../hooks/useNativeBridge";
 const TestProjectPage = () => {
   const [status, setStatus] = useState("대기 중...");
   const navigate = useNavigate();
+  const { sendToNative } = useNativeBridge();
 
-  // 🚀 리액트 스타일: 평면 구조(action, status)로 바로 판단
-  const { sendToNative } = useNativeBridge((response) => {
-    if (response.action === "REQ_FACE_ID") {
-      if (response.status === "SUCCESS") {
-        setStatus("인증 성공! 이동합니다...");
-        setTimeout(() => navigate("/transfer-success"), 1000);
-      } else {
-        // 네이티브에서 보낸 에러 메시지가 있으면 보여주고, 없으면 기본 문구
-        setStatus(response.message || "인증 실패나 취소됨");
-      }
-    }
-  });
-
-  const handleAuthStart = () => {
+  // 🚀 이제 핸들러 자체가 async 함수가 됩니다.
+  const handleAuthStart = async () => {
     setStatus("네이티브 인증 호출 중...");
-    sendToNative("REQ_FACE_ID", { amount: "10,000" });
+
+    try {
+      // 1. 던지고 기다린다 (await)
+      const response: any = await sendToNative("REQ_FACE_ID", {
+        amount: "10,000",
+      });
+
+      console.log("네이티브가 준 선물:", response.data);
+
+      // 2. 성공 시 로직 (여기로 왔다는 건 status가 SUCCESS라는 뜻)
+      setStatus("인증 성공! 이동합니다...");
+      setTimeout(() => navigate("/transfer-success"), 1000);
+    } catch (error: any) {
+      // 3. 실패 시 로직 (FAIL이나 에러가 발생하면 일로 튕겨져 들어옴)
+      console.error("인증 실패 로그:", error);
+      setStatus(error.message || "인증 실패나 취소됨");
+    }
   };
 
   return (
@@ -30,20 +35,6 @@ const TestProjectPage = () => {
       <div style={statusBoxStyle}>{status}</div>
       <button onClick={handleAuthStart} style={buttonStyle}>
         FaceID 인증 요청
-      </button>
-
-      {/* 🛠️ 개발자용 테스트 버튼도 변경된 구조에 맞게 수정 */}
-      <button
-        onClick={() =>
-          (window as any).onNativeCallback?.({
-            action: "REQ_FACE_ID",
-            status: "SUCCESS",
-            id: "debug-123",
-          })
-        }
-        style={debugButtonStyle}
-      >
-        (브라우저 전용) 성공 강제 발생
       </button>
     </div>
   );
@@ -64,14 +55,6 @@ const buttonStyle = {
   border: "none",
   borderRadius: "8px",
   cursor: "pointer",
-};
-const debugButtonStyle = {
-  marginTop: "50px",
-  display: "block",
-  fontSize: "12px",
-  color: "#ccc",
-  background: "none",
-  border: "none",
 };
 
 export default TestProjectPage;
