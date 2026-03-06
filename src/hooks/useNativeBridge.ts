@@ -41,7 +41,6 @@ export const useNativeBridge = () => {
       const payload = {
         header: { id, platform: "iOS" },
         action,
-
         params,
       };
 
