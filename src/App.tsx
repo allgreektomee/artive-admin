@@ -71,7 +71,7 @@ const App: React.FC = () => {
             2. 스탠드얼론 페이지 (레이아웃 없음)
            ========================================= */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/TestPage" element={<TestPage />} />
+        <Route path="/testpage" element={<TestPage />} />
         {/* =========================================
             3. 관리자 영역 (Admin) - 로그인 필요
             - /admin 경로로 접근 시 AdminLayout이 인증을 확인합니다.
