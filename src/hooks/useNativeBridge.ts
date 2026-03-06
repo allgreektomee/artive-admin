@@ -14,6 +14,10 @@ export const useNativeBridge = (
   const sendToNative = useCallback((action: string, params: any = {}) => {
     // 네이티브가 알아먹을 수 있는 통합 규격
     const payload = {
+      header: {
+        id: Date.now().toString(), // 네이티브에서 필요한 requestId 추가
+        platform: "IOS&AOS",
+      },
       action: action,
       params: params,
     };
@@ -40,7 +44,7 @@ export const useNativeBridge = (
           `[Native Error] ${response.header.action}: ${response.body.message}`,
         );
       }
-      
+
       // 2. 개별 컴포넌트로 데이터 전달
       onResponse?.(response);
     };

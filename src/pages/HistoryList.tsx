@@ -1,14 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  List,
-  Card,
-  Button,
-  Typography,
-  Tag,
-  Space,
-  Spin,
-  Result,
-} from "antd";
+import { List, Card, Button, Typography, Tag, Space, Spin, Result } from "antd";
 import {
   ArrowLeftOutlined,
   PlusOutlined,
