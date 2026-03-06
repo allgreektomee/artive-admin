@@ -1,4 +1,3 @@
-// pages/TestProjectPage.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNativeBridge } from "../hooks/useNativeBridge";
@@ -7,14 +6,15 @@ const TestProjectPage = () => {
   const [status, setStatus] = useState("대기 중...");
   const navigate = useNavigate();
 
-  // 네이티브 응답이 왔을 때 실행할 로직
+  // 🚀 리액트 스타일: 평면 구조(action, status)로 바로 판단
   const { sendToNative } = useNativeBridge((response) => {
     if (response.action === "REQ_FACE_ID") {
       if (response.status === "SUCCESS") {
         setStatus("인증 성공! 이동합니다...");
         setTimeout(() => navigate("/transfer-success"), 1000);
       } else {
-        setStatus("인증 실패나 취소됨");
+        // 네이티브에서 보낸 에러 메시지가 있으면 보여주고, 없으면 기본 문구
+        setStatus(response.message || "인증 실패나 취소됨");
       }
     }
   });
@@ -32,14 +32,14 @@ const TestProjectPage = () => {
         FaceID 인증 요청
       </button>
 
-      {/* 개발자용 가짜 테스트 버튼 (앱 없이 브라우저에서 테스트할 때 사용) */}
+      {/* 🛠️ 개발자용 테스트 버튼도 변경된 구조에 맞게 수정 */}
       <button
         onClick={() =>
-          window.dispatchEvent(
-            new CustomEvent("fromNative", {
-              detail: { action: "REQ_FACE_ID", status: "SUCCESS" },
-            }),
-          )
+          (window as any).onNativeCallback?.({
+            action: "REQ_FACE_ID",
+            status: "SUCCESS",
+            id: "debug-123",
+          })
         }
         style={debugButtonStyle}
       >
@@ -49,7 +49,7 @@ const TestProjectPage = () => {
   );
 };
 
-// 스타일 (생략 가능)
+// 스타일은 관리자님 기존 코드 그대로 유지합니다.
 const containerStyle = { padding: "50px", textAlign: "center" as const };
 const statusBoxStyle = {
   margin: "20px",
