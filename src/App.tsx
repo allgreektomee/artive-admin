@@ -27,7 +27,22 @@ import ProfilePage from "./pages/ProfileTest"; // 추가
 import LoginPage from './pages/LoginPage';
 import NotFound from './pages/NotFound';
 
+import TestPage from './pages/TestProjectPage';
+declare global {
+  interface Window {
+    webkit?: {
+      messageHandlers: {
+        iosBridge: {
+          postMessage: (message: any) => void;
+        };
+      };
+    };
+    onNativeCallback: (response: any) => void; // 네이티브가 호출할 콜백 함수도 등록
+  }
+}
+
 const App: React.FC = () => {
+  
   // 로그아웃 핸들러 (AdminLayout에 전달)
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -56,7 +71,7 @@ const App: React.FC = () => {
             2. 스탠드얼론 페이지 (레이아웃 없음)
            ========================================= */}
         <Route path="/login" element={<LoginPage />} />
-
+        <Route path="/TestPage" element={<TestPage />} />
         {/* =========================================
             3. 관리자 영역 (Admin) - 로그인 필요
             - /admin 경로로 접근 시 AdminLayout이 인증을 확인합니다.
