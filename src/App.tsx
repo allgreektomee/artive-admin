@@ -33,11 +33,11 @@ declare global {
     webkit?: {
       messageHandlers: {
         iosBridge: {
-          postMessage: (message: any) => void;
+          postMessage: (message: Record<string, any>) => void;
         };
       };
     };
-    onNativeCallback: (response: any) => void; // 네이티브가 호출할 콜백 함수도 등록
+    onNativeCallback: (response: Record<string, any>) => void; // 네이티브가 호출할 콜백 함수도 등록
   }
 }
 
