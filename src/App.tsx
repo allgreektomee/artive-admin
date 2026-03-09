@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+
 // Layouts
 import AdminLayout from "./common/components/layout/AdminLayout";
 import PublicLayout from "./common/pages/PublicLayout";
@@ -8,11 +9,17 @@ import PublicLayout from "./common/pages/PublicLayout";
 // =========================================
 // 1. 핵심 매거진 & 에필로그 (Root & Profile)
 // =========================================
-import MagazineHome from "./common/pages/MagazineHome"; // 하드코딩 유지
-import ProfilePage from "./common/pages/ProfileTest"; // 에필로그(Profile)
+import MagazineHome from "./common/pages/MagazineHome"; // 하드코딩 홈 유지
+import ProfilePage from "./common/pages/ProfileTest"; // 에필로그
 
 // =========================================
-// 2. Common 도메인 (기능 및 정보 페이지)
+// 2. [NEW] ART 도메인 (워드프레스 연동 및 실전 전시)
+// =========================================
+import ArtMagazineHome from "./art/pages/MagazineHome"; // /art 메인
+import MagazineDetail from "./art/pages/MagazineDetail"; // /art/magazine/:slug (동적 SEO)
+
+// =========================================
+// 3. Common 도메인 (레거시/참조용)
 // =========================================
 import About from "./common/pages/About";
 import GalleryPage from "./common/pages/GalleryPage";
@@ -21,7 +28,7 @@ import CriticPage from "./common/pages/CriticPage";
 import WorkDetail from "./common/pages/WorkDetail";
 
 // =========================================
-// 3. Admin 영역
+// 4. Admin 영역
 // =========================================
 import AdminDashboard from "./common/pages/AdminDashboard";
 import UserManagement from "./common/pages/UserManagement";
@@ -30,9 +37,9 @@ import ArtworkPost from "./common/pages/ArtworkPost";
 import HistoryList from "./common/pages/HistoryList";
 import HistoryPost from "./common/pages/HistoryPost";
 import ProfileSetting from "./common/pages/ProfileSetting";
+import LoginPage from "./common/pages/LoginPage";
 
 // Standalone
-import LoginPage from "./common/pages/LoginPage";
 import NotFound from "./common/pages/NotFound";
 import TestPage from "./common/pages/TestProjectPage";
 
@@ -53,7 +60,7 @@ const App: React.FC = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
   };
 
   return (
@@ -61,16 +68,20 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           {/* =========================================
-            PUBLIC 영역 (사용자 페이지)
-           ========================================= */}
+              PUBLIC 영역 (Magazine & Art)
+             ========================================= */}
           <Route element={<PublicLayout />}>
-            {/* 하드코딩된 메인 홈 */}
+            {/* [기존] 하드코딩된 루트 홈 */}
             <Route index element={<MagazineHome />} />
-
-            {/* 에필로그 (작가 프로필) */}
             <Route path="profile" element={<ProfilePage />} />
 
-            {/* Common 도메인 - 하위 경로 정리 */}
+            {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
+            <Route path="art">
+              <Route index element={<ArtMagazineHome />} />
+              <Route path="magazine/:slug" element={<MagazineDetail />} />
+            </Route>
+
+            {/* [참조] Common 도메인 */}
             <Route path="common">
               <Route path="work/:artworkId" element={<WorkDetail />} />
               <Route path="report" element={<ReportPage />} />
@@ -81,39 +92,34 @@ const App: React.FC = () => {
           </Route>
 
           {/* =========================================
-            STANDALONE 영역
-           ========================================= */}
-
+              STANDALONE & TEST
+             ========================================= */}
           <Route path="/testpage" element={<TestPage />} />
 
           {/* =========================================
-            ADMIN 영역 (관리자 페이지)
-           ========================================= */}
-          <Route
-            path="/admin"
-            element={<AdminLayout onLogout={handleLogout} />}
-          >
-            {/* 로그인 페이지를 /admin/login으로 배치 */}
+              ADMIN 영역
+             ========================================= */}
+          <Route path="/admin">
             <Route path="login" element={<LoginPage />} />
-            {/* 관리자 레이아웃 적용 구간 */}
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="profile" element={<ProfileSetting />} />
-            <Route path="users" element={<UserManagement />} />
-            <Route path="artworks" element={<ArtworkList />} />
-            <Route path="artworks/post" element={<ArtworkPost />} />
-            <Route path="artworks/edit/:id" element={<ArtworkPost />} />
-            <Route
-              path="artworks/:artworkId/history"
-              element={<HistoryList />}
-            />
-            <Route
-              path="artworks/:artworkId/history/post"
-              element={<HistoryPost />}
-            />
+            <Route element={<AdminLayout onLogout={handleLogout} />}>
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="profile" element={<ProfileSetting />} />
+              <Route path="users" element={<UserManagement />} />
+              <Route path="artworks" element={<ArtworkList />} />
+              <Route path="artworks/post" element={<ArtworkPost />} />
+              <Route path="artworks/edit/:id" element={<ArtworkPost />} />
+              <Route
+                path="artworks/:artworkId/history"
+                element={<HistoryList />}
+              />
+              <Route
+                path="artworks/:artworkId/history/post"
+                element={<HistoryPost />}
+              />
+            </Route>
           </Route>
 
-          {/* 404 처리 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

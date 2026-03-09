@@ -1,110 +1,130 @@
 // src/art/pages/MagazineHome.tsx
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import ArtSEO from "../components/ArtSEO";
 
-const MagazineHome: React.FC = () => {
+// 아티브님이 워드프레스에서 만드실 태그 정보 (ID는 확인 후 수정하세요)
+const TAGS = [
+  { id: null, label: "ALL", color: "#000" },
+  { id: 10, label: "ARTIST", color: "#3b82f6" },
+  { id: 11, label: "SPACE", color: "#10b981" },
+  { id: 12, label: "EXHIBITION", color: "#f59e0b" },
+  { id: 13, label: "ESSAY", color: "#8b5cf6" },
+  { id: 14, label: "INSIGHT", color: "#ef4444" },
+];
+
+const MagazineHome = () => {
   const [posts, setPosts] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const activeTag = searchParams.get("tag");
 
   useEffect(() => {
-    // 실제 워드프레스 API 연동 시 주석 해제
-    // fetch('https://your-wp-site.com/wp-json/wp/v2/posts?_embed')
-    //   .then(res => res.json())
-    //   .then(data => setPosts(data));
+    // 매거진 전체 태그(예: 5)는 기본으로 하고, 선택된 태그가 있다면 추가 필터링
+    const baseTag = "5";
+    const tagQuery = activeTag ? `&tags=${activeTag}` : `&tags=${baseTag}`;
 
-    // 테스트용 목업 데이터 (작가 3인 부스 컨셉)
-    setPosts([
-      {
-        id: 1,
-        slug: "artive-solitude",
-        title: "The Solitude: 아티브 개인전",
-        thumb: "/sample1.jpg",
-        excerpt: "시니어 개발자의 시선으로 본 고독...",
-      },
-      {
-        id: 2,
-        slug: "writer-a-light",
-        title: "작가 A: 빛의 파편",
-        thumb: "/sample2.jpg",
-        excerpt: "이번 아트페어 부스 참여 작가 A의 세계관...",
-      },
-      {
-        id: 3,
-        slug: "writer-b-space",
-        title: "작가 B: 기억의 공간",
-        thumb: "/sample3.jpg",
-        excerpt: "공간을 재해석하는 작가 B의 작업 노트...",
-      },
-    ] as any);
-  }, []);
+    fetch(`https://your-wp-site.com/wp-json/wp/v2/posts?_embed${tagQuery}`)
+      .then((res) => res.json())
+      .then((data) => setPosts(data));
+  }, [activeTag]);
 
   return (
-    <div style={{ padding: "40px" }}>
+    <div style={{ padding: "60px 20px", maxWidth: "1200px", margin: "0 auto" }}>
       <ArtSEO
-        title="서울아트페어(SAF)05.14-17"
-        description="화실숲 작가들의 기록"
-        image="https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg"
-        url="https://www.artivefor.me/art"
+        title="Artive Magazine"
+        description="아티스트와 공간의 기록"
+        image="/og-mag.jpg"
+        url="https://artivefor.me/art"
       />
 
-      {/* Hero Section */}
-      <section style={{ marginBottom: "80px", textAlign: "center" }}>
-        <h1 style={{ fontFamily: "serif", fontSize: "3rem", fontWeight: 300 }}>
-          The Archive & Magazine
-        </h1>
-        <p style={{ color: "#888", letterSpacing: "2px" }}>ARTIVE FOR ME</p>
-      </section>
+      {/* 태그 필터 메뉴 */}
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          marginBottom: "50px",
+          flexWrap: "wrap",
+        }}
+      >
+        {TAGS.map((tag) => (
+          <button
+            key={tag.label}
+            onClick={() =>
+              tag.id
+                ? setSearchParams({ tag: String(tag.id) })
+                : setSearchParams({})
+            }
+            style={{
+              padding: "10px 20px",
+              cursor: "pointer",
+              border: "1px solid #eee",
+              borderRadius: "20px",
+              fontSize: "13px",
+              backgroundColor:
+                activeTag === String(tag.id) || (!activeTag && !tag.id)
+                  ? "#000"
+                  : "#fff",
+              color:
+                activeTag === String(tag.id) || (!activeTag && !tag.id)
+                  ? "#fff"
+                  : "#000",
+              transition: "0.3s",
+            }}
+          >
+            {tag.label}
+          </button>
+        ))}
+      </div>
 
-      {/* Magazine Grid */}
+      {/* 리스트 영역 */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "60px 40px",
+          gap: "40px",
         }}
       >
-        {posts.map((post: any) => (
-          <article
-            key={post.id}
-            onClick={() => navigate(`/art/magazine/${post.slug}`)}
-            style={{ cursor: "pointer" }}
-          >
-            <div
-              style={{
-                width: "100%",
-                height: "400px",
-                backgroundColor: "#f9f9f9",
-                marginBottom: "20px",
-                overflow: "hidden",
-              }}
+        {posts.map((post: any) => {
+          const featuredImg =
+            post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+          return (
+            <article
+              key={post.id}
+              onClick={() => navigate(`/art/contents/${post.slug}`)}
+              style={{ cursor: "pointer" }}
             >
-              <img
-                src={post.thumb}
-                alt={post.title}
+              <div
                 style={{
                   width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  transition: "0.5s",
+                  aspectRatio: "4/3",
+                  overflow: "hidden",
+                  marginBottom: "15px",
+                  backgroundColor: "#f9f9f9",
                 }}
-                className="hover-zoom"
+              >
+                <img
+                  src={featuredImg || "/placeholder.jpg"}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+              <h2
+                style={{
+                  fontSize: "1.2rem",
+                  fontFamily: "serif",
+                  marginBottom: "10px",
+                }}
+                dangerouslySetInnerHTML={{ __html: post.title.rendered }}
               />
-            </div>
-            <h2
-              style={{
-                fontFamily: "serif",
-                fontSize: "20px",
-                marginBottom: "10px",
-              }}
-            >
-              {post.title}
-            </h2>
-            <p style={{ color: "#666", fontSize: "14px", lineHeight: "1.6" }}>
-              {post.excerpt}
-            </p>
-          </article>
-        ))}
+              <div
+                style={{ color: "#888", fontSize: "14px" }}
+                dangerouslySetInnerHTML={{
+                  __html: post.excerpt.rendered.slice(0, 80) + "...",
+                }}
+              />
+            </article>
+          );
+        })}
       </div>
     </div>
   );
