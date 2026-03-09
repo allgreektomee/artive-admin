@@ -100,23 +100,23 @@ const ArtworkPost: React.FC = () => {
   // 🚀 공통 업로드 훅 적용
   const handleFileUpload = async (file: File) => {
     try {
-    const url = await uploadSingleImage(file, "artwork");
-    
-    if (url) {
-      // 🚀 핵심: (prev) => ... 처럼 이전 상태값을 인자로 받아야 합니다.
-      // 이렇게 하면 리액트가 업데이트 큐를 순차적으로 처리하여 4장 모두 유실 없이 쌓입니다.
-      setImageList((prev) => {
-        // 이미 리스트에 있는 URL인지 중복 체크 (안정성 확보)
-        if (prev.includes(url)) return prev;
-        
-        const nextList = [...prev, url];
-        console.log("현재 업데이트된 이미지 리스트:", nextList);
-        return nextList;
-      });
+      const url = await uploadSingleImage(file, "artwork");
+
+      if (url) {
+        // 🚀 핵심: (prev) => ... 처럼 이전 상태값을 인자로 받아야 합니다.
+        // 이렇게 하면 리액트가 업데이트 큐를 순차적으로 처리하여 4장 모두 유실 없이 쌓입니다.
+        setImageList((prev) => {
+          // 이미 리스트에 있는 URL인지 중복 체크 (안정성 확보)
+          if (prev.includes(url)) return prev;
+
+          const nextList = [...prev, url];
+          console.log("현재 업데이트된 이미지 리스트:", nextList);
+          return nextList;
+        });
+      }
+    } catch (error) {
+      console.error("파일 업로드 중 에러 발생:", error);
     }
-  } catch (error) {
-    console.error("파일 업로드 중 에러 발생:", error);
-  }
     return false;
   };
 
@@ -127,7 +127,7 @@ const ArtworkPost: React.FC = () => {
 
     if (success) {
       message.success(
-        `작품이 성공적으로 ${isEdit ? "수정" : "등록"}되었습니다!`
+        `작품이 성공적으로 ${isEdit ? "수정" : "등록"}되었습니다!`,
       );
       navigate("/admin/artworks");
     }
@@ -260,6 +260,19 @@ const ArtworkPost: React.FC = () => {
             </Form.Item>
             <Form.Item name="size" label="규격 (Size)">
               <Input placeholder="예: 60 x 60 cm" />
+            </Form.Item>
+            <Form.Item name="price" label="가격 (Price)">
+              <Input
+                type="number"
+                prefix="₩"
+                placeholder="판매가 (숫자만 입력)"
+              />
+            </Form.Item>
+            <Form.Item name="youtubeUrl" label="관련 영상 (YouTube URL)">
+              <Input
+                prefix={<LinkOutlined />}
+                placeholder="작품 관련 유튜브 영상 링크"
+              />
             </Form.Item>
           </div>
         </Card>

@@ -1,0 +1,10 @@
+/*
+  아트 도메인 전용 감성 스타일 (Serif 폰트 등)
+*/
+
+.magazine-layout {
+  /* Example: Using a serif font for the art section */
+  font-family: "Georgia", "Times New Roman", Times, serif;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
