@@ -1,10 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useResponsive } from "../hooks/useResponsive";
+// import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../hook/useResponsive";
 
 const MagazineHome: React.FC = () => {
   const { isMobile } = useResponsive();
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   const images = {
     work100_1:
