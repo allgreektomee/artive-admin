@@ -75,23 +75,22 @@ const App: React.FC = () => {
             {/* [기존] 하드코딩된 루트 홈 */}
             <Route index element={<MagazineHome />} />
             <Route path="profile" element={<ProfilePage />} />
+          </Route>
+          {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
+          {/* [변경] 매거진 전용 레이아웃 또는 독립 페이지 */}
+          <Route path="/art" element={<ArtLayout />}>
+            {/* 매거진 전용 헤더가 있는 껍데기 */}
+            <Route index element={<ArtMagazineHome />} />
+            <Route path="magazine/:slug" element={<MagazineDetail />} />
+          </Route>
 
-            {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
-            {/* [변경] 매거진 전용 레이아웃 또는 독립 페이지 */}
-            <Route path="/art" element={<ArtLayout />}>
-              {/* 매거진 전용 헤더가 있는 껍데기 */}
-              <Route index element={<ArtMagazineHome />} />
-              <Route path="magazine/:slug" element={<MagazineDetail />} />
-            </Route>
-
-            {/* [참조] Common 도메인 */}
-            <Route path="common">
-              <Route path="work/:artworkId" element={<WorkDetail />} />
-              <Route path="report" element={<ReportPage />} />
-              <Route path="critic" element={<CriticPage />} />
-              <Route path="gallery" element={<GalleryPage />} />
-              <Route path="office" element={<About />} />
-            </Route>
+          {/* [참조] Common 도메인 */}
+          <Route path="common">
+            <Route path="work/:artworkId" element={<WorkDetail />} />
+            <Route path="report" element={<ReportPage />} />
+            <Route path="critic" element={<CriticPage />} />
+            <Route path="gallery" element={<GalleryPage />} />
+            <Route path="office" element={<About />} />
           </Route>
 
           {/* =========================================
