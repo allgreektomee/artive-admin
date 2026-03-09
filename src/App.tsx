@@ -71,7 +71,7 @@ const App: React.FC = () => {
           {/* =========================================
               PUBLIC 영역 (Magazine & Art)
              ========================================= */}
-          <Route element={<PublicLayout />}>
+          <Route path="/" element={<PublicLayout />}>
             {/* [기존] 하드코딩된 루트 홈 */}
             <Route index element={<MagazineHome />} />
             <Route path="profile" element={<ProfilePage />} />
