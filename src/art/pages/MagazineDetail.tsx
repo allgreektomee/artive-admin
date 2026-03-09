@@ -1,5 +1,5 @@
 // src/art/pages/MagazineDetail.tsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ArtSEO from "../components/ArtSEO";
 
