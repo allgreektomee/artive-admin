@@ -5,7 +5,7 @@ const PublicLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 현재 경로가 /art 인지 /stock 인지에 따라 테마 컬러를 바꿀 수도 있습니다.
+  // 현재 /art 경로에 있는지 확인 (필요 시 스타일 분기용)
   const isArtMode = location.pathname.startsWith("/art");
 
   return (
@@ -17,61 +17,35 @@ const PublicLayout: React.FC = () => {
         flexDirection: "column",
       }}
     >
-      {/* --- Header: Magazine Style --- */}
+      {/* --- Header: Magazine Minimal --- */}
       <header
         style={{
-          padding: "20px 40px",
+          padding: "15px 20px", // 모바일에 맞춰 패딩 축소
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline", // 텍스트 높이 정렬
+          justifyContent: "center", // 로고 중앙 정렬 (매거진 느낌)
+          alignItems: "center",
           position: "sticky",
           top: 0,
           zIndex: 1000,
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)", // 시각적 고급스러움 추가
-          borderBottom: "0.5px solid #e0e0e0",
+          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(8px)",
+          borderBottom: "0.5px solid #f0f0f0", // 아주 연하게 구분선
         }}
       >
         <div
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/art")} // 클릭 시 매거진 홈으로 바로 이동
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "24px",
+            fontSize: "20px", // 모바일 적정 사이즈
             fontWeight: 900,
             cursor: "pointer",
-            letterSpacing: "-1.5px",
+            letterSpacing: "-1px",
             color: "#000",
+            textAlign: "center",
           }}
         >
           ARTIVE
         </div>
-
-        <nav style={{ display: "flex", gap: "30px" }}>
-          <span
-            onClick={() => navigate("/art/magazine")}
-            style={{
-              fontFamily: "'Nanum Myeongjo', serif", // 명조체 사용
-              fontSize: "15px",
-              cursor: "pointer",
-              color: isArtMode ? "#000" : "#888",
-              transition: "0.3s",
-            }}
-          >
-            매거진
-          </span>
-          <span
-            onClick={() => navigate("/profile")}
-            style={{
-              fontFamily: "'Nanum Myeongjo', serif",
-              fontSize: "15px",
-              cursor: "pointer",
-              color: "#888",
-              transition: "0.3s",
-            }}
-          >
-            에필로그
-          </span>
-        </nav>
       </header>
 
       {/* --- Main Content --- */}
@@ -82,14 +56,14 @@ const PublicLayout: React.FC = () => {
       {/* --- Footer: Minimal --- */}
       <footer
         style={{
-          padding: "60px 40px 30px",
-          fontSize: "12px",
-          color: "#aaa",
-          textAlign: "left",
-          letterSpacing: "1px",
+          padding: "40px 20px 30px", // 모바일 여백 조정
+          fontSize: "11px",
+          color: "#bbb",
+          textAlign: "center", // 모바일은 중앙 정렬이 깔끔합니다
+          letterSpacing: "0.5px",
         }}
       >
-        <div style={{ borderTop: "1px solid #eee", paddingTop: "20px" }}>
+        <div style={{ borderTop: "1px solid #f9f9f9", paddingTop: "20px" }}>
           © 2026 ARTIVE. ALL RIGHTS RESERVED.
         </div>
       </footer>
