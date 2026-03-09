@@ -64,7 +64,7 @@ const PublicLayout: React.FC = () => {
         }}
       >
         <div style={{ borderTop: "1px solid #f9f9f9", paddingTop: "20px" }}>
-          © 2026 ARTIVE. ALL RIGHTS RESERVED.
+          © 2026 ARTIVE FOR ME. ALL RIGHTS RESERVED.
         </div>
       </footer>
     </div>
