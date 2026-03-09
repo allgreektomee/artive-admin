@@ -69,7 +69,7 @@ const MagazineHome: React.FC = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: "#fff" }}>
+    <div style={{ backgroundColor: "#fff", width: "100%" }}>
       {/* 배너 영역 */}
       <section
         style={{
@@ -77,6 +77,7 @@ const MagazineHome: React.FC = () => {
           width: "100%",
           position: "relative",
           backgroundColor: "#eee",
+          marginTop: "0", // 상단 여백 제거
         }}
       >
         <img
@@ -111,25 +112,28 @@ const MagazineHome: React.FC = () => {
       </section>
 
       {/* 태그 필터 */}
+      {/* 2. 필터 영역: 배너 바로 밑에 붙임 */}
       <nav
         style={{
           display: "flex",
           gap: "20px",
-          padding: "20px",
+          padding: "15px 20px",
           justifyContent: isMobile ? "flex-start" : "center",
           overflowX: "auto",
           borderBottom: "1px solid #f0f0f0",
-          position: "sticky",
-          top: "60px",
           backgroundColor: "#fff",
-          zIndex: 10,
         }}
       >
         {["ALL", "ARTIST", "SPACE", "EXHIBITION", "ESSAY", "INSIGHT"].map(
           (tag) => (
             <span
               key={tag}
-              style={{ fontSize: "12px", cursor: "pointer", flexShrink: 0 }}
+              style={{
+                fontSize: "11px",
+                fontWeight: 600,
+                cursor: "pointer",
+                flexShrink: 0,
+              }}
             >
               {tag}
             </span>
@@ -138,28 +142,24 @@ const MagazineHome: React.FC = () => {
       </nav>
 
       {/* 그리드 리스트 */}
+      {/* 3. 그리드 리스트 */}
       <main
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: isMobile ? "20px" : "60px 20px",
+          padding: isMobile ? "30px 20px" : "60px 20px",
           display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
-          gap: "40px",
+          gap: "30px",
         }}
       >
         {dummyPosts.map((post) => (
-          <article
-            key={post.id}
-            onClick={() => navigate(`/art/contents/${post.id}`)}
-            style={{ cursor: "pointer" }}
-          >
+          <article key={post.id} style={{ cursor: "pointer" }}>
             <div
               style={{
                 width: "100%",
                 aspectRatio: "4/5",
                 overflow: "hidden",
-                backgroundColor: "#f9f9f9",
                 marginBottom: "15px",
               }}
             >
@@ -169,15 +169,10 @@ const MagazineHome: React.FC = () => {
                 alt="Thumb"
               />
             </div>
-            <div
-              style={{ fontSize: "11px", color: "#888", marginBottom: "5px" }}
-            >
-              {post.tag}
-            </div>
-            <h3 style={{ fontSize: "1.2rem", margin: "0 0 10px" }}>
+            <h3 style={{ fontSize: "1.1rem", margin: "0 0 5px" }}>
               {post.title}
             </h3>
-            <p style={{ fontSize: "14px", color: "#666", margin: 0 }}>
+            <p style={{ fontSize: "13px", color: "#666", margin: 0 }}>
               {post.summary}
             </p>
           </article>
