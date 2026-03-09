@@ -23,7 +23,13 @@ export const useNativeBridge = () => {
         } else {
           reject(response); // status가 FAIL이거나 CANCEL이면 에러로 취급
         }
-
+        // self.bridgeResponse = [
+        //           "action": action,
+        //           "id": id,
+        //           "status": status,
+        //           "data": data,
+        //           "message": message ?? ""
+        //       ]
         pendingRequests.delete(id);
       }
     };
