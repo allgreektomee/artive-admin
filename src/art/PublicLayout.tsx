@@ -1,12 +1,12 @@
 import React from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const PublicLayout: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  //   const location = useLocation();
 
   // 현재 /art 경로에 있는지 확인 (필요 시 스타일 분기용)
-  const isArtMode = location.pathname.startsWith("/art");
+  //   const isArtMode = location.pathname.startsWith("/art");
 
   return (
     <div
