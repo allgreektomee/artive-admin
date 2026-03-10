@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useResponsive } from "../hook/useResponsive";
 import ArtworkCard from "../components/ArtworkCard";
 // 새로 만든 컴포넌트들 임포트
