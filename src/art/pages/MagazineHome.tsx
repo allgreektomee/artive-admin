@@ -65,6 +65,7 @@ const MagazineHome = () => {
   // 3번 영역 데이터 (Type 선택형)
   const logs = [
     {
+      id: "log_01",
       type: "c", // 이미지 2개 밀착형 (Type C)
       tag: "PROCESS",
       title: "대작의 층위: 120호 기록",
@@ -73,6 +74,7 @@ const MagazineHome = () => {
       imgUrl2: images.work8,
     },
     {
+      id: "log_02",
       type: "a", // 이미지 2개 밀착형 (Type C)
       tag: "SPACE",
       title: "대작의 층위: 120호 기록",
@@ -80,6 +82,7 @@ const MagazineHome = () => {
       imgUrl: images.work8,
     },
     {
+      id: "log_03",
       type: "b", // 이미지 2개 밀착형 (Type C)
       tag: "ESSAY",
       title: "대작의 층위: 120호 기록",
@@ -87,6 +90,7 @@ const MagazineHome = () => {
       imgUrl: images.work120_process,
     },
     {
+      id: "log_04",
       type: "d", // 이미지 2개 밀착형 (Type C)
       tag: "PROCESS",
       title: "대작의 층위: 기록",
