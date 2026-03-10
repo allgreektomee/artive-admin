@@ -228,16 +228,18 @@ const MagazineHome: React.FC = () => {
         </div>
       </section>
 
-      {/* --- Section 3: Main Grid (기존 그리드 정렬) --- */}
+      {/* --- Section 3: Main Grid (모바일 2열 버전) --- */}
       <div style={{ backgroundColor: "#fff", borderTop: "1px solid #f0f0f0" }}>
         <main
           style={{
-            padding: isMobile ? "50px 20px" : "100px 50px",
+            padding: isMobile ? "30px 15px" : "100px 50px",
             maxWidth: "1400px",
             margin: "0 auto",
             display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
-            gap: isMobile ? "40px" : "60px 40px",
+            // [변경] 모바일에서 1fr -> 2fr(또는 repeat(2, 1fr))로 변경
+            gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+            // [변경] 간격을 조금 좁혀서 촘촘하게 만듦
+            gap: isMobile ? "25px 15px" : "60px 40px",
           }}
         >
           {dummyPosts.map((post) => (
@@ -252,7 +254,7 @@ const MagazineHome: React.FC = () => {
                   aspectRatio: "4/5",
                   overflow: "hidden",
                   backgroundColor: "#f9f9f9",
-                  marginBottom: "20px",
+                  marginBottom: "12px",
                 }}
               >
                 <img
@@ -261,12 +263,14 @@ const MagazineHome: React.FC = () => {
                   alt="Thumb"
                 />
               </div>
+
+              {/* [조정] 모바일 2열에서는 텍스트가 작아야 예쁩니다 */}
               <div
                 style={{
-                  fontSize: "10px",
+                  fontSize: "9px",
                   color: "#888",
-                  letterSpacing: "1.5px",
-                  marginBottom: "8px",
+                  letterSpacing: "1px",
+                  marginBottom: "5px",
                   fontWeight: 600,
                 }}
               >
@@ -274,41 +278,33 @@ const MagazineHome: React.FC = () => {
               </div>
               <h3
                 style={{
-                  fontSize: "1.4rem",
+                  fontSize: isMobile ? "1rem" : "1.4rem", // 폰트 크기 축소
                   fontFamily: "'Nanum Myeongjo', serif",
-                  margin: "0 0 12px",
+                  margin: "0 0 8px",
                   lineHeight: 1.3,
+                  wordBreak: "keep-all",
                 }}
               >
                 {post.title}
               </h3>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#666",
-                  margin: 0,
-                  lineHeight: 1.6,
-                }}
-              >
-                {post.summary}
-              </p>
+
+              {/* [조정] 2열일 때는 요약글을 숨기거나 아주 짧게 처리하는 게 깔끔합니다 */}
+              {!isMobile && (
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "#666",
+                    margin: 0,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {post.summary}
+                </p>
+              )}
             </article>
           ))}
         </main>
       </div>
-
-      <footer
-        style={{
-          padding: "80px 20px",
-          textAlign: "center",
-          borderTop: "1px solid #eee",
-          color: "#aaa",
-          fontSize: "11px",
-          letterSpacing: "1px",
-        }}
-      >
-        © 2026 ARTIVE. ALL RIGHTS RESERVED.
-      </footer>
     </div>
   );
 };
