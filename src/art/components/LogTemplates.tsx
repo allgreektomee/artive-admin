@@ -10,7 +10,7 @@ interface LogProps {
   isMobile: boolean;
 }
 
-// 공통 태그 스타일
+// 공통 태그 스타일 (매거진 B 스타일의 미니멀함)
 const Tag = ({ children }: { children: React.ReactNode }) => (
   <span
     style={{
@@ -19,158 +19,201 @@ const Tag = ({ children }: { children: React.ReactNode }) => (
       letterSpacing: "1.5px",
       marginBottom: "8px",
       display: "block",
+      textTransform: "uppercase",
     }}
   >
     {children}
   </span>
 );
 
-/** Type A: 왼쪽 이미지 + 오른쪽 텍스트 */
-export const TypeA = ({ data }: LogProps) => (
+/** * [LOG 섹션용]
+ * FixedGridSection & TextListSection
+ * 네이트온의 자동차 섹션 구조를 계승
+ */
+
+export const FixedGridSection = ({
+  items,
+}: {
+  items: any[];
+  isMobile: boolean;
+}) => (
   <div
     style={{
-      display: "flex",
-      gap: "20px",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "12px",
       padding: "0 20px",
-      marginBottom: "50px",
-      alignItems: "center",
+      marginBottom: "25px",
     }}
   >
-    <div style={{ flex: "0 0 110px", height: "110px", overflow: "hidden" }}>
-      <img
-        src={data.imgUrl}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        alt="A"
-      />
-    </div>
-    <div style={{ flex: 1 }}>
-      <Tag>{data.tag}</Tag>
-      <h3
-        style={{
-          fontSize: "16px",
-          fontWeight: 600,
-          margin: "0 0 5px 0",
-          lineHeight: 1.4,
-        }}
-      >
-        {data.title}
-      </h3>
-      <p
-        style={{ fontSize: "12px", color: "#777", margin: 0, lineHeight: 1.5 }}
-      >
-        {data.desc}
-      </p>
-    </div>
+    {items.map((item, idx) => (
+      <div key={idx} style={{ cursor: "pointer" }}>
+        <div
+          style={{
+            width: "100%",
+            aspectRatio: "16 / 11",
+            overflow: "hidden",
+            backgroundColor: "#f7f7f7",
+            marginBottom: "10px",
+          }}
+        >
+          <img
+            src={item.imgUrl}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            alt={item.title}
+          />
+        </div>
+        <h3
+          style={{
+            fontSize: "14px",
+            fontWeight: 600,
+            lineHeight: 1.4,
+            margin: 0,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            letterSpacing: "-0.3px",
+          }}
+        >
+          {item.title}
+        </h3>
+      </div>
+    ))}
   </div>
 );
 
-/** Type B: 왼쪽 텍스트 + 오른쪽 이미지 */
-export const TypeB = ({ data }: LogProps) => (
-  <div
-    style={{
-      display: "flex",
-      gap: "20px",
-      padding: "0 20px",
-      marginBottom: "50px",
-      alignItems: "center",
-    }}
-  >
-    <div style={{ flex: 1 }}>
-      <Tag>{data.tag}</Tag>
-      <h3
-        style={{
-          fontSize: "16px",
-          fontWeight: 600,
-          margin: "0 0 5px 0",
-          lineHeight: 1.4,
-        }}
-      >
-        {data.title}
-      </h3>
-      <p
-        style={{ fontSize: "12px", color: "#777", margin: 0, lineHeight: 1.5 }}
-      >
-        {data.desc}
-      </p>
-    </div>
-    <div style={{ flex: "0 0 110px", height: "110px", overflow: "hidden" }}>
-      <img
-        src={data.imgUrl}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        alt="B"
-      />
-    </div>
-  </div>
-);
-
-/** Type C: 이미지 하단 오버랩 (카드형) */
-export const TypeC = ({ data }: LogProps) => (
-  <div
-    style={{ padding: "0 20px", marginBottom: "50px", position: "relative" }}
-  >
-    <div style={{ width: "100%", height: "160px", overflow: "hidden" }}>
-      <img
-        src={data.imgUrl}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          opacity: 0.9,
-        }}
-        alt="C"
-      />
-    </div>
-    <div
-      style={{
-        marginTop: "-30px",
-        marginLeft: "20px",
-        padding: "20px",
-        backgroundColor: "#fff",
-        borderLeft: "2px solid #333",
-        boxShadow: "10px 10px 30px rgba(0,0,0,0.05)",
-      }}
-    >
-      <Tag>{data.tag}</Tag>
-      <h3 style={{ fontSize: "16px", fontWeight: 600, margin: 0 }}>
-        {data.title}
-      </h3>
-    </div>
-  </div>
-);
-
-/** Type D: 미니멀 박스형 (텍스트만 있을 때도 버튼처럼 보이게) */
-export const TypeD = ({ data }: LogProps) => (
+export const TextListSection = ({ items }: { items: any[] }) => (
   <div style={{ padding: "0 20px", marginBottom: "50px" }}>
-    <div
-      style={{
-        padding: "30px",
-        border: "1px solid #eee",
-        textAlign: "center",
-        backgroundColor: "#fafafa",
-      }}
-    >
-      <Tag>{data.tag}</Tag>
-      <h3
+    {items.slice(0, 5).map((item, idx) => (
+      <div
+        key={idx}
         style={{
-          fontSize: "17px",
-          fontWeight: 500,
-          margin: "10px 0",
-          wordBreak: "keep-all",
+          padding: "15px 0",
+          borderBottom: "1px solid #f0f0f0",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          cursor: "pointer",
         }}
       >
-        {data.title}
-      </h3>
+        <p
+          style={{
+            fontSize: "14px",
+            color: "#333",
+            margin: 0,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            paddingRight: "20px",
+          }}
+        >
+          {item.title}
+        </p>
+        <span style={{ fontSize: "12px", color: "#ddd", fontWeight: 300 }}>
+          {"→"}
+        </span>
+      </div>
+    ))}
+  </div>
+);
+
+/** * [INSIGHT 섹션용]
+ * InsightGrid & InsightTextList
+ * 매거진 B의 미니멀한 감성 강조
+ */
+
+export const InsightGrid = ({ items }: { items: any[] }) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "10px",
+      padding: "0 20px",
+      marginBottom: "30px",
+    }}
+  >
+    {items.map((item: any, idx: number) => (
+      <div key={idx} style={{ cursor: "pointer" }}>
+        <div
+          style={{
+            aspectRatio: "4/5",
+            overflow: "hidden",
+            backgroundColor: "#f4f4f4",
+            marginBottom: "10px",
+          }}
+        >
+          <img
+            src={item.imgUrl}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            alt={item.title}
+          />
+        </div>
+        <span
+          style={{
+            fontSize: "9px",
+            color: "#999",
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+            display: "block",
+            marginBottom: "4px",
+          }}
+        >
+          {item.tag}
+        </span>
+        <h4
+          style={{
+            fontSize: "14px",
+            fontWeight: 500,
+            lineHeight: 1.4,
+            color: "#222",
+            margin: 0,
+          }}
+        >
+          {item.title}
+        </h4>
+      </div>
+    ))}
+  </div>
+);
+
+export const InsightTextList = ({ items }: { items: any[] }) => (
+  <div style={{ padding: "0 20px", marginBottom: "80px" }}>
+    {items.slice(0, 5).map((item: any, idx: number) => (
       <div
+        key={idx}
         style={{
-          width: "20px",
-          height: "1px",
-          backgroundColor: "#ccc",
-          margin: "15px auto",
+          padding: "14px 0",
+          borderBottom: "0.5px solid #eee",
+          display: "flex",
+          alignItems: "baseline",
+          cursor: "pointer",
         }}
-      ></div>
-      <p style={{ fontSize: "12px", color: "#999", letterSpacing: "1px" }}>
-        READ ARCHIVE —
-      </p>
-    </div>
+      >
+        <span
+          style={{
+            fontSize: "10px",
+            color: "#ccc",
+            marginRight: "12px",
+            fontFamily: "serif",
+            fontStyle: "italic",
+          }}
+        >
+          0{idx + 1}
+        </span>
+        <p
+          style={{
+            fontSize: "14px",
+            color: "#444",
+            margin: 0,
+            flex: 1,
+            letterSpacing: "-0.3px",
+            lineHeight: 1.4,
+          }}
+        >
+          {item.title}
+        </p>
+      </div>
+    ))}
   </div>
 );
