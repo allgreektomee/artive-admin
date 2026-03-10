@@ -1,238 +1,213 @@
-import React, { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { useResponsive } from "../hook/useResponsive";
+import React from "react";
 
-const MagazineHome: React.FC = () => {
-  const { isMobile } = useResponsive();
-  const navigate = useNavigate();
-
+const ArtiveMockup = () => {
   const images = {
-    work100_1:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png",
     studioView:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
+    mentorView:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg",
+    work100_1:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png",
+    work100_2:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100ss.png",
     work120_process:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
+    first:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
+    love: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/60.png",
+    work1:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/123.png",
+    work2:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png",
+    work3:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
+    work4:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100s.png",
+    work5: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/gg.png",
+    work6:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/sss.png",
+    work7: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/ss.png",
+    work8:
+      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
     work9:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
     work10:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/home.png",
-    mentorView:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg",
-    first:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
   };
 
-  // 기존 태그 활용 데이터
-  const dummyPosts = [
-    {
-      id: "1",
-      tags: ["ARTIST", "MAIN"],
-      title: "TEST TITLE 01",
-      summary: "TEST SUMMARY 01",
-      img: images.work100_1,
-    },
-    {
-      id: "2",
-      tags: ["SPACE", "MAIN"],
-      title: "TEST TITLE 02",
-      summary: "TEST SUMMARY 02",
-      img: images.studioView,
-    },
-    {
-      id: "3",
-      tags: ["EXHIBITION"],
-      title: "TEST TITLE 03",
-      summary: "TEST SUMMARY 03",
-      img: images.work120_process,
-    },
-    {
-      id: "4",
-      tags: ["ESSAY"],
-      title: "TEST TITLE 04",
-      summary: "TEST SUMMARY 04",
-      img: images.work9,
-    },
-    {
-      id: "5",
-      tags: ["INSIGHT"],
-      title: "TEST TITLE 05",
-      summary: "TEST SUMMARY 05",
-      img: images.mentorView,
-    },
-  ];
-
-  const mainPost = useMemo(() => {
-    const mainPool = dummyPosts.filter((post) => post.tags.includes("MAIN"));
-    return mainPool[Math.floor(Math.random() * mainPool.length)];
-  }, []);
-
   return (
-    <div style={{ backgroundColor: "#fff", color: "#1a1a1a" }}>
-      <div
-        style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          padding: isMobile ? "0 20px" : "0",
-        }}
-      >
-        {/* --- 1. HERO BANNER --- */}
-        {mainPost && (
-          <section
-            style={{ padding: "60px 0", borderBottom: "1px solid #eee" }}
-          >
-            <div
-              onClick={() => navigate(`/art/contents/${mainPost.id}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "16/9",
-                  overflow: "hidden",
-                  marginBottom: "30px",
-                }}
-              >
-                <img
-                  src={mainPost.img}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <span
-                  style={{
-                    fontSize: "10px",
-                    letterSpacing: "3px",
-                    color: "#aaa",
-                  }}
-                >
-                  FEATURED
-                </span>
-                <h1
-                  style={{
-                    fontSize: isMobile ? "1.8rem" : "2.5rem",
-                    margin: "10px 0",
-                    fontWeight: 300,
-                  }}
-                >
-                  {mainPost.title}
-                </h1>
-              </div>
-            </div>
-          </section>
-        )}
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "800px",
+        margin: "0 auto",
+        backgroundColor: "#fff",
+        color: "#1a1a1a",
+        fontFamily: "serif",
+      }}
+    >
+      {/* 1. BANNER 영역 (Main) */}
+      <section style={{ marginBottom: "100px" }}>
+        <div style={{ width: "100%", aspectRatio: "21/9", overflow: "hidden" }}>
+          <img
+            src={images.first}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            alt="Main"
+          />
+        </div>
+        <h1
+          style={{
+            fontSize: "24px",
+            textAlign: "center",
+            marginTop: "20px",
+            letterSpacing: "-0.5px",
+          }}
+        >
+          2026 ART BUSAN: THE FIRST STEP
+        </h1>
+      </section>
 
-        {/* --- 2. ARTWORK SECTION (배너 바로 아래) --- */}
-        <section style={{ padding: "80px 0" }}>
-          <h2
-            style={{
-              fontSize: "11px",
-              letterSpacing: "4px",
-              color: "#000",
-              textAlign: "center",
-              marginBottom: "40px",
-            }}
-          >
-            SELECTED ARTWORK
-          </h2>
-          <div style={{ display: "grid", gap: "40px" }}>
-            {/* 나중에 여러 작품일 때 이곳을 슬라이더나 그룹 커버로 구현 */}
-            <div
-              onClick={() => navigate(`/artwork/1`)}
-              style={{ cursor: "pointer" }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "1/1",
-                  overflow: "hidden",
-                  backgroundColor: "#f9f9f9",
-                }}
-              >
-                <img
-                  src={images.work120_process}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </div>
-              <p
-                style={{
-                  fontSize: "12px",
-                  textAlign: "center",
-                  marginTop: "15px",
-                  color: "#888",
-                }}
-              >
-                WORK_TITLE_01 / ARTIST_NAME
-              </p>
-            </div>
+      {/* 2. ARTWORK 영역 (고정형 5개) */}
+      <section style={{ marginBottom: "120px", padding: "0 20px" }}>
+        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
+          01 SELECTED ARTWORK
+        </p>
+        {[
+          images.work1,
+          images.work2,
+          images.work3,
+          images.work4,
+          images.work5,
+        ].map((img, i) => (
+          <div key={i} style={{ marginBottom: "60px" }}>
+            <img
+              src={img}
+              style={{ width: "100%", height: "auto", display: "block" }}
+              alt="Artwork"
+            />
+            <p style={{ fontSize: "11px", marginTop: "10px", color: "#666" }}>
+              Series No. 0{i + 1} / 2026
+            </p>
           </div>
-        </section>
+        ))}
+      </section>
 
-        {/* --- 3. MAGAZINE FEED (기존 태그 기반) --- */}
-        <section style={{ borderTop: "1px solid #eee", padding: "80px 0" }}>
+      {/* 3. LOG 영역 (A/B/C 타입 혼합) */}
+      <section style={{ marginBottom: "120px", padding: "0 20px" }}>
+        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
+          02 LOG: PROCESS & SPACE
+        </p>
+
+        {/* Type C: 기록 밀착형 */}
+        <div style={{ marginBottom: "80px" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <img
+              src={images.work120_process}
+              style={{ width: "100%", marginBottom: "2px" }}
+            />
+            <img src={images.work8} style={{ width: "100%" }} />
+          </div>
+          <h3 style={{ fontSize: "18px", marginTop: "20px" }}>
+            120호 대작의 기록
+          </h3>
+          <p style={{ fontSize: "14px", lineHeight: "1.6", color: "#444" }}>
+            캔버스를 마주하는 첫 순간의 긴장감. 밑색이 깔리는 과정의 층위들.
+          </p>
+        </div>
+
+        {/* Type B: 서사 중심형 (좌이미지/우텍스트) */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "30px",
+            marginBottom: "80px",
+          }}
+        >
+          <img
+            src={images.studioView}
+            style={{ width: "40%", height: "auto" }}
+          />
+          <div style={{ width: "60%" }}>
+            <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
+              작업실 조도
+            </h3>
+            <p style={{ fontSize: "13px", lineHeight: "1.6", color: "#444" }}>
+              오후 4시의 빛이 가장 깊게 들어올 때, 비로소 물감의 본래 색이
+              보인다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. INSIGHT 영역 (B/D 타입 혼합) */}
+      <section style={{ marginBottom: "120px", padding: "0 20px" }}>
+        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
+          03 INSIGHT: VISION
+        </p>
+
+        {/* Type D: 메시지 강조형 */}
+        <div
+          style={{
+            backgroundColor: "#f9f9f9",
+            padding: "80px 40px",
+            textAlign: "center",
+            marginBottom: "80px",
+          }}
+        >
           <h2
             style={{
-              fontSize: "11px",
-              letterSpacing: "4px",
-              color: "#000",
-              textAlign: "center",
-              marginBottom: "60px",
+              fontSize: "28px",
+              lineHeight: "1.4",
+              fontWeight: "normal",
+              margin: 0,
             }}
           >
-            ARCHIVE
+            "작가는 정답을 내놓는 사람이 아니라,
+            <br />
+            끊임없이 질문을 던지는 사람이다."
           </h2>
-          {dummyPosts.map((post) => (
-            <article
-              key={post.id}
-              onClick={() => navigate(`/art/contents/${post.id}`)}
-              style={{ width: "100%", marginBottom: "80px", cursor: "pointer" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "12px",
-                }}
-              >
-                <span style={{ fontSize: "11px", fontWeight: 700 }}>
-                  {post.tags[0]}
-                </span>
-                <span style={{ fontSize: "11px", color: "#ccc" }}>
-                  2026.03.10
-                </span>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "16/10",
-                  overflow: "hidden",
-                }}
-              >
-                <img
-                  src={post.img}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </div>
-              <div style={{ marginTop: "20px" }}>
-                <h3
-                  style={{
-                    fontSize: "1.6rem",
-                    margin: "0 0 10px",
-                    fontWeight: 500,
-                  }}
-                >
-                  {post.title}
-                </h3>
-                <p style={{ fontSize: "15px", color: "#666", lineHeight: 1.7 }}>
-                  {post.summary}
-                </p>
-              </div>
-            </article>
-          ))}
-        </section>
-      </div>
+        </div>
+
+        {/* Type B: 서사 중심형 (좌텍스트/우이미지) */}
+        <div style={{ display: "flex", alignItems: "center", gap: "30px" }}>
+          <div style={{ width: "60%", textAlign: "right" }}>
+            <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
+              멘토와의 대화
+            </h3>
+            <p style={{ fontSize: "13px", lineHeight: "1.6", color: "#444" }}>
+              전시를 앞두고 나눈 대화들. 결국 본질은 테크닉이 아닌 태도에
+              있었다.
+            </p>
+          </div>
+          <img
+            src={images.mentorView}
+            style={{ width: "40%", height: "auto" }}
+          />
+        </div>
+      </section>
+
+      {/* 5. NEWS 영역 */}
+      <section style={{ padding: "0 20px 100px 20px" }}>
+        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
+          04 NEWS
+        </p>
+        {/* Type A: 이미지 몰입형 */}
+        <div style={{ width: "100%" }}>
+          <img
+            src={images.love}
+            style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover" }}
+          />
+          <h3 style={{ fontSize: "18px", marginTop: "20px" }}>
+            심야미술관 기수제 모집 예고
+          </h3>
+          <p style={{ fontSize: "14px", color: "#444" }}>
+            함께 고민하고 함께 그릴 동료들을 기다립니다.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default MagazineHome;
+export default ArtiveMockup;
