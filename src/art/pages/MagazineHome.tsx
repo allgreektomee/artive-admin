@@ -81,17 +81,8 @@ const MagazineHome = () => {
               textTransform: "uppercase",
             }}
           >
-            2026 ART BUSAN
+            2026 SEOUL ART FAIR
             <br />
-            <span
-              style={{
-                fontSize: isMobile ? "1.2rem" : "1.8rem",
-                fontWeight: 300,
-                letterSpacing: "8px",
-              }}
-            >
-              THE FIRST ARCHIVE
-            </span>
           </h1>
 
           {/* 구분선: 영역을 시각적으로 더 넓어 보이게 함 */}
