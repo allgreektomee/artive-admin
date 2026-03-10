@@ -5,8 +5,7 @@ import ArtworkCard from "../components/ArtworkCard";
 import {
   FixedGridSection,
   TextListSection,
-  InsightGrid,
-  InsightTextList,
+  InsightBigCard,
 } from "../components/LogTemplates";
 
 const MagazineHome = () => {
@@ -28,7 +27,22 @@ const MagazineHome = () => {
     work8:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
   };
-
+  const insightData = [
+    {
+      tag: "ARTIST",
+      subTag: "ARTIVE PROFILE",
+      title: "ARTIVE (아티브)",
+      imgUrl: images.work1,
+      desc: "아티브는 2026년을 기점으로 선과 면의 경계를 허무는 작업을 이어오고 있습니다. 이번 아카이브는 단순한 기록을 넘어 작가의 내면 세계와 재료가 만나는 접점을 탐구합니다...",
+    },
+    {
+      tag: "EXHIBITION",
+      subTag: "ISSUE NO.01",
+      title: "Layered Silence",
+      imgUrl: images.work8,
+      desc: "침묵에도 층위가 있다면 그것은 어떤 색일까. 이번 전시는 120호 대작을 중심으로 겹겹이 쌓아 올린 아크릴 과슈의 질감을 통해 우리가 놓치고 살았던 고요의 순간들을 포착합니다.",
+    },
+  ];
   const artworks = [
     {
       id: 1,
@@ -230,34 +244,22 @@ const MagazineHome = () => {
         <TextListSection items={logListItems} />
       </section>
 
-      {/* 4. INSIGHT: 매거진 B 스타일 감성 레이아웃 */}
-      <section>
+      <section style={{ backgroundColor: "#f9f9f9", padding: "60px 0" }}>
         <p
           style={{
             fontSize: "10px",
             color: "#bbb",
             letterSpacing: "3px",
             paddingLeft: "20px",
-            marginBottom: "20px",
+            marginBottom: "40px",
           }}
         >
-          03 INSIGHT: VISION
+          03 INSIGHT
         </p>
-        <InsightGrid items={insightGridItems} />
-        <InsightTextList items={insightListItems} />
+        {insightData.map((item, i) => (
+          <InsightBigCard key={i} item={item} />
+        ))}
       </section>
-
-      <footer
-        style={{
-          padding: "60px 0",
-          textAlign: "center",
-          borderTop: "1px solid #eee",
-        }}
-      >
-        <p style={{ fontSize: "10px", color: "#bbb", letterSpacing: "2px" }}>
-          © 2026 ARTIVE ARCHIVE
-        </p>
-      </footer>
 
       <style>{`div::-webkit-scrollbar { display: none; }`}</style>
     </div>

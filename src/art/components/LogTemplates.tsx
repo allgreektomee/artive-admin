@@ -190,3 +190,68 @@ export const InsightTextList = ({ items }: { items: any[] }) => (
     ))}
   </div>
 );
+
+/** [INSIGHT 전용] 매거진 B 스타일 빅 카드 */
+export const InsightBigCard = ({ item }: { item: any }) => (
+  <div style={{ padding: "0 20px", marginBottom: "60px" }}>
+    {/* 1. 메인 이미지 */}
+    <div
+      style={{
+        width: "100%",
+        aspectRatio: "3 / 2",
+        overflow: "hidden",
+        marginBottom: "20px",
+      }}
+    >
+      <img
+        src={item.imgUrl}
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        alt={item.title}
+      />
+    </div>
+
+    {/* 2. 카테고리 & 넘버링 */}
+    <div style={{ display: "flex", gap: "10px", marginBottom: "12px" }}>
+      <span
+        style={{
+          fontSize: "11px",
+          fontWeight: 700,
+          letterSpacing: "1px",
+          textTransform: "uppercase",
+        }}
+      >
+        {item.tag}
+      </span>
+      <span style={{ fontSize: "11px", color: "#888" }}>{item.subTag}</span>
+    </div>
+
+    {/* 3. 메인 타이틀 */}
+    <h2
+      style={{
+        fontSize: "24px",
+        fontWeight: 600,
+        margin: "0 0 15px 0",
+        letterSpacing: "-0.5px",
+      }}
+    >
+      {item.title}
+    </h2>
+
+    {/* 4. 본문 요약 (매거진 B 스타일) */}
+    <p
+      style={{
+        fontSize: "14px",
+        color: "#444",
+        lineHeight: "1.7",
+        margin: 0,
+        textAlign: "justify", // 양쪽 정렬로 잡지 느낌 극대화
+        display: "-webkit-box",
+        WebkitLineClamp: 4,
+        WebkitBoxOrient: "vertical",
+        overflow: "hidden",
+      }}
+    >
+      {item.desc}
+    </p>
+  </div>
+);
