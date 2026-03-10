@@ -95,28 +95,6 @@ const MagazineHome = () => {
     { title: "비 오는 날의 캔버스 텐션 조절" },
   ];
 
-  // 03 INSIGHT 데이터: 인사이트 그리드(2개) + 리스트(5개)
-  const insightGridItems = [
-    {
-      tag: "EXHIBITION",
-      title: "Layered Silence 개인전",
-      imgUrl: images.work8,
-    },
-    {
-      tag: "CLASS",
-      title: "작가와 함께하는 유화 클래스",
-      imgUrl: images.work100_1,
-    },
-  ];
-
-  const insightListItems = [
-    { title: "MANIFESTO: 예술은 질문이다" },
-    { title: "ARTIST: 작가 아티브 소개" },
-    { title: "ARCHIVE: 지난 작업들 다시보기" },
-    { title: "CONTACT: 협업 및 작업 문의" },
-    { title: "MEMBERSHIP: 아카이브 구독 서비스" },
-  ];
-
   return (
     <div
       style={{
