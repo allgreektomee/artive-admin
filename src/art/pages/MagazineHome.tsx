@@ -74,14 +74,14 @@ const MagazineHome = () => {
     },
     {
       type: "a", // 이미지 2개 밀착형 (Type C)
-      tag: "PROCESS",
+      tag: "SPACE",
       title: "대작의 층위: 120호 기록",
       desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
       imgUrl: images.work120_process,
     },
     {
       type: "b", // 이미지 2개 밀착형 (Type C)
-      tag: "PROCESS",
+      tag: "ESSAY",
       title: "대작의 층위: 120호 기록",
       desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
       imgUrl: images.work120_process,
@@ -231,19 +231,38 @@ const MagazineHome = () => {
       </section>
 
       {/* 3. LOG: LogTemplates 컴포넌트 적용 (수정됨) */}
-      <section>
-        <p
+      <section style={{ paddingBottom: "100px" }}>
+        <div style={{ paddingLeft: "20px", marginBottom: "60px" }}>
+          <p
+            style={{
+              fontSize: "10px",
+              color: "#bbb",
+              letterSpacing: "3px",
+              margin: 0,
+            }}
+          >
+            02 LOG: THE ARCHIVE
+          </p>
+          <div
+            style={{
+              width: "30px",
+              height: "1px",
+              backgroundColor: "#eee",
+              marginTop: "10px",
+            }}
+          ></div>
+        </div>
+
+        {/* 맵핑되는 로그 컴포넌트들 사이의 간격을 조절하기 위해 div로 감쌈 */}
+        <div
           style={{
-            fontSize: "10px",
-            color: "#bbb",
-            letterSpacing: "3px",
-            paddingLeft: "20px",
-            marginBottom: "40px",
+            display: "flex",
+            flexDirection: "column",
+            gap: isMobile ? "80px" : "120px",
           }}
         >
-          02 LOG: THE ARCHIVE
-        </p>
-        {logs.map((log, index) => renderLog(log, index))}
+          {logs.map((log, index) => renderLog(log, index))}
+        </div>
       </section>
 
       {/* 4. INSIGHT: 나중에 이것도 컴포넌트화 가능 */}
