@@ -23,173 +23,123 @@ const MagazineHome: React.FC = () => {
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
   };
 
-  const dummyPosts = [
-    {
-      id: "1",
-      tag: "ARTIST",
-      title: "테스트 타이틀 01",
-      summary: "본문 내용 요약 테스트입니다.",
-      img: images.studioView,
-    },
-    {
-      id: "2",
-      tag: "SPACE",
-      title: "테스트 타이틀 02",
-      summary: "본문 내용 요약 테스트입니다.",
-      img: images.work10,
-    },
-    {
-      id: "3",
-      tag: "EXHIBITION",
-      title: "테스트 타이틀 03",
-      summary: "본문 내용 요약 테스트입니다.",
-      img: images.work120_process,
-    },
-    {
-      id: "4",
-      tag: "ESSAY",
-      title: "테스트 타이틀 04",
-      summary: "본문 내용 요약 테스트입니다.",
-      img: images.work9,
-    },
-    {
-      id: "5",
-      tag: "INSIGHT",
-      title: "테스트 타이틀 05",
-      summary: "본문 내용 요약 테스트입니다.",
-      img: images.mentorView,
-    },
-    {
-      id: "6",
-      tag: "ARTIST",
-      title: "테스트 타이틀 06",
-      summary: "본문 내용 요약 테스트입니다.",
-      img: images.first,
-    },
-  ];
-
   return (
-    <div style={{ backgroundColor: "#fff", width: "100%" }}>
-      {/* 배너 영역 */}
+    <div style={{ backgroundColor: "#fcfcfc" }}>
+      {" "}
+      {/* 완전 흰색보다 미색 추천 */}
+      {/* --- Section 1: Hero (비대칭 레이아웃) --- */}
       <section
         style={{
-          height: isMobile ? "70vh" : "60vh",
-          width: "100%",
-          position: "relative",
-          backgroundColor: "#eee",
-          marginTop: "0", // 상단 여백 제거
+          display: isMobile ? "block" : "flex",
+          padding: isMobile ? "0" : "60px 50px",
+          gap: "40px",
+          alignItems: "center",
         }}
       >
-        <img
-          src={images.work100_1}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          alt="Hero"
-        />
-        <div
+        <div style={{ flex: 1.5, aspectRatio: "16/9", overflow: "hidden" }}>
+          <img
+            src={images.work100_1}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+        <div style={{ flex: 1, padding: isMobile ? "20px" : "0" }}>
+          <span
+            style={{ fontSize: "11px", color: "#888", letterSpacing: "2px" }}
+          >
+            EXHIBITION
+          </span>
+          <h1
+            style={{
+              fontSize: isMobile ? "1.8rem" : "2.8rem",
+              fontFamily: "serif",
+              margin: "15px 0",
+            }}
+          >
+            테스트 메인 타이틀: 레이아웃 믹스 버전
+          </h1>
+          <p style={{ color: "#666", lineHeight: 1.6 }}>
+            여기에 메인 기사의 요약 내용이 들어갑니다. 뉴스 매거진처럼 정보를
+            한쪽에 배치하여 시각적 밀도를 높입니다.
+          </p>
+        </div>
+      </section>
+      <hr
+        style={{
+          border: "none",
+          borderTop: "0.5px solid #eee",
+          margin: "0 50px",
+        }}
+      />
+      {/* --- Section 2: Small Grid (정보 밀도 구간) --- */}
+      <section style={{ padding: isMobile ? "40px 20px" : "60px 50px" }}>
+        <h2
           style={{
-            position: "absolute",
-            bottom: "40px",
-            left: isMobile ? "20px" : "50px",
-            color: "#fff",
-            zIndex: 2,
+            fontSize: "12px",
+            letterSpacing: "3px",
+            marginBottom: "30px",
           }}
         >
-          <h1 style={{ fontSize: isMobile ? "2rem" : "3.5rem", margin: 0 }}>
-            MAIN TITLE TEST
-          </h1>
-          <p style={{ margin: "10px 0 0" }}>Subtitle content test text.</p>
-        </div>
+          LATEST RECORDS
+        </h2>
         <div
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "linear-gradient(to top, rgba(0,0,0,0.5), transparent)",
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
+            gap: "20px",
           }}
-        />
-      </section>
-
-      {/* 태그 필터 */}
-      {/* 2. 필터 영역: 배너 바로 밑에 붙임 */}
-      <nav
-        style={{
-          display: "flex",
-          gap: "20px",
-          padding: "15px 20px",
-          justifyContent: isMobile ? "flex-start" : "center",
-          overflowX: "auto",
-          borderBottom: "1px solid #f0f0f0",
-          backgroundColor: "#fff",
-        }}
-      >
-        {["ALL", "ARTIST", "SPACE", "EXHIBITION", "ESSAY", "INSIGHT"].map(
-          (tag) => (
-            <span
-              key={tag}
+        >
+          {/* 작은 썸네일과 제목만 있는 뉴스형 리스트 4개 배치 */}
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
               style={{
-                fontSize: "11px",
-                fontWeight: 600,
-                cursor: "pointer",
-                flexShrink: 0,
+                display: "flex",
+                flexDirection: isMobile ? "row" : "column",
+                gap: "15px",
               }}
             >
-              {tag}
-            </span>
-          ),
-        )}
-      </nav>
-
-      {/* 그리드 리스트 */}
-      {/* 3. 그리드 리스트 */}
+              <div
+                style={{
+                  width: isMobile ? "80px" : "100%",
+                  aspectRatio: "1/1",
+                  backgroundColor: "#eee",
+                }}
+              >
+                <img
+                  src={images.work9}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+              <div>
+                <h4
+                  style={{
+                    fontSize: "14px",
+                    margin: "0 0 5px",
+                    fontWeight: 600,
+                  }}
+                >
+                  작은 기사 타이틀 테스트 {i}
+                </h4>
+                <span style={{ fontSize: "11px", color: "#aaa" }}>
+                  2026.03.10
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      {/* --- Section 3: Main Grid (기존 그리드) --- */}
       <main
         style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: isMobile ? "30px 20px" : "60px 20px",
+          padding: isMobile ? "20px" : "60px 50px",
+          backgroundColor: "#fff",
           display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
-          gap: "30px",
+          gap: "40px",
         }}
       >
-        {dummyPosts.map((post) => (
-          <article key={post.id} style={{ cursor: "pointer" }}>
-            <div
-              style={{
-                width: "100%",
-                aspectRatio: "4/5",
-                overflow: "hidden",
-                marginBottom: "15px",
-              }}
-            >
-              <img
-                src={post.img}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                alt="Thumb"
-              />
-            </div>
-            <h3 style={{ fontSize: "1.1rem", margin: "0 0 5px" }}>
-              {post.title}
-            </h3>
-            <p style={{ fontSize: "13px", color: "#666", margin: 0 }}>
-              {post.summary}
-            </p>
-          </article>
-        ))}
+        {/* 기존에 만드신 dummyPosts 맵핑 */}
       </main>
-
-      <footer
-        style={{
-          padding: "60px 20px",
-          textAlign: "center",
-          borderTop: "1px solid #eee",
-          color: "#aaa",
-          fontSize: "12px",
-        }}
-      >
-        © 2026 ARTIVE.
-      </footer>
     </div>
   );
 };
