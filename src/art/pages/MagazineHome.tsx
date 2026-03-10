@@ -77,7 +77,7 @@ const MagazineHome = () => {
       tag: "SPACE",
       title: "대작의 층위: 120호 기록",
       desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
-      imgUrl: images.work120_process,
+      imgUrl: images.work8,
     },
     {
       type: "b", // 이미지 2개 밀착형 (Type C)
@@ -89,9 +89,9 @@ const MagazineHome = () => {
     {
       type: "d", // 이미지 2개 밀착형 (Type C)
       tag: "PROCESS",
-      title: "대작의 층위: 120호 기록",
+      title: "대작의 층위: 기록",
       desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
-      imgUrl: images.work120_process,
+      imgUrl: images.work8,
     },
   ];
 
@@ -230,9 +230,15 @@ const MagazineHome = () => {
         </div>
       </section>
 
-      {/* 3. LOG: LogTemplates 컴포넌트 적용 (수정됨) */}
-      <section style={{ paddingBottom: "100px" }}>
-        <div style={{ paddingLeft: "20px", marginBottom: "60px" }}>
+      {/* 3. LOG: 하나의 덩어리로 묶기 */}
+      <section
+        style={{
+          padding: "0 0 120px 0", // 섹션 전체의 하단 여백만 크게
+          backgroundColor: "#fff",
+        }}
+      >
+        {/* 섹션 헤더: 여기서부터 LOG 시작임을 명시 */}
+        <div style={{ paddingLeft: "20px", marginBottom: "40px" }}>
           <p
             style={{
               fontSize: "10px",
@@ -245,23 +251,25 @@ const MagazineHome = () => {
           </p>
           <div
             style={{
-              width: "30px",
+              width: "20px",
               height: "1px",
-              backgroundColor: "#eee",
+              backgroundColor: "#333",
               marginTop: "10px",
             }}
           ></div>
         </div>
 
-        {/* 맵핑되는 로그 컴포넌트들 사이의 간격을 조절하기 위해 div로 감쌈 */}
+        {/* 내부 아이템들을 묶는 컨테이너: 간격을 좁게 설정 */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: isMobile ? "80px" : "120px",
+            gap: isMobile ? "40px" : "60px", // 아이템들끼리는 '이정도면 같은 팀'이다 싶을 정도의 간격
           }}
         >
-          {logs.map((log, index) => renderLog(log, index))}
+          {logs.map((log) => (
+            <div key={log.id}>{renderLog(log, 0)}</div>
+          ))}
         </div>
       </section>
 
