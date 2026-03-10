@@ -72,6 +72,27 @@ const MagazineHome = () => {
       imgUrl: images.work120_process,
       imgUrl2: images.work8,
     },
+    {
+      type: "a", // 이미지 2개 밀착형 (Type C)
+      tag: "PROCESS",
+      title: "대작의 층위: 120호 기록",
+      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
+      imgUrl: images.work120_process,
+    },
+    {
+      type: "b", // 이미지 2개 밀착형 (Type C)
+      tag: "PROCESS",
+      title: "대작의 층위: 120호 기록",
+      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
+      imgUrl: images.work120_process,
+    },
+    {
+      type: "d", // 이미지 2개 밀착형 (Type C)
+      tag: "PROCESS",
+      title: "대작의 층위: 120호 기록",
+      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
+      imgUrl: images.work120_process,
+    },
   ];
 
   // 로그 렌더러 함수
