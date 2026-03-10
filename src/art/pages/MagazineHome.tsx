@@ -1,7 +1,13 @@
-// import React from "react";
+import React from "react";
 import { useResponsive } from "../hook/useResponsive";
 import ArtworkCard from "../components/ArtworkCard";
-import { TypeA, TypeB, TypeC, TypeD } from "../components/LogTemplates";
+// 새로 만든 컴포넌트들 임포트
+import {
+  FixedGridSection,
+  TextListSection,
+  InsightGrid,
+  InsightTextList,
+} from "../components/LogTemplates";
 
 const MagazineHome = () => {
   const { isMobile } = useResponsive();
@@ -23,7 +29,6 @@ const MagazineHome = () => {
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
   };
 
-  // 2번 영역 데이터 (워드프레스 연동 대비)
   const artworks = [
     {
       id: 1,
@@ -62,59 +67,41 @@ const MagazineHome = () => {
     },
   ];
 
-  // 3번 영역 데이터 (Type 선택형)
-  const logs = [
+  // 02 LOG 데이터: 고정 그리드(2개) + 리스트(5개)
+  const logGridItems = [
+    { title: "대작의 층위: 120호 작업 기록", imgUrl: images.work120_process },
+    { title: "연산동 화실의 오전 10시", imgUrl: images.work1 },
+  ];
+
+  const logListItems = [
+    { title: "불완전한 선이 주는 위로에 대하여" },
+    { title: "아크릴 과슈와 젯소를 섞는 시간" },
+    { title: "2026 전시 라인업 구상" },
+    { title: "작업실 근처 조용한 카페 발견" },
+    { title: "비 오는 날의 캔버스 텐션 조절" },
+  ];
+
+  // 03 INSIGHT 데이터: 인사이트 그리드(2개) + 리스트(5개)
+  const insightGridItems = [
     {
-      id: "log_01",
-      type: "c", // 이미지 2개 밀착형 (Type C)
-      tag: "PROCESS",
-      title: "대작의 층위: 120호 기록",
-      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
-      imgUrl: images.work120_process,
-      imgUrl2: images.work8,
-    },
-    {
-      id: "log_02",
-      type: "a", // 이미지 2개 밀착형 (Type C)
-      tag: "SPACE",
-      title: "대작의 층위: 120호 기록",
-      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
+      tag: "EXHIBITION",
+      title: "Layered Silence 개인전",
       imgUrl: images.work8,
     },
     {
-      id: "log_03",
-      type: "b", // 이미지 2개 밀착형 (Type C)
-      tag: "ESSAY",
-      title: "대작의 층위: 120호 기록",
-      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
-      imgUrl: images.work120_process,
-    },
-    {
-      id: "log_04",
-      type: "d", // 이미지 2개 밀착형 (Type C)
-      tag: "PROCESS",
-      title: "대작의 층위: 기록",
-      desc: "물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.",
-      imgUrl: images.work8,
+      tag: "CLASS",
+      title: "작가와 함께하는 유화 클래스",
+      imgUrl: images.work100_1,
     },
   ];
 
-  // 로그 렌더러 함수
-  const renderLog = (log: any, index: number) => {
-    const props = { data: log, isMobile };
-    switch (log.type) {
-      case "a":
-        return <TypeA key={index} {...props} />;
-      case "b":
-        return <TypeB key={index} {...props} />;
-      case "c":
-        return <TypeC key={index} {...props} />;
-      case "d":
-        return <TypeD key={index} {...props} />;
-      default:
-        return <TypeB key={index} {...props} />;
-    }
-  };
+  const insightListItems = [
+    { title: "MANIFESTO: 예술은 질문이다" },
+    { title: "ARTIST: 작가 아티브 소개" },
+    { title: "ARCHIVE: 지난 작업들 다시보기" },
+    { title: "CONTACT: 협업 및 작업 문의" },
+    { title: "MEMBERSHIP: 아카이브 구독 서비스" },
+  ];
 
   return (
     <div
@@ -128,19 +115,20 @@ const MagazineHome = () => {
         overflowX: "hidden",
       }}
     >
-      {/* 1. BANNER: 임팩트 있는 첫 화면 */}
+      {/* 1. BANNER */}
       <section
         style={{
           position: "relative",
           width: "100%",
           height: isMobile ? "55vh" : "65vh",
           overflow: "hidden",
-          marginBottom: isMobile ? "20px" : "40px",
+          marginBottom: "40px",
         }}
       >
         <img
           src={images.first}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          alt="main"
         />
         <div
           style={{
@@ -153,7 +141,6 @@ const MagazineHome = () => {
             width: isMobile ? "80%" : "65%",
             padding: isMobile ? "50px 20px" : "70px 40px",
             textAlign: "center",
-            boxSizing: "border-box",
             border: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
@@ -164,11 +151,10 @@ const MagazineHome = () => {
               fontWeight: 500,
               margin: 0,
               letterSpacing: "5px",
-              lineHeight: "1.2",
               textTransform: "uppercase",
             }}
           >
-            2026 SEOUL ART FAIR
+            2026 ARTIVE
           </h1>
           <div
             style={{
@@ -191,13 +177,8 @@ const MagazineHome = () => {
         </div>
       </section>
 
-      {/* 2. ARTWORK: ArtworkCard 컴포넌트 적용 (수정됨) */}
-      <section
-        style={{
-          marginTop: isMobile ? "60px" : "100px",
-          marginBottom: isMobile ? "80px" : "120px",
-        }}
-      >
+      {/* 2. ARTWORK (가로 스크롤) */}
+      <section style={{ marginTop: "60px", marginBottom: "80px" }}>
         <p
           style={{
             fontSize: "10px",
@@ -216,9 +197,7 @@ const MagazineHome = () => {
             paddingLeft: "20px",
             paddingRight: "60px",
             gap: "20px",
-            alignItems: "flex-start",
             scrollbarWidth: "none",
-            WebkitOverflowScrolling: "touch",
           }}
         >
           {artworks.map((art, i) => (
@@ -234,72 +213,38 @@ const MagazineHome = () => {
         </div>
       </section>
 
-      {/* 3. LOG: 하나의 덩어리로 묶기 */}
-      <section
-        style={{
-          padding: "0 0 120px 0", // 섹션 전체의 하단 여백만 크게
-          backgroundColor: "#fff",
-        }}
-      >
-        {/* 섹션 헤더: 여기서부터 LOG 시작임을 명시 */}
-        <div style={{ paddingLeft: "20px", marginBottom: "40px" }}>
-          <p
-            style={{
-              fontSize: "10px",
-              color: "#bbb",
-              letterSpacing: "3px",
-              margin: 0,
-            }}
-          >
-            02 LOG: THE ARCHIVE
-          </p>
-          <div
-            style={{
-              width: "20px",
-              height: "1px",
-              backgroundColor: "#333",
-              marginTop: "10px",
-            }}
-          ></div>
-        </div>
-
-        {/* 내부 아이템들을 묶는 컨테이너: 간격을 좁게 설정 */}
-        <div
+      {/* 3. LOG: 네이트온 스타일 고정 레이아웃 */}
+      <section style={{ marginBottom: "60px" }}>
+        <p
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: isMobile ? "40px" : "60px", // 아이템들끼리는 '이정도면 같은 팀'이다 싶을 정도의 간격
+            fontSize: "10px",
+            color: "#bbb",
+            letterSpacing: "3px",
+            paddingLeft: "20px",
+            marginBottom: "20px",
           }}
         >
-          {logs.map((log) => (
-            <div key={log.id}>{renderLog(log, 0)}</div>
-          ))}
-        </div>
+          02 LOG: THE ARCHIVE
+        </p>
+        <FixedGridSection items={logGridItems} isMobile={isMobile} />
+        <TextListSection items={logListItems} />
       </section>
 
-      {/* 4. INSIGHT: 나중에 이것도 컴포넌트화 가능 */}
-      <section style={{ marginBottom: "100px" }}>
-        <div
+      {/* 4. INSIGHT: 매거진 B 스타일 감성 레이아웃 */}
+      <section>
+        <p
           style={{
-            backgroundColor: "#f6f6f6",
-            padding: isMobile ? "80px 30px" : "120px 40px",
-            textAlign: "center",
+            fontSize: "10px",
+            color: "#bbb",
+            letterSpacing: "3px",
+            paddingLeft: "20px",
+            marginBottom: "20px",
           }}
         >
-          <h2
-            style={{
-              fontSize: isMobile ? "20px" : "24px",
-              fontWeight: 300,
-              lineHeight: 1.6,
-              margin: 0,
-              wordBreak: "keep-all",
-            }}
-          >
-            "작가는 정답을 내놓는 사람이 아니라,
-            <br />
-            끊임없이 질문을 던지는 사람이다."
-          </h2>
-        </div>
+          03 INSIGHT: VISION
+        </p>
+        <InsightGrid items={insightGridItems} />
+        <InsightTextList items={insightListItems} />
       </section>
 
       <footer
