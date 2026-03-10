@@ -37,19 +37,18 @@ const MagazineHome = () => {
         fontFamily: '"Noto Serif KR", serif',
       }}
     >
-      {/* 1. BANNER: isMobile에 따라 높이와 폰트 크기 가변 적용 */}
+      {/* 1. BANNER: 조금 더 컴팩트하게 조절 (55vh~60vh) */}
       <section
         style={{
           position: "relative",
           width: "100%",
-          height: isMobile ? "65vh" : "75vh", // 모바일은 살짝 낮게, 데스크탑은 웅장하게
+          height: isMobile ? "55vh" : "65vh", // 배너 높이를 살짝 줄여 아래 아트워크를 끌어올림
           overflow: "hidden",
-          marginBottom: "60px",
+          marginBottom: "40px", // 간격을 좁혀서 아트워크가 바로 보이게
         }}
       >
         <img
           src={images.first}
-          alt="Main Banner"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div
@@ -58,61 +57,40 @@ const MagazineHome = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            backgroundColor: "rgba(20, 20, 20, 0.65)",
-            padding: isMobile ? "30px 20px" : "50px 70px", // 훅으로 패딩 조절
+            backgroundColor: "rgba(20, 20, 20, 0.7)",
+            padding: "30px 20px",
             textAlign: "center",
-            width: isMobile ? "85%" : "70%", // 훅으로 너비 조절
+            width: "80%",
             backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
           <h1
             style={{
               color: "#fff",
-              fontSize: isMobile ? "1.5rem" : "2.2rem", // 훅으로 폰트 크기 픽스
+              fontSize: "1.3rem",
               margin: 0,
-              fontWeight: 500,
               letterSpacing: "3px",
-              lineHeight: "1.3",
             }}
           >
             2026 ART BUSAN
             <br />
-            THE FIRST ARCHIVE
+            ARCHIVE
           </h1>
-          <div
-            style={{
-              width: "30px",
-              height: "1px",
-              backgroundColor: "#fff",
-              margin: "20px auto",
-            }}
-          ></div>
-          <p
-            style={{
-              color: "#ccc",
-              fontSize: "12px",
-              fontWeight: 300,
-              letterSpacing: "1px",
-            }}
-          >
-            선과 면의 기록, 아카이브의 시작
-          </p>
         </div>
       </section>
 
-      {/* 2. ARTWORK: isMobile에 따라 이미지 고정 높이(Height) 조절 */}
-      <section style={{ marginBottom: "100px" }}>
+      {/* 2. ARTWORK: 150px 콤팩트 스와이프 (Index View) */}
+      <section style={{ marginBottom: "80px" }}>
         <p
           style={{
-            fontSize: "10px",
-            color: "#aaa",
+            fontSize: "9px",
+            color: "#bbb",
             letterSpacing: "2px",
             paddingLeft: "20px",
-            marginBottom: "20px",
+            marginBottom: "15px",
           }}
         >
-          01 SELECTED ARTWORK
+          01 SELECTED WORKS
         </p>
 
         <div
@@ -121,40 +99,42 @@ const MagazineHome = () => {
             overflowX: "auto",
             paddingLeft: "20px",
             paddingRight: "60px",
-            gap: "15px",
+            gap: "12px", // 간격도 좁혀서 오밀조밀하게
             alignItems: "flex-end",
             scrollbarWidth: "none",
             WebkitOverflowScrolling: "touch",
           }}
         >
-          {[images.work1, images.work2, images.work3, images.work100_1].map(
-            (img, i) => (
-              <div
-                key={i}
+          {[
+            images.work1,
+            images.work2,
+            images.work3,
+            images.work100_1,
+            images.work8,
+          ].map((img, i) => (
+            <div key={i} style={{ flex: "0 0 auto" }}>
+              <img
+                src={img}
                 style={{
-                  flex: "0 0 auto",
-                  display: "flex",
-                  flexDirection: "column",
+                  height: isMobile ? "150px" : "220px", // ★ 아티브님 제안: 150px 적용
+                  width: "auto",
+                  display: "block",
+                  objectFit: "contain",
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.05)", // 살짝 그림자 주면 작아도 고급스러움
+                }}
+              />
+              <p
+                style={{
+                  fontSize: "9px",
+                  color: "#ccc",
+                  marginTop: "8px",
+                  textAlign: "center",
                 }}
               >
-                <img
-                  src={img}
-                  alt={`Work ${i}`}
-                  style={{
-                    height: isMobile ? "350px" : "450px", // ★ 훅을 사용하여 높이 최적화
-                    width: "auto",
-                    display: "block",
-                    objectFit: "contain",
-                  }}
-                />
-                <p
-                  style={{ fontSize: "10px", color: "#888", marginTop: "10px" }}
-                >
-                  Piece No. 0{i + 1}
-                </p>
-              </div>
-            ),
-          )}
+                0{i + 1}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
