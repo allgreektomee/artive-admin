@@ -1,6 +1,9 @@
 // import React from 'react';
+import { useResponsive } from "../hook/useResponsive"; // 경로에 맞춰 수정해서 쓰세요!
 
 const MagazineHome = () => {
+  const { isMobile } = useResponsive(); // 아티브님이 만든 훅 호출
+
   const images = {
     first:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
@@ -34,12 +37,12 @@ const MagazineHome = () => {
         fontFamily: '"Noto Serif KR", serif',
       }}
     >
-      {/* 1. BANNER: 모바일 대응 높이 및 텍스트 박스 */}
+      {/* 1. BANNER: isMobile에 따라 높이와 폰트 크기 가변 적용 */}
       <section
         style={{
           position: "relative",
           width: "100%",
-          height: "75vh",
+          height: isMobile ? "65vh" : "75vh", // 모바일은 살짝 낮게, 데스크탑은 웅장하게
           overflow: "hidden",
           marginBottom: "60px",
         }}
@@ -56,19 +59,17 @@ const MagazineHome = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             backgroundColor: "rgba(20, 20, 20, 0.65)",
-            padding: "40px 30px", // 모바일 고려 패딩 축소
+            padding: isMobile ? "30px 20px" : "50px 70px", // 훅으로 패딩 조절
             textAlign: "center",
-            width: "85%", // 모바일에서 박스가 넉넉히 차지하도록
-            maxWidth: "500px",
+            width: isMobile ? "85%" : "70%", // 훅으로 너비 조절
             backdropFilter: "blur(10px)",
             border: "1px solid rgba(255,255,255,0.1)",
-            boxSizing: "border-box",
           }}
         >
           <h1
             style={{
               color: "#fff",
-              fontSize: "1.6rem",
+              fontSize: isMobile ? "1.5rem" : "2.2rem", // 훅으로 폰트 크기 픽스
               margin: 0,
               fontWeight: 500,
               letterSpacing: "3px",
@@ -84,7 +85,7 @@ const MagazineHome = () => {
               width: "30px",
               height: "1px",
               backgroundColor: "#fff",
-              margin: "15px auto",
+              margin: "20px auto",
             }}
           ></div>
           <p
@@ -100,7 +101,7 @@ const MagazineHome = () => {
         </div>
       </section>
 
-      {/* 2. ARTWORK: 가로 스와이프 (높이 고정형) */}
+      {/* 2. ARTWORK: isMobile에 따라 이미지 고정 높이(Height) 조절 */}
       <section style={{ marginBottom: "100px" }}>
         <p
           style={{
@@ -115,7 +116,6 @@ const MagazineHome = () => {
         </p>
 
         <div
-          className="artwork-scroll"
           style={{
             display: "flex",
             overflowX: "auto",
@@ -123,7 +123,8 @@ const MagazineHome = () => {
             paddingRight: "60px",
             gap: "15px",
             alignItems: "flex-end",
-            WebkitOverflowScrolling: "touch", // iOS 부드러운 스크롤
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch",
           }}
         >
           {[images.work1, images.work2, images.work3, images.work100_1].map(
@@ -139,9 +140,8 @@ const MagazineHome = () => {
                 <img
                   src={img}
                   alt={`Work ${i}`}
-                  className="artwork-img"
                   style={{
-                    height: "380px", // 모바일 가독성을 위해 살짝 조절 (데스크탑에선 미디어쿼리로 키움)
+                    height: isMobile ? "350px" : "450px", // ★ 훅을 사용하여 높이 최적화
                     width: "auto",
                     display: "block",
                     objectFit: "contain",
@@ -158,8 +158,8 @@ const MagazineHome = () => {
         </div>
       </section>
 
-      {/* 3. LOG & OTHERS (중략 - 이전과 동일하되 텍스트 크기 미세 조정) */}
-      <section style={{ padding: "0 20px", marginBottom: "80px" }}>
+      {/* 3. LOG: 이미지 밀착형 (모바일에서 여백 더 타이트하게) */}
+      <section style={{ padding: "0 20px", marginBottom: "100px" }}>
         <p
           style={{
             fontSize: "10px",
@@ -175,34 +175,44 @@ const MagazineHome = () => {
             display: "flex",
             flexDirection: "column",
             gap: "2px",
-            marginBottom: "20px",
+            marginBottom: "25px",
           }}
         >
           <img src={images.work120_process} style={{ width: "100%" }} />
           <img src={images.work8} style={{ width: "100%" }} />
         </div>
-        <h3 style={{ fontSize: "18px", fontWeight: 500 }}>
+        <h3 style={{ fontSize: isMobile ? "18px" : "20px", fontWeight: 500 }}>
           대작의 층위: 120호 기록
         </h3>
-        <p style={{ color: "#444", fontSize: "13px", marginTop: "8px" }}>
+        <p style={{ color: "#444", fontSize: "14px", marginTop: "10px" }}>
           물감이 쌓이고 긁혀나가는 과정에서 발견된 질감.
         </p>
       </section>
 
-      {/* 미디어 쿼리 스타일링 */}
-      <style>{`
-        .artwork-scroll::-webkit-scrollbar { display: none; }
-        
-        @media (min-width: 600px) {
-          .artwork-img { height: 450px !important; }
-          h1 { fontSize: '30px' !important; }
-        }
-
-        /* 모바일 텍스트 가독성 */
-        @media (max-width: 480px) {
-          p { font-size: 13px !important; line-height: 1.6 !important; }
-        }
-      `}</style>
+      {/* 4. INSIGHT: 메시지 강조 (모바일 패딩 조절) */}
+      <section style={{ marginBottom: "100px" }}>
+        <div
+          style={{
+            backgroundColor: "#f6f6f6",
+            padding: isMobile ? "80px 30px" : "120px 40px",
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: isMobile ? "20px" : "24px",
+              fontWeight: 300,
+              lineHeight: 1.6,
+              margin: 0,
+              wordBreak: "keep-all",
+            }}
+          >
+            "작가는 정답을 내놓는 사람이 아니라,
+            <br />
+            끊임없이 질문을 던지는 사람이다."
+          </h2>
+        </div>
+      </section>
 
       <footer
         style={{
@@ -215,6 +225,9 @@ const MagazineHome = () => {
           © 2026 ARTIVE ARCHIVE
         </p>
       </footer>
+
+      {/* 스크롤바 숨기기 */}
+      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
     </div>
   );
 };
