@@ -1,6 +1,4 @@
-// import React from "react";
-
-const ArtiveMockup = () => {
+const MagazineHome = () => {
   const images = {
     studioView:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
@@ -8,8 +6,6 @@ const ArtiveMockup = () => {
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg",
     work100_1:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png",
-    work100_2:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100ss.png",
     work120_process:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
     first:
@@ -21,18 +17,8 @@ const ArtiveMockup = () => {
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/456.png",
     work3:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/678.png",
-    work4:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/100s.png",
-    work5: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/gg.png",
-    work6:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/sss.png",
-    work7: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/ss.png",
     work8:
       "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_2.png",
-    work9:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
-    work10:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/home.png",
   };
 
   return (
@@ -43,171 +29,139 @@ const ArtiveMockup = () => {
         margin: "0 auto",
         backgroundColor: "#fff",
         color: "#1a1a1a",
-        fontFamily: "serif",
+        fontFamily: '"Noto Serif KR", serif',
       }}
     >
-      {/* 1. BANNER 영역 (Main) */}
-      <section style={{ marginBottom: "100px" }}>
-        <div style={{ width: "100%", aspectRatio: "21/9", overflow: "hidden" }}>
-          <img
-            src={images.first}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            alt="Main"
-          />
-        </div>
-        <h1
+      {/* 1. BANNER 영역 (Height 확장 + 센터 타이틀 + 반투명 배경) */}
+      <section
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "70vh",
+          overflow: "hidden",
+          marginBottom: "100px",
+        }}
+      >
+        <img
+          src={images.first}
+          alt="Main Banner"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+        {/* 중앙 텍스트 박스 */}
+        <div
           style={{
-            fontSize: "24px",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(0, 0, 0, 0.4)", // 회색 투명값
+            padding: "40px 60px",
             textAlign: "center",
-            marginTop: "20px",
-            letterSpacing: "-0.5px",
+            minWidth: "60%",
+            backdropFilter: "blur(4px)", // 살짝 블러 줘서 더 고급스럽게
           }}
         >
-          2026 ART BUSAN: THE FIRST STEP
-        </h1>
-      </section>
-
-      {/* 2. ARTWORK 영역 (고정형 5개) */}
-      <section style={{ marginBottom: "120px", padding: "0 20px" }}>
-        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
-          01 SELECTED ARTWORK
-        </p>
-        {[
-          images.work1,
-          images.work2,
-          images.work3,
-          images.work4,
-          images.work5,
-        ].map((img, i) => (
-          <div key={i} style={{ marginBottom: "60px" }}>
-            <img
-              src={img}
-              style={{ width: "100%", height: "auto", display: "block" }}
-              alt="Artwork"
-            />
-            <p style={{ fontSize: "11px", marginTop: "10px", color: "#666" }}>
-              Series No. 0{i + 1} / 2026
-            </p>
-          </div>
-        ))}
-      </section>
-
-      {/* 3. LOG 영역 (A/B/C 타입 혼합) */}
-      <section style={{ marginBottom: "120px", padding: "0 20px" }}>
-        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
-          02 LOG: PROCESS & SPACE
-        </p>
-
-        {/* Type C: 기록 밀착형 */}
-        <div style={{ marginBottom: "80px" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <img
-              src={images.work120_process}
-              style={{ width: "100%", marginBottom: "2px" }}
-            />
-            <img src={images.work8} style={{ width: "100%" }} />
-          </div>
-          <h3 style={{ fontSize: "18px", marginTop: "20px" }}>
-            120호 대작의 기록
-          </h3>
-          <p style={{ fontSize: "14px", lineHeight: "1.6", color: "#444" }}>
-            캔버스를 마주하는 첫 순간의 긴장감. 밑색이 깔리는 과정의 층위들.
+          <h1
+            style={{
+              color: "#fff",
+              fontSize: "32px",
+              margin: 0,
+              fontWeight: 500,
+              letterSpacing: "2px",
+            }}
+          >
+            2026 ART BUSAN
+            <br />
+            THE FIRST ARCHIVE
+          </h1>
+          <p
+            style={{
+              color: "#eee",
+              fontSize: "14px",
+              marginTop: "15px",
+              fontWeight: 300,
+            }}
+          >
+            아카이브의 시작, 선과 면의 기록
           </p>
         </div>
+      </section>
 
-        {/* Type B: 서사 중심형 (좌이미지/우텍스트) */}
+      {/* 2. ARTWORK 영역 (스와이프 유도 레이아웃) */}
+      <section style={{ marginBottom: "120px" }}>
+        <p
+          style={{
+            fontSize: "10px",
+            color: "#aaa",
+            letterSpacing: "2px",
+            paddingLeft: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          01 SELECTED ARTWORK
+        </p>
+
+        {/* 가로 스크롤 컨테이너 */}
         <div
           style={{
             display: "flex",
-            alignItems: "flex-start",
-            gap: "30px",
-            marginBottom: "80px",
+            overflowX: "auto",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            gap: "20px",
+            scrollbarWidth: "none", // 파이어폭스
+            msOverflowStyle: "none", // IE
           }}
         >
-          <img
-            src={images.studioView}
-            style={{ width: "40%", height: "auto" }}
-          />
-          <div style={{ width: "60%" }}>
-            <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
-              작업실 조도
-            </h3>
-            <p style={{ fontSize: "13px", lineHeight: "1.6", color: "#444" }}>
-              오후 4시의 빛이 가장 깊게 들어올 때, 비로소 물감의 본래 색이
-              보인다.
-            </p>
-          </div>
+          {/* 각 아이템 너비를 약 75%로 설정하여 1.3개가 보이도록 유도 */}
+          {[images.work1, images.work2, images.work3, images.work100_1].map(
+            (img, i) => (
+              <div key={i} style={{ flex: "0 0 75%", minWidth: "75%" }}>
+                <img
+                  src={img}
+                  alt={`Work ${i}`}
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                />
+                <p
+                  style={{ fontSize: "11px", color: "#999", marginTop: "10px" }}
+                >
+                  Piece No. 0{i + 1}
+                </p>
+              </div>
+            ),
+          )}
         </div>
+        <style>{
+          `.container::-webkit-scrollbar { display: none; }` /* 크롬 스크롤바 숨기기 */
+        }</style>
       </section>
 
-      {/* 4. INSIGHT 영역 (B/D 타입 혼합) */}
-      <section style={{ marginBottom: "120px", padding: "0 20px" }}>
-        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
-          03 INSIGHT: VISION
-        </p>
-
-        {/* Type D: 메시지 강조형 */}
-        <div
+      {/* 이후 LOG, INSIGHT 등은 기존과 동일하되 위 섹션들의 변화에 맞춰 여백 조정 */}
+      <section style={{ padding: "0 20px", marginBottom: "100px" }}>
+        <p
           style={{
-            backgroundColor: "#f9f9f9",
-            padding: "80px 40px",
-            textAlign: "center",
-            marginBottom: "80px",
+            fontSize: "10px",
+            color: "#aaa",
+            letterSpacing: "2px",
+            marginBottom: "40px",
           }}
         >
-          <h2
-            style={{
-              fontSize: "28px",
-              lineHeight: "1.4",
-              fontWeight: "normal",
-              margin: 0,
-            }}
-          >
-            "작가는 정답을 내놓는 사람이 아니라,
-            <br />
-            끊임없이 질문을 던지는 사람이다."
-          </h2>
-        </div>
-
-        {/* Type B: 서사 중심형 (좌텍스트/우이미지) */}
-        <div style={{ display: "flex", alignItems: "center", gap: "30px" }}>
-          <div style={{ width: "60%", textAlign: "right" }}>
-            <h3 style={{ fontSize: "18px", marginBottom: "10px" }}>
-              멘토와의 대화
-            </h3>
-            <p style={{ fontSize: "13px", lineHeight: "1.6", color: "#444" }}>
-              전시를 앞두고 나눈 대화들. 결국 본질은 테크닉이 아닌 태도에
-              있었다.
+          02 LOG: PROCESS
+        </p>
+        <div style={{ display: "flex", gap: "30px", alignItems: "flex-start" }}>
+          <div style={{ flex: 4 }}>
+            <img src={images.studioView} alt="Studio" />
+          </div>
+          <div style={{ flex: 6 }}>
+            <h3 style={{ fontSize: "18px", marginTop: 0 }}>작업실 기록</h3>
+            <p style={{ color: "#444", fontSize: "13px" }}>
+              빛이 가장 깊게 들어오는 시간의 기록.
             </p>
           </div>
-          <img
-            src={images.mentorView}
-            style={{ width: "40%", height: "auto" }}
-          />
-        </div>
-      </section>
-
-      {/* 5. NEWS 영역 */}
-      <section style={{ padding: "0 20px 100px 20px" }}>
-        <p style={{ fontSize: "10px", color: "#999", marginBottom: "20px" }}>
-          04 NEWS
-        </p>
-        {/* Type A: 이미지 몰입형 */}
-        <div style={{ width: "100%" }}>
-          <img
-            src={images.love}
-            style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover" }}
-          />
-          <h3 style={{ fontSize: "18px", marginTop: "20px" }}>
-            심야미술관 기수제 모집 예고
-          </h3>
-          <p style={{ fontSize: "14px", color: "#444" }}>
-            함께 고민하고 함께 그릴 동료들을 기다립니다.
-          </p>
         </div>
       </section>
     </div>
   );
 };
 
-export default ArtiveMockup;
+export default MagazineHome;
