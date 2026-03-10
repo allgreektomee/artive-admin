@@ -37,14 +37,14 @@ const MagazineHome = () => {
         fontFamily: '"Noto Serif KR", serif',
       }}
     >
-      {/* 1. BANNER: 조금 더 컴팩트하게 조절 (55vh~60vh) */}
+      {/* 1. BANNER: 화면 높이의 절반을 조금 넘게 (55vh) */}
       <section
         style={{
           position: "relative",
           width: "100%",
-          height: isMobile ? "55vh" : "65vh", // 배너 높이를 살짝 줄여 아래 아트워크를 끌어올림
+          height: isMobile ? "55vh" : "65vh",
           overflow: "hidden",
-          marginBottom: "40px", // 간격을 좁혀서 아트워크가 바로 보이게
+          marginBottom: isMobile ? "20px" : "40px", // 여백을 줄여서 아트워크를 위로 바짝 붙임
         }}
       >
         <img
@@ -57,37 +57,77 @@ const MagazineHome = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            backgroundColor: "rgba(20, 20, 20, 0.7)",
-            padding: "30px 20px",
+            /* 투명도를 다시 연하게(0.4) 조정하고 블러를 강화해서 고급스럽게 */
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            backdropFilter: "blur(8px)",
+
+            /* 글자 영역이 화면의 반 이상(75~80%)을 차지하도록 설정 */
+            width: isMobile ? "80%" : "65%",
+            padding: isMobile ? "50px 20px" : "70px 40px",
             textAlign: "center",
-            width: "80%",
-            backdropFilter: "blur(10px)",
+            boxSizing: "border-box",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
+          {/* Main Title: 폰트를 키우고 자간(letterSpacing)을 넓혀 가독성 확보 */}
           <h1
             style={{
               color: "#fff",
-              fontSize: "1.3rem",
+              fontSize: isMobile ? "1.8rem" : "2.8rem",
+              fontWeight: 500,
               margin: 0,
-              letterSpacing: "3px",
+              letterSpacing: "5px", // 자간을 넓혀서 면적을 더 차지하게 함
+              lineHeight: "1.2",
+              textTransform: "uppercase",
             }}
           >
             2026 ART BUSAN
             <br />
-            ARCHIVE
+            <span
+              style={{
+                fontSize: isMobile ? "1.2rem" : "1.8rem",
+                fontWeight: 300,
+                letterSpacing: "8px",
+              }}
+            >
+              THE FIRST ARCHIVE
+            </span>
           </h1>
+
+          {/* 구분선: 영역을 시각적으로 더 넓어 보이게 함 */}
+          <div
+            style={{
+              width: "50px",
+              height: "1px",
+              backgroundColor: "rgba(255,255,255,0.5)",
+              margin: "25px auto",
+            }}
+          ></div>
+
+          {/* Sub Title: 명조체의 느낌을 살려 우아하게 */}
+          <p
+            style={{
+              color: "rgba(255, 255, 255, 0.9)",
+              fontSize: isMobile ? "13px" : "16px",
+              fontWeight: 300,
+              letterSpacing: "2px",
+              wordBreak: "keep-all",
+            }}
+          >
+            선과 면의 기록, 아카이브의 시작
+          </p>
         </div>
       </section>
 
-      {/* 2. ARTWORK: 150px 콤팩트 스와이프 (Index View) */}
-      <section style={{ marginBottom: "80px" }}>
+      {/* 2. ARTWORK: 화면 높이에 비례하게 (약 20~25vh) */}
+      <section style={{ marginBottom: isMobile ? "40px" : "80px" }}>
         <p
           style={{
             fontSize: "9px",
             color: "#bbb",
             letterSpacing: "2px",
             paddingLeft: "20px",
-            marginBottom: "15px",
+            marginBottom: "10px",
           }}
         >
           01 SELECTED WORKS
@@ -99,7 +139,7 @@ const MagazineHome = () => {
             overflowX: "auto",
             paddingLeft: "20px",
             paddingRight: "60px",
-            gap: "12px", // 간격도 좁혀서 오밀조밀하게
+            gap: "12px",
             alignItems: "flex-end",
             scrollbarWidth: "none",
             WebkitOverflowScrolling: "touch",
@@ -116,18 +156,19 @@ const MagazineHome = () => {
               <img
                 src={img}
                 style={{
-                  height: isMobile ? "150px" : "220px", // ★ 아티브님 제안: 150px 적용
+                  /* ★ 핵심: 기기 높이(vh)에 맞춤 + 최대/최소값(clamp)으로 가이드라인 형성 */
+                  height: isMobile ? "clamp(140px, 22vh, 180px)" : "250px",
                   width: "auto",
                   display: "block",
                   objectFit: "contain",
-                  boxShadow: "0 4px 10px rgba(0,0,0,0.05)", // 살짝 그림자 주면 작아도 고급스러움
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                 }}
               />
               <p
                 style={{
                   fontSize: "9px",
                   color: "#ccc",
-                  marginTop: "8px",
+                  marginTop: "6px",
                   textAlign: "center",
                 }}
               >
