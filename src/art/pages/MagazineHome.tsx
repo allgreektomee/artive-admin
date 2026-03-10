@@ -6,275 +6,189 @@ const MagazineHome: React.FC = () => {
   const { isMobile } = useResponsive();
   const navigate = useNavigate();
 
-  const images = {
-    work100_1:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png",
-    studioView:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
-    work120_process:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
-    work9:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
-    work10:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/home.png",
-    mentorView:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/jsh.jpg",
-    first:
-      "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/first.png",
-  };
-
   const dummyPosts = [
     {
       id: "1",
-      tags: ["ARTIST", "MAIN"],
-      title: "TEST TITLE 01",
-      summary: "TEST SUMMARY TEXT 01",
-      img: images.work100_1,
+      tags: ["ART", "MAIN"],
+      title: "ART TEST TITLE",
+      summary: "아트 연재물 테스트 텍스트입니다.",
+      img: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/work100_1.png",
     },
     {
       id: "2",
-      tags: ["SPACE", "MAIN"],
-      title: "TEST TITLE 02",
-      summary: "TEST SUMMARY TEXT 02",
-      img: images.studioView,
+      tags: ["STOCK"],
+      title: "STOCK TEST TITLE",
+      summary: "주식 연재물 테스트 텍스트입니다.",
+      img: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/studio.png",
     },
     {
       id: "3",
-      tags: ["EXHIBITION", "MAIN"],
-      title: "TEST TITLE 03",
-      summary: "TEST SUMMARY TEXT 03",
-      img: images.work120_process,
+      tags: ["EVENT"],
+      title: "GALLERY OPEN (COMING SOON)",
+      summary: "미래의 오프라인 행사/전시 공지 레이아웃 테스트",
+      img: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/120_1.png",
     },
     {
       id: "4",
       tags: ["ESSAY"],
-      title: "TEST TITLE 04",
-      summary: "TEST SUMMARY TEXT 04",
-      img: images.work9,
-    },
-    {
-      id: "5",
-      tags: ["INSIGHT"],
-      title: "TEST TITLE 05",
-      summary: "TEST SUMMARY TEXT 05",
-      img: images.mentorView,
-    },
-    {
-      id: "6",
-      tags: ["SPACE"],
-      title: "TEST TITLE 06",
-      summary: "TEST SUMMARY TEXT 06",
-      img: images.work10,
+      title: "ESSAY TEST TITLE",
+      summary: "에세이 테스트 텍스트입니다.",
+      img: "https://artive-uploads.s3.ap-southeast-2.amazonaws.com/test/rome.png",
     },
   ];
 
-  // 메인 랜덤 추출 (상단 노출용)
   const mainPool = dummyPosts.filter((post) => post.tags.includes("MAIN"));
   const mainPost = useMemo(() => {
     if (mainPool.length === 0) return null;
     return mainPool[Math.floor(Math.random() * mainPool.length)];
   }, [mainPool.length]);
 
-  // 태그별 렌더링 카드 (이제 무조건 한 줄 차지)
   const renderPostCard = (post: any) => {
-    const isArtist = post.tags.includes("ARTIST");
-    const isEssay =
-      post.tags.includes("ESSAY") || post.tags.includes("INSIGHT");
-
-    // 1. ARTIST: 큰 이미지 중심의 피드
-    if (isArtist) {
-      return (
-        <article
-          key={post.id}
-          onClick={() => navigate(`/art/contents/${post.id}`)}
-          style={{ width: "100%", marginBottom: "60px", cursor: "pointer" }}
-        >
-          <div
-            style={{
-              width: "100%",
-              aspectRatio: "16/9",
-              overflow: "hidden",
-              marginBottom: "20px",
-            }}
-          >
-            <img
-              src={post.img}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <span style={{ fontSize: "11px", color: "#888", fontWeight: 700 }}>
-            {post.tags[0]}
-          </span>
-          <h3 style={{ fontSize: "1.8rem", margin: "10px 0", fontWeight: 500 }}>
-            {post.title}
-          </h3>
-          <p style={{ fontSize: "15px", color: "#666", lineHeight: 1.6 }}>
-            {post.summary}
-          </p>
-        </article>
-      );
-    }
-
-    // 2. ESSAY / INSIGHT: 가로형 (이미지 옆에 글) - 데스크탑에서도 한 줄로 크게
-    if (isEssay) {
-      return (
-        <article
-          key={post.id}
-          onClick={() => navigate(`/art/contents/${post.id}`)}
-          style={{
-            width: "100%",
-            display: "flex",
-            gap: "30px",
-            alignItems: "center",
-            padding: "40px 0",
-            borderBottom: "1px solid #eee",
-            cursor: "pointer",
-          }}
-        >
-          <div
-            style={{
-              width: isMobile ? "100px" : "200px",
-              height: isMobile ? "100px" : "200px",
-              flexShrink: 0,
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={post.img}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div>
-            <span style={{ fontSize: "11px", color: "#aaa" }}>
-              {post.tags[0]}
-            </span>
-            <h4
-              style={{
-                fontSize: isMobile ? "1.1rem" : "1.5rem",
-                margin: "10px 0",
-                fontWeight: 600,
-              }}
-            >
-              {post.title}
-            </h4>
-            {!isMobile && (
-              <p style={{ color: "#888", fontSize: "14px" }}>{post.summary}</p>
-            )}
-          </div>
-        </article>
-      );
-    }
-
-    // 3. 기본형 (SPACE, EXHIBITION): 시원한 한 줄 카드
+    // 공통 스타일: 800px 너비 안에서 꽉 차는 1열 피드
     return (
       <article
         key={post.id}
         onClick={() => navigate(`/art/contents/${post.id}`)}
-        style={{ width: "100%", marginBottom: "60px", cursor: "pointer" }}
+        style={{
+          width: "100%",
+          marginBottom: isMobile ? "40px" : "80px", // 피드 간 간격을 넓게 주어 기록 하나하나에 집중
+          cursor: "pointer",
+          borderBottom: isMobile ? "1px solid #eee" : "none",
+          paddingBottom: isMobile ? "30px" : "0",
+        }}
       >
+        {/* 태그 & 날짜 (상단 배치로 정보 전달력 강화) */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "12px",
+            alignItems: "baseline",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "11px",
+              fontWeight: 700,
+              letterSpacing: "1px",
+              color: "#000",
+            }}
+          >
+            {post.tags[0]}
+          </span>
+          <span style={{ fontSize: "10px", color: "#aaa" }}>2026.03.10</span>
+        </div>
+
+        {/* 메인 이미지 */}
         <div
           style={{
             width: "100%",
-            aspectRatio: "4/3",
+            aspectRatio: "16/10",
             overflow: "hidden",
-            marginBottom: "20px",
+            backgroundColor: "#f9f9f9",
           }}
         >
           <img
             src={post.img}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            alt="Content"
           />
         </div>
-        <span style={{ fontSize: "11px", color: "#888", fontWeight: 600 }}>
-          {post.tags[0]}
-        </span>
-        <h3 style={{ fontSize: "1.5rem", margin: "10px 0", fontWeight: 500 }}>
-          {post.title}
-        </h3>
+
+        {/* 텍스트 영역 */}
+        <div style={{ marginTop: "20px" }}>
+          <h3
+            style={{
+              fontSize: isMobile ? "1.4rem" : "1.8rem",
+              margin: "0 0 10px",
+              fontWeight: 500,
+              lineHeight: 1.3,
+            }}
+          >
+            {post.title}
+          </h3>
+          <p
+            style={{
+              fontSize: "15px",
+              color: "#666",
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
+            {post.summary}
+          </p>
+        </div>
       </article>
     );
   };
 
   return (
-    <div
-      style={{ backgroundColor: "#fff", color: "#1a1a1a", minHeight: "100vh" }}
-    >
-      {/* --- Section 1: Hero (메인 큐레이션) --- */}
+    <div style={{ backgroundColor: "#fff", color: "#1a1a1a" }}>
+      {/* --- Section 1: Hero (EDITOR'S PICK) --- */}
       {mainPost && (
         <section
           style={{
-            padding: isMobile ? "20px" : "60px 20px",
-            maxWidth: "800px", // 피드처럼 보이기 위해 너비를 좁게 제한
+            padding: isMobile ? "40px 20px" : "80px 20px",
+            maxWidth: "800px",
             margin: "0 auto",
+            borderBottom: "1px solid #000", // 메인과 아카이브의 경계를 확실히
           }}
         >
-          <div
+          <span
             style={{
-              width: "100%",
-              aspectRatio: "16/9",
-              overflow: "hidden",
-              backgroundColor: "#fafafa",
-            }}
-          >
-            <img
-              src={mainPost.img}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-          <div
-            style={{
-              padding: "30px 0",
+              fontSize: "10px",
+              letterSpacing: "3px",
+              color: "#888",
+              display: "block",
+              marginBottom: "20px",
               textAlign: "center",
-              borderBottom: "1px solid #eee",
             }}
           >
-            <span
-              style={{ fontSize: "12px", color: "#888", letterSpacing: "2px" }}
-            >
-              FEATURED
-            </span>
-            <h1
+            FEATURED RECORD
+          </span>
+          <div
+            onClick={() => navigate(`/art/contents/${mainPost.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <div
               style={{
-                fontSize: isMobile ? "2rem" : "2.8rem",
-                margin: "15px 0",
-                fontWeight: 300,
+                width: "100%",
+                aspectRatio: "1/1",
+                overflow: "hidden",
+                marginBottom: "30px",
               }}
             >
-              {mainPost.title}
-            </h1>
-            <p
-              style={{
-                color: "#666",
-                maxWidth: "600px",
-                margin: "0 auto",
-                lineHeight: 1.6,
-              }}
-            >
-              {mainPost.summary}
-            </p>
+              <img
+                src={mainPost.img}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <h1
+                style={{
+                  fontSize: isMobile ? "2rem" : "3rem",
+                  margin: "0 0 15px",
+                  fontWeight: 300,
+                }}
+              >
+                {mainPost.title}
+              </h1>
+              <p style={{ color: "#666", fontSize: "15px" }}>
+                {mainPost.summary}
+              </p>
+            </div>
           </div>
         </section>
       )}
 
-      {/* --- Section 2: One Column Feed (한 줄 나열) --- */}
+      {/* --- Section 2: Archive Feed (1열 리스트) --- */}
       <main
         style={{
-          maxWidth: "800px", // 데스크탑에서도 이 너비를 넘지 않게 해서 1열 피드 유지
+          maxWidth: "800px",
           margin: "0 auto",
-          padding: isMobile ? "20px" : "40px 20px",
+          padding: isMobile ? "40px 20px" : "100px 20px",
         }}
       >
-        <h2
-          style={{
-            fontSize: "11px",
-            letterSpacing: "3px",
-            marginBottom: "40px",
-            color: "#ccc",
-            textAlign: "center",
-          }}
-        >
-          ARCHIVE FEED
-        </h2>
         {dummyPosts.map((post) => renderPostCard(post))}
       </main>
     </div>
