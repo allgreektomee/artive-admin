@@ -1,41 +1,16 @@
-import React from "react";
+// import React from "react";
 
-interface LogProps {
-  data: {
-    tag: string;
-    title: string;
-    desc: string;
-    imgUrl?: string;
-  };
-  isMobile: boolean;
-}
-
-// 공통 태그 스타일 (매거진 B 스타일의 미니멀함)
-const Tag = ({ children }: { children: React.ReactNode }) => (
-  <span
-    style={{
-      fontSize: "9px",
-      color: "#aaa",
-      letterSpacing: "1.5px",
-      marginBottom: "8px",
-      display: "block",
-      textTransform: "uppercase",
-    }}
-  >
-    {children}
-  </span>
-);
-
-/** * [LOG 섹션용]
- * FixedGridSection & TextListSection
- * 네이트온의 자동차 섹션 구조를 계승
+/**
+ * [LOG & INSIGHT 전용 컴포넌트]
+ * 네이트의 효율적인 구조 + 매거진 B의 미니멀한 감성
  */
 
+// 1. [LOG] 상단 2분할 그리드 카드 (Process, Space 등)
 export const FixedGridSection = ({
   items,
 }: {
   items: any[];
-  isMobile: boolean;
+  isMobile?: boolean;
 }) => (
   <div
     style={{
@@ -83,6 +58,7 @@ export const FixedGridSection = ({
   </div>
 );
 
+// 2. [LOG] 하단 텍스트 리스트 (5개 제한)
 export const TextListSection = ({ items }: { items: any[] }) => (
   <div style={{ padding: "0 20px", marginBottom: "50px" }}>
     {items.slice(0, 5).map((item, idx) => (
@@ -118,11 +94,7 @@ export const TextListSection = ({ items }: { items: any[] }) => (
   </div>
 );
 
-/** * [INSIGHT 섹션용]
- * InsightGrid & InsightTextList
- * 매거진 B의 미니멀한 감성 강조
- */
-
+// 3. [INSIGHT] 2구 그리드 - 매거진 B 감성 (4:5 비율)
 export const InsightGrid = ({ items }: { items: any[] }) => (
   <div
     style={{
@@ -177,6 +149,7 @@ export const InsightGrid = ({ items }: { items: any[] }) => (
   </div>
 );
 
+// 4. [INSIGHT] 텍스트 리스트 - 도록 스타일
 export const InsightTextList = ({ items }: { items: any[] }) => (
   <div style={{ padding: "0 20px", marginBottom: "80px" }}>
     {items.slice(0, 5).map((item: any, idx: number) => (
