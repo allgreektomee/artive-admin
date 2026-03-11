@@ -5,6 +5,22 @@ const MainBanner = () => {
   // BANNER 카테고리 ID가 2번이 맞는지 꼭 확인하세요!
   const { data, loading, error } = useWordPress(32);
 
+  // 1. S3 기본 경로 (아티브님 S3 버킷 주소)
+  //   const S3_BASE_URL = "https://artive-uploads.s3.ap-southeast-2.amazonaws.com";
+
+  // 2. 이미지 소스 결정 로직
+  const getBannerImage = (post: any) => {
+    const artImage = post.acf?.art_image;
+
+    // 만약 art_image가 숫자(ID)라면, 워드프레스가 제공하는 _embedded에서 주소를 찾습니다.
+    if (typeof artImage === "number") {
+      return post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
+    }
+
+    // 이미 주소(string)로 오고 있다면 그대로 반환
+    return artImage || "";
+  };
+
   if (loading) return <div style={{ padding: "20px" }}>로딩 중...</div>;
   if (error)
     return (
@@ -23,7 +39,7 @@ const MainBanner = () => {
           {/* ACF 필드명 art_image가 맞는지 확인! */}
           {post.acf?.art_image && (
             <img
-              src={post.acf.art_image}
+              src={getBannerImage(post)}
               alt={post.title?.rendered}
               style={{ width: "100%", height: "auto" }}
             />
