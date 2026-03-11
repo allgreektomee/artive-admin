@@ -17,7 +17,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artistName,
 }) => {
   const navigate = useNavigate();
-  const FIXED_HEIGHT = "40vh"; // 아까 정한 콤팩트한 높이
+  const FIXED_HEIGHT = "30vh"; // 아까 정한 콤팩트한 높이
 
   return (
     <div
