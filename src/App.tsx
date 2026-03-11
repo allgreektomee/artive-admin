@@ -85,6 +85,8 @@ const App: React.FC = () => {
             <Route index element={<ArtHome />} />
             <Route path="magazine/:slug" element={<MagazineDetail />} />
             {/* /art/post/banner/1 로 접속됨 */}
+            <Route path="post/:type/:id" element={<PostDetail />} />
+            {/* Artworks */}
             <Route path="works" element={<Artworks />} />
           </Route>
 
