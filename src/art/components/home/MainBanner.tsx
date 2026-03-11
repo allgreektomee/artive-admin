@@ -10,7 +10,7 @@ const MainBanner = () => {
   const { isMobile } = useResponsive();
 
   // 개별 포스트의 이미지 로딩 상태 관리
-  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+  const [loadedImages] = useState<Record<number, boolean>>({});
 
   const getBannerImage = (post: any) => {
     return post.acf?.art_image || "";
@@ -19,11 +19,6 @@ const MainBanner = () => {
   const handleBannerClick = (post: any) => {
     const categoryType = "banner";
     navigate(`/art/post/${categoryType}/${post.id}`);
-  };
-
-  // 이미지 로드 완료 시 실행
-  const handleImageLoad = (postId: number) => {
-    setLoadedImages((prev) => ({ ...prev, [postId]: true }));
   };
 
   if (loading)
