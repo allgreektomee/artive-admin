@@ -17,14 +17,14 @@ const SelectedWorks = ({
     <section style={{ marginTop: "60px" }}>
       <p
         style={{
-          fontSize: "18px",
+          fontSize: "16px",
           color: "#bbb",
           letterSpacing: "3px",
-          paddingLeft: "20px",
+          paddingLeft: "10px",
           marginBottom: "20px",
         }}
       >
-        01 ART WORKS
+        ART WORKS
       </p>
 
       <div
