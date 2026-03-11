@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import MainBanner from "../components/home/MainBanner";
-import { useResponsive } from "../hook/useResponsive";
+// import { useResponsive } from "../hook/useResponsive";
 import ArtWorks from "../components/home/ArtworkGrid"; // 새로 만들 섹션
 
 const ArtHome = () => {
@@ -8,7 +8,7 @@ const ArtHome = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { isMobile } = useResponsive();
+  //   const { isMobile } = useResponsive();
   return (
     <div className="art-page-root">
       {/* 섹션 1: 메인 배너 */}
