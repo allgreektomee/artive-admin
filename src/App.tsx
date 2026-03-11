@@ -18,6 +18,7 @@ import ProfilePage from "./common/pages/ProfileTest"; // 에필로그
 import ArtLayout from "./art/ArtLayout"; // /art 레이아웃
 import ArtHome from "./art/pages/ArtHome"; // /art 메인
 import MagazineDetail from "./art/pages/MagazineDetail"; // /art/magazine/:slug (동적 SEO)
+import PostDetail from "./art/pages/PostDetail";
 
 // =========================================
 // 3. Common 도메인 (레거시/참조용)
@@ -82,6 +83,8 @@ const App: React.FC = () => {
             {/* 매거진 전용 헤더가 있는 껍데기 */}
             <Route index element={<ArtHome />} />
             <Route path="magazine/:slug" element={<MagazineDetail />} />
+
+            <Route path="/post/:type/:id" element={<PostDetail />} />
           </Route>
 
           {/* [참조] Common 도메인 */}
