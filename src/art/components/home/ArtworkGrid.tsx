@@ -49,7 +49,7 @@ const ArtworkGrid = ({
               style={{
                 gridColumn: isFullWidth ? "span 2" : "span 1",
                 // 2개짜리 높이는 300px, 1개짜리(Full)는 450px로 시원하게 배치
-                height: isFullWidth ? "450px" : "300px",
+                height: "auto",
               }}
             >
               <ArtWorkCardHover
