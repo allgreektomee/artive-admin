@@ -1,17 +1,16 @@
 import React from "react";
-import { useWordPress } from "../../hook/useWordPress";
-import { useResponsive } from "../../hook/useResponsive"; // 이미 만들어두신 훅 사용
+import { useWordPress } from "../../hook/useWordPress"; // 깃에 있는 경로
+import { useResponsive } from "../../hook/useResponsive"; // 깃에 있는 훅
 
 const MainBanner = () => {
-  // 1. 깃에 있는 훅들 그대로 호출
+  // 1. 깃의 기존 훅 호출 구조 유지
   const { data, loading, error } = useWordPress(32);
   const { isMobile } = useResponsive();
 
-  // 2. 깃에 있는 이미지 추출 로직 (S3 대응)
+  // 2. 깃에 정의된 S3 이미지 추출 로직 (수정 없이 그대로 사용)
   const getBannerImage = (post: any) => {
     const artImage = post.acf?.art_image;
     if (typeof artImage === "number") {
-      // _embed 파라미터 덕분에 가능한 S3 주소 추출
       return (
         post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
         post._embedded?.["wp:attachment"]?.[0]?.source_url ||
@@ -31,7 +30,7 @@ const MainBanner = () => {
 
   return (
     <section className="main-banner">
-      {/* 3. 깃 구조 그대로 .map 렌더링 */}
+      {/* 3. 깃에 있는 .map 리스트 렌더링 구조 유지 */}
       {data.map((post) => (
         <div
           key={post.id}
@@ -43,14 +42,14 @@ const MainBanner = () => {
             marginBottom: "40px",
           }}
         >
-          {/* S3 이미지 배경 */}
+          {/* 배경 이미지: S3 연동 주소 */}
           <img
             src={getBannerImage(post)}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
             alt={post.title?.rendered}
           />
 
-          {/* 중앙 유리 효과 박스 (요청하신 스타일) */}
+          {/* 중앙 유리 효과 박스 (요청하신 레이아웃 추가) */}
           <div
             style={{
               position: "absolute",
@@ -95,7 +94,7 @@ const MainBanner = () => {
                 letterSpacing: "2px",
               }}
             >
-              {post.acf?.sub_title || "선과 면의 기록, 아카이브의 시작"}
+              {post.acf?.sub_title}
             </p>
           </div>
         </div>
