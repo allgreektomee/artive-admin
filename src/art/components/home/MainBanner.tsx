@@ -16,7 +16,7 @@ const MainBanner = () => {
   const handleBannerClick = (post: any) => {
     // 현재는 banner 카테고리로 고정 (나중에 데이터에서 추출 가능)
     const categoryType = "banner";
-    navigate(`/post/${categoryType}/${post.id}`);
+    navigate(`/art/post/${categoryType}/${post.id}`);
   };
 
   if (loading)
