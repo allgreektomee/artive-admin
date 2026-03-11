@@ -1,15 +1,22 @@
 // import React from "react";
-import { useWordPress } from "../../hook/useWordPress"; // 깃에 있는 경로
-import { useResponsive } from "../../hook/useResponsive"; // 깃에 있는 훅
+import { useNavigate } from "react-router-dom"; // 1. 라우터 훅 추가
+import { useWordPress } from "../../hook/useWordPress";
+import { useResponsive } from "../../hook/useResponsive";
 
 const MainBanner = () => {
-  // 1. 깃의 기존 훅 호출 구조 유지
+  const navigate = useNavigate(); // 2. 네비게이트 함수 초기화
   const { data, loading, error } = useWordPress(32);
   const { isMobile } = useResponsive();
 
-  // 2. 깃에 정의된 S3 이미지 추출 로직 (수정 없이 그대로 사용)
   const getBannerImage = (post: any) => {
     return post.acf?.art_image || "";
+  };
+
+  // 3. 클릭 핸들러: 상세 페이지로 이동
+  const handleBannerClick = (post: any) => {
+    // 현재는 banner 카테고리로 고정 (나중에 데이터에서 추출 가능)
+    const categoryType = "banner";
+    navigate(`/post/${categoryType}/${post.id}`);
   };
 
   if (loading)
@@ -22,26 +29,37 @@ const MainBanner = () => {
 
   return (
     <section className="main-banner">
-      {/* 3. 깃에 있는 .map 리스트 렌더링 구조 유지 */}
       {data.map((post) => (
         <div
           key={post.id}
+          // 4. 전체 배너 영역에 클릭 이벤트 부여
+          onClick={() => handleBannerClick(post)}
           style={{
             position: "relative",
             width: "100%",
             height: isMobile ? "55vh" : "65vh",
             overflow: "hidden",
             marginBottom: "40px",
+            cursor: "pointer", // 마우스 올리면 클릭 가능함을 표시
           }}
         >
-          {/* 배경 이미지: S3 연동 주소 */}
+          {/* 배경 이미지 */}
           <img
             src={getBannerImage(post)}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.4s ease", // 부드러운 효과
+            }}
             alt={post.title?.rendered}
+            onMouseOver={(e) =>
+              (e.currentTarget.style.transform = "scale(1.03)")
+            } // 호버 효과
+            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1.0)")}
           />
 
-          {/* 중앙 유리 효과 박스 (요청하신 레이아웃 추가) */}
+          {/* 중앙 유리 효과 박스 */}
           <div
             style={{
               position: "absolute",
@@ -54,6 +72,7 @@ const MainBanner = () => {
               padding: isMobile ? "50px 20px" : "70px 40px",
               textAlign: "center",
               border: "1px solid rgba(255, 255, 255, 0.1)",
+              pointerEvents: "none", // 박스 클릭 시에도 부모 div의 onClick이 작동하도록 설정
             }}
           >
             <h1
