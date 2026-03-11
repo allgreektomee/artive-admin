@@ -19,6 +19,7 @@ import ArtLayout from "./art/ArtLayout"; // /art 레이아웃
 import ArtHome from "./art/pages/ArtHome"; // /art 메인
 import MagazineDetail from "./art/pages/MagazineDetail"; // /art/magazine/:slug (동적 SEO)
 import PostDetail from "./art/pages/PostDetail";
+import Artworks from "./art/pages/ArtworkList";
 
 // =========================================
 // 3. Common 도메인 (레거시/참조용)
@@ -84,7 +85,7 @@ const App: React.FC = () => {
             <Route index element={<ArtHome />} />
             <Route path="magazine/:slug" element={<MagazineDetail />} />
             {/* /art/post/banner/1 로 접속됨 */}
-            <Route path="post/:type/:id" element={<PostDetail />} />
+            <Route path="works" element={<Artworks />} />
           </Route>
 
           {/* [참조] Common 도메인 */}
