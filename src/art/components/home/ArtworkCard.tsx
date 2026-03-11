@@ -65,7 +65,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         <p
           style={{
             fontSize: "13px",
-            color: "#adadad",
+            color: "#828282",
             fontStyle: "italic",
             margin: "0 0 6px 0",
             lineHeight: "1",
@@ -75,7 +75,22 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
             whiteSpace: "nowrap",
           }}
         >
-          {artistName} - {artworkInfo}
+          {artworkInfo}
+        </p>
+        <p
+          style={{
+            fontSize: "12px",
+            color: "#828282",
+            fontStyle: "italic",
+            margin: "0 0 6px 0",
+            lineHeight: "1",
+            // 글자가 이미지 너비보다 길어지면 자연스럽게 말줄임표 처리
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {artistName}
         </p>
 
         <h4
