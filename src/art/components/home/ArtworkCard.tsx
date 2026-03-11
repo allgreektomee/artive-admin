@@ -65,7 +65,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         <p
           style={{
             fontSize: "13px",
-            color: "#ccc",
+            color: "#adadad",
             fontStyle: "italic",
             margin: "0 0 6px 0",
             lineHeight: "1",
