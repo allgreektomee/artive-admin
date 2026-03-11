@@ -16,7 +16,7 @@ import ProfilePage from "./common/pages/ProfileTest"; // 에필로그
 // 2. [NEW] ART 도메인 (워드프레스 연동 및 실전 전시)
 // =========================================
 import ArtLayout from "./art/ArtLayout"; // /art 레이아웃
-import ArtMagazineHome from "./art/pages/MagazineHome"; // /art 메인
+import ArtHome from "./art/pages/ArtHome"; // /art 메인
 import MagazineDetail from "./art/pages/MagazineDetail"; // /art/magazine/:slug (동적 SEO)
 
 // =========================================
@@ -80,7 +80,7 @@ const App: React.FC = () => {
           {/* [변경] 매거진 전용 레이아웃 또는 독립 페이지 */}
           <Route path="/art" element={<ArtLayout />}>
             {/* 매거진 전용 헤더가 있는 껍데기 */}
-            <Route index element={<ArtMagazineHome />} />
+            <Route index element={<ArtHome />} />
             <Route path="magazine/:slug" element={<MagazineDetail />} />
           </Route>
 

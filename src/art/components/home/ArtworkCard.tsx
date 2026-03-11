@@ -1,5 +1,5 @@
 import React from "react";
-import { useResponsive } from "../hook/useResponsive";
+import { useResponsive } from "../../hook/useResponsive";
 
 // 1. 여기서 약속(Interface)을 정의하고
 interface ArtworkCardProps {

@@ -1,7 +1,7 @@
 // src/art/pages/MagazineDetail.tsx
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ArtSEO from "../components/ArtSEO";
+import ArtSEO from "../components/home/ArtSEO";
 
 const MagazineDetail = () => {
   const { slug } = useParams();

@@ -1,12 +1,12 @@
 // import React from "react";
 import { useResponsive } from "../hook/useResponsive";
-import ArtworkCard from "../components/ArtworkCard";
+import ArtworkCard from "../components/home/ArtworkCard";
 // 새로 만든 컴포넌트들 임포트
 import {
   FixedGridSection,
   TextListSection,
   InsightBigCard,
-} from "../components/LogTemplates";
+} from "../components/home/LogTemplates";
 
 const MagazineHome = () => {
   const { isMobile } = useResponsive();
