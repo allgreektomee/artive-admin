@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWordPress } from "../../hook/useWordPress";
 import { useResponsive } from "../../hook/useResponsive";
-import BlurImage from "../../components/BlurImage";
 
 const MainBanner = () => {
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ const MainBanner = () => {
   const { isMobile } = useResponsive();
 
   // 개별 포스트의 이미지 로딩 상태 관리
-  const [loadedImages] = useState<Record<number, boolean>>({});
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
 
   const getBannerImage = (post: any) => {
     return post.acf?.art_image || "";
@@ -19,6 +18,11 @@ const MainBanner = () => {
   const handleBannerClick = (post: any) => {
     const categoryType = "banner";
     navigate(`/art/post/${categoryType}/${post.id}`);
+  };
+
+  // 이미지 로드 완료 시 실행
+  const handleImageLoad = (postId: number) => {
+    setLoadedImages((prev) => ({ ...prev, [postId]: true }));
   };
 
   if (loading)
@@ -52,11 +56,26 @@ const MainBanner = () => {
             }}
           >
             {/* 1. 배경 이미지: 로딩 전후 상태에 따라 블러/투명도 조절 */}
-            {/* 배경 이미지 컴포넌트 호출 */}
-            <BlurImage
+            <img
               src={getBannerImage(post)}
+              onLoad={() => handleImageLoad(post.id)}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "all 0.6s ease", // 블러와 투명도 전환 효과
+                filter: isLoaded ? "none" : "blur(20px)", // 로딩 전엔 전체 블러
+                opacity: isLoaded ? 1 : 0.7, // 로딩 전엔 살짝 투명하게
+                transform: isLoaded ? "scale(1.0)" : "scale(1.1)", // 로딩 전엔 약간 확대해서 블러 외곽선 방지
+              }}
               alt={post.title?.rendered}
-              hoverScale={1.03}
+              // 기존 호버 효과 유지 (로드 완료 후에만 작동하도록 조건 추가 가능)
+              onMouseOver={(e) =>
+                isLoaded && (e.currentTarget.style.transform = "scale(1.03)")
+              }
+              onMouseOut={(e) =>
+                isLoaded && (e.currentTarget.style.transform = "scale(1.0)")
+              }
             />
 
             {/* 2. 기존 중앙 유리 효과 박스 (그대로 유지) */}
