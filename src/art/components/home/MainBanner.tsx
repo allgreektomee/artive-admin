@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWordPress } from "../../hook/useWordPress";
 import { useResponsive } from "../../hook/useResponsive";
-import BlurImage from "../../common/components/BlurImage";
+import BlurImage from "../../components/BlurImage";
 
 const MainBanner = () => {
   const navigate = useNavigate();
