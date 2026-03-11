@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ArtworkCardProps {
+  id: number;
   imageUrl: string;
   artworkName: string;
   artworkInfo: string;
@@ -9,6 +10,7 @@ interface ArtworkCardProps {
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({
+  id,
   imageUrl,
   artworkName,
   artworkInfo,
@@ -18,26 +20,28 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
 
   return (
     <div
+      // 💡 주소 중간에 'artwork'를 확실히 박아서 63번으로 보냅니다.
+      onClick={() => navigate(`/art/post/artwork/${id}`)}
       style={{
         flex: "0 0 auto",
         display: "flex",
         flexDirection: "column",
-        width: "300px", // 가로 너비 유지
+        width: "300px",
         textAlign: "right",
         cursor: "pointer",
       }}
     >
-      {/* --- 1. 이미지 박스: 화면 높이(vh)에 반응하도록 고정 --- */}
+      {/* --- 이미지 박스 (반응형 vh 고정) --- */}
       <div
         style={{
-          height: "45vh", // 👈 화면 높이의 45%로 고정. 어떤 기기든 한 화면에 쏙 들어옴
+          height: "45vh",
           width: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#fcfcfc",
           marginBottom: "16px",
-          overflow: "hidden", // 혹시 모를 삐져나옴 방지
+          overflow: "hidden",
         }}
       >
         <img
@@ -45,18 +49,15 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
           alt={artworkName}
           style={{
             maxWidth: "100%",
-            maxHeight: "100%", // 박스 높이(45vh) 안에서만 움직임
-            width: "auto",
-            height: "auto",
-            objectFit: "contain", // 👈 절대 안 잘리고 다 보여줌
+            maxHeight: "100%",
+            objectFit: "contain",
             display: "block",
           }}
         />
       </div>
 
-      {/* --- 2. 텍스트 영역: 아티브님 설정 그대로 --- */}
+      {/* --- 텍스트 (아티브님 설정: #444 / #ccc) --- */}
       <div style={{ paddingRight: "2px" }}>
-        {/* 상단: 아티스트 / 정보 (ccc 색상) */}
         <p
           style={{
             fontSize: "13px",
@@ -71,15 +72,12 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
           </span>
           {artworkInfo}
         </p>
-
-        {/* 하단: 작품명 (444 색상) */}
         <h4
           style={{
             fontSize: "16px",
             color: "#444",
             fontWeight: 600,
             margin: 0,
-            lineHeight: "1.3",
           }}
         >
           {artworkName}
