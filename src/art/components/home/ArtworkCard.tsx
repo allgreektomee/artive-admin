@@ -75,7 +75,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
             whiteSpace: "nowrap",
           }}
         >
-          {artistName} / {artworkInfo}
+          {artistName} - {artworkInfo}
         </p>
 
         <h4

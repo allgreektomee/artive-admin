@@ -14,10 +14,10 @@ const SelectedWorks = ({
   if (loading) return null;
 
   return (
-    <section style={{ marginTop: "40px", marginBottom: "60px" }}>
+    <section style={{ marginTop: "60px" }}>
       <p
         style={{
-          fontSize: "10px",
+          fontSize: "18px",
           color: "#bbb",
           letterSpacing: "3px",
           paddingLeft: "20px",

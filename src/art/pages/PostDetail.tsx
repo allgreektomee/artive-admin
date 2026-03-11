@@ -1,7 +1,11 @@
-// import React from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const PostDetail = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // URL에서 type(banner 등)과 id(1 등)를 가져옴
   const { type, id } = useParams();
   const navigate = useNavigate();

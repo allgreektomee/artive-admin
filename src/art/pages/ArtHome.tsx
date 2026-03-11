@@ -1,9 +1,13 @@
-// import React from "react";
+import { useEffect } from "react";
 import MainBanner from "../components/home/MainBanner";
 import { useResponsive } from "../hook/useResponsive";
 import SelectedWorks from "../components/home/SelectedWorks"; // 새로 만들 섹션
 
 const ArtHome = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { isMobile } = useResponsive();
   return (
     <div className="art-page-root">
