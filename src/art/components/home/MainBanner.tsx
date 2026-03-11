@@ -1,53 +1,102 @@
-// import React from "react";
+import React from "react";
 import { useWordPress } from "../../hook/useWordPress";
+import { useResponsive } from "../../hook/useResponsive"; // 이미 만들어두신 훅 사용
 
 const MainBanner = () => {
-  // BANNER 카테고리 ID가 2번이 맞는지 꼭 확인하세요!
+  // 1. 깃에 있는 훅들 그대로 호출
   const { data, loading, error } = useWordPress(32);
+  const { isMobile } = useResponsive();
 
-  // 1. S3 기본 경로 (아티브님 S3 버킷 주소)
-  //   const S3_BASE_URL = "https://artive-uploads.s3.ap-southeast-2.amazonaws.com";
-
-  // 2. 이미지 소스 결정 로직
+  // 2. 깃에 있는 이미지 추출 로직 (S3 대응)
   const getBannerImage = (post: any) => {
     const artImage = post.acf?.art_image;
-
-    // 만약 art_image가 숫자(ID)라면, 워드프레스가 제공하는 _embedded에서 주소를 찾습니다.
     if (typeof artImage === "number") {
-      return post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
+      // _embed 파라미터 덕분에 가능한 S3 주소 추출
+      return (
+        post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+        post._embedded?.["wp:attachment"]?.[0]?.source_url ||
+        ""
+      );
     }
-
-    // 이미 주소(string)로 오고 있다면 그대로 반환
     return artImage || "";
   };
 
-  if (loading) return <div style={{ padding: "20px" }}>로딩 중...</div>;
-  if (error)
+  if (loading)
     return (
-      <div style={{ padding: "20px", color: "red" }}>에러 발생: {error}</div>
+      <div
+        style={{ height: isMobile ? "55vh" : "65vh", backgroundColor: "#000" }}
+      />
     );
-  if (!data || data.length === 0)
-    return <div style={{ padding: "20px" }}>표시할 배너가 없습니다.</div>;
+  if (error || !data || data.length === 0) return null;
 
   return (
     <section className="main-banner">
+      {/* 3. 깃 구조 그대로 .map 렌더링 */}
       {data.map((post) => (
         <div
           key={post.id}
-          style={{ border: "1px solid #eee", marginBottom: "10px" }}
+          style={{
+            position: "relative",
+            width: "100%",
+            height: isMobile ? "55vh" : "65vh",
+            overflow: "hidden",
+            marginBottom: "40px",
+          }}
         >
-          {/* ACF 필드명 art_image가 맞는지 확인! */}
-          {post.acf?.art_image && (
-            <img
-              src={getBannerImage(post)}
-              alt={post.title?.rendered}
-              style={{ width: "100%", height: "auto" }}
-            />
-          )}
-          <div style={{ padding: "15px" }}>
-            <p style={{ color: "#666" }}>{post.acf?.sub_title}</p>
-            <h2>{post.title?.rendered}</h2>
-            <p>작가: {post.acf?.artist_name}</p>
+          {/* S3 이미지 배경 */}
+          <img
+            src={getBannerImage(post)}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            alt={post.title?.rendered}
+          />
+
+          {/* 중앙 유리 효과 박스 (요청하신 스타일) */}
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+              backdropFilter: "blur(8px)",
+              width: isMobile ? "80%" : "65%",
+              padding: isMobile ? "50px 20px" : "70px 40px",
+              textAlign: "center",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+            }}
+          >
+            <h1
+              style={{
+                color: "#fff",
+                fontSize: isMobile ? "1.8rem" : "2.8rem",
+                fontWeight: 500,
+                margin: 0,
+                letterSpacing: "5px",
+                textTransform: "uppercase",
+              }}
+            >
+              {post.title?.rendered}
+            </h1>
+
+            <div
+              style={{
+                width: "50px",
+                height: "1px",
+                backgroundColor: "rgba(255,255,255,0.5)",
+                margin: "25px auto",
+              }}
+            ></div>
+
+            <p
+              style={{
+                color: "rgba(255, 255, 255, 0.9)",
+                fontSize: isMobile ? "13px" : "16px",
+                fontWeight: 300,
+                letterSpacing: "2px",
+              }}
+            >
+              {post.acf?.sub_title || "선과 면의 기록, 아카이브의 시작"}
+            </p>
           </div>
         </div>
       ))}
