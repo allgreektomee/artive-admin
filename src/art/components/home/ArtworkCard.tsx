@@ -13,9 +13,9 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artworkInfo,
   artistName,
 }) => {
-  // 💡 기기 상관없이 모바일 최적화된 비율로 고정
-  const fixedHeight = "380px";
-  const cardWidth = "280px";
+  // 💡 이미지와 카드의 크기를 고정 (모바일/데스크탑 공용)
+  const FIXED_HEIGHT = "400px";
+  const FIXED_WIDTH = "300px";
 
   return (
     <div
@@ -23,67 +23,64 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         flex: "0 0 auto",
         display: "flex",
         flexDirection: "column",
-        width: cardWidth, // 카드 너비 고정
+        width: FIXED_WIDTH,
+        textAlign: "right", // 👈 모든 텍스트 기본 우측 정렬
       }}
     >
-      {/* --- 이미지 영역: 높이 380px로 완전 고정 --- */}
+      {/* --- 이미지 영역: 높이 완전 고정 --- */}
       <div
         style={{
-          height: fixedHeight,
+          height: FIXED_HEIGHT,
           width: "100%",
-          backgroundColor: "#fcfcfc",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          backgroundColor: "#f7f7f7", // 배경색 살짝 조절
           overflow: "hidden",
+          marginBottom: "16px", // 이미지와 텍스트 간격
         }}
       >
         <img
           src={imageUrl}
           alt={artworkName}
           style={{
-            maxHeight: "100%",
-            maxWidth: "100%",
-            objectFit: "contain", // 어떤 비율이 와도 꽉 차거나 여백 생기며 정렬됨
+            width: "100%",
+            height: "100%",
+            objectFit: "cover", // 👈 영역을 빈틈없이 채워 높이를 맞춤
             display: "block",
           }}
         />
       </div>
 
-      {/* --- 텍스트 영역: 모바일에서 보던 크기 그대로 --- */}
-      <div style={{ marginTop: "14px", paddingRight: "4px" }}>
-        {/* 1층: 우측 상단 인포 (이탤릭) */}
-        <div style={{ textAlign: "right", marginBottom: "4px" }}>
-          <p
-            style={{
-              fontSize: "11px",
-              color: "#888",
-              fontStyle: "italic",
-              margin: 0,
-            }}
-          >
-            {artworkInfo}
-          </p>
-        </div>
+      {/* --- 텍스트 영역: 우측 정렬 --- */}
+      <div style={{ paddingRight: "2px" }}>
+        {/* 1층: 상세 정보 (Italic) */}
+        <p
+          style={{
+            fontSize: "11px",
+            color: "#888",
+            fontStyle: "italic",
+            margin: "0 0 6px 0",
+            letterSpacing: "-0.2px",
+          }}
+        >
+          {artworkInfo}
+        </p>
 
-        {/* 2층: 좌측 하단 작품명 / 작가명 */}
-        <div style={{ textAlign: "left" }}>
-          <h4
-            style={{
-              fontSize: "15px",
-              color: "#1a1a1a",
-              fontWeight: 600,
-              margin: 0,
-              lineHeight: "1.2",
-            }}
-          >
-            {artworkName}{" "}
-            <span style={{ fontWeight: 300, color: "#bbb", margin: "0 4px" }}>
-              /
-            </span>{" "}
-            {artistName}
-          </h4>
-        </div>
+        {/* 2층: 작품명 / 작가명 */}
+        <h4
+          style={{
+            fontSize: "16px",
+            color: "#444",
+            fontWeight: 600,
+            margin: 0,
+            lineHeight: "1.3",
+            letterSpacing: "-0.5px",
+          }}
+        >
+          {artworkName}
+          <span style={{ fontWeight: 300, color: "#ccc", margin: "0 6px" }}>
+            /
+          </span>
+          {artistName}
+        </h4>
       </div>
     </div>
   );
