@@ -8,14 +8,13 @@ const SelectedWorks = ({
   isMobile: boolean;
   limit?: number;
 }) => {
-  // 워드프레스 카테고리 33번(작품)에서 데이터 10개 가져오기
+  // 워드프레스 카테고리 3번(작품)에서 데이터 가져오기
   const { data, loading } = useWordPress(3);
 
-  if (loading) return null; // 또는 로딩 스켈레톤
+  if (loading) return null;
 
   return (
     <section style={{ marginTop: "40px", marginBottom: "60px" }}>
-      {/* 섹션 타이틀 */}
       <p
         style={{
           fontSize: "10px",
@@ -28,20 +27,20 @@ const SelectedWorks = ({
         01 ART WORKS
       </p>
 
-      {/* 가로 스크롤 영역 */}
       <div
         style={{
           display: "flex",
           overflowX: "auto",
           paddingLeft: "20px",
-          paddingRight: "60px", // 마지막 카드 여백
+          paddingRight: "60px",
           gap: "30px",
-          scrollbarWidth: "none", // 스크롤바 숨기기
+          scrollbarWidth: "none",
         }}
       >
         {data?.slice(0, limit).map((post) => (
           <ArtworkCard
             key={post.id}
+            id={post.id} // 👈 여기에 post.id를 넣습니다 (예: 63)
             imageUrl={post.acf?.art_image}
             artworkName={post.acf?.artwork_name}
             artworkInfo={post.acf?.artwork_info}
