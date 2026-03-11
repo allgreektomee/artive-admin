@@ -17,54 +17,62 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artistName,
 }) => {
   const navigate = useNavigate();
-
-  // 💡 높이는 화면의 45%로 딱 고정 (상하 라인 정렬의 기준)
-  const FIXED_HEIGHT = "45vh";
+  const FIXED_HEIGHT = "40vh"; // 아까 정한 콤팩트한 높이
 
   return (
     <div
       onClick={() => navigate(`/art/post/artwork/${id}`)}
       style={{
-        flex: "0 0 auto", // 👈 가로 스크롤에서 너비가 찌그러지지 않게 방지
+        flex: "0 0 auto",
         display: "flex",
         flexDirection: "column",
         textAlign: "right",
         cursor: "pointer",
-        // width: "300px" 👈 이걸 지워야 이미지 비율대로 너비가 늘어납니다!
+        // 💡 중요: 카드의 너비가 자식 콘텐츠(이미지)에 딱 붙게 설정
+        width: "max-content",
       }}
     >
-      {/* --- 1. 이미지 박스: 높이 고정 + 너비 자동 --- */}
+      {/* --- 1. 이미지 박스 --- */}
       <div
         style={{
           height: FIXED_HEIGHT,
-          // width: "auto" 👈 자식 이미지 크기에 따라 박스가 늘어남
+          display: "flex",
+          justifyContent: "flex-end",
           backgroundColor: "#fcfcfc",
           marginBottom: "16px",
-          display: "flex",
-          justifyContent: "flex-end", // 우측 정렬 유지
         }}
       >
         <img
           src={imageUrl}
           alt={artworkName}
           style={{
-            height: "100%", // 👈 박스 높이에 꽉 채움 (45vh)
-            width: "auto", // 👈 비율에 맞춰 가로 길이는 자동 계산 (안 잘림!)
+            height: "100%",
+            width: "auto", // 이미지 비율 보존
             objectFit: "contain",
             display: "block",
           }}
         />
       </div>
 
-      {/* --- 2. 텍스트 영역 --- */}
-      <div style={{ paddingRight: "2px" }}>
+      {/* --- 2. 텍스트 영역: 이미지 너비를 넘지 않게 고정 --- */}
+      <div
+        style={{
+          paddingRight: "2px",
+          // 💡 부모(이미지) 너비만큼만 텍스트 영역을 잡음
+          maxWidth: "100%",
+        }}
+      >
         <p
           style={{
             fontSize: "13px",
             color: "#ccc",
             fontStyle: "italic",
             margin: "0 0 6px 0",
-            whiteSpace: "nowrap", // 텍스트도 한 줄로 정갈하게
+            lineHeight: "1",
+            // 글자가 이미지 너비보다 길어지면 자연스럽게 말줄임표 처리
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
           }}
         >
           {artistName} / {artworkInfo}
@@ -76,7 +84,9 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
             color: "#444",
             fontWeight: 600,
             margin: 0,
-            lineHeight: "1.3",
+            lineHeight: "1.2",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
             whiteSpace: "nowrap",
           }}
         >
