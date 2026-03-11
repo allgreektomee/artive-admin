@@ -25,14 +25,33 @@ const ArtworkHoverCard: React.FC<ArtworkHoverCardProps> = ({
       style={{
         position: "relative",
         width: "100%",
-        lineHeight: 0, // 👈 이미지 아래 미세한 틈새 제거
+
+        height: "100%",
         overflow: "hidden",
+        cursor: "pointer",
+        backgroundColor: "#000",
       }}
     >
       {/* 1. 기본 이미지 */}
       <img
         src={imageUrl}
-        style={{ width: "100%", height: "auto", display: "block" }}
+        alt={artworkName}
+        style={{
+          width: "100%",
+          height: "100%", // 박스 높이에 맞춤
+
+          // 💡 핵심: 비율 깨지지 않게 꽉 채우되 넘치면 잘라냄
+          objectFit: "cover",
+
+          // 💡 핵심: 자를 때 그림의 정중앙을 기준으로 자름
+          objectPosition: "center",
+
+          display: "block",
+          transition:
+            "transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s ease",
+          transform: isHovered ? "scale(1.08)" : "scale(1)",
+          opacity: isHovered ? 0.6 : 1,
+        }}
       />
 
       {/* 2. 호버 오버레이  */}
