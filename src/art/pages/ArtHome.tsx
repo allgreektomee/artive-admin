@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import MainBanner from "../components/home/MainBanner";
 // import MagazineList from '../components/MagazineList'; // 나중에 추가
 
