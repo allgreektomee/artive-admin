@@ -16,64 +16,63 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  // 💡 한 화면에 담기기 좋은 최적의 고정 높이와 너비
-  const BOX_HEIGHT = "400px";
-  const BOX_WIDTH = "300px";
-
   return (
     <div
-      onClick={() => navigate(`/art/post/${id}`)}
       style={{
         flex: "0 0 auto",
         display: "flex",
         flexDirection: "column",
-        width: BOX_WIDTH,
-        textAlign: "right", // 모든 텍스트 우측 정렬
+        width: "300px", // 가로 너비 유지
+        textAlign: "right",
         cursor: "pointer",
       }}
     >
-      {/* --- 1. 이미지 박스 (여기 높이가 고정되어야 라인이 맞습니다) --- */}
+      {/* --- 1. 이미지 박스: 화면 높이(vh)에 반응하도록 고정 --- */}
       <div
         style={{
-          height: BOX_HEIGHT, // 👈 모든 카드의 높이를 400px로 강제 고정
+          height: "45vh", // 👈 화면 높이의 45%로 고정. 어떤 기기든 한 화면에 쏙 들어옴
           width: "100%",
           display: "flex",
-          alignItems: "center", // 이미지가 가로형일 때 세로 중앙 정렬
+          alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#fcfcfc",
           marginBottom: "16px",
-          overflow: "hidden",
+          overflow: "hidden", // 혹시 모를 삐져나옴 방지
         }}
       >
         <img
           src={imageUrl}
           alt={artworkName}
           style={{
-            maxWidth: "100%", // 박스 너비를 넘지 않게
-            maxHeight: "100%", // 박스 높이를 넘지 않게 (자르지 않음)
+            maxWidth: "100%",
+            maxHeight: "100%", // 박스 높이(45vh) 안에서만 움직임
             width: "auto",
             height: "auto",
-            objectFit: "contain", // 👈 비율 유지하며 박스 안에 다 넣기
+            objectFit: "contain", // 👈 절대 안 잘리고 다 보여줌
             display: "block",
           }}
         />
       </div>
 
-      {/* --- 2. 텍스트 영역 (검정 & ccc 우측 정렬) --- */}
+      {/* --- 2. 텍스트 영역: 아티브님 설정 그대로 --- */}
       <div style={{ paddingRight: "2px" }}>
-        {/* 상세 정보 (ccc 색상) */}
+        {/* 상단: 아티스트 / 정보 (ccc 색상) */}
         <p
           style={{
-            fontSize: "11px",
+            fontSize: "13px",
             color: "#ccc",
             fontStyle: "italic",
             margin: "0 0 6px 0",
           }}
         >
+          {artistName}
+          <span style={{ fontWeight: 300, color: "#ccc", margin: "0 8px" }}>
+            /
+          </span>
           {artworkInfo}
         </p>
 
-        {/* 작품명 / 작가명 (검정) */}
+        {/* 하단: 작품명 (444 색상) */}
         <h4
           style={{
             fontSize: "16px",
@@ -84,10 +83,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
           }}
         >
           {artworkName}
-          <span style={{ fontWeight: 300, color: "#ccc", margin: "0 8px" }}>
-            /
-          </span>
-          {artistName}
         </h4>
       </div>
     </div>
