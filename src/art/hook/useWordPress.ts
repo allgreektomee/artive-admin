@@ -10,7 +10,7 @@ export const useWordPress = (categoryId: number) => {
       try {
         setLoading(true);
         // $ 표시가 절대 들어가지 않게 주의!
-        const url = `https://cms.artivefor.me/wp-json/wp/v2/posts?categories=${categoryId}&_embed`;
+        const url = `https://cms.artivefor.me/wp-json/wp/v2/posts?categories=${categoryId}&lang=ko&_embed`;
         const res = await fetch(url);
 
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);

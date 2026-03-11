@@ -3,7 +3,7 @@ import { useWordPress } from "../../hook/useWordPress";
 
 const MainBanner = () => {
   // BANNER 카테고리 ID가 2번이 맞는지 꼭 확인하세요!
-  const { data, loading, error } = useWordPress(2);
+  const { data, loading, error } = useWordPress(32);
 
   if (loading) return <div style={{ padding: "20px" }}>로딩 중...</div>;
   if (error)
