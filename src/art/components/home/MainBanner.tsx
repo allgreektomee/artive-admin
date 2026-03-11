@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useWordPress } from "../../hook/useWordPress"; // 깃에 있는 경로
 import { useResponsive } from "../../hook/useResponsive"; // 깃에 있는 훅
 
