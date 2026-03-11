@@ -83,8 +83,8 @@ const App: React.FC = () => {
             {/* 매거진 전용 헤더가 있는 껍데기 */}
             <Route index element={<ArtHome />} />
             <Route path="magazine/:slug" element={<MagazineDetail />} />
-
-            <Route path="/post/:type/:id" element={<PostDetail />} />
+            {/* /art/post/banner/1 로 접속됨 */}
+            <Route path="post/:type/:id" element={<PostDetail />} />
           </Route>
 
           {/* [참조] Common 도메인 */}
