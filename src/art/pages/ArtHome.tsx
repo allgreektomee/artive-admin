@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import MainBanner from "../components/home/MainBanner";
 import { useResponsive } from "../hook/useResponsive";
-import SelectedWorks from "../components/home/SelectedWorks"; // 새로 만들 섹션
+import ArtWorks from "../components/home/ArtworkGrid"; // 새로 만들 섹션
 
 const ArtHome = () => {
   useEffect(() => {
@@ -15,7 +15,8 @@ const ArtHome = () => {
       <MainBanner />
 
       {/* 섹션 2 : artwork */}
-      <SelectedWorks isMobile={isMobile} limit={10} />
+      {/* <SelectedWorks isMobile={isMobile} limit={10} /> */}
+      <ArtWorks />
       {/* 섹션 2: 매거진 리스트 (이런 식으로 확장) */}
       {/* <MagazineList /> */}
     </div>

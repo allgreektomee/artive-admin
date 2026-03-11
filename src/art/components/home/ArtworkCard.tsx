@@ -57,7 +57,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
       {/* --- 2. 텍스트 영역: 이미지 너비를 넘지 않게 고정 --- */}
       <div
         style={{
-          paddingRight: "2px",
+          paddingRight: "5px",
           // 💡 부모(이미지) 너비만큼만 텍스트 영역을 잡음
           maxWidth: "100%",
         }}
