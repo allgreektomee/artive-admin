@@ -3,10 +3,9 @@ import { useResponsive } from "../../hook/useResponsive";
 
 interface ArtworkCardProps {
   imageUrl: string;
-  artworkName: string; // acf.artwork_name
-  artworkInfo: string; // acf.artwork_info
-  artistName: string; // acf.artist_name
-  index?: number;
+  artworkName: string;
+  artworkInfo: string;
+  artistName: string;
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({
@@ -14,7 +13,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
   artworkName,
   artworkInfo,
   artistName,
-  index,
 }) => {
   const { isMobile } = useResponsive();
 
@@ -24,33 +22,35 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         flex: "0 0 auto",
         display: "flex",
         flexDirection: "column",
-        width: isMobile ? "200px" : "auto",
+        // 모바일에서도 카드가 너무 작지 않게 너비 확보
+        width: isMobile ? "75vw" : "auto",
+        maxWidth: isMobile ? "320px" : "none",
       }}
     >
-      {/* --- 이미지 영역 (기존 와꾸 유지) --- */}
+      {/* --- 이미지 영역: 비율 유지하며 시원하게 --- */}
       <img
         src={imageUrl}
         alt={artworkName}
         style={{
-          height: isMobile ? "clamp(150px, 25vh, 200px)" : "300px",
-          width: "auto",
+          // 모바일에서 높이를 350px~400px 정도로 넉넉히 주거나 auto로 비율 유지
+          height: isMobile ? "380px" : "420px",
+          width: "100%",
           display: "block",
-          objectFit: "contain",
+          objectFit: "contain", // 이미지 전체가 잘리지 않게
           backgroundColor: "#fcfcfc",
         }}
       />
 
-      {/* --- 텍스트 영역 (새로운 레이아웃) --- */}
-      <div style={{ marginTop: "12px" }}>
-        {/* 1층: 우측 상단 인포 (Italic) */}
-        <div style={{ textAlign: "right", marginBottom: "4px" }}>
+      {/* --- 텍스트 영역 (넘버링 삭제) --- */}
+      <div style={{ marginTop: "16px" }}>
+        {/* 1층: 우측 상단 인포 */}
+        <div style={{ textAlign: "right", marginBottom: "6px" }}>
           <p
             style={{
-              fontSize: "10px",
+              fontSize: isMobile ? "11px" : "10px",
               color: "#888",
               fontStyle: "italic",
               margin: 0,
-              letterSpacing: "-0.2px",
             }}
           >
             {artworkInfo}
@@ -61,7 +61,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
         <div style={{ textAlign: "left" }}>
           <h4
             style={{
-              fontSize: "13px",
+              fontSize: isMobile ? "16px" : "14px",
               color: "#1a1a1a",
               fontWeight: 600,
               margin: 0,
@@ -74,20 +74,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({
             </span>{" "}
             {artistName}
           </h4>
-
-          {/* 인덱스 표시 (선택사항, 아주 작게 아래나 위에 유지) */}
-          <p
-            style={{
-              fontSize: "8px",
-              color: "#ddd",
-              marginTop: "4px",
-              margin: 0,
-            }}
-          >
-            {index !== undefined
-              ? `NO. ${String(index + 1).padStart(2, "0")}`
-              : ""}
-          </p>
         </div>
       </div>
     </div>

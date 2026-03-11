@@ -25,7 +25,7 @@ const SelectedWorks = ({
           marginBottom: "20px",
         }}
       >
-        01 SELECTED WORKS
+        01 ART WORKS
       </p>
 
       {/* 가로 스크롤 영역 */}
@@ -39,10 +39,9 @@ const SelectedWorks = ({
           scrollbarWidth: "none", // 스크롤바 숨기기
         }}
       >
-        {data?.slice(0, limit).map((post, index) => (
+        {data?.slice(0, limit).map((post) => (
           <ArtworkCard
             key={post.id}
-            index={index}
             imageUrl={post.acf?.art_image}
             artworkName={post.acf?.artwork_name}
             artworkInfo={post.acf?.artwork_info}
