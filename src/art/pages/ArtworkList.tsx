@@ -1,5 +1,5 @@
 import { useWordPress } from "../hook/useWordPress";
-import ArtworkCard from "../components/home/ArtworkCard";
+import ArtWorkCardHover from "../components/home/ArtworkHoverCard";
 import { useEffect } from "react";
 
 const ArtworkList = () => {
@@ -15,39 +15,22 @@ const ArtworkList = () => {
     );
 
   return (
-    <div style={{ paddingTop: "80px", paddingBottom: "100px" }}>
-      <h2
-        style={{
-          textAlign: "center",
-          fontSize: "24px",
-          fontWeight: 700,
-          marginBottom: "60px",
-          letterSpacing: "4px",
-        }}
-      >
-        ART WORKS
-      </h2>
-
-      {/* 리스트는 시원시원하게 1열 또는 2열로 도록처럼 배치 */}
+    <div style={{ padding: "80px 10px" }}>
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "80px", // 작품 사이 간격을 넉넉히 줘서 도록 느낌 극대화
-          padding: "0 20px",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr", // 리스트는 2열로 깔끔하게
+          gap: "10px",
         }}
       >
         {data?.map((post) => (
-          <div
-            key={post.id}
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
-          >
-            <ArtworkCard
+          <div key={post.id} style={{ height: "300px" }}>
+            {" "}
+            {/* 높이 고정으로 칼정렬 */}
+            <ArtWorkCardHover
               id={post.id}
               imageUrl={post.acf?.art_image}
               artworkName={post.acf?.artwork_name}
-              artworkInfo={post.acf?.artwork_info}
               artistName={post.acf?.artist_name}
             />
           </div>
