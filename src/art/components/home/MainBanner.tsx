@@ -9,25 +9,7 @@ const MainBanner = () => {
 
   // 2. 깃에 정의된 S3 이미지 추출 로직 (수정 없이 그대로 사용)
   const getBannerImage = (post: any) => {
-    const artImageId = post.acf?.art_image;
-
-    // 1. 만약 이미 URL(문자열)로 오고 있다면 그대로 반환
-    if (typeof artImageId === "string") return artImageId;
-
-    // 2. 숫자로 올 때 (여러 이미지 중 해당 ID와 일치하는 S3 주소 찾기)
-    if (typeof artImageId === "number") {
-      const attachments = post._embedded?.["wp:attachment"] || [];
-      const featuredMedia = post._embedded?.["wp:featuredmedia"] || [];
-
-      // 전체 미디어 목록을 합쳐서, ACF가 준 숫자(artImageId)와 일치하는 녀석의 주소를 찾음
-      const targetMedia = [...attachments, ...featuredMedia].find(
-        (item: any) => item.id === artImageId,
-      );
-
-      return targetMedia?.source_url || "";
-    }
-
-    return "";
+    return post.acf?.art_image || "";
   };
 
   if (loading)
