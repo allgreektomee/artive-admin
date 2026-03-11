@@ -9,7 +9,7 @@ const SelectedWorks = ({
   limit?: number;
 }) => {
   // 워드프레스 카테고리 33번(작품)에서 데이터 10개 가져오기
-  const { data, loading } = useWordPress(33);
+  const { data, loading } = useWordPress(3);
 
   if (loading) return null; // 또는 로딩 스켈레톤
 
