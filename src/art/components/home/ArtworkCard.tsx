@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ArtworkCardProps {
-  id: number;
   imageUrl: string;
   artworkName: string;
   artworkInfo: string;
@@ -10,7 +9,6 @@ interface ArtworkCardProps {
 }
 
 const ArtworkCard: React.FC<ArtworkCardProps> = ({
-  id,
   imageUrl,
   artworkName,
   artworkInfo,
