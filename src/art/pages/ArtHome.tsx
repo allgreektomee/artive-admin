@@ -1,13 +1,15 @@
 // import React from "react";
 import MainBanner from "../components/home/MainBanner";
-// import MagazineList from '../components/MagazineList'; // 나중에 추가
+import { useResponsive } from "../hook/useResponsive";
+import SelectedWorks from "../components/home/SelectedWorks"; // 새로 만들 섹션
 
 const ArtHome = () => {
+  const { isMobile } = useResponsive();
   return (
     <div className="art-page-root">
       {/* 섹션 1: 메인 배너 */}
       <MainBanner />
-
+      <SelectedWorks isMobile={isMobile} limit={10} />
       {/* 섹션 2: 매거진 리스트 (이런 식으로 확장) */}
       {/* <MagazineList /> */}
     </div>
