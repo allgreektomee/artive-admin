@@ -195,7 +195,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
               style={{
                 marginBottom: "30px",
                 borderBottom: "1px solid #eee",
-                pb: "10px",
+                paddingBottom: "10px",
               }}
             >
               <span
