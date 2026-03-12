@@ -42,9 +42,8 @@ const MainBanner = () => {
       style={{
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px",
-        // 💡 모바일 상단에도 여백을 주어 배너가 떠 있는 느낌을 강조
-        margin: isMobile ? "20px auto 40px auto" : "40px auto 80px auto",
-        padding: isMobile ? "0 20px" : "0", // 💡 모바일 좌우 여백 확보
+        margin: isMobile ? "50px auto 40px auto" : "40px auto 80px auto",
+        padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}
     >
@@ -58,13 +57,12 @@ const MainBanner = () => {
             style={{
               position: "relative",
               width: "100%",
-              // 💡 모바일 높이를 살짝 줄여서 한눈에 들어오게 함
               height: isMobile ? "450px" : "500px",
               overflow: "hidden",
               marginBottom: "20px",
               cursor: "pointer",
               backgroundColor: "#f0f0f0",
-              borderRadius: "2px", // 💡 모바일에서도 살짝 라운드 주면 부드러움
+              borderRadius: "2px",
             }}
           >
             {/* 1. 배경 이미지 */}
@@ -83,18 +81,21 @@ const MainBanner = () => {
               alt={post.title?.rendered}
             />
 
-            {/* 2. 중앙 유리 효과 박스 (모바일 최적화) */}
+            {/* 2. 중앙 유리 효과 박스 (슬림화 핵심 수정) */}
             <div
               style={{
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                backgroundColor: "rgba(0, 0, 0, 0.4)",
-                backdropFilter: "blur(12px)", // 💡 블러를 조금 더 줌
-                width: isMobile ? "80%" : "70%",
-                // 💡 상하 높이를 제한하여 이미지 영역을 더 많이 노출
-                padding: isMobile ? "30px 20px" : "60px 40px",
+                backgroundColor: "rgba(0, 0, 0, 0.45)", // 💡 레퍼런스 느낌을 위해 어둡기를 살짝 높임
+                backdropFilter: "blur(15px)", // 💡 블러를 조금 더 주어 질감을 살림
+                width: isMobile ? "85%" : "70%", // 💡 모바일 좌우 꽉 채우기
+
+                // 💡 핵심 수정: 상하 패딩을 좌우 패딩과 같거나 작게 조절
+                // 모바일: 상하 10px, 좌우 20px | PC: 상하 15px, 좌우 40px
+                padding: isMobile ? "10px 20px" : "15px 40px",
+
                 textAlign: "center",
                 border: "1px solid rgba(255, 255, 255, 0.15)",
                 pointerEvents: "none",
@@ -105,32 +106,36 @@ const MainBanner = () => {
               <h1
                 style={{
                   color: "#fff",
-                  fontSize: isMobile ? "1.2rem" : "2.2rem", // 💡 모바일 폰트 크기 살짝 축소
+                  fontSize: isMobile ? "1.1rem" : "2.0rem", // 💡 레퍼런스처럼 텍스트를 살짝 더 작게
                   fontWeight: 500,
                   margin: 0,
                   letterSpacing: isMobile ? "4px" : "6px",
                   textTransform: "uppercase",
                   wordBreak: "keep-all",
-                  lineHeight: 1.3,
+                  lineHeight: 1.1, // 💡 텍스트 상하 간격도 타이트하게
                 }}
               >
                 {post.title?.rendered}
               </h1>
+
+              {/* 💡 상하 여백이 줄었으므로 구분선 간격도 타이트하게 조정 */}
               <div
                 style={{
-                  width: "30px",
+                  width: "25px", // 💡 레퍼런스처럼 더 짧게
                   height: "1px",
-                  backgroundColor: "rgba(255,255,255,0.4)",
-                  margin: isMobile ? "15px auto" : "20px auto",
+                  backgroundColor: "rgba(255,255,255,0.3)",
+                  margin: isMobile ? "8px auto" : "12px auto",
                 }}
               ></div>
+
               <p
                 style={{
-                  color: "rgba(255, 255, 255, 0.7)",
-                  fontSize: isMobile ? "10px" : "14px", // 💡 서브 텍스트 더 작게 해서 여백 강조
+                  color: "rgba(255, 255, 255, 0.65)", // 💡 텍스트 어둡기를 살짝 높임
+                  fontSize: isMobile ? "9px" : "13px", // 💡 텍스트를 더 작게
                   fontWeight: 300,
                   letterSpacing: "1.5px",
                   margin: 0,
+                  lineHeight: 1, // 💡 텍스트 상하 간격 타이트하게
                 }}
               >
                 {post.acf?.sub_title}
