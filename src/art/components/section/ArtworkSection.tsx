@@ -33,8 +33,8 @@ const ArtworkGrid = ({
       <div
         style={{
           marginBottom: isMobile ? "30px" : "50px",
-          borderTop: "1px solid #eee",
-          paddingTop: "60px",
+
+          paddingTop: "10px",
         }}
       >
         <p
