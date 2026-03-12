@@ -1,7 +1,7 @@
 // import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../../hook/useResponsive"; // 경로 확인 필요
 
-// 데이터 구조 (나중에 WordPress API로 교체 가능)
 const insightData = [
   {
     id: "manifesto-1",
@@ -31,30 +31,53 @@ const insightData = [
 
 const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
   const navigate = useNavigate();
+  const { isMobile } = useResponsive();
 
   return (
-    <section style={{ marginTop: "100px", padding: "0 10px", width: "100%" }}>
-      {/* 1. INSIGHT (시선) 섹션 */}
-      <div style={{ marginBottom: "40px" }}>
+    <section
+      style={{
+        marginTop: isMobile ? "80px" : "150px",
+        width: "100%",
+        // 💡 PC에서는 패드 너비로 제한, 모바일은 꽉 차게
+        maxWidth: isMobile ? "100%" : "1100px",
+        marginLeft: "auto",
+        marginRight: "auto",
+        padding: isMobile ? "0 20px" : "0 40px",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* --- INSIGHT 헤더 --- */}
+      <div
+        style={{ marginBottom: isMobile ? "40px" : "80px", textAlign: "left" }}
+      >
         <p
           style={{
-            fontSize: "16px",
+            fontSize: "14px",
             color: "#bbb",
-            letterSpacing: "3px",
-            marginBottom: "5px",
+            letterSpacing: "4px",
+            marginBottom: "8px",
           }}
         >
           INSIGHT
         </p>
-        <p style={{ fontSize: "18px", color: "#444", fontWeight: "300" }}>
+        <p
+          style={{
+            fontSize: isMobile ? "20px" : "26px",
+            color: "#333",
+            fontWeight: 300,
+          }}
+        >
           시선
         </p>
       </div>
 
-      {/* 모바일 1열 / PC 지그재그 대응을 위해 래퍼 생성 */}
+      {/* --- 매거진 리스트 (지그재그/1열) --- */}
       <div
-        className="insight-grid-wrapper"
-        style={{ display: "flex", flexDirection: "column", gap: "80px" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: isMobile ? "80px" : "160px",
+        }}
       >
         {insightData.map((item, index) => {
           const isEven = index % 2 === 1;
@@ -64,29 +87,27 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
               onClick={() => navigate(`/insight/${item.id}`)}
               style={{
                 width: "100%",
+                // 💡 PC에서 카드가 너무 퍼지지 않게 하고 지그재그 배치
+                maxWidth: isMobile ? "100%" : "800px",
+                alignSelf: !isMobile && isEven ? "flex-end" : "flex-start",
                 cursor: "pointer",
-                // PC에서 지그재그 느낌을 내고 싶다면 아래 스타일 시트를 참고하거나
-                // 인라인에서는 margin으로 조절
-                alignSelf: isEven ? "flex-end" : "flex-start",
               }}
             >
-              {/* 이미지: 원본 비율 유지 (h-auto) */}
               <div
                 style={{
                   width: "100%",
                   backgroundColor: "#f9f9f9",
-                  marginBottom: "25px",
+                  marginBottom: "30px",
                 }}
               >
                 <img
                   src={item.image}
-                  alt="insight"
                   style={{ width: "100%", height: "auto", display: "block" }}
+                  alt="insight"
                 />
               </div>
 
-              {/* 텍스트 정보 */}
-              <div style={{ padding: "0 10px" }}>
+              <div style={{ padding: "0 5px" }}>
                 <div
                   style={{
                     display: "flex",
@@ -98,7 +119,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                   <span
                     style={{
                       fontSize: "10px",
-                      fontWeight: "900",
+                      fontWeight: 900,
                       color: "#0055ff",
                       letterSpacing: "2px",
                     }}
@@ -124,21 +145,20 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 </div>
                 <h3
                   style={{
-                    fontSize: "24px",
-                    fontWeight: "700",
-                    marginBottom: "15px",
-                    color: "#222",
-                    lineHeight: "1.2",
+                    fontSize: isMobile ? "24px" : "30px",
+                    fontWeight: 700,
+                    marginBottom: "20px",
+                    lineHeight: 1.25,
                   }}
                 >
                   {item.title[lang as keyof typeof item.title]}
                 </h3>
                 <p
                   style={{
-                    fontSize: "14px",
+                    fontSize: isMobile ? "14px" : "16px",
                     color: "#666",
-                    lineHeight: "1.6",
-                    marginBottom: "20px",
+                    lineHeight: 1.7,
+                    marginBottom: "25px",
                     wordBreak: "keep-all",
                   }}
                 >
@@ -147,12 +167,12 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 <p
                   style={{
                     fontSize: "11px",
-                    fontWeight: "700",
+                    fontWeight: 700,
                     color: "#bbb",
-                    letterSpacing: "1px",
+                    letterSpacing: "2px",
                   }}
                 >
-                  READ STORY —
+                  VIEW STORY —
                 </p>
               </div>
             </div>
@@ -160,25 +180,25 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         })}
       </div>
 
-      {/* 2. LOG (기록) 섹션 - 지워졌던 리스트 복구 */}
+      {/* --- LOG 섹션 --- */}
       <div
         style={{
-          marginTop: "120px",
+          marginTop: isMobile ? "120px" : "200px",
           borderTop: "1px solid #eee",
-          paddingTop: "60px",
+          paddingTop: "80px",
+          paddingBottom: "120px",
         }}
       >
         <p
           style={{
-            fontSize: "16px",
+            fontSize: "14px",
             color: "#bbb",
-            letterSpacing: "3px",
-            marginBottom: "40px",
+            letterSpacing: "4px",
+            marginBottom: "50px",
           }}
         >
           LOG
         </p>
-
         <div style={{ display: "flex", flexDirection: "column" }}>
           {[1, 2, 3].map((i) => (
             <div
@@ -187,19 +207,19 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "20px 10px",
-                borderBottom: "1px solid #f5f5f5",
+                padding: "25px 10px",
+                borderBottom: "1px solid #f8f8f8",
                 cursor: "pointer",
               }}
             >
               <span
-                style={{ fontSize: "15px", color: "#444", fontWeight: "300" }}
+                style={{ fontSize: "16px", color: "#444", fontWeight: 300 }}
               >
-                아카이빙의 순간 No.{i} (작업 노트 발췌)
+                아카이빙의 순간 No.{i}
               </span>
               <span
                 style={{
-                  fontSize: "11px",
+                  fontSize: "12px",
                   color: "#ccc",
                   fontFamily: "monospace",
                 }}
