@@ -189,7 +189,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
 
         return (
           <div key={cat} style={{ marginBottom: isMobile ? "100px" : "180px" }}>
-            {/* 1. 메인 인사이트 (초기 디자인 복구) */}
+            {/* 1. 메인 인사이트 (초기 디자인 복구 + 이슈 번호) */}
             <div
               onClick={() => navigate(`/insight/${mainItem.id}`)}
               style={{
@@ -204,18 +204,13 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 textAlign: isMobile ? "left" : isEven ? "right" : "left",
               }}
             >
-              {/* 💡 카테고리명 (이미지 위 배치) */}
+              {/* 카테고리 + 이슈번호 조합 */}
               <div
                 style={{
                   display: "flex",
-                  gap: "15px",
+                  gap: "12px",
                   alignItems: "baseline",
                   marginBottom: "25px",
-                  justifyContent: isMobile
-                    ? "flex-start"
-                    : isEven
-                      ? "flex-end"
-                      : "flex-start",
                 }}
               >
                 <span
@@ -233,14 +228,12 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                     fontSize: "11px",
                     color: "#bbb",
                     letterSpacing: "1px",
-                    fontWeight: 400,
                   }}
                 >
-                  {mainItem.issueNo || "MAR 2026"}
+                  {mainItem.issueNo}
                 </span>
               </div>
 
-              {/* 메인 이미지 */}
               <div
                 style={{
                   width: isMobile ? "100%" : "85%",
@@ -255,13 +248,12 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 />
               </div>
 
-              {/* 텍스트 영역 (이미지 바로 아래) */}
               <div style={{ maxWidth: "650px" }}>
                 <h3
                   style={{
                     fontSize: isMobile ? "24px" : "32px",
                     fontWeight: 700,
-                    marginBottom: "20px",
+                    marginBottom: "15px",
                     lineHeight: 1.2,
                   }}
                 >
@@ -272,7 +264,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                     fontSize: "16px",
                     color: "#666",
                     lineHeight: 1.8,
-                    marginBottom: "40px",
+                    marginBottom: "45px",
                   }}
                 >
                   {
@@ -284,7 +276,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
               </div>
             </div>
 
-            {/* 2. 서브 타이틀 리스트 (심심함 방지 디테일) */}
+            {/* 2. 서브 리스트 (선 굵기 연하게 + 디스크립션 한 줄) */}
             {subItems.length > 0 && (
               <div
                 style={{
@@ -303,53 +295,80 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                     key={sub.id}
                     onClick={() => navigate(`/insight/${sub.id}`)}
                     style={{
-                      width: isMobile ? "100%" : "650px", // 메인 텍스트 폭과 통일
-                      padding: "22px 0",
-                      borderTop: "1.5px solid #424242", // 선의 두께감을 줘서 존재감 부여
+                      width: isMobile ? "100%" : "650px",
+                      padding: "24px 0",
+                      borderTop: "1px solid #eee", // 💡 훨씬 연하고 얇은 선으로 변경 (로그 섹션 느낌)
                       cursor: "pointer",
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "20px",
+                      flexDirection: "column",
+                      gap: "10px",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
+                        justifyContent: "space-between",
                         alignItems: "center",
-                        gap: "15px",
                       }}
                     >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "10px",
+                            color: "#ccc",
+                            fontWeight: 500,
+                          }}
+                        >
+                          0{subIndex + 1}
+                        </span>
+                        <h4
+                          style={{
+                            fontSize: "17px",
+                            fontWeight: 600,
+                            color: "#222",
+                          }}
+                        >
+                          {sub.title[lang as keyof typeof sub.title]}
+                        </h4>
+                      </div>
                       <span
                         style={{
-                          fontSize: "11px",
-                          color: "#999",
-                          fontWeight: 500,
+                          fontSize: "14px",
+                          color: "#0055ff",
+                          opacity: 0.7,
                         }}
                       >
-                        0{subIndex + 1}
+                        →
                       </span>
-                      <h4
-                        style={{
-                          fontSize: isMobile ? "16px" : "18px",
-                          fontWeight: 600,
-                          color: "#222",
-                          letterSpacing: "-0.5px",
-                        }}
-                      >
-                        {sub.title[lang as keyof typeof sub.title]}
-                      </h4>
                     </div>
-                    <span style={{ fontSize: "16px", color: "#343435" }}>
-                      →
-                    </span>
+
+                    {/* 💡 디스크립션 1줄 (말줄임표) */}
+                    <p
+                      style={{
+                        fontSize: "13px",
+                        color: "#999",
+                        paddingLeft: "26px", // 번호 너비만큼 들여쓰기
+                        margin: 0,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      {sub.description[lang as keyof typeof sub.description]}
+                    </p>
                   </div>
                 ))}
-                {/* 마지막 닫는 선 */}
                 <div
                   style={{
                     width: isMobile ? "100%" : "650px",
-                    borderTop: "1.5px solid #111",
+                    borderTop: "1px solid #eee",
                   }}
                 />
               </div>
