@@ -92,7 +92,7 @@ const ArtworkGrid = ({
       </div>
       {/* 💡 VIEW ALL 버튼 추가 */}
       <ViewMoreButton
-        label="VVIEW MORE ARTWORKS"
+        label="VIEW MORE ARTWORKS"
         onClick={() => navigate("/art/works")}
       />
     </section>
