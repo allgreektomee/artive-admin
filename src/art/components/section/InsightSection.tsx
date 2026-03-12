@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../../hook/useResponsive";
 import ViewMoreButton from "../home/ViewMoreButton";
 
-export const insightData = [
+const insightData = [
   // --- 1. EXHIBITION (전시) ---
   {
     id: "exh-1",
