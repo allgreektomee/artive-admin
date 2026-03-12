@@ -47,15 +47,6 @@ const ArtworkGrid = ({
         >
           ARTWORKS
         </p>
-        <p
-          style={{
-            fontSize: isMobile ? "18px" : "22px",
-            color: "#333",
-            fontWeight: 300,
-          }}
-        >
-          흔적
-        </p>
       </div>
 
       {/* 2-1-2-1 그리드 레이아웃 */}
