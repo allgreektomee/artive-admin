@@ -29,19 +29,33 @@ const ArtworkGrid = ({
         boxSizing: "border-box",
       }}
     >
-      {/* 섹션 타이틀 (기존 스타일 유지) */}
-      <p
+      <div
         style={{
-          fontSize: "16px",
-          color: "#bbb",
-          letterSpacing: "3px",
-          paddingLeft: "10px",
-          marginBottom: "20px",
+          marginBottom: isMobile ? "30px" : "50px",
+          borderTop: "1px solid #eee",
+          paddingTop: "60px",
         }}
       >
-        ARTWORKS
-        <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>흔적</p>
-      </p>
+        <p
+          style={{
+            fontSize: "14px",
+            color: "#bbb",
+            letterSpacing: "4px",
+            marginBottom: "8px",
+          }}
+        >
+          ARTWORKS
+        </p>
+        <p
+          style={{
+            fontSize: isMobile ? "18px" : "22px",
+            color: "#333",
+            fontWeight: 300,
+          }}
+        >
+          흔적
+        </p>
+      </div>
 
       {/* 2-1-2-1 그리드 레이아웃 */}
       <div
