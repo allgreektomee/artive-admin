@@ -3,6 +3,7 @@ import { useWordPress } from "../../hook/useWordPress";
 import ArtWorkCardHover from "../home/ArtworkHoverCard";
 
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../../hook/useResponsive";
 
 const ArtworkGrid = ({
   limit = 9, // 2-1-2 패턴이라 3의 배수로 맞추는 게 예쁩니다.
@@ -12,11 +13,22 @@ const ArtworkGrid = ({
   // 워드프레스 카테고리 3번(작품) 데이터 가져오기
   const { data, loading } = useWordPress(3);
   const navigate = useNavigate();
+  const { isMobile } = useResponsive();
 
   if (loading) return null;
 
   return (
-    <section style={{ marginTop: "60px", marginBottom: "80px", width: "100%" }}>
+    <section
+      style={{
+        marginTop: "60px",
+        marginBottom: "80px",
+        width: "100%",
+        maxWidth: isMobile ? "100%" : "1100px", // 💡 라인 통일
+        margin: "60px auto 80px auto", // 💡 중앙 정렬
+        padding: isMobile ? "0 4px" : "0", // PC에서는 그리드가 1100px에 딱 맞게
+        boxSizing: "border-box",
+      }}
+    >
       {/* 섹션 타이틀 (기존 스타일 유지) */}
       <p
         style={{
@@ -27,7 +39,7 @@ const ArtworkGrid = ({
           marginBottom: "20px",
         }}
       >
-        ART WORKS
+        ARTWORKS
       </p>
 
       {/* 2-1-2-1 그리드 레이아웃 */}

@@ -30,26 +30,20 @@ const insightData = [
 ];
 
 const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
-  const navigate = useNavigate();
   const { isMobile } = useResponsive();
+  const navigate = useNavigate();
 
   return (
     <section
       style={{
-        marginTop: isMobile ? "80px" : "150px",
         width: "100%",
-        // 💡 PC에서는 패드 너비로 제한, 모바일은 꽉 차게
-        maxWidth: isMobile ? "100%" : "1100px",
-        marginLeft: "auto",
-        marginRight: "auto",
-        padding: isMobile ? "0 20px" : "0 40px",
+        maxWidth: isMobile ? "100%" : "1100px", // 💡 전체 통일 여백값
+        margin: "150px auto 0 auto",
+        padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}
     >
-      {/* --- INSIGHT 헤더 --- */}
-      <div
-        style={{ marginBottom: isMobile ? "40px" : "80px", textAlign: "left" }}
-      >
+      <div style={{ marginBottom: "80px", textAlign: "left" }}>
         <p
           style={{
             fontSize: "14px",
@@ -60,119 +54,117 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         >
           INSIGHT
         </p>
-        <p
-          style={{
-            fontSize: isMobile ? "20px" : "26px",
-            color: "#333",
-            fontWeight: 300,
-          }}
-        >
-          시선
-        </p>
+        <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>시선</p>
       </div>
-      {/* --- 매거진 리스트 (지그재그/1열) --- */}
+
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: isMobile ? "80px" : "160px",
+          gap: isMobile ? "80px" : "180px",
+          width: "100%",
         }}
       >
         {insightData.map((item, index) => {
-          const isEven = index % 2 === 1;
+          const isRight = index % 2 === 1; // 짝수번째는 우측 정렬
           return (
             <div
               key={item.id}
-              onClick={() => navigate(`/insight/${item.id}`)}
               style={{
                 width: "100%",
-                // 💡 PC에서 카드가 너무 퍼지지 않게 하고 지그재그 배치
-                maxWidth: isMobile ? "100%" : "800px",
-                alignSelf: !isMobile && isEven ? "flex-end" : "flex-start",
-                cursor: "pointer",
+                display: "flex",
+                justifyContent:
+                  isRight && !isMobile ? "flex-end" : "flex-start", // 💡 PC에서 우측 끝으로 밀기
               }}
             >
               <div
+                onClick={() => navigate(`/insight/${item.id}`)}
                 style={{
-                  width: "100%",
-                  backgroundColor: "#f9f9f9",
-                  marginBottom: "30px",
+                  width: isMobile ? "100%" : "750px", // 💡 카드의 고정 너비 (라인을 맞추기 위함)
+                  cursor: "pointer",
                 }}
               >
-                <img
-                  src={item.image}
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                  alt="insight"
-                />
-              </div>
-
-              <div style={{ padding: "0 5px" }}>
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    marginBottom: "15px",
+                    width: "100%",
+                    backgroundColor: "#f9f9f9",
+                    marginBottom: "30px",
                   }}
                 >
-                  <span
+                  <img
+                    src={item.image}
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                    alt="insight"
+                  />
+                </div>
+                <div style={{ padding: "0 10px" }}>
+                  <div
                     style={{
-                      fontSize: "10px",
-                      fontWeight: 900,
-                      color: "#0055ff",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      marginBottom: "15px",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        fontWeight: 900,
+                        color: "#0055ff",
+                        letterSpacing: "2px",
+                      }}
+                    >
+                      {item.category}
+                    </span>
+                    <span
+                      style={{
+                        width: "1px",
+                        height: "10px",
+                        backgroundColor: "#ddd",
+                      }}
+                    ></span>
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        color: "#aaa",
+                        fontFamily: "monospace",
+                      }}
+                    >
+                      {item.issueNo}
+                    </span>
+                  </div>
+                  <h3
+                    style={{
+                      fontSize: "28px",
+                      fontWeight: 700,
+                      marginBottom: "20px",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {item.title[lang as keyof typeof item.title]}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      color: "#666",
+                      lineHeight: 1.7,
+                      marginBottom: "25px",
+                      wordBreak: "keep-all",
+                    }}
+                  >
+                    {item.description[lang as keyof typeof item.description]}
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      color: "#bbb",
                       letterSpacing: "2px",
                     }}
                   >
-                    {item.category}
-                  </span>
-                  <span
-                    style={{
-                      width: "1px",
-                      height: "10px",
-                      backgroundColor: "#ddd",
-                    }}
-                  ></span>
-                  <span
-                    style={{
-                      fontSize: "10px",
-                      color: "#aaa",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    {item.issueNo}
-                  </span>
+                    VIEW STORY —
+                  </p>
                 </div>
-                <h3
-                  style={{
-                    fontSize: isMobile ? "24px" : "30px",
-                    fontWeight: 700,
-                    marginBottom: "20px",
-                    lineHeight: 1.25,
-                  }}
-                >
-                  {item.title[lang as keyof typeof item.title]}
-                </h3>
-                <p
-                  style={{
-                    fontSize: isMobile ? "14px" : "16px",
-                    color: "#666",
-                    lineHeight: 1.7,
-                    marginBottom: "25px",
-                    wordBreak: "keep-all",
-                  }}
-                >
-                  {item.description[lang as keyof typeof item.description]}
-                </p>
-                <p
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    color: "#bbb",
-                    letterSpacing: "2px",
-                  }}
-                >
-                  VIEW STORY —
-                </p>
               </div>
             </div>
           );
