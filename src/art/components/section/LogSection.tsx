@@ -110,24 +110,10 @@ const LogSection = () => {
       </div>
 
       {/* 💡 더보기 버튼 (필요시) */}
-      <div style={{ marginTop: "40px", textAlign: "center" }}>
-        <button
-          style={{
-            background: "none",
-            border: "none",
-            color: "#aaa",
-            fontSize: "11px",
-            letterSpacing: "2px",
-            cursor: "pointer",
-            fontWeight: 700,
-          }}
-        >
-          VIEW MORE LOGS +
-        </button>
-      </div>
+
       <ViewMoreButton
-        label="VIEW MORE INSIGHTS"
-        onClick={() => navigate("/art/insights")} // 👈 인사이트 모아보기 주소
+        label="VIEW MORE LOGS"
+        onClick={() => navigate("/art/log")} // 👈 인사이트 모아보기 주소
       />
     </section>
   );
