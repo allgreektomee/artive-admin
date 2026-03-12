@@ -1,6 +1,6 @@
 // import React from "react";
 import { useWordPress } from "../../hook/useWordPress";
-import ArtWorkCardHover from "./ArtworkHoverCard";
+import ArtWorkCardHover from "../home/ArtworkHoverCard";
 
 import { useNavigate } from "react-router-dom";
 

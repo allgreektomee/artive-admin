@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import MainBanner from "../components/home/MainBanner";
 // import { useResponsive } from "../hook/useResponsive";
-import ArtWorks from "../components/home/ArtworkGrid"; // 새로 만들 섹션
+import ArtWorks from "../components/section/ArtworkGrid"; // 새로 만들 섹션
 
 const ArtHome = () => {
   useEffect(() => {
