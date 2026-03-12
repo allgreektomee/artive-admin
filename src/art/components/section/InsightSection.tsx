@@ -174,7 +174,6 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         >
           INSIGHT
         </p>
-        <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>시선</p>
       </div>
 
       {categories.map((cat, index) => {

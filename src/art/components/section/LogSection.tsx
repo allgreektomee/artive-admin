@@ -127,15 +127,6 @@ const LogSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         >
           LOG
         </p>
-        <p
-          style={{
-            fontSize: isMobile ? "20px" : "26px",
-            color: "#333",
-            fontWeight: 300,
-          }}
-        >
-          기록
-        </p>
       </div>
 
       {/* --- LOG 그리드 레이아웃 --- */}

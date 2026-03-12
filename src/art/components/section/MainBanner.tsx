@@ -41,14 +41,15 @@ const MainBanner = () => {
       className="main-banner"
       style={{
         width: "100%",
-        maxWidth: isMobile ? "100%" : "1100px", // 💡 인사이트 섹션과 동일한 가이드 라인
-        margin: isMobile ? "0 auto 40px auto" : "40px auto 80px auto", // 💡 PC에서 중앙 정렬 및 위아래 여백
-        padding: isMobile ? "0" : "0", // 배너는 좌우 패딩 없이 1100px 꽉 채우기
+        maxWidth: isMobile ? "100%" : "1100px",
+        // 💡 모바일 상단에도 여백을 주어 배너가 떠 있는 느낌을 강조
+        margin: isMobile ? "20px auto 40px auto" : "40px auto 80px auto",
+        padding: isMobile ? "0 20px" : "0", // 💡 모바일 좌우 여백 확보
         boxSizing: "border-box",
       }}
     >
       {data.map((post) => {
-        const isLoaded = loadedImages[post.id]; // 현재 포스트 이미지가 로드됐는지 확인
+        const isLoaded = loadedImages[post.id];
 
         return (
           <div
@@ -57,17 +58,16 @@ const MainBanner = () => {
             style={{
               position: "relative",
               width: "100%",
-              // 💡 PC에서 너무 길어지지 않게 고정 높이 혹은 비율 최적화
-              height: isMobile ? "55vh" : "500px",
+              // 💡 모바일 높이를 살짝 줄여서 한눈에 들어오게 함
+              height: isMobile ? "450px" : "500px",
               overflow: "hidden",
               marginBottom: "20px",
               cursor: "pointer",
               backgroundColor: "#f0f0f0",
-              // 💡 PC에서 배너에도 약간의 라운드를 주면 더 고급스럽습니다 (취향따라 삭제 가능)
-              borderRadius: isMobile ? "0" : "2px",
+              borderRadius: "2px", // 💡 모바일에서도 살짝 라운드 주면 부드러움
             }}
           >
-            {/* 1. 배경 이미지: 로딩 전후 상태에 따라 블러/투명도 조절 */}
+            {/* 1. 배경 이미지 */}
             <img
               src={getBannerImage(post)}
               onLoad={() => handleImageLoad(post.id)}
@@ -75,22 +75,15 @@ const MainBanner = () => {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                transition: "all 0.6s ease", // 블러와 투명도 전환 효과
-                filter: isLoaded ? "none" : "blur(20px)", // 로딩 전엔 전체 블러
-                opacity: isLoaded ? 1 : 0.7, // 로딩 전엔 살짝 투명하게
-                transform: isLoaded ? "scale(1.0)" : "scale(1.1)", // 로딩 전엔 약간 확대해서 블러 외곽선 방지
+                transition: "all 0.6s ease",
+                filter: isLoaded ? "none" : "blur(20px)",
+                opacity: isLoaded ? 1 : 0.7,
+                transform: isLoaded ? "scale(1.0)" : "scale(1.1)",
               }}
               alt={post.title?.rendered}
-              // 기존 호버 효과 유지 (로드 완료 후에만 작동하도록 조건 추가 가능)
-              onMouseOver={(e) =>
-                isLoaded && (e.currentTarget.style.transform = "scale(1.03)")
-              }
-              onMouseOut={(e) =>
-                isLoaded && (e.currentTarget.style.transform = "scale(1.0)")
-              }
             />
 
-            {/* 2. 기존 중앙 유리 효과 박스 (그대로 유지) */}
+            {/* 2. 중앙 유리 효과 박스 (모바일 최적화) */}
             <div
               style={{
                 position: "absolute",
@@ -98,11 +91,12 @@ const MainBanner = () => {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 backgroundColor: "rgba(0, 0, 0, 0.4)",
-                backdropFilter: "blur(8px)",
-                width: isMobile ? "85%" : "70%", // 💡 모바일에서 조금 더 넓게
-                padding: isMobile ? "40px 20px" : "60px 40px",
+                backdropFilter: "blur(12px)", // 💡 블러를 조금 더 줌
+                width: isMobile ? "80%" : "70%",
+                // 💡 상하 높이를 제한하여 이미지 영역을 더 많이 노출
+                padding: isMobile ? "30px 20px" : "60px 40px",
                 textAlign: "center",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
                 pointerEvents: "none",
                 opacity: isLoaded ? 1 : 0,
                 transition: "opacity 0.5s ease",
@@ -111,30 +105,32 @@ const MainBanner = () => {
               <h1
                 style={{
                   color: "#fff",
-                  fontSize: isMobile ? "1.5rem" : "2.2rem", // 💡 타이포 크기 살짝 조정
+                  fontSize: isMobile ? "1.2rem" : "2.2rem", // 💡 모바일 폰트 크기 살짝 축소
                   fontWeight: 500,
                   margin: 0,
-                  letterSpacing: isMobile ? "3px" : "6px",
+                  letterSpacing: isMobile ? "4px" : "6px",
                   textTransform: "uppercase",
                   wordBreak: "keep-all",
+                  lineHeight: 1.3,
                 }}
               >
                 {post.title?.rendered}
               </h1>
               <div
                 style={{
-                  width: "40px",
+                  width: "30px",
                   height: "1px",
                   backgroundColor: "rgba(255,255,255,0.4)",
-                  margin: "20px auto",
+                  margin: isMobile ? "15px auto" : "20px auto",
                 }}
               ></div>
               <p
                 style={{
-                  color: "rgba(255, 255, 255, 0.8)",
-                  fontSize: isMobile ? "12px" : "14px",
+                  color: "rgba(255, 255, 255, 0.7)",
+                  fontSize: isMobile ? "10px" : "14px", // 💡 서브 텍스트 더 작게 해서 여백 강조
                   fontWeight: 300,
-                  letterSpacing: "2px",
+                  letterSpacing: "1.5px",
+                  margin: 0,
                 }}
               >
                 {post.acf?.sub_title}
