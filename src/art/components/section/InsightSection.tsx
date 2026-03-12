@@ -150,7 +150,6 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
   const { isMobile } = useResponsive();
   const navigate = useNavigate();
 
-  // 1. 카테고리 리스트 (이 순서대로 화면에 나옵니다)
   const categories = ["EXHIBITION", "MANIFESTO", "ARTIST"];
 
   return (
@@ -163,7 +162,6 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         boxSizing: "border-box",
       }}
     >
-      {/* 섹션 전체 헤더 */}
       <div style={{ marginBottom: "80px" }}>
         <p
           style={{
@@ -171,6 +169,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
             color: "#bbb",
             letterSpacing: "4px",
             marginBottom: "8px",
+            fontWeight: 900,
           }}
         >
           INSIGHT
@@ -178,110 +177,135 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>시선</p>
       </div>
 
-      {categories.map((cat) => {
-        // 2. 각 카테고리별로 데이터 필터링 (메인 1 + 서브 2)
+      {categories.map((cat, index) => {
+        // 카테고리별 데이터 분리
         const categoryData = insightData.filter(
           (item) => item.category === cat,
         );
         const mainItem = categoryData[0];
         const subItems = categoryData.slice(1, 3);
+        const isEven = index % 2 === 1; // 지그재그 방향
 
-        if (!mainItem) return null; // 데이터가 없으면 패스
+        if (!mainItem) return null;
 
         return (
-          <div key={cat} style={{ marginBottom: "120px" }}>
-            {/* 카테고리 소제목 (선택사항) */}
+          <div key={cat} style={{ marginBottom: isMobile ? "100px" : "180px" }}>
+            {/* 1. 메인 인사이트 (지그재그 레이아웃) */}
             <div
+              onClick={() => navigate(`/insight/${mainItem.id}`)}
               style={{
-                marginBottom: "30px",
-                borderBottom: "1px solid #eee",
-                paddingBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: isMobile
+                  ? "flex-start"
+                  : isEven
+                    ? "flex-end"
+                    : "flex-start",
+                marginBottom: "40px",
+                cursor: "pointer",
+                textAlign: isMobile ? "left" : isEven ? "right" : "left",
               }}
             >
               <span
                 style={{
-                  fontSize: "12px",
+                  fontSize: "10px",
                   fontWeight: 900,
                   color: "#0055ff",
                   letterSpacing: "2px",
-                }}
-              >
-                {cat}
-              </span>
-            </div>
-
-            {/* 메인 콘텐츠 (크게) */}
-            <div
-              onClick={() => navigate(`/insight/${mainItem.id}`)}
-              style={{ marginBottom: "40px", cursor: "pointer" }}
-            >
-              <img
-                src={mainItem.image}
-                style={{ width: "100%", height: "auto", marginBottom: "20px" }}
-                alt="main"
-              />
-              <h3
-                style={{
-                  fontSize: isMobile ? "22px" : "28px",
-                  fontWeight: 700,
                   marginBottom: "15px",
                 }}
               >
-                {mainItem.title[lang as keyof typeof mainItem.title]}
-              </h3>
-              <p style={{ fontSize: "15px", color: "#666", lineHeight: 1.7 }}>
-                {
-                  mainItem.description[
-                    lang as keyof typeof mainItem.description
-                  ]
-                }
-              </p>
+                {mainItem.category}
+              </span>
+              <div
+                style={{
+                  width: isMobile ? "100%" : "85%",
+                  backgroundColor: "#f9f9f9",
+                  marginBottom: "30px",
+                }}
+              >
+                <img
+                  src={mainItem.image}
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                  alt="main"
+                />
+              </div>
+              <div style={{ maxWidth: "600px" }}>
+                <h3
+                  style={{
+                    fontSize: isMobile ? "22px" : "28px",
+                    fontWeight: 700,
+                    marginBottom: "15px",
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {mainItem.title[lang as keyof typeof mainItem.title]}
+                </h3>
+                <p style={{ fontSize: "15px", color: "#666", lineHeight: 1.8 }}>
+                  {
+                    mainItem.description[
+                      lang as keyof typeof mainItem.description
+                    ]
+                  }
+                </p>
+              </div>
             </div>
 
-            {/* 서브 콘텐츠 2개 (가로 나열) */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                gap: "30px",
-              }}
-            >
-              {subItems.map((sub) => (
-                <div
-                  key={sub.id}
-                  onClick={() => navigate(`/insight/${sub.id}`)}
-                  style={{ flex: 1, cursor: "pointer" }}
-                >
-                  <img
-                    src={sub.image}
+            {/* 2. 서브 인사이트 (메인 아래에 2개 나란히) */}
+            {subItems.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: isMobile ? "column" : "row",
+                  gap: "30px",
+                  // 💡 서브 카드들도 메인의 방향에 맞춰 정렬하고 싶다면 아래 주석 해제
+                  // justifyContent: isEven ? "flex-end" : "flex-start"
+                }}
+              >
+                {subItems.map((sub) => (
+                  <div
+                    key={sub.id}
+                    onClick={() => navigate(`/insight/${sub.id}`)}
                     style={{
-                      width: "100%",
-                      aspectRatio: "16/9",
-                      objectFit: "cover",
-                      marginBottom: "15px",
-                    }}
-                    alt="sub"
-                  />
-                  <h4
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: 700,
-                      marginBottom: "10px",
-                    }}
+                      flex: isMobile ? "1" : "0 0 calc(40% - 15px)",
+                      cursor: "pointer",
+                    }} // 서브는 메인보다 약간 작게
                   >
-                    {sub.title[lang as keyof typeof sub.title]}
-                  </h4>
-                  <p
-                    style={{ fontSize: "13px", color: "#888", lineHeight: 1.6 }}
-                  >
-                    {sub.description[
-                      lang as keyof typeof sub.description
-                    ].slice(0, 80)}
-                    ...
-                  </p>
-                </div>
-              ))}
-            </div>
+                    <img
+                      src={sub.image}
+                      style={{
+                        width: "100%",
+                        aspectRatio: "16/10",
+                        objectFit: "cover",
+                        marginBottom: "15px",
+                      }}
+                      alt="sub"
+                    />
+                    <h4
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: 700,
+                        marginBottom: "8px",
+                      }}
+                    >
+                      {sub.title[lang as keyof typeof sub.title]}
+                    </h4>
+                    <p
+                      style={{
+                        fontSize: "13px",
+                        color: "#888",
+                        lineHeight: 1.6,
+                      }}
+                    >
+                      {sub.description[
+                        lang as keyof typeof sub.description
+                      ].slice(0, 60)}
+                      ...
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         );
       })}
@@ -293,5 +317,4 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
     </section>
   );
 };
-
 export default InsightSection;
