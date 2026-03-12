@@ -37,7 +37,16 @@ const MainBanner = () => {
   if (error || !data || data.length === 0) return null;
 
   return (
-    <section className="main-banner">
+    <section
+      className="main-banner"
+      style={{
+        width: "100%",
+        maxWidth: isMobile ? "100%" : "1100px", // 💡 인사이트 섹션과 동일한 가이드 라인
+        margin: isMobile ? "0 auto 40px auto" : "40px auto 80px auto", // 💡 PC에서 중앙 정렬 및 위아래 여백
+        padding: isMobile ? "0" : "0", // 배너는 좌우 패딩 없이 1100px 꽉 채우기
+        boxSizing: "border-box",
+      }}
+    >
       {data.map((post) => {
         const isLoaded = loadedImages[post.id]; // 현재 포스트 이미지가 로드됐는지 확인
 
@@ -48,11 +57,14 @@ const MainBanner = () => {
             style={{
               position: "relative",
               width: "100%",
-              height: isMobile ? "55vh" : "65vh",
+              // 💡 PC에서 너무 길어지지 않게 고정 높이 혹은 비율 최적화
+              height: isMobile ? "55vh" : "500px",
               overflow: "hidden",
-              marginBottom: "40px",
+              marginBottom: "20px",
               cursor: "pointer",
-              backgroundColor: "#f0f0f0", // 로딩 전 배경색
+              backgroundColor: "#f0f0f0",
+              // 💡 PC에서 배너에도 약간의 라운드를 주면 더 고급스럽습니다 (취향따라 삭제 가능)
+              borderRadius: isMobile ? "0" : "2px",
             }}
           >
             {/* 1. 배경 이미지: 로딩 전후 상태에 따라 블러/투명도 조절 */}
@@ -87,12 +99,11 @@ const MainBanner = () => {
                 transform: "translate(-50%, -50%)",
                 backgroundColor: "rgba(0, 0, 0, 0.4)",
                 backdropFilter: "blur(8px)",
-                width: isMobile ? "80%" : "65%",
-                padding: isMobile ? "50px 20px" : "70px 40px",
+                width: isMobile ? "85%" : "70%", // 💡 모바일에서 조금 더 넓게
+                padding: isMobile ? "40px 20px" : "60px 40px",
                 textAlign: "center",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 pointerEvents: "none",
-                // 이미지가 로드된 후에만 텍스트 박스가 나타나게 하려면 아래 줄 추가
                 opacity: isLoaded ? 1 : 0,
                 transition: "opacity 0.5s ease",
               }}
@@ -100,29 +111,28 @@ const MainBanner = () => {
               <h1
                 style={{
                   color: "#fff",
-                  fontSize: isMobile ? "1.8rem" : "2.8rem",
+                  fontSize: isMobile ? "1.5rem" : "2.2rem", // 💡 타이포 크기 살짝 조정
                   fontWeight: 500,
                   margin: 0,
-                  letterSpacing: "5px",
+                  letterSpacing: isMobile ? "3px" : "6px",
                   textTransform: "uppercase",
+                  wordBreak: "keep-all",
                 }}
               >
                 {post.title?.rendered}
               </h1>
-
               <div
                 style={{
-                  width: "50px",
+                  width: "40px",
                   height: "1px",
-                  backgroundColor: "rgba(255,255,255,0.5)",
-                  margin: "25px auto",
+                  backgroundColor: "rgba(255,255,255,0.4)",
+                  margin: "20px auto",
                 }}
               ></div>
-
               <p
                 style={{
-                  color: "rgba(255, 255, 255, 0.9)",
-                  fontSize: isMobile ? "13px" : "16px",
+                  color: "rgba(255, 255, 255, 0.8)",
+                  fontSize: isMobile ? "12px" : "14px",
                   fontWeight: 300,
                   letterSpacing: "2px",
                 }}
