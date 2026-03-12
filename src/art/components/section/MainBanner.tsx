@@ -42,7 +42,7 @@ const MainBanner = () => {
       style={{
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px",
-        margin: isMobile ? "80px auto" : "40px auto 80px auto", // 모바일 상하 여백 더 확보
+        margin: isMobile ? "80px auto" : "40px auto 80px auto",
         padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}
@@ -57,16 +57,13 @@ const MainBanner = () => {
             style={{
               position: "relative",
               width: "100%",
-              // 💡 핵심: 이미지 높이를 슬림하게 조절 (회색 박스가 튀어나올 수 있도록)
-              height: isMobile ? "240px" : "450px",
-              // 💡 중요: 박스가 삐져나와야 하므로 overflow를 visible로 변경하거나
-              // 내부 컨테이너 구조를 활용해야 하지만,
-              // 이미지 자체를 슬림하게 보여주기 위해 높이값만 조정합니다.
+              // 💡 이미지는 더 얇게 (슬림 배너 비율)
+              height: isMobile ? "220px" : "400px",
               cursor: "pointer",
-              marginBottom: "40px",
+              marginBottom: "60px", // 박스가 삐져나올 것을 대비해 하단 여백 충분히
             }}
           >
-            {/* 1. 배경 이미지 (슬림한 밴드 형태) */}
+            {/* 1. 배경 이미지 컨테이너 */}
             <div
               style={{
                 width: "100%",
@@ -91,24 +88,26 @@ const MainBanner = () => {
               />
             </div>
 
-            {/* 2. 중앙 유리 효과 박스 (기존 크기 유지하며 이미지 위로 올라옴) */}
+            {/* 2. 중앙 검정 유리 박스 (상하 패딩 50% 추가 확장) */}
             <div
               style={{
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                backgroundColor: "rgba(0, 0, 0, 0.45)",
+                backgroundColor: "rgba(0, 0, 0, 0.5)", // 💡 조금 더 선명하게 대비
                 backdropFilter: "blur(10px)",
                 width: isMobile ? "85%" : "75%",
-                // 💡 아티브님이 원하시는 넉넉한 회색 박스 사이즈
-                padding: isMobile ? "50px 20px" : "70px 40px",
+
+                // 💡 상하 패딩을 기존 50px에서 75px로 50% 확장
+                padding: isMobile ? "75px 20px" : "100px 40px",
+
                 textAlign: "center",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 pointerEvents: "none",
                 opacity: isLoaded ? 1 : 0,
                 transition: "opacity 0.5s ease",
-                zIndex: 2, // 이미지 위로 확실히 올라오게
+                zIndex: 2,
               }}
             >
               <h1
@@ -129,7 +128,7 @@ const MainBanner = () => {
                   width: "40px",
                   height: "1px",
                   backgroundColor: "rgba(255,255,255,0.4)",
-                  margin: "20px auto",
+                  margin: "25px auto", // 💡 간격도 박스 크기에 맞춰 살짝 조정
                 }}
               ></div>
               <p
