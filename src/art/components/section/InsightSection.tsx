@@ -1,6 +1,7 @@
 // import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../../hook/useResponsive";
+import ViewMoreButton from "../home/ViewMoreButton";
 
 const insightData = [
   {
@@ -199,6 +200,11 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
           );
         })}
       </div>
+
+      <ViewMoreButton
+        label="VIEW MORE INSIGHTS"
+        onClick={() => navigate("/art/insights")} // 👈 인사이트 모아보기 주소
+      />
     </section>
   );
 };

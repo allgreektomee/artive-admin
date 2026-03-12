@@ -4,6 +4,7 @@ import ArtWorkCardHover from "../home/ArtworkHoverCard";
 
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../../hook/useResponsive";
+import ViewMoreButton from "../home/ViewMoreButton";
 
 const ArtworkGrid = ({
   limit = 9, // 2-1-2 패턴이라 3의 배수로 맞추는 게 예쁩니다.
@@ -90,38 +91,10 @@ const ArtworkGrid = ({
         })}
       </div>
       {/* 💡 VIEW ALL 버튼 추가 */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "50px",
-        }}
-      >
-        <button
-          onClick={() => navigate("/art/works")} // 리스트 페이지 주소
-          style={{
-            padding: "12px 40px",
-            fontSize: "12px",
-            letterSpacing: "2px",
-            color: "#444",
-            backgroundColor: "transparent",
-            border: "1px solid #444",
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            borderRadius: "0", // 아티브님 취향은 각진 느낌이죠?
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#444";
-            e.currentTarget.style.color = "#fff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "transparent";
-            e.currentTarget.style.color = "#444";
-          }}
-        >
-          VIEW ALL WORKS
-        </button>
-      </div>
+      <ViewMoreButton
+        label="VVIEW MORE ARTWORKS"
+        onClick={() => navigate("/art/works")}
+      />
     </section>
   );
 };

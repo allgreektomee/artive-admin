@@ -1,6 +1,8 @@
 // import React from "react";
-import { useResponsive } from "../../hook/useResponsive"; // 경로 확인 필요
 
+import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../../hook/useResponsive";
+import ViewMoreButton from "../home/ViewMoreButton";
 // 임시 데이터 (나중에 API 연결하기 좋습니다)
 const logData = [
   { id: 1, title: "아카이빙의 순간 No.3 (작업 노트 발췌)", date: "2026.03.12" },
@@ -18,6 +20,7 @@ const logData = [
 
 const LogSection = () => {
   const { isMobile } = useResponsive();
+  const navigate = useNavigate();
 
   return (
     <section
@@ -122,6 +125,10 @@ const LogSection = () => {
           VIEW MORE LOGS +
         </button>
       </div>
+      <ViewMoreButton
+        label="VIEW MORE INSIGHTS"
+        onClick={() => navigate("/art/insights")} // 👈 인사이트 모아보기 주소
+      />
     </section>
   );
 };
