@@ -144,7 +144,7 @@ const LogSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           gap: isMobile ? "60px" : "40px",
-          marginBottom: "60px",
+          marginBottom: "30px",
         }}
       >
         {categories.map((cat) => (
