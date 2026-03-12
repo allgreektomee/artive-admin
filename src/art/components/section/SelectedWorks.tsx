@@ -1,6 +1,6 @@
 // import React from "react";
 import { useWordPress } from "../../hook/useWordPress";
-import ArtworkCard from "./ArtworkCard";
+import ArtworkCard from "../home/ArtworkCard";
 
 const SelectedWorks = ({
   limit = 10,

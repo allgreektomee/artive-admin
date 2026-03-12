@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // 데이터 구조 (나중에 WordPress API로 교체 가능)
