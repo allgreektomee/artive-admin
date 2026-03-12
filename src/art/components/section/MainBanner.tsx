@@ -42,7 +42,7 @@ const MainBanner = () => {
       style={{
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px",
-        margin: isMobile ? "50px auto 40px auto" : "40px auto 80px auto",
+        margin: isMobile ? "80px auto" : "40px auto 80px auto", // 모바일 상하 여백 더 확보
         padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}
@@ -57,85 +57,87 @@ const MainBanner = () => {
             style={{
               position: "relative",
               width: "100%",
-              height: isMobile ? "450px" : "500px",
-              overflow: "hidden",
-              marginBottom: "20px",
+              // 💡 핵심: 이미지 높이를 슬림하게 조절 (회색 박스가 튀어나올 수 있도록)
+              height: isMobile ? "240px" : "450px",
+              // 💡 중요: 박스가 삐져나와야 하므로 overflow를 visible로 변경하거나
+              // 내부 컨테이너 구조를 활용해야 하지만,
+              // 이미지 자체를 슬림하게 보여주기 위해 높이값만 조정합니다.
               cursor: "pointer",
-              backgroundColor: "#f0f0f0",
-              borderRadius: "2px",
+              marginBottom: "40px",
             }}
           >
-            {/* 1. 배경 이미지 */}
-            <img
-              src={getBannerImage(post)}
-              onLoad={() => handleImageLoad(post.id)}
+            {/* 1. 배경 이미지 (슬림한 밴드 형태) */}
+            <div
               style={{
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
-                transition: "all 0.6s ease",
-                filter: isLoaded ? "none" : "blur(20px)",
-                opacity: isLoaded ? 1 : 0.7,
-                transform: isLoaded ? "scale(1.0)" : "scale(1.1)",
+                overflow: "hidden",
+                borderRadius: "2px",
+                backgroundColor: "#f0f0f0",
               }}
-              alt={post.title?.rendered}
-            />
+            >
+              <img
+                src={getBannerImage(post)}
+                onLoad={() => handleImageLoad(post.id)}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  transition: "all 0.6s ease",
+                  filter: isLoaded ? "none" : "blur(20px)",
+                  opacity: isLoaded ? 1 : 0.7,
+                }}
+                alt={post.title?.rendered}
+              />
+            </div>
 
-            {/* 2. 중앙 유리 효과 박스 (슬림화 핵심 수정) */}
+            {/* 2. 중앙 유리 효과 박스 (기존 크기 유지하며 이미지 위로 올라옴) */}
             <div
               style={{
                 position: "absolute",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                backgroundColor: "rgba(0, 0, 0, 0.45)", // 💡 레퍼런스 느낌을 위해 어둡기를 살짝 높임
-                backdropFilter: "blur(15px)", // 💡 블러를 조금 더 주어 질감을 살림
-                width: isMobile ? "85%" : "70%", // 💡 모바일 좌우 꽉 채우기
-
-                // 💡 핵심 수정: 상하 패딩을 좌우 패딩과 같거나 작게 조절
-                // 모바일: 상하 10px, 좌우 20px | PC: 상하 15px, 좌우 40px
-                padding: isMobile ? "10px 20px" : "15px 40px",
-
+                backgroundColor: "rgba(0, 0, 0, 0.45)",
+                backdropFilter: "blur(10px)",
+                width: isMobile ? "85%" : "75%",
+                // 💡 아티브님이 원하시는 넉넉한 회색 박스 사이즈
+                padding: isMobile ? "50px 20px" : "70px 40px",
                 textAlign: "center",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
                 pointerEvents: "none",
                 opacity: isLoaded ? 1 : 0,
                 transition: "opacity 0.5s ease",
+                zIndex: 2, // 이미지 위로 확실히 올라오게
               }}
             >
               <h1
                 style={{
                   color: "#fff",
-                  fontSize: isMobile ? "1.1rem" : "2.0rem", // 💡 레퍼런스처럼 텍스트를 살짝 더 작게
+                  fontSize: isMobile ? "1.4rem" : "2.2rem",
                   fontWeight: 500,
                   margin: 0,
-                  letterSpacing: isMobile ? "4px" : "6px",
+                  letterSpacing: isMobile ? "3px" : "6px",
                   textTransform: "uppercase",
                   wordBreak: "keep-all",
-                  lineHeight: 1.1, // 💡 텍스트 상하 간격도 타이트하게
                 }}
               >
                 {post.title?.rendered}
               </h1>
-
-              {/* 💡 상하 여백이 줄었으므로 구분선 간격도 타이트하게 조정 */}
               <div
                 style={{
-                  width: "25px", // 💡 레퍼런스처럼 더 짧게
+                  width: "40px",
                   height: "1px",
-                  backgroundColor: "rgba(255,255,255,0.3)",
-                  margin: isMobile ? "8px auto" : "12px auto",
+                  backgroundColor: "rgba(255,255,255,0.4)",
+                  margin: "20px auto",
                 }}
               ></div>
-
               <p
                 style={{
-                  color: "rgba(255, 255, 255, 0.65)", // 💡 텍스트 어둡기를 살짝 높임
-                  fontSize: isMobile ? "9px" : "13px", // 💡 텍스트를 더 작게
+                  color: "rgba(255, 255, 255, 0.8)",
+                  fontSize: isMobile ? "11px" : "14px",
                   fontWeight: 300,
-                  letterSpacing: "1.5px",
-                  margin: 0,
-                  lineHeight: 1, // 💡 텍스트 상하 간격 타이트하게
+                  letterSpacing: "2px",
                 }}
               >
                 {post.acf?.sub_title}
