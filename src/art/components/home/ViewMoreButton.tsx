@@ -6,7 +6,7 @@ interface ViewMoreButtonProps {
 }
 
 const ViewMoreButton = ({ label, onClick }: ViewMoreButtonProps) => (
-  <div style={{ marginTop: "60px", textAlign: "center", width: "100%" }}>
+  <div style={{ marginTop: "30px", textAlign: "center", width: "100%" }}>
     <button
       onClick={onClick}
       style={{
