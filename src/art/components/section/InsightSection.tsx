@@ -176,7 +176,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         </p>
         <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>시선</p>
       </div>
-      // ... 상단 import 생략
+
       {categories.map((cat, index) => {
         const categoryData = insightData.filter(
           (item) => item.category === cat,
@@ -189,7 +189,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
 
         return (
           <div key={cat} style={{ marginBottom: isMobile ? "100px" : "180px" }}>
-            {/* 1. 메인 인사이트 (이미지 포함 지그재그) */}
+            {/* 1. 메인 인사이트 (초기 디자인: 이미지 상단 카테고리 배치) */}
             <div
               onClick={() => navigate(`/insight/${mainItem.id}`)}
               style={{
@@ -200,22 +200,24 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                   : isEven
                     ? "flex-end"
                     : "flex-start",
-                marginBottom: "30px", // 서브 타이틀과 가까이 붙임
                 cursor: "pointer",
                 textAlign: isMobile ? "left" : isEven ? "right" : "left",
               }}
             >
+              {/* 💡 카테고리를 이미지 위쪽으로 배치 (초기 감성) */}
               <span
                 style={{
-                  fontSize: "10px",
+                  fontSize: "12px",
                   fontWeight: 900,
                   color: "#0055ff",
-                  letterSpacing: "2px",
-                  marginBottom: "15px",
+                  letterSpacing: "3px",
+                  marginBottom: "20px",
+                  display: "block",
                 }}
               >
                 {mainItem.category}
               </span>
+
               <div
                 style={{
                   width: isMobile ? "100%" : "85%",
@@ -229,13 +231,14 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                   alt="main"
                 />
               </div>
+
               <div style={{ maxWidth: "600px" }}>
                 <h3
                   style={{
-                    fontSize: isMobile ? "22px" : "28px",
+                    fontSize: isMobile ? "22px" : "32px",
                     fontWeight: 700,
                     marginBottom: "15px",
-                    lineHeight: 1.3,
+                    lineHeight: 1.2,
                   }}
                 >
                   {mainItem.title[lang as keyof typeof mainItem.title]}
@@ -245,7 +248,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                     fontSize: "15px",
                     color: "#666",
                     lineHeight: 1.8,
-                    marginBottom: "20px",
+                    marginBottom: "40px",
                   }}
                 >
                   {
@@ -257,7 +260,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
               </div>
             </div>
 
-            {/* 2. 서브 컨텐츠 타이틀 리스트 (로그 섹션 스타일 적용) */}
+            {/* 2. 서브 컨텐츠 리스트 (심심하지 않게 디테일 추가) */}
             {subItems.length > 0 && (
               <div
                 style={{
@@ -269,53 +272,71 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                       ? "flex-end"
                       : "flex-start",
                   width: "100%",
+                  marginTop: "-10px", // 메인 설명글과 적절한 간격
                 }}
               >
-                {subItems.map((sub) => (
+                {subItems.map((sub, subIndex) => (
                   <div
                     key={sub.id}
                     onClick={() => navigate(`/insight/${sub.id}`)}
                     style={{
-                      width: isMobile ? "100%" : "600px", // 메인 텍스트 폭과 맞춤
-                      padding: "15px 0",
-                      borderTop: "1px solid #eee", // 로그 느낌의 얇은 선
+                      width: isMobile ? "100%" : "600px",
+                      padding: "20px 0",
+                      borderTop: "1px solid #333", // 선을 조금 더 진하게 해서 존재감 부여
                       cursor: "pointer",
                       display: "flex",
-                      justifyContent: "space-between",
                       alignItems: "center",
                       gap: "20px",
                     }}
                   >
+                    {/* 번호를 넣어서 리스트의 지루함을 해소 */}
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        color: "#aaa",
+                        fontFamily: "serif",
+                      }}
+                    >
+                      0{subIndex + 1}
+                    </span>
+
                     <h4
                       style={{
-                        fontSize: "15px",
-                        fontWeight: 500,
-                        color: "#333",
-                        textAlign: isMobile
-                          ? "left"
-                          : isEven
-                            ? "right"
-                            : "left",
+                        fontSize: isMobile ? "15px" : "17px",
+                        fontWeight: 600,
+                        color: "#111",
+                        textAlign: "left", // 리스트 제목은 가독성을 위해 왼쪽 정렬 유지
                         flex: 1,
+                        letterSpacing: "-0.5px",
                       }}
                     >
                       {sub.title[lang as keyof typeof sub.title]}
                     </h4>
-                    <span style={{ fontSize: "12px", color: "#ccc" }}>+</span>
+
+                    {/* 화살표 아이콘으로 클릭 유도 */}
+                    <span
+                      style={{
+                        fontSize: "14px",
+                        color: "#0055ff",
+                        fontWeight: 300,
+                      }}
+                    >
+                      →
+                    </span>
                   </div>
                 ))}
                 <div
                   style={{
                     width: isMobile ? "100%" : "600px",
-                    borderTop: "1px solid #eee",
+                    borderTop: "1px solid #333",
                   }}
-                />{" "}
-                {/* 마지막 선 */}
+                />
               </div>
             )}
           </div>
         );
       })}
+
       <ViewMoreButton
         label="VIEW MORE INSIGHTS"
         onClick={() => navigate("/art/insights")}
