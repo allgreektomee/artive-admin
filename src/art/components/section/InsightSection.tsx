@@ -58,7 +58,13 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         boxSizing: "border-box",
       }}
     >
-      <div style={{ marginBottom: "80px", textAlign: "left" }}>
+      <div
+        style={{
+          marginBottom: isMobile ? "30px" : "50px",
+          borderTop: "1px solid #eee",
+          paddingTop: "60px",
+        }}
+      >
         <p
           style={{
             fontSize: "14px",
@@ -69,7 +75,15 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         >
           INSIGHT
         </p>
-        <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>시선</p>
+        <p
+          style={{
+            fontSize: isMobile ? "18px" : "22px",
+            color: "#333",
+            fontWeight: 300,
+          }}
+        >
+          시선
+        </p>
       </div>
 
       <div

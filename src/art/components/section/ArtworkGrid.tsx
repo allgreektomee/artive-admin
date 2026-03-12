@@ -40,6 +40,7 @@ const ArtworkGrid = ({
         }}
       >
         ARTWORKS
+        <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>흔적</p>
       </p>
 
       {/* 2-1-2-1 그리드 레이아웃 */}
