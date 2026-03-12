@@ -70,7 +70,6 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
           시선
         </p>
       </div>
-
       {/* --- 매거진 리스트 (지그재그/1열) --- */}
       <div
         style={{
@@ -178,57 +177,6 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
             </div>
           );
         })}
-      </div>
-
-      {/* --- LOG 섹션 --- */}
-      <div
-        style={{
-          marginTop: isMobile ? "120px" : "200px",
-          borderTop: "1px solid #eee",
-          paddingTop: "80px",
-          paddingBottom: "120px",
-        }}
-      >
-        <p
-          style={{
-            fontSize: "14px",
-            color: "#bbb",
-            letterSpacing: "4px",
-            marginBottom: "50px",
-          }}
-        >
-          LOG
-        </p>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "25px 10px",
-                borderBottom: "1px solid #f8f8f8",
-                cursor: "pointer",
-              }}
-            >
-              <span
-                style={{ fontSize: "16px", color: "#444", fontWeight: 300 }}
-              >
-                아카이빙의 순간 No.{i}
-              </span>
-              <span
-                style={{
-                  fontSize: "12px",
-                  color: "#ccc",
-                  fontFamily: "monospace",
-                }}
-              >
-                2026.03.12
-              </span>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
