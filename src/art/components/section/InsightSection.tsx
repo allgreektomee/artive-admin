@@ -205,18 +205,40 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
               }}
             >
               {/* 💡 카테고리명 (이미지 위 배치) */}
-              <span
+              <div
                 style={{
-                  fontSize: "12px",
-                  fontWeight: 900,
-                  color: "#0055ff",
-                  letterSpacing: "3px",
-                  marginBottom: "25px", // 이미지와의 간격
-                  display: "block",
+                  display: "flex",
+                  gap: "15px",
+                  alignItems: "baseline",
+                  marginBottom: "25px",
+                  justifyContent: isMobile
+                    ? "flex-start"
+                    : isEven
+                      ? "flex-end"
+                      : "flex-start",
                 }}
               >
-                {mainItem.category}
-              </span>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 900,
+                    color: "#0055ff",
+                    letterSpacing: "3px",
+                  }}
+                >
+                  {mainItem.category}
+                </span>
+                <span
+                  style={{
+                    fontSize: "11px",
+                    color: "#bbb",
+                    letterSpacing: "1px",
+                    fontWeight: 400,
+                  }}
+                >
+                  {mainItem.issueNo || "MAR 2026"}
+                </span>
+              </div>
 
               {/* 메인 이미지 */}
               <div
