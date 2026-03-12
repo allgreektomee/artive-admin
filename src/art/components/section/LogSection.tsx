@@ -2,96 +2,92 @@ import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../../hook/useResponsive";
 import ViewMoreButton from "../home/ViewMoreButton";
 
-아티브님, PROCESS(연습 흔적), SPACE(일상), ESSAY(감상) 카테고리에 맞춰서 아티브님의 브랜드 무드에 딱 맞는 데이터를 만들어 왔습니다. 나중에 일본어나 중국어 확장도 고려해서 구조를 잡아두었으니, 그대로 복사해서 logData에 붙여넣으시면 됩니다.
-
-📂 LogSection.tsx용 데이터셋
-TypeScript
 const logData = [
   // --- 1. PROCESS (연습 흔적) ---
-  { 
-    id: "p1", 
-    category: "PROCESS", 
-    date: "2026.03.12", 
-    title: { 
-      ko: "두꺼운 마티에르 실험: 나이프의 궤적", 
-      en: "Matière Experiment: Trajectory of the Knife" 
-    } 
+  {
+    id: "p1",
+    category: "PROCESS",
+    date: "2026.03.12",
+    title: {
+      ko: "두꺼운 마티에르 실험: 나이프의 궤적",
+      en: "Matière Experiment: Trajectory of the Knife",
+    },
   },
-  { 
-    id: "p2", 
-    category: "PROCESS", 
-    date: "2026.03.05", 
-    title: { 
-      ko: "캔버스 뒷면, 우리가 놓친 기록들", 
-      en: "Back of the Canvas: Records We Missed" 
-    } 
+  {
+    id: "p2",
+    category: "PROCESS",
+    date: "2026.03.05",
+    title: {
+      ko: "캔버스 뒷면, 우리가 놓친 기록들",
+      en: "Back of the Canvas: Records We Missed",
+    },
   },
-  { 
-    id: "p3", 
-    category: "PROCESS", 
-    date: "2026.02.18", 
-    title: { 
-      ko: "미완성 드로잉: 선의 망설임에 대하여", 
-      en: "Incomplete Drawings: On the Hesitation of Lines" 
-    } 
+  {
+    id: "p3",
+    category: "PROCESS",
+    date: "2026.02.18",
+    title: {
+      ko: "미완성 드로잉: 선의 망설임에 대하여",
+      en: "Incomplete Drawings: On the Hesitation of Lines",
+    },
   },
 
   // --- 2. SPACE (일상) ---
-  { 
-    id: "s1", 
-    category: "SPACE", 
-    date: "2026.03.10", 
-    title: { 
-      ko: "오후 3시의 성수동, 갤러리에 스며든 빛", 
-      en: "Seongsu-dong at 3 PM: Light Seeping into the Gallery" 
-    } 
+  {
+    id: "s1",
+    category: "SPACE",
+    date: "2026.03.10",
+    title: {
+      ko: "오후 3시의 성수동, 갤러리에 스며든 빛",
+      en: "Seongsu-dong at 3 PM: Light Seeping into the Gallery",
+    },
   },
-  { 
-    id: "s2", 
-    category: "SPACE", 
-    date: "2026.02.24", 
-    title: { 
-      ko: "작업실의 낡은 나무 책상이 주는 안정감", 
-      en: "Stability from the Old Wooden Desk in the Studio" 
-    } 
+  {
+    id: "s2",
+    category: "SPACE",
+    date: "2026.02.24",
+    title: {
+      ko: "작업실의 낡은 나무 책상이 주는 안정감",
+      en: "Stability from the Old Wooden Desk in the Studio",
+    },
   },
-  { 
-    id: "s3", 
-    category: "SPACE", 
-    date: "2026.02.12", 
-    title: { 
-      ko: "비 오는 날의 아카이브실 소음", 
-      en: "Noise from the Archive Room on a Rainy Day" 
-    } 
+  {
+    id: "s3",
+    category: "SPACE",
+    date: "2026.02.12",
+    title: {
+      ko: "비 오는 날의 아카이브실 소음",
+      en: "Noise from the Archive Room on a Rainy Day",
+    },
   },
 
   // --- 3. ESSAY (감상) ---
-  { 
-    id: "e1", 
-    category: "ESSAY", 
-    date: "2026.03.01", 
-    title: { 
-      ko: "무너진 것들에서 발견한 기록의 가치", 
-      en: "The Value of Records Found in Broken Things" 
-    } 
+  {
+    id: "e1",
+    category: "ESSAY",
+    date: "2026.03.01",
+    title: {
+      ko: "무너진 것들에서 발견한 기록의 가치",
+      en: "The Value of Records Found in Broken Things",
+    },
   },
-  { 
-    id: "e2", 
-    category: "ESSAY", 
-    date: "2026.02.15", 
-    title: { 
-      ko: "예술을 기록한다는 것의 무게", 
-      en: "The Weight of Archiving Art" 
-    } 
+  {
+    id: "e2",
+    category: "ESSAY",
+    date: "2026.02.15",
+    title: {
+      ko: "예술을 기록한다는 것의 무게",
+      en: "The Weight of Archiving Art",
+    },
   },
-  { 
-    id: "e3", 
-    category: "ESSAY", 
-    date: "2026.01.30", 
-    title: { 
-      ko: "완벽함보다 소중한 미완의 순간들", 
-      en: "Moments of Incompleteness More Precious Than Perfection" 
-    } 
+  {
+    id: "e3",
+    category: "ESSAY",
+    date: "2026.01.30",
+    title: {
+      ko: "완벽함보다 소중한 미완의 순간들",
+      en: "Moments of Incompleteness More Precious Than Perfection",
+    },
   },
 ];
 const LogSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
