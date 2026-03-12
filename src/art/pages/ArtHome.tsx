@@ -1,14 +1,11 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import MainBanner from "../components/section/MainBanner";
 // import { useResponsive } from "../hook/useResponsive";
 import ArtWorks from "../components/section/ArtworkGrid"; // 새로 만들 섹션
 import InsightSection from "../components/section/InsightSection";
+import LogSection from "../components/section/LogSection";
 
 const ArtHome = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   //   const { isMobile } = useResponsive();
   return (
     <div className="art-page-root">
@@ -21,6 +18,7 @@ const ArtHome = () => {
       {/* 섹션 2: 매거진 리스트 (이런 식으로 확장) */}
       {/* <MagazineList /> */}
       <InsightSection />
+      <LogSection />
     </div>
   );
 };
