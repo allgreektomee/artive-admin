@@ -204,6 +204,19 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 textAlign: isMobile ? "left" : isEven ? "right" : "left",
               }}
             >
+              <div
+                style={{
+                  width: isMobile ? "100%" : "85%",
+                  backgroundColor: "#f9f9f9",
+                  marginBottom: "30px",
+                }}
+              >
+                <img
+                  src={mainItem.image}
+                  style={{ width: "100%", height: "auto", display: "block" }}
+                  alt="main"
+                />
+              </div>
               {/* 카테고리 + 이슈번호 조합 */}
               <div
                 style={{
@@ -233,21 +246,6 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                   {mainItem.issueNo}
                 </span>
               </div>
-
-              <div
-                style={{
-                  width: isMobile ? "100%" : "85%",
-                  backgroundColor: "#f9f9f9",
-                  marginBottom: "30px",
-                }}
-              >
-                <img
-                  src={mainItem.image}
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                  alt="main"
-                />
-              </div>
-
               <div style={{ maxWidth: "650px" }}>
                 <h3
                   style={{
