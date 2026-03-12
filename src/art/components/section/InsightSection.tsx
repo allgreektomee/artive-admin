@@ -1,8 +1,23 @@
 // import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useResponsive } from "../../hook/useResponsive"; // 경로 확인 필요
+import { useResponsive } from "../../hook/useResponsive";
 
 const insightData = [
+  {
+    id: "exhibition-1",
+    category: "EXHIBITION",
+    issueNo: "MAR 2026", // 전시 월 또는 시즌
+    title: {
+      ko: "첫 번째 오프라인 전시: 색의 흔적",
+      en: "First Offline Exhibition: Traces of Color",
+    },
+    description: {
+      ko: "온라인을 넘어 실물로 마주하는 색의 깊이. 3월 20일부터 성수동 아티브 갤러리에서 첫 번째 기록을 시작합니다.",
+      en: "The depth of color encountered beyond online. Starting our first record at Artive Gallery, Seongsu-dong from March 20th.",
+    },
+    image:
+      "https://images.unsplash.com/photo-1554188248-986adbb73be4?q=80&w=1000", // 전시 포스터나 메인 작품 이미지
+  },
   {
     id: "manifesto-1",
     category: "MANIFESTO",
