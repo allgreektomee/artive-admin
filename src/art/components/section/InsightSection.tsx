@@ -176,21 +176,20 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         </p>
         <p style={{ fontSize: "26px", color: "#333", fontWeight: 300 }}>시선</p>
       </div>
-
+      // ... 상단 import 생략
       {categories.map((cat, index) => {
-        // 카테고리별 데이터 분리
         const categoryData = insightData.filter(
           (item) => item.category === cat,
         );
         const mainItem = categoryData[0];
         const subItems = categoryData.slice(1, 3);
-        const isEven = index % 2 === 1; // 지그재그 방향
+        const isEven = index % 2 === 1;
 
         if (!mainItem) return null;
 
         return (
           <div key={cat} style={{ marginBottom: isMobile ? "100px" : "180px" }}>
-            {/* 1. 메인 인사이트 (지그재그 레이아웃) */}
+            {/* 1. 메인 인사이트 (이미지 포함 지그재그) */}
             <div
               onClick={() => navigate(`/insight/${mainItem.id}`)}
               style={{
@@ -201,7 +200,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                   : isEven
                     ? "flex-end"
                     : "flex-start",
-                marginBottom: "40px",
+                marginBottom: "30px", // 서브 타이틀과 가까이 붙임
                 cursor: "pointer",
                 textAlign: isMobile ? "left" : isEven ? "right" : "left",
               }}
@@ -221,7 +220,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 style={{
                   width: isMobile ? "100%" : "85%",
                   backgroundColor: "#f9f9f9",
-                  marginBottom: "30px",
+                  marginBottom: "25px",
                 }}
               >
                 <img
@@ -241,7 +240,14 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                 >
                   {mainItem.title[lang as keyof typeof mainItem.title]}
                 </h3>
-                <p style={{ fontSize: "15px", color: "#666", lineHeight: 1.8 }}>
+                <p
+                  style={{
+                    fontSize: "15px",
+                    color: "#666",
+                    lineHeight: 1.8,
+                    marginBottom: "20px",
+                  }}
+                >
                   {
                     mainItem.description[
                       lang as keyof typeof mainItem.description
@@ -251,15 +257,18 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
               </div>
             </div>
 
-            {/* 2. 서브 인사이트 (메인 아래에 2개 나란히) */}
+            {/* 2. 서브 컨텐츠 타이틀 리스트 (로그 섹션 스타일 적용) */}
             {subItems.length > 0 && (
               <div
                 style={{
                   display: "flex",
-                  flexDirection: isMobile ? "column" : "row",
-                  gap: "30px",
-                  // 💡 서브 카드들도 메인의 방향에 맞춰 정렬하고 싶다면 아래 주석 해제
-                  // justifyContent: isEven ? "flex-end" : "flex-start"
+                  flexDirection: "column",
+                  alignItems: isMobile
+                    ? "flex-start"
+                    : isEven
+                      ? "flex-end"
+                      : "flex-start",
+                  width: "100%",
                 }}
               >
                 {subItems.map((sub) => (
@@ -267,49 +276,46 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
                     key={sub.id}
                     onClick={() => navigate(`/insight/${sub.id}`)}
                     style={{
-                      flex: isMobile ? "1" : "0 0 calc(40% - 15px)",
+                      width: isMobile ? "100%" : "600px", // 메인 텍스트 폭과 맞춤
+                      padding: "15px 0",
+                      borderTop: "1px solid #eee", // 로그 느낌의 얇은 선
                       cursor: "pointer",
-                    }} // 서브는 메인보다 약간 작게
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: "20px",
+                    }}
                   >
-                    <img
-                      src={sub.image}
-                      style={{
-                        width: "100%",
-                        aspectRatio: "16/10",
-                        objectFit: "cover",
-                        marginBottom: "15px",
-                      }}
-                      alt="sub"
-                    />
                     <h4
                       style={{
-                        fontSize: "16px",
-                        fontWeight: 700,
-                        marginBottom: "8px",
+                        fontSize: "15px",
+                        fontWeight: 500,
+                        color: "#333",
+                        textAlign: isMobile
+                          ? "left"
+                          : isEven
+                            ? "right"
+                            : "left",
+                        flex: 1,
                       }}
                     >
                       {sub.title[lang as keyof typeof sub.title]}
                     </h4>
-                    <p
-                      style={{
-                        fontSize: "13px",
-                        color: "#888",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {sub.description[
-                        lang as keyof typeof sub.description
-                      ].slice(0, 60)}
-                      ...
-                    </p>
+                    <span style={{ fontSize: "12px", color: "#ccc" }}>+</span>
                   </div>
                 ))}
+                <div
+                  style={{
+                    width: isMobile ? "100%" : "600px",
+                    borderTop: "1px solid #eee",
+                  }}
+                />{" "}
+                {/* 마지막 선 */}
               </div>
             )}
           </div>
         );
       })}
-
       <ViewMoreButton
         label="VIEW MORE INSIGHTS"
         onClick={() => navigate("/art/insights")}
