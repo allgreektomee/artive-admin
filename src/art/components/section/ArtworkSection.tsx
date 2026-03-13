@@ -47,7 +47,7 @@ const ArtworkGrid = () => {
 
   // 💡 [핵심] 모든 이미지 카드의 비율을 통일 (가로2:세로1)
   // 만약 1개짜리가 너무 얇아보이면 1.5/1 정도로 조절 가능합니다.
-  const cardAspectRatio = "2 / 1";
+  // const cardAspectRatio = "2 / 1";
 
   const gridStyle = {
     display: "grid",
