@@ -20,6 +20,7 @@ import ArtHome from "./art/pages/ArtHome"; // /art 메인
 import MagazineDetail from "./art/pages/MagazineDetail"; // /art/magazine/:slug (동적 SEO)
 import PostDetail from "./art/pages/PostDetail";
 import Artworks from "./art/pages/ArtworkList";
+// import HistoryDetailPage from "./presentation/pages/HistoryDetailPage";
 
 // =========================================
 // 3. Common 도메인 (레거시/참조용)
@@ -88,6 +89,8 @@ const App: React.FC = () => {
             <Route path="post/:type/:id" element={<PostDetail />} />
             {/* Artworks */}
             <Route path="works" element={<Artworks />} />
+            {/* 🚀 신규 아키텍처 기반 히스토리 상세 페이지
+            // <Route path="history/:historyId" element={<HistoryDetailPage />} /> */}
           </Route>
 
           {/* [참조] Common 도메인 */}
