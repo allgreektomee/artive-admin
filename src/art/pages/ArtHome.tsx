@@ -26,8 +26,9 @@ const ArtHome = () => {
       <ArtWorksSection />
       {/* 섹션 2: 매거진 리스트 (이런 식으로 확장) */}
       {/* <MagazineList /> */}
-      <MainBanner />
+
       <InsightSection />
+      <MainBanner />
       <LogSection />
     </div>
   );
