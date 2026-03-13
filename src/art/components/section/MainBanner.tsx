@@ -21,29 +21,6 @@ const MainBanner = () => {
   const bannerRatio = "2 / 1";
   const commonMargin = isMobile ? "60px auto" : "40px auto 120px auto";
 
-  if (loading) {
-    return (
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "1100px",
-          margin: commonMargin,
-          padding: isMobile ? "0 20px" : "0",
-          boxSizing: "border-box",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            aspectRatio: bannerRatio,
-            backgroundColor: "#f0f0f0",
-            borderRadius: "2px",
-          }}
-        />
-      </div>
-    );
-  }
-
   return (
     <section
       style={{
