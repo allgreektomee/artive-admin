@@ -19,7 +19,7 @@ export class BaseRepositoryImpl implements IBaseRepository {
       // 슬러그(slug) 오름차순(asc)으로 정렬하여 포스트 순서를 제어합니다.
       const rawPosts = await fetchPostsByCategory(categoryId, {
         orderBy: "slug",
-        order: "asc",
+        order: "desc",
       });
       return rawPosts.map(toBaseEntry);
     }
