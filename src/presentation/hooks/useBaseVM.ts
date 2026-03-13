@@ -1,3 +1,9 @@
+/**
+ * [PRESENTATION LAYER] ViewModel (Custom Hook)
+ * 역할: View(React Component)에 필요한 데이터와 상태(Loading, Error)를 관리합니다.
+ * 특징: UI 로직과 데이터 요청 로직을 분리하여 View가 '어떻게 보여줄지'에만 집중하게 만듭니다.
+ */
+
 import { useState, useEffect } from "react";
 import { BaseEntry } from "../../domain/models/BaseEntry";
 import { baseRepo } from "../../core/di/ServiceLocator";

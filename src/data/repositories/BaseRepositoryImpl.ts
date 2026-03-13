@@ -1,3 +1,9 @@
+/**
+ * [DATA LAYER] Repository Implementation
+ * 역할: Domain의 인터페이스(IBaseRepository)를 실제로 구현하며, 외부 API(WordPress)와 통신합니다.
+ * 특징: API 응답 데이터(JSON)를 우리 시스템의 'BaseEntry' 규격으로 다듬는 Mapper 역할을 수행합니다.
+ */
+
 import axios from "axios";
 import { IBaseRepository } from "../../domain/repositories/IBaseRepository";
 import { BaseEntry, BaseDetail } from "../../domain/models/BaseEntry";
