@@ -7,152 +7,152 @@ const MainBanner = () => {
   const navigate = useNavigate();
   const { data, loading, error } = useWordPress(32);
   const { isMobile } = useResponsive();
-
-  // 개별 포스트의 이미지 로딩 상태 관리
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
 
-  const getBannerImage = (post: any) => {
-    return post.acf?.art_image || "";
-  };
-
-  const handleBannerClick = (post: any) => {
-    const categoryType = "banner";
-    navigate(`/art/post/${categoryType}/${post.id}`);
-  };
-
-  const handleImageLoad = (postId: number) => {
+  const getBannerImage = (post: any) => post.acf?.art_image || "";
+  const handleBannerClick = (post: any) =>
+    navigate(`/art/post/banner/${post.id}`);
+  const handleImageLoad = (postId: number) =>
     setLoadedImages((prev) => ({ ...prev, [postId]: true }));
-  };
 
-  // 에러가 났거나 데이터가 아예 없을 때만 null 처리
   if (!loading && (error || !data || data.length === 0)) return null;
 
-  return (
-    <section
-      className="main-banner"
-      style={{
-        width: "100%",
-        maxWidth: isMobile ? "100%" : "1100px",
-        // 💡 로딩 중에도 마진을 동일하게 유지해서 배너가 툭 떨어지는 현상 방지
-        margin: isMobile ? "80px auto" : "40px auto 80px auto",
-        padding: isMobile ? "0 20px" : "0",
-        boxSizing: "border-box",
-        // 💡 배너가 들어올 자리를 미리 확보
-        minHeight: isMobile ? "220px" : "400px",
-      }}
-    >
-      {/* 💡 로딩 중일 때는 틀만 유지하고 내부에 스켈레톤 노출 */}
-      {loading ? (
+  // 💡 [핵심] 모든 기기에서 동일한 비율 유지 (가로 대비 세로 높이)
+  // aspect-ratio를 지원하지 않는 브라우저를 위해 padding-top 방식 대신 최신 CSS 활용
+  const bannerStyle: React.CSSProperties = {
+    width: "100%",
+    aspectRatio: isMobile ? "1.2 / 1" : "2.5 / 1", // 💡 모바일은 너무 얇으면 글자가 깨지니 살짝만 더 높게, 나머지는 동일 비율
+    position: "relative",
+    overflow: "visible", // 💡 박스가 삐져나와야 하므로 visible
+    cursor: "pointer",
+    marginBottom: isMobile ? "100px" : "120px", // 박스가 아래로 삐져나오니 마진 넉넉히
+  };
+
+  const commonMargin = isMobile ? "80px auto" : "40px auto 120px auto";
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1100px",
+          margin: commonMargin,
+          padding: isMobile ? "0 20px" : "0",
+          boxSizing: "border-box",
+        }}
+      >
         <div
           style={{
-            width: "100%",
-            height: isMobile ? "220px" : "400px",
+            ...bannerStyle,
             backgroundColor: "#f0f0f0",
             borderRadius: "2px",
           }}
         />
-      ) : (
-        data.map((post) => {
-          const isLoaded = loadedImages[post.id];
+      </div>
+    );
+  }
 
-          return (
+  return (
+    <section
+      style={{
+        width: "100%",
+        maxWidth: "1100px",
+        margin: commonMargin,
+        padding: isMobile ? "0 20px" : "0",
+        boxSizing: "border-box",
+      }}
+    >
+      {data.map((post) => {
+        const isLoaded = loadedImages[post.id];
+        return (
+          <div
+            key={post.id}
+            onClick={() => handleBannerClick(post)}
+            style={bannerStyle}
+          >
+            {/* 1. 배경 이미지 (슬림한 고정 비율) */}
             <div
-              key={post.id}
-              onClick={() => handleBannerClick(post)}
               style={{
-                position: "relative",
                 width: "100%",
-                height: isMobile ? "220px" : "400px",
-                cursor: "pointer",
-                marginBottom: "60px",
+                height: "100%",
+                overflow: "hidden",
+                borderRadius: "2px",
+                backgroundColor: "#f0f0f0",
               }}
             >
-              {/* 1. 배경 이미지 컨테이너 */}
-              <div
+              <img
+                src={getBannerImage(post)}
+                onLoad={() => handleImageLoad(post.id)}
                 style={{
                   width: "100%",
                   height: "100%",
-                  overflow: "hidden",
-                  borderRadius: "2px",
-                  backgroundColor: "#f0f0f0",
+                  objectFit: "cover",
+                  transition: "all 0.6s ease",
+                  filter: isLoaded ? "none" : "blur(20px)",
+                  opacity: isLoaded ? 1 : 0.7,
+                }}
+                alt={post.title?.rendered}
+              />
+            </div>
+
+            {/* 2. 중앙 검정 유리 박스 (겹쳐진 느낌 극대화) */}
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                backdropFilter: "blur(12px)",
+
+                // 💡 아티브님이 요청하신 "좌우는 줄이고 높이는 더 늘린" 비율
+                width: isMobile ? "70%" : "50%",
+                padding: isMobile ? "80px 20px" : "120px 40px",
+
+                textAlign: "center",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                opacity: isLoaded ? 1 : 0,
+                transition: "opacity 0.5s ease",
+                zIndex: 2,
+                boxShadow: "0 20px 40px rgba(0,0,0,0.2)", // 💡 겹쳐진 느낌을 위해 그림자 살짝
+              }}
+            >
+              <h1
+                style={{
+                  color: "#fff",
+                  fontSize: isMobile ? "1.3rem" : "2.2rem",
+                  fontWeight: 500,
+                  margin: 0,
+                  letterSpacing: isMobile ? "4px" : "8px",
+                  textTransform: "uppercase",
+                  wordBreak: "keep-all",
+                  lineHeight: 1.2,
                 }}
               >
-                <img
-                  src={getBannerImage(post)}
-                  onLoad={() => handleImageLoad(post.id)}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transition: "all 0.6s ease",
-                    filter: isLoaded ? "none" : "blur(20px)",
-                    opacity: isLoaded ? 1 : 0.7,
-                  }}
-                  alt={post.title?.rendered}
-                />
-              </div>
-
-              {/* 2. 중앙 검정 유리 박스 (아티브님 커스텀 비율 적용) */}
+                {post.title?.rendered}
+              </h1>
               <div
                 style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  backdropFilter: "blur(10px)",
-
-                  // 💡 좌우 박스를 더 줄여서 겹쳐진 느낌 강조 (75% -> 65%)
-                  // 💡 상하 높이는 기존보다 더 넉넉하게 (90px -> 110px)
-                  width: isMobile ? "65%" : "55%",
-                  padding: isMobile ? "110px 20px" : "130px 40px",
-
-                  textAlign: "center",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  pointerEvents: "none",
-                  // 💡 이미지가 로드되기 전까지는 박스를 숨겨서 깜빡임 방지
-                  opacity: isLoaded ? 1 : 0,
-                  transition: "opacity 0.5s ease",
-                  zIndex: 2,
+                  width: "30px",
+                  height: "1px",
+                  backgroundColor: "rgba(255,255,255,0.4)",
+                  margin: "25px auto",
+                }}
+              ></div>
+              <p
+                style={{
+                  color: "rgba(255, 255, 255, 0.8)",
+                  fontSize: isMobile ? "11px" : "14px",
+                  fontWeight: 300,
+                  letterSpacing: "2px",
                 }}
               >
-                <h1
-                  style={{
-                    color: "#fff",
-                    fontSize: isMobile ? "1.4rem" : "2.2rem",
-                    fontWeight: 500,
-                    margin: 0,
-                    letterSpacing: isMobile ? "3px" : "6px",
-                    textTransform: "uppercase",
-                    wordBreak: "keep-all",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {post.title?.rendered}
-                </h1>
-                <div
-                  style={{
-                    width: "40px",
-                    height: "1px",
-                    backgroundColor: "rgba(255,255,255,0.4)",
-                    margin: "25px auto",
-                  }}
-                ></div>
-                <p
-                  style={{
-                    color: "rgba(255, 255, 255, 0.8)",
-                    fontSize: isMobile ? "11px" : "14px",
-                    fontWeight: 300,
-                    letterSpacing: "2px",
-                  }}
-                >
-                  {post.acf?.sub_title}
-                </p>
-              </div>
+                {post.acf?.sub_title}
+              </p>
             </div>
-          );
-        })
-      )}
+          </div>
+        );
+      })}
     </section>
   );
 };

@@ -8,7 +8,10 @@ import LogSection from "../components/section/LogSection";
 const ArtHome = () => {
   //   const { isMobile } = useResponsive();
   return (
-    <div className="art-page-root">
+    <div
+      className="art-page-root"
+      style={{ display: "flex", flexDirection: "column" }}
+    >
       {/* 섹션 1: 메인 배너 */}
 
       {/* 섹션 2 : artwork */}
