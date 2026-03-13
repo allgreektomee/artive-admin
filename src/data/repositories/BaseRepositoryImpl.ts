@@ -32,7 +32,11 @@ export class BaseRepositoryImpl implements IBaseRepository {
         lang: "ko",
         title: item.title.rendered,
         date: new Date(item.date).toLocaleDateString(),
-        thumbnail: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
+        thumbnail:
+          item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+          item.jetpack_featured_media_url || // 제트팩 사용 시 대비
+          "https://via.placeholder.com/300", // 없으면 임시 이미지
+
         summary: item.excerpt.rendered.replace(/<[^>]*>?/gm, "").slice(0, 100),
       }),
     );
