@@ -25,7 +25,7 @@ const ArtworkGrid = ({
         marginBottom: "80px",
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px", // 💡 핵심: 1100px로 제한
-        margin: "120px auto 0 auto", // 💡 핵심: 중앙 정렬
+        margin: "0 auto", // 💡 핵심: 중앙 정렬
         padding: isMobile ? "0 20px" : "0", // 💡 모바일에서만 좌우 여백, PC는 1100px 안에서 정렬
         boxSizing: "border-box",
       }}

@@ -19,7 +19,6 @@ const MainBanner = () => {
 
   // 💡 [통일] 전 기기 동일 비율 (가로 2 : 세로 1)
   const bannerRatio = "2 / 1";
-  const commonMargin = isMobile ? "60px auto" : "40px auto 120px auto";
 
   return (
     <section
@@ -27,7 +26,7 @@ const MainBanner = () => {
         width: "100%",
         maxWidth: "1100px",
         marginTop: "30px",
-        margin: commonMargin,
+        margin: "0 auto",
         padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}

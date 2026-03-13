@@ -98,13 +98,11 @@ const LogSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
   return (
     <section
       style={{
-        marginTop: isMobile ? "100px" : "180px",
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px",
-        marginLeft: "auto",
-        marginRight: "auto",
-        padding: isMobile ? "0 20px" : "0", // 인사이트와 동일하게 좌우 여백 정렬
-        paddingBottom: "120px",
+        margin: "0 auto", // 💡 기존 marginTop 제거
+        padding: isMobile ? "0 20px" : "0",
+        // paddingBottom: "120px", // 💡 필요 없다면 이것도 제거
         boxSizing: "border-box",
       }}
     >

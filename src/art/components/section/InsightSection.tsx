@@ -157,7 +157,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
       style={{
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px",
-        margin: "150px auto 0 auto",
+        margin: " 0 auto",
         padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}
