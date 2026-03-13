@@ -95,7 +95,7 @@ const MainBanner = () => {
               <h1
                 style={{
                   color: "#fff",
-                  fontSize: isMobile ? "1.2rem" : "2.4rem", // 💡 모바일 폰트는 가로폭에 맞춰 살짝 조정
+                  fontSize: isMobile ? "1.6rem" : "2.4rem", // 💡 모바일 폰트는 가로폭에 맞춰 살짝 조정
                   fontWeight: 500,
                   margin: 0,
                   letterSpacing: isMobile ? "4px" : "10px",
@@ -117,7 +117,7 @@ const MainBanner = () => {
               <p
                 style={{
                   color: "rgba(255, 255, 255, 0.7)",
-                  fontSize: isMobile ? "9px" : "15px",
+                  fontSize: isMobile ? "12px" : "15px",
                   fontWeight: 300,
                   letterSpacing: "2px",
                   margin: 0,
