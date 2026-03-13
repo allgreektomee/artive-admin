@@ -97,7 +97,7 @@ const MainBanner = () => {
                 transform: "translate(-50%, -50%)",
                 backgroundColor: "rgba(0, 0, 0, 0.5)", // 💡 조금 더 선명하게 대비
                 backdropFilter: "blur(10px)",
-                width: isMobile ? "60%" : "75%",
+                width: isMobile ? "70%" : "75%",
 
                 // 💡 상하 패딩을 기존 50px에서 75px로 50% 확장
                 padding: isMobile ? "90px 20px" : "100px 40px",
