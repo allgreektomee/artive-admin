@@ -1,7 +1,19 @@
-// ... 상단 import 동일
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useWordPress } from "../../hook/useWordPress";
+import { useResponsive } from "../../hook/useResponsive";
 
 const MainBanner = () => {
-  // ... 로직 동일 (navigate, useWordPress, useResponsive 등)
+  const navigate = useNavigate();
+  const { data, loading, error } = useWordPress(32);
+  const { isMobile } = useResponsive();
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+
+  const getBannerImage = (post: any) => post.acf?.art_image || "";
+  const handleBannerClick = (post: any) =>
+    navigate(`/art/post/banner/${post.id}`);
+  const handleImageLoad = (postId: number) =>
+    setLoadedImages((prev) => ({ ...prev, [postId]: true }));
 
   if (!loading && (error || !data || data.length === 0)) return null;
 
