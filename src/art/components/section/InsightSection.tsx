@@ -162,7 +162,7 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
         boxSizing: "border-box",
       }}
     >
-      <div style={{ marginBottom: "80px" }}>
+      <div style={{ marginBottom: "30px" }}>
         <p
           style={{
             fontSize: "14px",
