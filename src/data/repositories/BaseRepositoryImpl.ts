@@ -24,22 +24,24 @@ export class BaseRepositoryImpl implements IBaseRepository {
 
     const response = await axios.get(url);
 
-    return response.data.map(
-      (item: any): BaseEntry => ({
-        id: item.id,
+    return response.data.map((item: any): BaseEntry => {
+      // 1. 우선순위별로 이미지 경로 탐색
+      const featuredImage =
+        item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || // 기본 임베드 경로
+        item.jetpack_featured_media_url || // 제트팩 플러그인 사용 시
+        item.featured_media_src_url || // 일부 테마 커스텀 경로
+        ""; // 없으면 빈값
 
+      return {
+        id: item.id,
         category: (category as CategoryType) || "ARTWORK",
         lang: "ko",
         title: item.title.rendered,
         date: new Date(item.date).toLocaleDateString(),
-        thumbnail:
-          item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-          item.jetpack_featured_media_url || // 제트팩 사용 시 대비
-          "https://via.placeholder.com/300", // 없으면 임시 이미지
-
+        thumbnail: featuredImage, // 💡 찾은 이미지 경로 주입
         summary: item.excerpt.rendered.replace(/<[^>]*>?/gm, "").slice(0, 100),
-      }),
-    );
+      };
+    });
   }
 
   // 상세 가져오기
