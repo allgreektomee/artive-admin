@@ -26,6 +26,7 @@ const MainBanner = () => {
       style={{
         width: "100%",
         maxWidth: "1100px",
+        marginTop: "30px",
         margin: commonMargin,
         padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",

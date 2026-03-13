@@ -21,7 +21,7 @@ const ArtworkGrid = ({
   return (
     <section
       style={{
-        marginTop: "60px",
+        marginTop: "30px",
         marginBottom: "80px",
         width: "100%",
         maxWidth: isMobile ? "100%" : "1100px", // 💡 핵심: 1100px로 제한
@@ -33,7 +33,6 @@ const ArtworkGrid = ({
       <div
         style={{
           marginBottom: isMobile ? "30px" : "50px",
-
           paddingTop: "10px",
         }}
       >
