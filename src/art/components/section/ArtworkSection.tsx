@@ -11,7 +11,7 @@ const ArtworkGrid = () => {
 
   if (loading) return null;
 
-  // 💡 더미 데이터 (이미지 6개를 맞추기 위함)
+  // 더미 데이터 3개 추가 (총 6개 유지)
   const dummyItems = [
     {
       id: "d1",
@@ -40,14 +40,22 @@ const ArtworkGrid = () => {
       },
     },
   ];
-
   const allData = [...(data || []), ...dummyItems].slice(0, 6);
   const firstGroup = allData.slice(0, 3);
   const secondGroup = allData.slice(3, 6);
 
-  // 💡 [핵심] 모든 이미지 카드의 비율을 통일 (가로2:세로1)
-  // 만약 1개짜리가 너무 얇아보이면 1.5/1 정도로 조절 가능합니다.
-  // const cardAspectRatio = "2 / 1";
+  // 💡 [핵심] 이미지 원본 무시! 박스 높이를 pixel로 고정 (데탑 기준)
+  // 모바일에서는 비율로 작동하게 해서 깨짐 방지
+  const desktopHeight = "350px";
+  const mobileHeight = "200px";
+
+  const getBoxStyle = (isFull: boolean) => ({
+    width: "100%",
+    // 💡 1개짜리든 2개짜리든 높이를 똑같이 고정 (아티브님이 원하신 '똑같은 박스 형태')
+    height: isMobile ? mobileHeight : desktopHeight,
+    gridColumn: isFull ? "span 2" : "span 1",
+    overflow: "hidden",
+  });
 
   const gridStyle = {
     display: "grid",
@@ -78,17 +86,10 @@ const ArtworkGrid = () => {
         </p>
       </div>
 
-      {/* --- 상단: 2개(반반) + 1개(전체) --- */}
+      {/* --- 상단 세트 (2-1) --- */}
       <div style={gridStyle}>
         {firstGroup.map((post, index) => (
-          <div
-            key={post.id}
-            style={{
-              gridColumn: index === 2 ? "span 2" : "span 1",
-              aspectRatio: index === 2 ? "2 / 1" : "1 / 1", // 💡 1개짜리는 2:1, 2개짜리는 1:1로 하면 정사각형 느낌나서 더 이쁩니다.
-              overflow: "hidden",
-            }}
-          >
+          <div key={post.id} style={getBoxStyle(index === 2)}>
             <ArtWorkCardHover
               id={post.id}
               imageUrl={post.acf?.art_image}
@@ -99,23 +100,16 @@ const ArtworkGrid = () => {
         ))}
       </div>
 
-      {/* --- 중앙: VIEW MORE --- */}
+      {/* --- 중앙 뷰모어 --- */}
       <ViewMoreButton
         label="VIEW MORE ARTWORKS"
         onClick={() => navigate("/art/works")}
       />
 
-      {/* --- 하단: 1개(전체) + 2개(반반) --- */}
+      {/* --- 하단 세트 (1-2) --- */}
       <div style={gridStyle}>
         {secondGroup.map((post, index) => (
-          <div
-            key={post.id}
-            style={{
-              gridColumn: index === 0 ? "span 2" : "span 1",
-              aspectRatio: index === 0 ? "2 / 1" : "1 / 1", // 💡 뷰모어 바로 아래 '1' 영역도 2:1 고정!
-              overflow: "hidden",
-            }}
-          >
+          <div key={post.id} style={getBoxStyle(index === 0)}>
             <ArtWorkCardHover
               id={post.id}
               imageUrl={post.acf?.art_image}
