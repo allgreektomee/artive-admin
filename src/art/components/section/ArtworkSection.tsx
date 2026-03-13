@@ -11,14 +11,14 @@ const ArtworkGrid = () => {
 
   if (loading) return null;
 
-  // 💡 1. 부족한 3개를 채울 더미 데이터 (아카이브 느낌용)
+  // 💡 더미 데이터 (이미지 6개를 맞추기 위함)
   const dummyItems = [
     {
       id: "d1",
       acf: {
         art_image:
           "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5",
-        artwork_name: "Archive Series 01",
+        artwork_name: "Archive 01",
         artist_name: "Artive",
       },
     },
@@ -27,7 +27,7 @@ const ArtworkGrid = () => {
       acf: {
         art_image:
           "https://images.unsplash.com/photo-1541963463532-d68292c34b19",
-        artwork_name: "Archive Series 02",
+        artwork_name: "Archive 02",
         artist_name: "Artive",
       },
     },
@@ -35,20 +35,21 @@ const ArtworkGrid = () => {
       id: "d3",
       acf: {
         art_image: "https://images.unsplash.com/photo-1554188248-986adbb73be4",
-        artwork_name: "Archive Series 03",
+        artwork_name: "Archive 03",
         artist_name: "Artive",
       },
     },
   ];
 
-  // 💡 2. 데이터 합치기 (최대 6개)
   const allData = [...(data || []), ...dummyItems].slice(0, 6);
+  const firstGroup = allData.slice(0, 3);
+  const secondGroup = allData.slice(3, 6);
 
-  // 💡 3. 그룹 쪼개기 (상단 3개 / 하단 3개)
-  const firstGroup = allData.slice(0, 3); // 2-1 용
-  const secondGroup = allData.slice(3, 6); // 1-2 용
+  // 💡 [핵심] 모든 이미지 카드의 비율을 통일 (가로2:세로1)
+  // 만약 1개짜리가 너무 얇아보이면 1.5/1 정도로 조절 가능합니다.
+  const cardAspectRatio = "2 / 1";
 
-  const gridContainerStyle = {
+  const gridStyle = {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: "8px",
@@ -59,7 +60,7 @@ const ArtworkGrid = () => {
       style={{
         width: "100%",
         maxWidth: "1100px",
-        margin: "0 auto", // 💡 부모 gap 관리를 위해 상하마진 제거
+        margin: "0 auto",
         padding: isMobile ? "0 20px" : "0",
         boxSizing: "border-box",
       }}
@@ -77,12 +78,16 @@ const ArtworkGrid = () => {
         </p>
       </div>
 
-      {/* --- 상단: 2-1 배치 --- */}
-      <div style={gridContainerStyle}>
+      {/* --- 상단: 2개(반반) + 1개(전체) --- */}
+      <div style={gridStyle}>
         {firstGroup.map((post, index) => (
           <div
             key={post.id}
-            style={{ gridColumn: index === 2 ? "span 2" : "span 1" }}
+            style={{
+              gridColumn: index === 2 ? "span 2" : "span 1",
+              aspectRatio: index === 2 ? "2 / 1" : "1 / 1", // 💡 1개짜리는 2:1, 2개짜리는 1:1로 하면 정사각형 느낌나서 더 이쁩니다.
+              overflow: "hidden",
+            }}
           >
             <ArtWorkCardHover
               id={post.id}
@@ -94,18 +99,22 @@ const ArtworkGrid = () => {
         ))}
       </div>
 
-      {/* --- 중앙: VIEW MORE 버튼 (배치 포인트) --- */}
+      {/* --- 중앙: VIEW MORE --- */}
       <ViewMoreButton
         label="VIEW MORE ARTWORKS"
         onClick={() => navigate("/art/works")}
       />
 
-      {/* --- 하단: 1-2 배치 --- */}
-      <div style={gridContainerStyle}>
+      {/* --- 하단: 1개(전체) + 2개(반반) --- */}
+      <div style={gridStyle}>
         {secondGroup.map((post, index) => (
           <div
             key={post.id}
-            style={{ gridColumn: index === 0 ? "span 2" : "span 1" }}
+            style={{
+              gridColumn: index === 0 ? "span 2" : "span 1",
+              aspectRatio: index === 0 ? "2 / 1" : "1 / 1", // 💡 뷰모어 바로 아래 '1' 영역도 2:1 고정!
+              overflow: "hidden",
+            }}
           >
             <ArtWorkCardHover
               id={post.id}
