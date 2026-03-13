@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { BaseEntry } from "../../01.domain/models/BaseEntry";
-import { baseRepo } from "../../core/di/ServiceLocator"; // ServiceLocator에서 인스턴스 가져오기
+import { baseRepo } from "../../00.core/di/ServiceLocator"; // ServiceLocator에서 인스턴스 가져오기
 
 /**
  * [PRESENTATION LAYER] ViewModel (Custom Hook)

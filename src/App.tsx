@@ -48,7 +48,7 @@ import NotFound from "./etc/pages/NotFound";
 import TestPage from "./etc/pages/TestProjectPage";
 
 //test
-import ArtHomeNew from "./presentation/page/ArtHomeNew";
+import ArtHomeNew from "./03.presentation/page/ArtHomeNew";
 
 declare global {
   interface Window {
