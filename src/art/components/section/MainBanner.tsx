@@ -100,7 +100,7 @@ const MainBanner = () => {
                 width: isMobile ? "85%" : "75%",
 
                 // 💡 상하 패딩을 기존 50px에서 75px로 50% 확장
-                padding: isMobile ? "75px 20px" : "100px 40px",
+                padding: isMobile ? "90px 20px" : "100px 40px",
 
                 textAlign: "center",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -113,7 +113,7 @@ const MainBanner = () => {
               <h1
                 style={{
                   color: "#fff",
-                  fontSize: isMobile ? "1.4rem" : "2.2rem",
+                  fontSize: isMobile ? "1.6rem" : "2.2rem",
                   fontWeight: 500,
                   margin: 0,
                   letterSpacing: isMobile ? "3px" : "6px",
@@ -134,7 +134,7 @@ const MainBanner = () => {
               <p
                 style={{
                   color: "rgba(255, 255, 255, 0.8)",
-                  fontSize: isMobile ? "11px" : "14px",
+                  fontSize: isMobile ? "12px" : "14px",
                   fontWeight: 300,
                   letterSpacing: "2px",
                 }}
