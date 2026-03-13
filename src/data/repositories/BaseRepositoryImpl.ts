@@ -6,7 +6,11 @@
 
 import axios from "axios";
 import type { IBaseRepository } from "../../domain/repositories/IBaseRepository";
-import type { BaseEntry, BaseDetail } from "../../domain/models/BaseEntry";
+import type {
+  BaseEntry,
+  BaseDetail,
+  CategoryType,
+} from "../../domain/models/BaseEntry";
 
 export class BaseRepositoryImpl implements IBaseRepository {
   private readonly API_URL = "https://cms.artivefor.me/wp-json/wp/v2";
