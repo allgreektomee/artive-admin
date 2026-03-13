@@ -2,7 +2,7 @@ import { useWordPress } from "../../hook/useWordPress";
 import ArtWorkCardHover from "../home/ArtworkHoverCard";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../../hook/useResponsive";
-import ViewMoreButton from "../home/ViewMoreButton";
+// import ViewMoreButton from "../home/ViewMoreButton";
 
 const ArtworkGrid = () => {
   const { data, loading } = useWordPress(3);
