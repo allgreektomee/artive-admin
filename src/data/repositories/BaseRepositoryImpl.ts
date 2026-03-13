@@ -17,20 +17,16 @@ export class BaseRepositoryImpl implements IBaseRepository {
 
   // 목록 가져오기
   async fetchAll(category?: string): Promise<BaseEntry[]> {
-    // 💡 category가 있을 경우 쿼리 파라미터로 추가하거나, 가져온 후 필터링에 사용합니다.
-    const url = category
-      ? `${this.API_URL}/posts?_embed&categories=${category}` // 카테고리 ID가 있을 때
-      : `${this.API_URL}/posts?_embed`;
+    // 💡 기존 코드처럼 lang=ko와 _embed를 명확히 붙여줍니다.
+    const baseUrl = `${this.API_URL}/posts?_embed&lang=ko`;
+    const url = category ? `${baseUrl}&categories=${category}` : baseUrl;
 
-    const response = await axios.get(url);
+    const { data } = await axios.get(url);
 
-    return response.data.map((item: any): BaseEntry => {
-      // 1. 우선순위별로 이미지 경로 탐색
-      const featuredImage =
-        item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || // 기본 임베드 경로
-        item.jetpack_featured_media_url || // 제트팩 플러그인 사용 시
-        item.featured_media_src_url || // 일부 테마 커스텀 경로
-        ""; // 없으면 빈값
+    return data.map((item: any): BaseEntry => {
+      // 💡 WP 임베드 이미지 추출 (기존 방식 최적화)
+      const featuredMedia = item._embedded?.["wp:featuredmedia"]?.[0];
+      const thumb = featuredMedia?.source_url || "";
 
       return {
         id: item.id,
@@ -38,7 +34,7 @@ export class BaseRepositoryImpl implements IBaseRepository {
         lang: "ko",
         title: item.title.rendered,
         date: new Date(item.date).toLocaleDateString(),
-        thumbnail: featuredImage, // 💡 찾은 이미지 경로 주입
+        thumbnail: thumb,
         summary: item.excerpt.rendered.replace(/<[^>]*>?/gm, "").slice(0, 100),
       };
     });
