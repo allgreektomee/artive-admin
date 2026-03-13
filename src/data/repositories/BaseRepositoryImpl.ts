@@ -5,20 +5,26 @@
  */
 
 import axios from "axios";
-import { IBaseRepository } from "../../domain/repositories/IBaseRepository";
-import { BaseEntry, BaseDetail } from "../../domain/models/BaseEntry";
+import type { IBaseRepository } from "../../domain/repositories/IBaseRepository";
+import type { BaseEntry, BaseDetail } from "../../domain/models/BaseEntry";
 
 export class BaseRepositoryImpl implements IBaseRepository {
   private readonly API_URL = "https://cms.artivefor.me/wp-json/wp/v2";
 
   // 목록 가져오기
   async fetchAll(category?: string): Promise<BaseEntry[]> {
-    const response = await axios.get(`${this.API_URL}/posts?_embed`);
+    // 💡 category가 있을 경우 쿼리 파라미터로 추가하거나, 가져온 후 필터링에 사용합니다.
+    const url = category
+      ? `${this.API_URL}/posts?_embed&categories=${category}` // 카테고리 ID가 있을 때
+      : `${this.API_URL}/posts?_embed`;
+
+    const response = await axios.get(url);
 
     return response.data.map(
       (item: any): BaseEntry => ({
         id: item.id,
-        category: "ARTWORK", // 우선 기본값, 나중에 WP 카테고리 ID와 매핑 가능
+
+        category: (category as CategoryType) || "ARTWORK",
         lang: "ko",
         title: item.title.rendered,
         date: new Date(item.date).toLocaleDateString(),

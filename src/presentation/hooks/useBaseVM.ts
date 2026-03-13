@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { BaseEntry } from "../../domain/models/BaseEntry";
+import type { BaseEntry } from "../../domain/models/BaseEntry";
 import { baseRepo } from "../../core/di/ServiceLocator";
 
 export const useBaseVM = (category?: string) => {

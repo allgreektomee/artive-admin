@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 // Layouts
-import AdminLayout from "./common/components/layout/AdminLayout";
-import PublicLayout from "./common/pages/PublicLayout";
+import AdminLayout from "./etc/components/layout/AdminLayout";
+import PublicLayout from "./etc/pages/PublicLayout";
 
 // =========================================
 // 1. 핵심 매거진 & 에필로그 (Root & Profile)
 // =========================================
-import MagazineHome from "./common/pages/MagazineHome"; // 하드코딩 홈 유지
-import ProfilePage from "./common/pages/ProfileTest"; // 에필로그
+import MagazineHome from "./etc/pages/MagazineHome"; // 하드코딩 홈 유지
+import ProfilePage from "./etc/pages/ProfileTest"; // 에필로그
 
 // =========================================
 // 2. [NEW] ART 도메인 (워드프레스 연동 및 실전 전시)
@@ -25,27 +25,30 @@ import Artworks from "./art/pages/ArtworkList";
 // =========================================
 // 3. Common 도메인 (레거시/참조용)
 // =========================================
-import About from "./common/pages/About";
-import GalleryPage from "./common/pages/GalleryPage";
-import ReportPage from "./common/pages/ReportPage";
-import CriticPage from "./common/pages/CriticPage";
-import WorkDetail from "./common/pages/WorkDetail";
+import About from "./etc/pages/About";
+import GalleryPage from "./etc/pages/GalleryPage";
+import ReportPage from "./etc/pages/ReportPage";
+import CriticPage from "./etc/pages/CriticPage";
+import WorkDetail from "./etc/pages/WorkDetail";
 
 // =========================================
 // 4. Admin 영역
 // =========================================
-import AdminDashboard from "./common/pages/AdminDashboard";
-import UserManagement from "./common/pages/UserManagement";
-import ArtworkList from "./common/pages/ArtworkList";
-import ArtworkPost from "./common/pages/ArtworkPost";
-import HistoryList from "./common/pages/HistoryList";
-import HistoryPost from "./common/pages/HistoryPost";
-import ProfileSetting from "./common/pages/ProfileSetting";
-import LoginPage from "./common/pages/LoginPage";
+import AdminDashboard from "./etc/pages/AdminDashboard";
+import UserManagement from "./etc/pages/UserManagement";
+import ArtworkList from "./etc/pages/ArtworkList";
+import ArtworkPost from "./etc/pages/ArtworkPost";
+import HistoryList from "./etc/pages/HistoryList";
+import HistoryPost from "./etc/pages/HistoryPost";
+import ProfileSetting from "./etc/pages/ProfileSetting";
+import LoginPage from "./etc/pages/LoginPage";
 
 // Standalone
-import NotFound from "./common/pages/NotFound";
-import TestPage from "./common/pages/TestProjectPage";
+import NotFound from "./etc/pages/NotFound";
+import TestPage from "./etc/pages/TestProjectPage";
+
+//test
+import ArtHomeNew from "./presentation/page/ArtHomeNew";
 
 declare global {
   interface Window {
@@ -79,6 +82,10 @@ const App: React.FC = () => {
             <Route index element={<MagazineHome />} />
             <Route path="profile" element={<ProfilePage />} />
           </Route>
+
+          {/* 🚀 [TEST] 신규 아키텍처 테스트 경로 추가 */}
+          <Route path="/test-art" element={<ArtHomeNew />} />
+
           {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
           {/* [변경] 매거진 전용 레이아웃 또는 독립 페이지 */}
           <Route path="/art" element={<ArtLayout />}>

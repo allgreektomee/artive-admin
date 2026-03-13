@@ -4,7 +4,7 @@
  * 특징: 데이터가 어디서(WP, Spring, Local) 오는지 모르더라도, 어떤 함수를 호출할지 결정합니다.
  */
 
-import { BaseEntry, BaseDetail } from "../models/BaseEntry";
+import type { BaseEntry, BaseDetail } from "../models/BaseEntry";
 
 export interface IBaseRepository {
   fetchAll(category?: string): Promise<BaseEntry[]>;
