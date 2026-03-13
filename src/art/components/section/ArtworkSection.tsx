@@ -101,10 +101,36 @@ const ArtworkGrid = () => {
       </div>
 
       {/* --- 중앙 뷰모어 --- */}
-      <ViewMoreButton
-        label="VIEW MORE ARTWORKS"
-        onClick={() => navigate("/art/works")}
-      />
+      {/* --- 💡 아트워크 전용: 박스형 뷰모어 버튼 --- */}
+      <div
+        style={{ margin: isMobile ? "60px 0" : "100px 0", textAlign: "center" }}
+      >
+        <button
+          onClick={() => navigate("/art/works")}
+          style={{
+            background: "none",
+            border: "1px solid #ddd", // 테두리 추가
+            color: "#888",
+            fontSize: "11px",
+            letterSpacing: "3px",
+            cursor: "pointer",
+            fontWeight: 700,
+            padding: "16px 45px", // 박스 형태를 위한 패딩
+            textTransform: "uppercase",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "#000";
+            e.currentTarget.style.color = "#000";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "#ddd";
+            e.currentTarget.style.color = "#888";
+          }}
+        >
+          VIEW MORE ARTWORKS +
+        </button>
+      </div>
 
       {/* --- 하단 세트 (1-2) --- */}
       <div style={gridStyle}>
