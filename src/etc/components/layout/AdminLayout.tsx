@@ -50,12 +50,12 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
       label: "작품 등록",
     },
     {
-      key: "/admin/insights",
+      key: "/admin/insight",
       icon: <ReadOutlined />,
       label: "인사이트",
     },
     {
-      key: "/admin/logs",
+      key: "/admin/log",
       icon: <FileTextOutlined />,
       label: "로그 (Log)",
     },

@@ -375,8 +375,8 @@ const InsightSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
       })}
 
       <ViewMoreButton
-        label="VIEW MORE INSIGHTS"
-        onClick={() => navigate("/art/insights")}
+        label="VIEW MORE INSIGHT"
+        onClick={() => navigate("/art/insight")}
       />
     </section>
   );
