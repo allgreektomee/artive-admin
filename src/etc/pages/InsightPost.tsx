@@ -12,7 +12,8 @@ import {
 import { GlobalOutlined, SaveOutlined, ReadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { insightApi } from "../api/insightApi";
-import { categoryApi, Category } from "../api/categoryApi";
+import { categoryApi } from "../api/categoryApi";
+import type { Category } from "../api/categoryApi";
 import { useImageUpload } from "../hooks/useImageUpload";
 
 const { Dragger } = Upload;

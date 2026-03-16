@@ -39,6 +39,13 @@ export interface ArtworkEntry extends BaseEntry {
 export interface InsightEntry extends BaseEntry {
   type: "Insight";
   summary: string; // 요약글 (excerpt)
+  koTitle: string;
+  enTitle?: string;
+  contents?: string;
+  externalUrl?: string;
+  thumbnailUrl: string;
+  categoryId: number;
+  categoryName?: string;
 }
 
 // 모든 아카이브 타입을 통합한 유니언 타입
