@@ -48,6 +48,20 @@ export interface InsightEntry extends BaseEntry {
   categoryName?: string;
 }
 
+/**
+ * [확장 모델] Log (로그)
+ */
+export interface LogEntry extends BaseEntry {
+  type: "Log";
+  koTitle: string;
+  enTitle?: string;
+  summary?: string;
+  externalUrl?: string;
+  thumbnailUrl: string;
+  categoryId: number;
+  categoryName?: string;
+}
+
 // 모든 아카이브 타입을 통합한 유니언 타입
 // 타입 가드를 통해 특정 타입의 속성에 접근할 수 있음
-export type ArchiveEntry = ArtworkEntry | InsightEntry | BaseEntry;
+export type ArchiveEntry = ArtworkEntry | InsightEntry | LogEntry | BaseEntry;
