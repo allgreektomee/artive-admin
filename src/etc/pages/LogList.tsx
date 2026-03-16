@@ -5,7 +5,6 @@ import {
   DeleteOutlined,
   PlusOutlined,
   ReloadOutlined,
-  FileTextOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useLog } from "../hooks/useLog";
