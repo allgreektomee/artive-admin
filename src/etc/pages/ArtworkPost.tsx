@@ -19,6 +19,7 @@ import {
   LinkOutlined,
   PictureOutlined,
   PlusOutlined,
+  GlobalOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -272,6 +273,16 @@ const ArtworkPost: React.FC = () => {
               <Input
                 prefix={<LinkOutlined />}
                 placeholder="작품 관련 유튜브 영상 링크"
+              />
+            </Form.Item>
+            <Form.Item
+              name="externalUrl"
+              label="워드프레스 본문 연결 (WP External URL)"
+              tooltip="작품의 상세 내용이 담긴 워드프레스 페이지 주소입니다. (iframe 연동)"
+            >
+              <Input
+                prefix={<GlobalOutlined />}
+                placeholder="https://cms.artivefor.me/atelier/..."
               />
             </Form.Item>
           </div>
