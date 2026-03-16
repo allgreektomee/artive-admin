@@ -3,36 +3,41 @@ import type { LogEntry } from "../../01.domain/models/BaseEntry";
 import client from "./client";
 
 export const logApi = {
-  // 목록 조회
-  getLogs: async (page: number = 0, size: number = 10) => {
+  // 목록 조회: GET /api/v1/articles?type=LOG
+  getLogs: async (page: number = 0, size: number = 10, categoryId?: number) => {
     const res = await client.get<ApiResponse<PageResponse<LogEntry>>>(
-      "/admin/log",
-      { params: { page, size } },
+      "/articles",
+      {
+        params: {
+          type: "LOG",
+          page,
+          size,
+          ...(categoryId && { categoryId }),
+        },
+      },
     );
     return res.data;
   },
 
-  // 단건 조회
   getLog: async (id: number | string) => {
-    const res = await client.get<ApiResponse<LogEntry>>(`/admin/log/${id}`);
+    const res = await client.get<ApiResponse<LogEntry>>(`/articles/${id}`);
     return res.data;
   },
 
-  // 생성
   createLog: async (data: Partial<LogEntry>) => {
-    const res = await client.post<ApiResponse<number>>("/admin/log", data);
+    const res = await client.post<ApiResponse<number>>("/articles", data, {
+      params: { type: "LOG" },
+    });
     return res.data;
   },
 
-  // 수정
   updateLog: async (id: number | string, data: Partial<LogEntry>) => {
-    const res = await client.put<ApiResponse<number>>(`/admin/log/${id}`, data);
+    const res = await client.put<ApiResponse<number>>(`/articles/${id}`, data);
     return res.data;
   },
 
-  // 삭제
   deleteLog: async (id: number | string) => {
-    const res = await client.delete<ApiResponse<void>>(`/admin/log/${id}`);
+    const res = await client.delete<ApiResponse<void>>(`/articles/${id}`);
     return res.data;
   },
 };

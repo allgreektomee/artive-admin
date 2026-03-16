@@ -10,35 +10,30 @@ export interface Category {
 }
 
 export const categoryApi = {
-  // 타입별 목록 조회
+  // 타입별 목록 조회: GET /api/v1/articles/categories?type=INSIGHT
   getByType: async (type: "INSIGHT" | "LOG") => {
-    // 1. 서버가 기대하는 단수형(INSIGHT, LOG)을 소문자로 변환
-    // 굳이 뒤에 's'를 붙이지 않고 서버가 받는 변수명(resource)과 타입을 일치시킵니다.
-    const resource = type.toLowerCase(); // "insight" 또는 "log"
-
-    // 2. 최종 주소: /api/v1/admin/insight/categories
     const res = await client.get<ApiResponse<Category[]>>(
-      `/admin/${resource}/categories`,
+      "/articles/categories",
+      { params: { type } },
     );
-
     return res.data;
   },
 
-  // 생성
-
+  // 생성: POST /api/v1/articles/categories?type=INSIGHT
   create: async (type: "INSIGHT" | "LOG", data: Partial<Category>) => {
-    const resource = type.toLowerCase();
     const res = await client.post<ApiResponse<Category>>(
-      `/admin/${resource}/categories`,
+      "/articles/categories",
       data,
+      { params: { type } },
     );
     return res.data;
   },
-  // 삭제
-  delete: async (id: number, type: "INSIGHT" | "LOG") => {
-    const resource = type.toLowerCase();
+
+  // 삭제: DELETE /api/v1/articles/categories/{id}
+  // 삭제는 ID가 고유하므로 type 파람이 없어도 되지만, 서버 구조에 따라 추가 가능합니다.
+  delete: async (id: number) => {
     const res = await client.delete<ApiResponse<void>>(
-      `/admin/${resource}/categories/${id}`,
+      `/articles/categories/${id}`,
     );
     return res.data;
   },
