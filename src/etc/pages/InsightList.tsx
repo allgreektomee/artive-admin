@@ -14,15 +14,15 @@ const InsightList: React.FC = () => {
   const {
     insight,
     loading,
-    fetchInsight,
+    getInsightList,
     deleteInsight,
     totalElements,
     currentPage,
   } = useInsight();
 
   useEffect(() => {
-    fetchInsight(0);
-  }, [fetchInsight]);
+    getInsightList(0);
+  }, [getInsightList]);
 
   const columns = [
     {
@@ -91,7 +91,7 @@ const InsightList: React.FC = () => {
         <Space>
           <Button
             icon={<ReloadOutlined />}
-            onClick={() => fetchInsight(currentPage - 1)}
+            onClick={() => getInsightList(currentPage - 1)}
           >
             새로고침
           </Button>
@@ -117,7 +117,7 @@ const InsightList: React.FC = () => {
           current: currentPage,
           total: totalElements,
           pageSize: 10,
-          onChange: (page) => fetchInsight(page - 1),
+          onChange: (page) => getInsightList(page - 1),
         }}
       />
     </div>

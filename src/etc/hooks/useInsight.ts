@@ -10,7 +10,7 @@ export const useInsight = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // 목록 조회
-  const fetchInsight = useCallback(async (page: number = 0) => {
+  const getInsightList = useCallback(async (page: number = 0) => {
     setLoading(true);
     try {
       const res = await insightApi.getInsightList(page);
@@ -32,7 +32,7 @@ export const useInsight = () => {
     try {
       await insightApi.deleteInsight(id);
       message.success("삭제되었습니다.");
-      fetchInsight(currentPage - 1); // 현재 페이지 리로드
+      getInsightList(currentPage - 1); // 현재 페이지 리로드
     } catch (err) {
       message.error("삭제 실패");
     }
@@ -43,7 +43,7 @@ export const useInsight = () => {
     loading,
     totalElements,
     currentPage,
-    fetchInsight,
+    getInsightList,
     deleteInsight,
   };
 };
