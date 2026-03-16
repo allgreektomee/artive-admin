@@ -20,7 +20,7 @@ const CategoryManagement: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
-  // 목록 불러오기
+  // 목록 불러오기: GET /api/v1/articles/categories?type=INSIGHT
   const fetchCategories = async (type: "INSIGHT" | "LOG") => {
     setLoading(true);
     try {
@@ -39,15 +39,16 @@ const CategoryManagement: React.FC = () => {
     fetchCategories(activeTab);
   }, [activeTab]);
 
-  // 카테고리 추가
+  // 카테고리 추가: POST /api/v1/articles/categories?type=INSIGHT
   const handleAdd = async (values: any) => {
     try {
       const payload = {
         ...values,
-        type: activeTab, // 현재 탭의 타입 주입
+        type: activeTab,
         displayOrder: categories.length + 1,
       };
-      // 💡 변경: 이제 type을 함께 넘겨서 /admin/insight/categories 경로를 타게 합니다.
+
+      // 💡 변경: 이제 주소에서 admin이 빠지고 type은 쿼리 파라미터로 전달됩니다.
       const res = await categoryApi.create(activeTab, payload);
       if (res.success) {
         message.success("카테고리가 추가되었습니다.");
@@ -59,11 +60,11 @@ const CategoryManagement: React.FC = () => {
     }
   };
 
-  // 카테고리 삭제
+  // 카테고리 삭제: DELETE /api/v1/articles/categories/{id}
   const handleDelete = async (id: number) => {
     try {
-      // 💡 변경: 삭제 시에도 현재 탭의 타입을 넘겨서 경로를 맞춥니다.
-      const res = await categoryApi.delete(id, activeTab);
+      // 💡 변경: 삭제 API 명세에 맞춰 id만 전달합니다.
+      const res = await categoryApi.delete(id);
       if (res.success) {
         message.success("삭제되었습니다.");
         fetchCategories(activeTab);
