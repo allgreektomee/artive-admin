@@ -13,7 +13,7 @@ export const useInsight = () => {
   const getInsightList = useCallback(async (page: number = 0) => {
     setLoading(true);
     try {
-      const res = await insightApi.getInsightList(page);
+      const res = await insightApi.getInsightList(page, 10);
       if (res.success) {
         setInsight(res.data.content);
         setTotalElements(res.data.totalElements);
