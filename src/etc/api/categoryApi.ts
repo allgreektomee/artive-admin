@@ -12,9 +12,16 @@ export interface Category {
 export const categoryApi = {
   // 타입별 목록 조회
   getByType: async (type: "INSIGHT" | "LOG") => {
-    const res = await client.get<ApiResponse<Category[]>>("/admin/categories", {
-      params: { type },
-    });
+    // 1. 서버 로직에 맞춰 INSIGHT -> insights, LOG -> logs로 변환
+    const resource = type === "INSIGHT" ? "insights" : "logs";
+
+    // 2. 주소 구조 변경: /admin/categories?type=... (X) -> /admin/insights/categories (O)
+    // 서버 컨트롤러가 @RequestMapping("/api/v1/admin") 이고
+    // 메서드가 @GetMapping("/{resource}/categories") 라고 가정할 때:
+    const res = await client.get<ApiResponse<Category[]>>(
+      `/admin/${resource}/categories`,
+    );
+
     return res.data;
   },
 
