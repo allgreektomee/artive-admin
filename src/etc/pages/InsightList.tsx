@@ -44,8 +44,9 @@ const InsightList: React.FC = () => {
       key: "category",
       render: (_: any, record: any) => (
         // 백엔드 응답에 따라 record.category.name 또는 record.categoryName 사용
-        <Tag color="blue">
-          {record.category?.name || record.categoryName || "미지정"}
+        <Tag color={record.type === "INSIGHT" ? "blue" : "cyan"}>
+          {/* record.category 객체 안의 name 필드를 읽음 */}
+          {record.category?.name || "미지정"}
         </Tag>
       ),
     },

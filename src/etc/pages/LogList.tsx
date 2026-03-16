@@ -38,8 +38,9 @@ const LogList: React.FC = () => {
       title: "카테고리",
       key: "category",
       render: (_: any, record: any) => (
-        <Tag color="cyan" icon={<FileTextOutlined />}>
-          {record.category?.name || record.categoryName || "Log"}
+        <Tag color={record.type === "LOG" ? "blue" : "cyan"}>
+          {/* record.category 객체 안의 name 필드를 읽음 */}
+          {record.category?.name || "미지정"}
         </Tag>
       ),
     },
