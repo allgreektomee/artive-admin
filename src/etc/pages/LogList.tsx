@@ -12,7 +12,7 @@ import { useLog } from "../hooks/useLog";
 
 const LogList: React.FC = () => {
   const navigate = useNavigate();
-  const { logs, loading, fetchLogs, deleteLog, totalElements, currentPage } =
+  const { log, loading, fetchLogs, deleteLog, totalElements, currentPage } =
     useLog();
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const LogList: React.FC = () => {
           <Button
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => navigate("/admin/logs/post")}
+            onClick={() => navigate("/admin/log/post")}
           >
             새 로그 등록
           </Button>
@@ -100,7 +100,7 @@ const LogList: React.FC = () => {
       </div>
 
       <Table
-        dataSource={logs}
+        dataSource={log}
         columns={columns}
         loading={loading}
         rowKey="id"
