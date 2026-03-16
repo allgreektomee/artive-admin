@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Card,
-  message,
-  Upload,
-  Space,
-} from "antd";
-import {
-  GlobalOutlined,
-  SaveOutlined,
-  ReadOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { Form, Input, Button, Select, Card, message, Upload } from "antd";
+import { GlobalOutlined, SaveOutlined, ReadOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { insightApi } from "../api/insightApi";
 import { categoryApi } from "../api/categoryApi";
