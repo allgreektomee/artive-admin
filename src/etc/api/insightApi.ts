@@ -22,7 +22,7 @@ export const insightApi = {
 
   // 생성
   createInsight: async (data: Partial<InsightEntry>) => {
-    const res = await client.post<ApiResponse<number>>("/admin/insights", data);
+    const res = await client.post<ApiResponse<number>>("/admin/insight", data);
     return res.data;
   },
 
