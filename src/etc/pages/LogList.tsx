@@ -12,12 +12,12 @@ import { useLog } from "../hooks/useLog";
 
 const LogList: React.FC = () => {
   const navigate = useNavigate();
-  const { log, loading, fetchLogs, deleteLog, totalElements, currentPage } =
+  const { log, loading, fetchLog, deleteLog, totalElements, currentPage } =
     useLog();
 
   useEffect(() => {
-    fetchLogs(0);
-  }, [fetchLogs]);
+    fetchLog(0);
+  }, [fetchLog]);
 
   const columns = [
     {
@@ -56,7 +56,7 @@ const LogList: React.FC = () => {
           <Button
             size="small"
             icon={<EditOutlined />}
-            onClick={() => navigate(`/admin/logs/${record.id}`)}
+            onClick={() => navigate(`/admin/log/${record.id}`)}
           >
             수정
           </Button>
@@ -85,7 +85,7 @@ const LogList: React.FC = () => {
         <Space>
           <Button
             icon={<ReloadOutlined />}
-            onClick={() => fetchLogs(currentPage - 1)}
+            onClick={() => fetchLog(currentPage - 1)}
           >
             새로고침
           </Button>
@@ -109,7 +109,7 @@ const LogList: React.FC = () => {
           current: currentPage,
           total: totalElements,
           pageSize: 10,
-          onChange: (page) => fetchLogs(page - 1),
+          onChange: (page) => fetchLog(page - 1),
         }}
       />
     </div>

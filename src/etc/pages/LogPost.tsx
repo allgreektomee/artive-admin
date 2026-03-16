@@ -86,7 +86,7 @@ const LogPost: React.FC = () => {
         await logApi.createLog(payload);
         message.success("등록되었습니다.");
       }
-      navigate("/admin/logs");
+      navigate("/admin/log");
     } catch (e) {
       message.error("저장에 실패했습니다.");
     } finally {

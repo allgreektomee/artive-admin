@@ -9,7 +9,7 @@ export const useLog = () => {
   const [totalElements, setTotalElements] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchLogs = useCallback(async (page: number = 0) => {
+  const fetchLog = useCallback(async (page: number = 0) => {
     setLoading(true);
     try {
       const res = await logApi.getLogList(page);
@@ -30,7 +30,7 @@ export const useLog = () => {
     try {
       await logApi.deleteLog(id);
       message.success("삭제되었습니다.");
-      fetchLogs(currentPage - 1);
+      fetchLog(currentPage - 1);
     } catch (err) {
       message.error("삭제 실패");
     }
@@ -41,7 +41,7 @@ export const useLog = () => {
     loading,
     totalElements,
     currentPage,
-    fetchLogs,
+    fetchLog,
     deleteLog,
   };
 };
