@@ -41,6 +41,11 @@ import ArtworkPost from "./etc/pages/ArtworkPost";
 import HistoryList from "./etc/pages/HistoryList";
 import HistoryPost from "./etc/pages/HistoryPost";
 import ProfileSetting from "./etc/pages/ProfileSetting";
+import CategoryManagement from "./etc/pages/CategoryManagement";
+import InsightList from "./etc/pages/InsightList";
+import InsightPost from "./etc/pages/InsightPost";
+import LogList from "./etc/pages/LogList";
+import LogPost from "./etc/pages/LogPost";
 import LoginPage from "./etc/pages/LoginPage";
 
 // Standalone
@@ -127,6 +132,20 @@ const App: React.FC = () => {
               <Route path="artworks" element={<ArtworkList />} />
               <Route path="artworks/post" element={<ArtworkPost />} />
               <Route path="artworks/edit/:id" element={<ArtworkPost />} />
+
+              {/* Insight Routes */}
+              <Route path="insights" element={<InsightList />} />
+              <Route path="insights/post" element={<InsightPost />} />
+              <Route path="insights/:id" element={<InsightPost />} />
+
+              {/* Log Routes */}
+              <Route path="logs" element={<LogList />} />
+              <Route path="logs/post" element={<LogPost />} />
+              <Route path="logs/:id" element={<LogPost />} />
+
+              {/* Category Management */}
+              <Route path="categories" element={<CategoryManagement />} />
+
               <Route
                 path="artworks/:artworkId/history"
                 element={<HistoryList />}
