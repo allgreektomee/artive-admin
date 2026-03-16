@@ -5,7 +5,7 @@ import {
   SaveOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom"; // 👈 useLocation 추가
 import { logApi } from "../api/logApi";
 import { categoryApi } from "../api/categoryApi";
 import type { Category } from "../api/categoryApi";
@@ -18,33 +18,48 @@ const { Option } = Select;
 const LogPost: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation(); // 👈 리스트에서 보낸 데이터를 받기 위한 hook
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
   const [categories, setCategories] = useState<Category[]>([]);
   const { uploadSingleImage, isUploading } = useImageUpload();
-
-  // 실시간 미리보기 및 상태 관리용
   const [thumbnailUrl, setThumbnailUrl] = useState("");
 
   useEffect(() => {
     const init = async () => {
       try {
+        // 1. 카테고리는 항상 불러오기
         const catRes = await categoryApi.getByType("LOG");
         if (catRes.success) {
           setCategories(catRes.data);
         }
 
+        // 2. 수정 모드일 경우 데이터 세팅
         if (id) {
-          const res = await logApi.getLogDetail(id);
-          if (res.success) {
-            const data = res.data as any; // TypeScript 대응
+          // 🔥 리스트 페이지에서 넘겨준 state 데이터가 있는지 먼저 확인
+          const stateData = location.state?.data;
+
+          if (stateData) {
+            // 리스트에서 데이터를 받아왔다면 API 호출 없이 바로 폼에 세팅
             form.setFieldsValue({
-              ...data,
-              categoryId: data.category?.id, // 객체에서 ID 추출
-              thumbnailUrl: data.thumbnailUrl, // 폼 필드에 URL 주입
+              ...stateData,
+              categoryId: stateData.category?.id,
+              thumbnailUrl: stateData.thumbnailUrl,
             });
-            setThumbnailUrl(data.thumbnailUrl);
+            setThumbnailUrl(stateData.thumbnailUrl);
+          } else {
+            // 만약 리스트를 거치지 않고 직접 들어왔다면 API 호출 (여기서 403 날 수 있음)
+            const res = await logApi.getLogDetail(id);
+            if (res.success) {
+              const data = res.data as any;
+              form.setFieldsValue({
+                ...data,
+                categoryId: data.category?.id,
+                thumbnailUrl: data.thumbnailUrl,
+              });
+              setThumbnailUrl(data.thumbnailUrl);
+            }
           }
         }
       } catch (e) {
@@ -52,13 +67,15 @@ const LogPost: React.FC = () => {
       }
     };
     init();
-  }, [id, form]);
+  }, [id, form, location.state]); // 👈 location.state를 의존성 배열에 추가
+
+  // ... handleFileUpload 및 onFinish 로직은 동일 ...
 
   const handleFileUpload = async (file: File) => {
-    const url = await uploadSingleImage(file, "log"); // log 폴더에 저장
+    const url = await uploadSingleImage(file, "log");
     if (url) {
       setThumbnailUrl(url);
-      form.setFieldsValue({ thumbnailUrl: url }); // 입력창에 자동 입력
+      form.setFieldsValue({ thumbnailUrl: url });
       message.success("이미지가 업로드되었습니다.");
     }
     return false;
@@ -66,7 +83,6 @@ const LogPost: React.FC = () => {
 
   const onFinish = async (values: any) => {
     setLoading(true);
-
     const finalCategoryId =
       typeof values.categoryId === "object"
         ? values.categoryId.id
@@ -75,7 +91,7 @@ const LogPost: React.FC = () => {
     const payload = {
       ...values,
       categoryId: finalCategoryId,
-      thumbnailUrl: values.thumbnailUrl, // 폼의 thumbnailUrl 필드 값 사용
+      thumbnailUrl: values.thumbnailUrl || thumbnailUrl,
     };
 
     try {
@@ -101,6 +117,7 @@ const LogPost: React.FC = () => {
       </h2>
 
       <Form form={form} layout="vertical" onFinish={onFinish}>
+        {/* ... (이하 렌더링 코드는 동일) ... */}
         <Card title="기본 정보" style={{ marginBottom: 24 }}>
           <Form.Item
             name="categoryId"
@@ -115,7 +132,6 @@ const LogPost: React.FC = () => {
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item
             name="koTitle"
             label="제목 (국문)"
@@ -123,7 +139,6 @@ const LogPost: React.FC = () => {
           >
             <Input placeholder="로그 제목 입력" />
           </Form.Item>
-
           <Form.Item name="enTitle" label="제목 (영문)">
             <Input placeholder="Log Title" />
           </Form.Item>
@@ -135,7 +150,6 @@ const LogPost: React.FC = () => {
               <p className="ant-upload-text">클릭하거나 드래그하여 업로드</p>
             </Dragger>
           </Form.Item>
-
           <Form.Item
             name="thumbnailUrl"
             label="방법 2: 이미지 URL 직접 입력"
@@ -148,8 +162,6 @@ const LogPost: React.FC = () => {
               allowClear
             />
           </Form.Item>
-
-          {/* 미리보기 컨테이너 */}
           {thumbnailUrl && (
             <div
               style={{
@@ -165,34 +177,23 @@ const LogPost: React.FC = () => {
               </p>
               <img
                 src={thumbnailUrl}
-                alt="thumbnail preview"
+                alt="preview"
                 style={{
                   maxHeight: 200,
                   maxWidth: "100%",
                   objectFit: "contain",
                 }}
-                onError={() =>
-                  message.error("유효하지 않은 이미지 주소입니다.")
-                }
               />
             </div>
           )}
         </Card>
 
         <Card title="콘텐츠 연결" style={{ marginBottom: 24 }}>
-          <Form.Item
-            name="externalUrl"
-            label="워드프레스 URL"
-            tooltip="해당 로그의 워드프레스 본문 주소"
-          >
-            <Input
-              prefix={<GlobalOutlined />}
-              placeholder="https://cms.artivefor.me/log/..."
-            />
+          <Form.Item name="externalUrl" label="워드프레스 URL">
+            <Input prefix={<GlobalOutlined />} placeholder="https://..." />
           </Form.Item>
-
           <Form.Item name="summary" label="짧은 설명 (Excerpt)">
-            <TextArea rows={3} placeholder="목록에 표시될 내용입니다." />
+            <TextArea rows={3} />
           </Form.Item>
         </Card>
 

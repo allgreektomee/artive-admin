@@ -64,7 +64,9 @@ const InsightList: React.FC = () => {
             size="small"
             icon={<EditOutlined />}
             onClick={() =>
-              navigate(`/admin/insight/${record.id}`, { state: { record } })
+              navigate(`/admin/insight/${record.id}`, {
+                state: { data: record },
+              })
             }
           >
             수정
