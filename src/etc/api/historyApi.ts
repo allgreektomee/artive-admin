@@ -23,6 +23,4 @@ export const historyApi = {
   // 히스토리 삭제
   deleteHistory: (historyId: number) =>
     client.delete<ApiResponse<void>>(`/artworks/histories/${historyId}`),
-
-
 };

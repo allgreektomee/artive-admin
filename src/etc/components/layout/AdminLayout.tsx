@@ -1,24 +1,29 @@
-import React from 'react';
-import { Layout, Menu, theme, Spin } from 'antd'; // Spin 추가
-import { 
-  DesktopOutlined, 
-  FileAddOutlined, 
-  LogoutOutlined, 
-  UnorderedListOutlined, 
+import React from "react";
+import { Layout, Menu, theme, Spin } from "antd"; // Spin 추가
+import {
+  DesktopOutlined,
+  FileAddOutlined,
+  LogoutOutlined,
+  UnorderedListOutlined,
   TeamOutlined,
   UserOutlined,
-  SettingOutlined 
-} from '@ant-design/icons';
-import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { useUser } from '../../hooks/useUser';
+  SettingOutlined,
+  TagsOutlined,
+  ReadOutlined,
+  FileTextOutlined,
+} from "@ant-design/icons";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { useUser } from "../../hooks/useUser";
 
 const { Header, Content, Sider } = Layout;
 
 const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
-  const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Auth 훅에서 정보 가져오기
   const { user, isAdmin, loading } = useUser(); // error 상태가 있다고 가정
   const token = localStorage.getItem("accessToken");
@@ -34,38 +39,86 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const menuItems = [
     { key: "/admin/dashboard", icon: <DesktopOutlined />, label: "대시보드" },
     { key: "/admin/profile", icon: <UserOutlined />, label: "내 프로필" },
-    { key: "/admin/artworks", icon: <UnorderedListOutlined />, label: "작품 목록" },
-    { key: "/admin/artworks/post", icon: <FileAddOutlined />, label: "작품 등록" },
-    
+    {
+      key: "/admin/artworks",
+      icon: <UnorderedListOutlined />,
+      label: "작품 목록",
+    },
+    {
+      key: "/admin/artworks/post",
+      icon: <FileAddOutlined />,
+      label: "작품 등록",
+    },
+    {
+      key: "/admin/insights",
+      icon: <ReadOutlined />,
+      label: "인사이트",
+    },
+    {
+      key: "/admin/logs",
+      icon: <FileTextOutlined />,
+      label: "로그 (Log)",
+    },
+
     // 에러가 났더라도 일단 ADMIN 메뉴를 보여주고 싶다면 아래 조건을 (isAdmin || error)로 조절 가능
-    ...(isAdmin ? [
-      { type: 'divider' as const }, 
-      { key: "/admin/users", icon: <TeamOutlined />, label: "유저 관리" },
-      { key: "/admin/settings", icon: <SettingOutlined />, label: "시스템 설정" },
-    ] : []),
-    
-    { type: 'divider' as const },
-    { key: "logout", icon: <LogoutOutlined />, label: "로그아웃", danger: true },
+    ...(isAdmin
+      ? [
+          { type: "divider" as const },
+          { key: "/admin/users", icon: <TeamOutlined />, label: "유저 관리" },
+          {
+            key: "/admin/categories",
+            icon: <TagsOutlined />,
+            label: "카테고리 관리",
+          },
+          {
+            key: "/admin/settings",
+            icon: <SettingOutlined />,
+            label: "시스템 설정",
+          },
+        ]
+      : []),
+
+    { type: "divider" as const },
+    {
+      key: "logout",
+      icon: <LogoutOutlined />,
+      label: "로그아웃",
+      danger: true,
+    },
   ];
 
   // 3. [로딩 처리] 정보를 가져오는 중일 때는 전체 화면 Spin 또는 Skeleton
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <Spin size="large" tip="사용자 권한 확인 중..." />
       </div>
     );
   }
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible>
-        <div style={{ 
-          height: 32, margin: 16, background: "rgba(255,255,255,.2)", 
-          borderRadius: 6, color: '#fff', textAlign: 'center', lineHeight: '32px',
-          fontWeight: 'bold'
-        }}>
-          ARTIVE {isAdmin ? 'ADMIN' : 'USER'}
+        <div
+          style={{
+            height: 32,
+            margin: 16,
+            background: "rgba(255,255,255,.2)",
+            borderRadius: 6,
+            color: "#fff",
+            textAlign: "center",
+            lineHeight: "32px",
+            fontWeight: "bold",
+          }}
+        >
+          ARTIVE {isAdmin ? "ADMIN" : "USER"}
         </div>
         <Menu
           theme="dark"
@@ -79,28 +132,36 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         />
       </Sider>
       <Layout>
-        <Header style={{ 
-          padding: '0 24px', 
-          background: colorBgContainer, 
-          display: 'flex', 
-          justifyContent: 'flex-end',
-          alignItems: 'center'
-        }}>
+        <Header
+          style={{
+            padding: "0 24px",
+            background: colorBgContainer,
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
           <span style={{ marginRight: 16 }}>
             {/* user가 없을 때(에러 시)를 대비한 옵셔널 체이닝 */}
-            <b>{user?.nickname || '방문객'}</b>님 환영합니다 
-            {user && <small style={{ marginLeft: 8, color: '#888' }}>({user?.role})</small>}
+            <b>{user?.nickname || "방문객"}</b>님 환영합니다
+            {user && (
+              <small style={{ marginLeft: 8, color: "#888" }}>
+                ({user?.role})
+              </small>
+            )}
           </span>
         </Header>
-        <Content style={{ margin: '24px 16px' }}>
-          <div style={{ 
-            padding: 24, 
-            minHeight: 'calc(100vh - 112px)', 
-            background: colorBgContainer, 
-            borderRadius: borderRadiusLG,
-          }}>
+        <Content style={{ margin: "24px 16px" }}>
+          <div
+            style={{
+              padding: 24,
+              minHeight: "calc(100vh - 112px)",
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
             {/* [핵심] 에러가 나도 Outlet은 렌더링되어야 ProfileSetting 안의 에러 UI가 보입니다 */}
-            <Outlet /> 
+            <Outlet />
           </div>
         </Content>
       </Layout>
