@@ -84,3 +84,47 @@
    - Presentation과 Data는 서로를 몰라야 하며, 둘 다 **Domain**을 바라봐야 합니다.
 2. **순수성**: `01.domain`에는 `react`, `axios` 같은 라이브러리를 import 하지 않습니다.
 3. **교체 용이성**: 나중에 `02.data`의 백엔드가 바뀌어도, `01.domain`과 `03.presentation`은 수정할 필요가 없어야 합니다.
+
+## 🔄 데이터 소스 전환 가이드 (WordPress → Spring Boot)
+
+현재 프로젝트는 기존 WordPress API를 직접 호출하는 방식에서 Spring Boot 기반의 새로운 백엔드 API를 사용하도록 전환하는 과정을 거치고 있습니다. 이는 **Clean Architecture의 교체 용이성 원칙**을 실제로 적용하는 좋은 예시입니다.
+
+### 1. 전환 전략: 하이브리드 헤드리스 (Hybrid Headless)
+
+- **목록/요약 정보**: 작품의 목록(Grid) 표시에 필요한 데이터(ID, 제목, 썸네일 URL 등)는 **Spring Boot API**로부터 받습니다.
+- **상세 콘텐츠**: 사용자가 작품 상세 페이지에 진입하면, Spring Boot API가 제공하는 `externalUrl`(WordPress 주소)을 받아와 **`<iframe>`**을 통해 기존 WordPress 콘텐츠를 그대로 보여줍니다.
+
+### 2. 아키텍처 기반 구현 순서
+
+새로운 Spring Boot API를 연동하는 작업은 아키텍처 가이드에 따라 아래 순서로 진행됩니다.
+
+#### 1단계: [01.domain] 모델 확장
+
+- `models/BaseEntry.ts` (또는 신규 `Artwork.ts`): 상세 페이지 링크를 담을 `externalUrl: string;` 속성을 추가합니다. 이로써 Domain 계층은 "작품은 외부 링크를 가질 수 있다"는 비즈니스 규칙을 정의하게 됩니다.
+
+#### 2단계: [02.data] 새로운 구현체 작성
+
+- `api/artworkApi.ts` (신규): Spring Boot의 Artwork API (`/api/v1/artworks`)를 호출하는 Axios 함수들을 정의합니다.
+- `mappers/ArtworkMapper.ts` (신규): Spring Boot API 응답(JSON)을 Domain 모델(`BaseEntry` 또는 `Artwork`)로 변환하는 매퍼 함수를 작성합니다.
+- `repositories/ArtworkRepositoryImpl.ts` (신규): `IBaseRepository` 인터페이스를 구현하는 새로운 클래스입니다. 내부적으로 `artworkApi`를 호출하고 `ArtworkMapper`를 통해 데이터를 정제하여 반환합니다.
+
+#### 3단계: [00.core] 의존성 교체
+
+- `di/ServiceLocator.ts`: 기존에 등록했던 `BaseRepositoryImpl` (WordPress용) 대신, 새로 만든 `ArtworkRepositoryImpl` (Spring Boot용)을 등록합니다.
+
+  ```typescript
+  // 변경 전
+  // serviceLocator.register('baseRepository', () => new BaseRepositoryImpl());
+
+  // 변경 후
+  serviceLocator.register("baseRepository", () => new ArtworkRepositoryImpl());
+  ```
+
+#### 4단계: [03.presentation] 화면 연결
+
+- **목록 페이지 (`ArtHomeNew.tsx`)**: **수정할 필요가 없습니다!** ViewModel(`useBaseVM`)은 Domain의 인터페이스(`IBaseRepository`)에만 의존하므로, 실제 구현체가 WordPress용이든 Spring Boot용이든 상관없이 동일하게 작동합니다.
+- **등록 페이지 (`ArtworkPost.tsx`)**: 작품의 메타데이터와 `externalUrl`을 입력받아 Spring Boot API로 전송하는 새로운 폼을 만듭니다.
+
+### 3. 핵심 이점
+
+이러한 흐름은 **Data 계층의 구현체만 교체**하면 프론트엔드의 핵심 로직이나 UI 코드를 거의 수정하지 않고도 데이터 소스를 완전히 바꿀 수 있음을 보여줍니다. 이것이 바로 Clean Architecture를 도입하여 얻는 가장 큰 이점입니다.
