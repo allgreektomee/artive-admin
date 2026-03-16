@@ -4,7 +4,7 @@ import { logApi } from "../api/logApi";
 import type { LogEntry } from "../../01.domain/models/BaseEntry";
 
 export const useLog = () => {
-  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [log, setLog] = useState<LogEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalElements, setTotalElements] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,9 +12,9 @@ export const useLog = () => {
   const fetchLogs = useCallback(async (page: number = 0) => {
     setLoading(true);
     try {
-      const res = await logApi.getLogs(page);
+      const res = await logApi.getLogList(page);
       if (res.success) {
-        setLogs(res.data.content);
+        setLog(res.data.content);
         setTotalElements(res.data.totalElements);
         setCurrentPage(res.data.number + 1);
       }
@@ -37,7 +37,7 @@ export const useLog = () => {
   };
 
   return {
-    logs,
+    log,
     loading,
     totalElements,
     currentPage,

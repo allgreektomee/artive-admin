@@ -134,14 +134,14 @@ const App: React.FC = () => {
               <Route path="artworks/edit/:id" element={<ArtworkPost />} />
 
               {/* Insight Routes */}
-              <Route path="insights" element={<InsightList />} />
-              <Route path="insights/post" element={<InsightPost />} />
-              <Route path="insights/:id" element={<InsightPost />} />
+              <Route path="insight" element={<InsightList />} />
+              <Route path="insight/post" element={<InsightPost />} />
+              <Route path="insight/:id" element={<InsightPost />} />
 
               {/* Log Routes */}
-              <Route path="logs" element={<LogList />} />
-              <Route path="logs/post" element={<LogPost />} />
-              <Route path="logs/:id" element={<LogPost />} />
+              <Route path="log" element={<LogList />} />
+              <Route path="log/post" element={<LogPost />} />
+              <Route path="log/:id" element={<LogPost />} />
 
               {/* Category Management */}
               <Route path="categories" element={<CategoryManagement />} />

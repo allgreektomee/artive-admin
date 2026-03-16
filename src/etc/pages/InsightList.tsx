@@ -62,7 +62,7 @@ const InsightList: React.FC = () => {
           <Button
             size="small"
             icon={<EditOutlined />}
-            onClick={() => navigate(`/admin/insights/${record.id}`)}
+            onClick={() => navigate(`/admin/insight/${record.id}`)}
           >
             수정
           </Button>
@@ -98,7 +98,7 @@ const InsightList: React.FC = () => {
           <Button
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => navigate("/admin/insights/post")}
+            onClick={() => navigate("/admin/insight/post")}
           >
             새 인사이트 등록
           </Button>

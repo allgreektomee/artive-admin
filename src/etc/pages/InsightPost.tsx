@@ -45,7 +45,7 @@ const InsightPost: React.FC = () => {
 
         // 2. 수정 모드일 경우 데이터 불러오기
         if (id) {
-          const res = await insightApi.getInsight(id);
+          const res = await insightApi.getInsightDetail(id);
           if (res.success) {
             form.setFieldsValue(res.data);
             setThumbnailUrl(res.data.thumbnailUrl);
@@ -82,7 +82,7 @@ const InsightPost: React.FC = () => {
         await insightApi.createInsight(payload);
         message.success("등록되었습니다.");
       }
-      navigate("/admin/insights");
+      navigate("/admin/insight");
     } catch (e) {
       message.error("저장에 실패했습니다.");
     } finally {

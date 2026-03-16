@@ -4,7 +4,11 @@ import client from "./client";
 
 export const logApi = {
   // 목록 조회: GET /api/v1/articles?type=LOG
-  getLogs: async (page: number = 0, size: number = 10, categoryId?: number) => {
+  getLogList: async (
+    page: number = 0,
+    size: number = 10,
+    categoryId?: number,
+  ) => {
     const res = await client.get<ApiResponse<PageResponse<LogEntry>>>(
       "/articles",
       {
@@ -19,7 +23,7 @@ export const logApi = {
     return res.data;
   },
 
-  getLog: async (id: number | string) => {
+  getLogDetail: async (id: number | string) => {
     const res = await client.get<ApiResponse<LogEntry>>(`/articles/${id}`);
     return res.data;
   },

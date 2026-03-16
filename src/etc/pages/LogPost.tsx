@@ -49,7 +49,7 @@ const LogPost: React.FC = () => {
 
         // 2. 수정 모드일 경우 데이터 불러오기
         if (id) {
-          const res = await logApi.getLog(id);
+          const res = await logApi.getLogDetail(id);
           if (res.success) {
             form.setFieldsValue(res.data);
             setThumbnailUrl(res.data.thumbnailUrl);

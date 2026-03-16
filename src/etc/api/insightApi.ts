@@ -4,7 +4,7 @@ import client from "./client";
 
 export const insightApi = {
   // 목록 조회 (카테고리 필터 추가): GET /api/v1/articles?type=INSIGHT&page=0&categoryId=1
-  getInsights: async (
+  getInsightList: async (
     page: number = 0,
     size: number = 10,
     categoryId?: number,
@@ -23,7 +23,7 @@ export const insightApi = {
     return res.data;
   },
 
-  getInsight: async (id: number | string) => {
+  getInsightDetail: async (id: number | string) => {
     const res = await client.get<ApiResponse<InsightEntry>>(`/articles/${id}`);
     return res.data;
   },

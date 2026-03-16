@@ -4,7 +4,7 @@ import { insightApi } from "../api/insightApi";
 import type { InsightEntry } from "../../01.domain/models/BaseEntry";
 
 export const useInsight = () => {
-  const [insights, setInsights] = useState<InsightEntry[]>([]);
+  const [insight, setInsight] = useState<InsightEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalElements, setTotalElements] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,9 +13,9 @@ export const useInsight = () => {
   const fetchInsights = useCallback(async (page: number = 0) => {
     setLoading(true);
     try {
-      const res = await insightApi.getInsights(page);
+      const res = await insightApi.getInsightList(page);
       if (res.success) {
-        setInsights(res.data.content);
+        setInsight(res.data.content);
         setTotalElements(res.data.totalElements);
         setCurrentPage(res.data.number + 1);
       }
@@ -39,7 +39,7 @@ export const useInsight = () => {
   };
 
   return {
-    insights,
+    insight,
     loading,
     totalElements,
     currentPage,
