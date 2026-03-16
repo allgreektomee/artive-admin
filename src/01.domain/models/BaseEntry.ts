@@ -46,6 +46,13 @@ export interface InsightEntry extends BaseEntry {
   thumbnailUrl: string;
   categoryId: number;
   categoryName?: string;
+  category?: {
+    id: number;
+    name: string;
+    type: string;
+    code: string;
+    displayOrder: number;
+  };
 }
 
 /**
@@ -60,6 +67,13 @@ export interface LogEntry extends BaseEntry {
   thumbnailUrl: string;
   categoryId: number;
   categoryName?: string;
+  category?: {
+    id: number;
+    name: string;
+    type: string;
+    code: string;
+    displayOrder: number;
+  };
 }
 
 // 모든 아카이브 타입을 통합한 유니언 타입

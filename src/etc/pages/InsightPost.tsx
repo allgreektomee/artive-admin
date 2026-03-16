@@ -9,7 +9,12 @@ import {
   Upload,
   Space,
 } from "antd";
-import { GlobalOutlined, SaveOutlined, ReadOutlined } from "@ant-design/icons";
+import {
+  GlobalOutlined,
+  SaveOutlined,
+  ReadOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { insightApi } from "../api/insightApi";
 import { categoryApi } from "../api/categoryApi";
@@ -26,29 +31,30 @@ const InsightPost: React.FC = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  // 카테고리 목록 상태
   const [categories, setCategories] = useState<Category[]>([]);
-
-  // 이미지 업로드 훅
   const { uploadSingleImage, isUploading } = useImageUpload();
+
+  // 미리보기용 상태 (입력창과 동기화됨)
   const [thumbnailUrl, setThumbnailUrl] = useState("");
 
-  // 초기 데이터 로드 (카테고리 목록 + 수정 시 상세 정보)
   useEffect(() => {
     const init = async () => {
       try {
-        // 1. 카테고리 목록 불러오기 (INSIGHT 타입만)
         const catRes = await categoryApi.getByType("INSIGHT");
         if (catRes.success) {
           setCategories(catRes.data);
         }
 
-        // 2. 수정 모드일 경우 데이터 불러오기
         if (id) {
           const res = await insightApi.getInsightDetail(id);
           if (res.success) {
-            form.setFieldsValue(res.data);
-            setThumbnailUrl(res.data.thumbnailUrl);
+            const data = res.data as any; // 타입 에러 방지를 위해 any 처리
+            form.setFieldsValue({
+              ...data,
+              categoryId: data.category?.id, // 객체에서 ID 추출
+              thumbnailUrl: data.thumbnailUrl, // 폼 필드에 URL 세팅
+            });
+            setThumbnailUrl(data.thumbnailUrl);
           }
         }
       } catch (e) {
@@ -58,10 +64,12 @@ const InsightPost: React.FC = () => {
     init();
   }, [id, form]);
 
+  // 파일 업로드 핸들러
   const handleFileUpload = async (file: File) => {
     const url = await uploadSingleImage(file, "insight");
     if (url) {
-      setThumbnailUrl(url);
+      setThumbnailUrl(url); // 미리보기 업데이트
+      form.setFieldsValue({ thumbnailUrl: url }); // 폼 입력창 값 업데이트
       message.success("이미지가 업로드되었습니다.");
     }
     return false;
@@ -69,9 +77,17 @@ const InsightPost: React.FC = () => {
 
   const onFinish = async (values: any) => {
     setLoading(true);
+
+    // categoryId가 객체로 넘어올 경우를 대비한 안전한 처리
+    const finalCategoryId =
+      typeof values.categoryId === "object"
+        ? values.categoryId.id
+        : values.categoryId;
+
     const payload = {
       ...values,
-      thumbnailUrl, // 업로드된 이미지 URL
+      categoryId: finalCategoryId,
+      thumbnailUrl: values.thumbnailUrl, // 폼 입력창의 값을 최종 사용
     };
 
     try {
@@ -91,60 +107,86 @@ const InsightPost: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto" }}>
+    <div style={{ maxWidth: 800, margin: "0 auto", padding: "20px 0" }}>
       <h2 style={{ marginBottom: 24 }}>
         <ReadOutlined /> {id ? "인사이트 수정" : "새 인사이트 등록"}
       </h2>
 
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Card title="기본 정보" style={{ marginBottom: 24 }}>
-          <Space
-            style={{ display: "flex", width: "100%" }}
-            direction="vertical"
+          <Form.Item
+            name="categoryId"
+            label="카테고리"
+            rules={[{ required: true, message: "카테고리를 선택해주세요." }]}
           >
-            {/* 동적 카테고리 선택 */}
-            <Form.Item
-              name="categoryId"
-              label="카테고리"
-              rules={[{ required: true, message: "카테고리를 선택해주세요." }]}
-            >
-              <Select placeholder="카테고리 선택">
-                {categories.map((cat) => (
-                  <Option key={cat.id} value={cat.id}>
-                    {cat.name} ({cat.code})
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+            <Select placeholder="카테고리 선택">
+              {categories.map((cat) => (
+                <Option key={cat.id} value={cat.id}>
+                  {cat.name} ({cat.code})
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
 
-            <Form.Item
-              name="koTitle"
-              label="제목 (국문)"
-              rules={[{ required: true }]}
-            >
-              <Input placeholder="제목을 입력하세요" />
-            </Form.Item>
-            <Form.Item name="enTitle" label="제목 (영문)">
-              <Input placeholder="English Title" />
-            </Form.Item>
-          </Space>
+          <Form.Item
+            name="koTitle"
+            label="제목 (국문)"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="제목을 입력하세요" />
+          </Form.Item>
+
+          <Form.Item name="enTitle" label="제목 (영문)">
+            <Input placeholder="English Title" />
+          </Form.Item>
         </Card>
 
-        <Card title="콘텐츠 연결" style={{ marginBottom: 24 }}>
-          <Form.Item label="썸네일 이미지">
+        <Card title="썸네일 이미지" style={{ marginBottom: 24 }}>
+          <Form.Item label="방법 1: 이미지 업로드 (S3)">
             <Dragger beforeUpload={handleFileUpload} showUploadList={false}>
-              {thumbnailUrl ? (
-                <img
-                  src={thumbnailUrl}
-                  alt="thumbnail"
-                  style={{ maxHeight: 150 }}
-                />
-              ) : (
-                <p className="ant-upload-text">클릭하거나 드래그하여 업로드</p>
-              )}
+              <p className="ant-upload-text">클릭하거나 드래그하여 업로드</p>
             </Dragger>
           </Form.Item>
 
+          <Form.Item
+            name="thumbnailUrl"
+            label="방법 2: 이미지 URL 직접 입력"
+            extra="S3 업로드 시 자동으로 채워지며, 외부 URL을 직접 입력할 수도 있습니다."
+          >
+            <Input
+              prefix={<GlobalOutlined />}
+              placeholder="https://..."
+              onChange={(e) => setThumbnailUrl(e.target.value)}
+              allowClear
+            />
+          </Form.Item>
+
+          {/* 미리보기 영역 */}
+          {thumbnailUrl && (
+            <div
+              style={{
+                marginTop: 16,
+                textAlign: "center",
+                border: "1px solid #f0f0f0",
+                padding: 10,
+              }}
+            >
+              <p style={{ fontSize: 12, color: "#888" }}>미리보기</p>
+              <img
+                src={thumbnailUrl}
+                alt="thumbnail preview"
+                style={{
+                  maxHeight: 200,
+                  maxWidth: "100%",
+                  objectFit: "contain",
+                }}
+                onError={() => message.error("이미지 URL이 유효하지 않습니다.")}
+              />
+            </div>
+          )}
+        </Card>
+
+        <Card title="상세 연결" style={{ marginBottom: 24 }}>
           <Form.Item
             name="externalUrl"
             label="워드프레스 URL"
