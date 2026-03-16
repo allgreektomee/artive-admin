@@ -15,7 +15,6 @@ import { categoryApi } from "../api/categoryApi";
 import type { Category } from "../api/categoryApi";
 
 const CategoryManagement: React.FC = () => {
-  // 탭 상태 (기본값: INSIGHT)
   const [activeTab, setActiveTab] = useState<"INSIGHT" | "LOG">("INSIGHT");
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -43,13 +42,13 @@ const CategoryManagement: React.FC = () => {
   // 카테고리 추가
   const handleAdd = async (values: any) => {
     try {
-      // displayOrder는 현재 길이 + 1로 자동 설정 (단순 구현)
       const payload = {
         ...values,
-        type: activeTab,
+        type: activeTab, // 현재 탭의 타입 주입
         displayOrder: categories.length + 1,
       };
-      const res = await categoryApi.create(payload);
+      // 💡 변경: 이제 type을 함께 넘겨서 /admin/insight/categories 경로를 타게 합니다.
+      const res = await categoryApi.create(activeTab, payload);
       if (res.success) {
         message.success("카테고리가 추가되었습니다.");
         form.resetFields();
@@ -63,7 +62,8 @@ const CategoryManagement: React.FC = () => {
   // 카테고리 삭제
   const handleDelete = async (id: number) => {
     try {
-      const res = await categoryApi.delete(id);
+      // 💡 변경: 삭제 시에도 현재 탭의 타입을 넘겨서 경로를 맞춥니다.
+      const res = await categoryApi.delete(id, activeTab);
       if (res.success) {
         message.success("삭제되었습니다.");
         fetchCategories(activeTab);
@@ -73,7 +73,6 @@ const CategoryManagement: React.FC = () => {
     }
   };
 
-  // 탭 내용물 (리스트 + 입력폼)
   const renderContent = () => (
     <div style={{ maxWidth: 600 }}>
       <div
