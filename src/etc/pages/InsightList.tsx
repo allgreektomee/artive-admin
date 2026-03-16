@@ -12,7 +12,7 @@ import { useInsight } from "../hooks/useInsight";
 const InsightList: React.FC = () => {
   const navigate = useNavigate();
   const {
-    insights,
+    insight,
     loading,
     fetchInsights,
     deleteInsight,
@@ -106,7 +106,7 @@ const InsightList: React.FC = () => {
       </div>
 
       <Table
-        dataSource={insights}
+        dataSource={insight}
         columns={columns}
         loading={loading}
         rowKey="id"
