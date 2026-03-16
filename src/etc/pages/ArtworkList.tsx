@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Table, Button, Space, Tag, Image, Empty, Result , Tooltip} from "antd";
+import { Table, Button, Space, Tag, Image, Empty, Result, Tooltip } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -8,7 +8,7 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useArtwork } from "../hooks/useArtwork"; // 🚀 분리한 훅 임포트
+import { useArtwork } from "../hooks/useArtwork"; // 훅 경로 확인
 
 const ArtworkList: React.FC = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const ArtworkList: React.FC = () => {
   } = useArtwork();
 
   useEffect(() => {
-    fetchArtworks();
+    fetchArtworks(0); // 첫 페이지 로드
   }, []);
 
   const columns = [
@@ -37,12 +37,13 @@ const ArtworkList: React.FC = () => {
           width={50}
           height={50}
           style={{ objectFit: "cover", borderRadius: 4 }}
+          fallback="https://via.placeholder.com/50?text=No+Img"
         />
       ),
     },
     {
       title: "제목",
-      dataIndex: "title", // 🚀 'koTitle'에서 'title'로 변경 (콘솔 데이터 기준)
+      dataIndex: "title", // 서버 DTO의 title (현재 언어 기준 제목)
       key: "title",
     },
     {
@@ -117,7 +118,7 @@ const ArtworkList: React.FC = () => {
           <Button
             type="primary"
             icon={<ReloadOutlined />}
-            onClick={() => fetchArtworks()}
+            onClick={() => fetchArtworks(0)}
           >
             다시 시도
           </Button>

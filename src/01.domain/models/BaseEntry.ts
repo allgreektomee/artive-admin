@@ -16,12 +16,21 @@ export interface BaseEntry {
  */
 export interface ArtworkEntry extends BaseEntry {
   type: "Artwork";
-  subtitle: string;
-  linkUrl: string;
-  artistName: string;
-  artworkName: string; // ACF의 artwork_name
-  info: string; // ACF의 artwork_info
-  year: string; // ACF의 artwork_year
+
+  // 다국어 지원 필드 (from Spring Boot DTO)
+  koTitle: string;
+  enTitle?: string;
+  koDescription?: string;
+  enDescription?: string;
+
+  // 작품 메타데이터
+  visibility?: "PUBLIC" | "PRIVATE";
+  medium?: string;
+  size?: string;
+  status?: "PENDING" | "COMPLETED" | "ON_HOLD" | "DELETED";
+  externalUrl?: string; // 🚀 Hybrid Headless: 워드프레스 본문 URL (iframe용)
+  thumbnailUrl: string; // BaseEntry의 thumbnail과 매핑될 필드
+  totalHistoryCount?: number;
 }
 
 /**
