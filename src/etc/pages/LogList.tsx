@@ -56,7 +56,9 @@ const LogList: React.FC = () => {
           <Button
             size="small"
             icon={<EditOutlined />}
-            onClick={() => navigate(`/admin/log/${record.id}`)}
+            onClick={() =>
+              navigate(`/admin/log/${record.id}`, { state: { record } })
+            }
           >
             수정
           </Button>

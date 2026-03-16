@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Select, Card, message, Upload } from "antd";
 import { GlobalOutlined, SaveOutlined, ReadOutlined } from "@ant-design/icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom"; // 👈 useLocation 추가
 import { insightApi } from "../api/insightApi";
 import { categoryApi } from "../api/categoryApi";
 import type { Category } from "../api/categoryApi";
@@ -14,6 +14,7 @@ const { Option } = Select;
 const InsightPost: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -26,29 +27,41 @@ const InsightPost: React.FC = () => {
   useEffect(() => {
     const init = async () => {
       try {
+        // 1. 카테고리는 항상 불러오기
         const catRes = await categoryApi.getByType("INSIGHT");
-        if (catRes.success) {
-          setCategories(catRes.data);
-        }
+        if (catRes.success) setCategories(catRes.data);
 
+        // 2. 수정 모드일 때 데이터 세팅
         if (id) {
-          const res = await insightApi.getInsightDetail(id);
-          if (res.success) {
-            const data = res.data as any; // 타입 에러 방지를 위해 any 처리
+          // 🔥 리스트에서 넘겨준 데이터가 있는지 확인
+          const editData = location.state?.data;
+
+          if (editData) {
+            // 리스트에서 받은 데이터가 있으면 바로 사용 (API 호출 안함!)
             form.setFieldsValue({
-              ...data,
-              categoryId: data.category?.id, // 객체에서 ID 추출
-              thumbnailUrl: data.thumbnailUrl, // 폼 필드에 URL 세팅
+              ...editData,
+              categoryId: editData.category?.id,
             });
-            setThumbnailUrl(data.thumbnailUrl);
+            setThumbnailUrl(editData.thumbnailUrl);
+          } else {
+            // 만약 주소창에 직접 입력해서 들어왔거나 새로고침했다면 API 호출
+            const res = await insightApi.getInsightDetail(id);
+            if (res.success) {
+              const data = res.data as any;
+              form.setFieldsValue({
+                ...data,
+                categoryId: data.category?.id,
+              });
+              setThumbnailUrl(data.thumbnailUrl);
+            }
           }
         }
       } catch (e) {
-        message.error("초기 데이터를 불러오는데 실패했습니다.");
+        message.error("데이터 로드 실패");
       }
     };
     init();
-  }, [id, form]);
+  }, [id, form, location.state]); // 👈 location.state 감시
 
   // 파일 업로드 핸들러
   const handleFileUpload = async (file: File) => {
