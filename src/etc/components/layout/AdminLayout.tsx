@@ -1,5 +1,5 @@
-import React from "react";
-import { Layout, Menu, theme, Spin } from "antd"; // Spin 추가
+import React, { useState, useEffect } from "react";
+import { Layout, Menu, theme, Spin, Button } from "antd";
 import {
   DesktopOutlined,
   FileAddOutlined,
@@ -11,6 +11,7 @@ import {
   TagsOutlined,
   ReadOutlined,
   FileTextOutlined,
+  MenuOutlined, // 햄버거 버튼용
 } from "@ant-design/icons";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
@@ -24,12 +25,15 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Auth 훅에서 정보 가져오기
-  const { user, isAdmin, loading } = useUser(); // error 상태가 있다고 가정
+  // 사용자 정보 및 권한 상태
+  const { user, isAdmin, loading } = useUser();
   const token = localStorage.getItem("accessToken");
 
-  // 1. [방어 로직] 토큰이 아예 없으면 로그인 페이지로 강제 이동
-  React.useEffect(() => {
+  // 사이드바 접힘 상태 관리
+  const [collapsed, setCollapsed] = useState(false);
+
+  // 1. [방어 로직] 토큰이 없으면 로그인으로 이동
+  useEffect(() => {
     if (!loading && !token) {
       navigate("/login");
     }
@@ -49,18 +53,9 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
       icon: <FileAddOutlined />,
       label: "작품 등록",
     },
-    {
-      key: "/admin/insight",
-      icon: <ReadOutlined />,
-      label: "인사이트",
-    },
-    {
-      key: "/admin/log",
-      icon: <FileTextOutlined />,
-      label: "로그 (Log)",
-    },
+    { key: "/admin/insight", icon: <ReadOutlined />, label: "인사이트" },
+    { key: "/admin/log", icon: <FileTextOutlined />, label: "로그 (Log)" },
 
-    // 에러가 났더라도 일단 ADMIN 메뉴를 보여주고 싶다면 아래 조건을 (isAdmin || error)로 조절 가능
     ...(isAdmin
       ? [
           { type: "divider" as const },
@@ -87,7 +82,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     },
   ];
 
-  // 3. [로딩 처리] 정보를 가져오는 중일 때는 전체 화면 Spin 또는 Skeleton
+  // 3. 로딩 처리
   if (loading) {
     return (
       <div
@@ -105,7 +100,20 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider collapsible>
+      {/* Sider 핵심 설정:
+        - breakpoint="lg": 1024px 미만일 때 반응형 모드 진입
+        - collapsedWidth="0": 모바일에서 접혔을 때 너비를 0으로 하여 본문을 가리지 않음
+      */}
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        style={{
+          zIndex: 1001,
+        }}
+      >
         <div
           style={{
             height: 32,
@@ -116,6 +124,8 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             textAlign: "center",
             lineHeight: "32px",
             fontWeight: "bold",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
           }}
         >
           ARTIVE {isAdmin ? "ADMIN" : "USER"}
@@ -127,40 +137,72 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           items={menuItems}
           onClick={({ key }) => {
             if (key === "logout") onLogout();
-            else navigate(key);
+            else {
+              navigate(key);
+              // 모바일에서 메뉴 클릭 시 사이드바 자동으로 닫기
+              if (window.innerWidth < 992) setCollapsed(true);
+            }
           }}
         />
       </Sider>
+
       <Layout>
         <Header
           style={{
-            padding: "0 24px",
+            padding: "0 16px",
             background: colorBgContainer,
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <span style={{ marginRight: 16 }}>
-            {/* user가 없을 때(에러 시)를 대비한 옵셔널 체이닝 */}
-            <b>{user?.nickname || "방문객"}</b>님 환영합니다
+          {/* 모바일용 메뉴 버튼 (사이드바가 0일 때만 보임) */}
+          <Button
+            type="text"
+            icon={<MenuOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: "18px",
+              width: 40,
+              height: 40,
+            }}
+          />
+
+          <div
+            style={{
+              flex: 1,
+              textAlign: "right",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ marginRight: 8 }}>
+              <b>{user?.nickname || "방문객"}</b>님
+            </span>
             {user && (
-              <small style={{ marginLeft: 8, color: "#888" }}>
+              <small
+                style={{
+                  color: "#888",
+                  display: window.innerWidth < 480 ? "none" : "inline",
+                }}
+              >
                 ({user?.role})
               </small>
             )}
-          </span>
+          </div>
         </Header>
-        <Content style={{ margin: "24px 16px" }}>
+
+        <Content style={{ margin: "16px" }}>
           <div
             style={{
-              padding: 24,
+              padding: window.innerWidth < 480 ? 12 : 24, // 모바일에서 패딩 축소
               minHeight: "calc(100vh - 112px)",
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              overflowX: "auto", // 테이블 등 가로 깨짐 방지
             }}
           >
-            {/* [핵심] 에러가 나도 Outlet은 렌더링되어야 ProfileSetting 안의 에러 UI가 보입니다 */}
             <Outlet />
           </div>
         </Content>
@@ -170,20 +212,3 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
 };
 
 export default AdminLayout;
-
-/**
- * 
- * 
- * 조건부 렌더링 (Spread Operator):
-...(isAdmin ? [...] : []) 문법을 사용하여 isAdmin이 true일 때만 배열에 요소를 추가합니다. 
-리액트 실무에서 메뉴 필터링을 할 때 가장 많이 쓰는 깔끔한 방식입니다.
-
-중앙화된 상태 관리:
-useAuth에서 이미 토큰 검사와 유저 정보를 가져오기 때문에, 이 레이아웃 안에서 별도의 API 호출 코드를 적을 필요가 없습니다. 
-코드가 훨씬 읽기 편해졌죠?
-
-사용자 편의성(UX):
-loading 상태일 때 Skeleton을 보여주어 화면이 번쩍이며 바뀌는 현상을 방지했습니다.
-헤더에 현재 로그인한 유저의 이름과 역할(Role)을 표시하여 내가 어떤 권한으로 들어왔는지 명확히 알 수 있게 했습니다.
-
- */
