@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react"; // useCallback 추가
 import {
   Form,
   Input,
@@ -36,7 +36,7 @@ import {
 import { useArtwork } from "../hooks/useArtwork";
 import { useImageUpload } from "../hooks/useImageUpload";
 import { LanguageCode, WorkStatus, WorkStatusLabels } from "../types";
-import SortableItem from "../components/artwork/SortableItem"; // 별도 분리 권장
+import SortableItem from "../components/artwork/SortableItem";
 
 const { Dragger } = Upload;
 const { RangePicker } = DatePicker;
@@ -44,10 +44,9 @@ const { RangePicker } = DatePicker;
 const ArtworkPost: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { id } = useParams(); // 🚀 URL에서 ID 추출
-  const isEdit = !!id; // 수정 모드 여부
+  const { id } = useParams();
+  const isEdit = !!id;
 
-  // 🚀 공통 훅 및 작품 훅 사용
   const {
     imageList,
     setImageList,
@@ -59,26 +58,43 @@ const ArtworkPost: React.FC = () => {
 
   const { uploadSingleImage, isUploading } = useImageUpload();
 
-  useEffect(() => {
-    if (isEdit) {
-      const loadDetail = async () => {
-        const data = await getArtworkForEdit(Number(id));
+  // 🚀 [수정] 데이터 로딩 로직을 별도 함수로 분리하여 useEffect 안정성 확보
+  const loadDetail = useCallback(
+    async (artworkId: number) => {
+      try {
+        const data = await getArtworkForEdit(artworkId);
         if (data) {
-          // Ant Design Form에 데이터 세팅
+          // 🔥 중요: 이미지 리스트를 먼저 세팅해줘야 폼 데이터와 동기화됩니다.
+          if (data.images) {
+            setImageList(data.images);
+          }
+
           form.setFieldsValue({
             ...data,
-            // 백엔드 날짜 데이터가 있다면 dayjs로 변환하여 RangePicker에 세팅
             workPeriod:
               data.startedAt && data.finishedAt
                 ? [dayjs(data.startedAt), dayjs(data.finishedAt)]
                 : undefined,
           });
         }
-      };
-      loadDetail();
+      } catch (error) {
+        console.error("데이터 로드 실패:", error);
+        message.error("작품 정보를 가져오는데 실패했습니다.");
+      }
+    },
+    [getArtworkForEdit, form, setImageList],
+  );
+
+  useEffect(() => {
+    if (isEdit && id) {
+      loadDetail(Number(id));
+    } else {
+      // 신규 등록 시 폼 초기화
+      form.resetFields();
+      setImageList([]);
     }
-  }, [id, isEdit, form]);
-  // 순서 변경 처리
+  }, [id, isEdit, loadDetail, form, setImageList]);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
@@ -90,7 +106,6 @@ const ArtworkPost: React.FC = () => {
     }
   };
 
-  // URL 직접 추가
   const addExternalUrl = () => {
     const url = form.getFieldValue("urlInput");
     if (!url) return;
@@ -98,33 +113,33 @@ const ArtworkPost: React.FC = () => {
     form.setFieldsValue({ urlInput: "" });
   };
 
-  // 🚀 공통 업로드 훅 적용
   const handleFileUpload = async (file: File) => {
     try {
       const url = await uploadSingleImage(file, "artwork");
-
       if (url) {
-        // 🚀 핵심: (prev) => ... 처럼 이전 상태값을 인자로 받아야 합니다.
-        // 이렇게 하면 리액트가 업데이트 큐를 순차적으로 처리하여 4장 모두 유실 없이 쌓입니다.
-        setImageList((prev) => {
-          // 이미 리스트에 있는 URL인지 중복 체크 (안정성 확보)
-          if (prev.includes(url)) return prev;
-
-          const nextList = [...prev, url];
-          console.log("현재 업데이트된 이미지 리스트:", nextList);
-          return nextList;
-        });
+        setImageList((prev) => (prev.includes(url) ? prev : [...prev, url]));
       }
     } catch (error) {
-      console.error("파일 업로드 중 에러 발생:", error);
+      console.error("파일 업로드 에러:", error);
     }
     return false;
   };
 
+  // 🚀 [핵심 수정] onFinish에서 날짜 포맷팅을 명시적으로 처리하여 백엔드 400/403 방지
   const onFinish = async (values: any) => {
+    const { workPeriod, urlInput, ...rest } = values;
+
+    // 백엔드 날짜 형식에 맞게 변환 (YYYY-MM-DD)
+    const formattedValues = {
+      ...rest,
+      images: imageList, // 현재 DND로 정렬된 이미지 리스트를 명시적으로 전달
+      startedAt: workPeriod ? workPeriod[0].format("YYYY-MM-DD") : null,
+      finishedAt: workPeriod ? workPeriod[1].format("YYYY-MM-DD") : null,
+    };
+
     const success = isEdit
-      ? await updateArtwork(Number(id), values)
-      : await createArtwork(values);
+      ? await updateArtwork(Number(id), formattedValues)
+      : await createArtwork(formattedValues);
 
     if (success) {
       message.success(
@@ -141,7 +156,7 @@ const ArtworkPost: React.FC = () => {
         layout="vertical"
         onFinish={onFinish}
         style={{ maxWidth: 1000, margin: "20px auto" }}
-        initialValues={{ isPublic: true }} // 기본값
+        initialValues={{ isPublic: true, status: WorkStatus.COMPLETED }}
       >
         <Card
           title={
@@ -150,7 +165,7 @@ const ArtworkPost: React.FC = () => {
             </span>
           }
         >
-          {/* 이미지 섹션 (기존 코드 유지) */}
+          {/* 이미지 섹션 */}
           <section style={{ marginBottom: 32 }}>
             <span
               style={{ display: "block", marginBottom: 12, fontWeight: "bold" }}
@@ -195,7 +210,6 @@ const ArtworkPost: React.FC = () => {
                 items={imageList}
                 strategy={verticalListSortingStrategy}
               >
-                {/* 🚀 minHeight와 패딩을 주어 영역을 확실히 확보하세요 */}
                 <div
                   style={{
                     marginTop: 16,
@@ -208,7 +222,7 @@ const ArtworkPost: React.FC = () => {
                 >
                   {imageList.map((url, index) => (
                     <SortableItem
-                      key={`img-${index}-${url.substring(url.length - 10)}`} // 인덱스와 URL 끝자리 조합
+                      key={`img-${index}-${url.substring(url.length - 10)}`}
                       id={url}
                       url={url}
                       onRemove={() =>
@@ -216,23 +230,12 @@ const ArtworkPost: React.FC = () => {
                       }
                     />
                   ))}
-                  {imageList.length === 0 && (
-                    <p
-                      style={{
-                        textAlign: "center",
-                        color: "#999",
-                        lineHeight: "50px",
-                      }}
-                    >
-                      등록된 이미지가 없습니다.
-                    </p>
-                  )}
                 </div>
               </SortableContext>
             </DndContext>
           </section>
 
-          {/* 정보 그리드 섹션 */}
+          {/* 정보 그리드 */}
           <div
             style={{
               display: "grid",
@@ -257,38 +260,24 @@ const ArtworkPost: React.FC = () => {
               <RangePicker style={{ width: "100%" }} />
             </Form.Item>
             <Form.Item name="medium" label="재료 (Medium)">
-              <Input placeholder="예: Oil on canvas" />
+              <Input />
             </Form.Item>
             <Form.Item name="size" label="규격 (Size)">
-              <Input placeholder="예: 60 x 60 cm" />
+              <Input />
             </Form.Item>
             <Form.Item name="price" label="가격 (Price)">
-              <Input
-                type="number"
-                prefix="₩"
-                placeholder="판매가 (숫자만 입력)"
-              />
+              <Input type="number" prefix="₩" />
             </Form.Item>
-            <Form.Item name="youtubeUrl" label="관련 영상 (YouTube URL)">
-              <Input
-                prefix={<LinkOutlined />}
-                placeholder="작품 관련 유튜브 영상 링크"
-              />
+            <Form.Item name="youtubeUrl" label="유튜브 URL">
+              <Input prefix={<LinkOutlined />} />
             </Form.Item>
-            <Form.Item
-              name="externalUrl"
-              label="워드프레스 본문 연결 (WP External URL)"
-              tooltip="작품의 상세 내용이 담긴 워드프레스 페이지 주소입니다. (iframe 연동)"
-            >
-              <Input
-                prefix={<GlobalOutlined />}
-                placeholder="https://cms.artivefor.me/atelier/..."
-              />
+            <Form.Item name="externalUrl" label="WP 주소">
+              <Input prefix={<GlobalOutlined />} />
             </Form.Item>
           </div>
         </Card>
 
-        {/* 다국어 섹션 (기존 유지) */}
+        {/* 다국어 섹션 */}
         <Card title="🌐 다국어 정보 관리" style={{ marginTop: 24 }}>
           <Tabs
             type="card"
@@ -320,7 +309,7 @@ const ArtworkPost: React.FC = () => {
           </Form.Item>
           <Button
             type="primary"
-            htmlType="submit"
+            htmlType="submit" // 🔥 이 버튼을 누를 때만 onFinish(PUT/POST)가 실행됩니다.
             size="large"
             loading={saveLoading}
             icon={<SaveOutlined />}
@@ -341,13 +330,10 @@ const LanguageFields = ({ prefix }: { prefix: string }) => (
       label="작품 제목"
       rules={[{ required: prefix === "ko" }]}
     >
-      <Input placeholder={`${prefix.toUpperCase()} 제목을 입력하세요`} />
+      <Input />
     </Form.Item>
     <Form.Item name={`${prefix}Description`} label="작품 설명">
-      <Input.TextArea
-        rows={4}
-        placeholder={`${prefix.toUpperCase()} 설명을 입력하세요`}
-      />
+      <Input.TextArea rows={4} />
     </Form.Item>
   </div>
 );
