@@ -373,10 +373,9 @@ const MagazineHome: React.FC = () => {
                 <br />
                 중심에 앉아있는 남자는 그 시절의 화려한 빛이자 따스한 온기 속에
                 머물러 있는 '나'의 모습입니다. <br />
-                <br />
-                그 빛은 가장 화려했던 기억을 의미하기도 하며, 동시에 듬직한
-                동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도 합니다.{" "}
-                <br />
+                <br />그 빛은 가장 화려했던 기억을 의미하기도 하며, 동시에
+                듬직한 동반자들과 함께 나누었던 견고하고 따뜻한 유대의 빛이기도
+                합니다. <br />
                 <br />
                 그리움을 투영하여 그려낸 나의 첫 번째 자화상이자, 수만 번의
                 붓질을 통해 과거의 찬란함과 현재의 나를 잇는 정직한 기록입니다.{" "}
@@ -498,130 +497,105 @@ const MagazineHome: React.FC = () => {
             </div>
           </div>
         </div>
+        {/* 03. Still Half 상세 Paragraph 바로 아래 삽입 */}
         <div
           style={{
-            marginTop: "150px",
-            paddingTop: "80px",
-            borderTop: "2px solid #000",
+            marginTop: "80px",
+            paddingTop: "40px",
+            borderTop: "1px solid #eee",
           }}
         >
-          <Row gutter={[40, 60]}>
-            <Col xs={24} md={10}>
-              <div style={{ position: "sticky", top: "100px" }}>
-                <Text
-                  style={{
-                    letterSpacing: "5px",
-                    fontSize: "0.9rem",
-                    color: "#000",
-                    fontWeight: 900,
-                  }}
-                >
-                  ESSAY
-                </Text>
-                <Title
-                  level={1}
-                  style={{
-                    fontFamily: "'Helvetica Neue', sans-serif",
-                    fontSize: "4.5rem",
-                    fontWeight: 900,
-                    lineHeight: 0.9,
-                    letterSpacing: "-4px",
-                    margin: "20px 0",
-                  }}
-                >
-                  JUST
-                  <br />
-                  ART
-                </Title>
-              </div>
-            </Col>
+          <div style={{ marginBottom: "30px" }}>
+            <Text
+              style={{
+                letterSpacing: "3px",
+                fontSize: "0.75rem",
+                color: "#999",
+                fontWeight: "bold",
+              }}
+            >
+              ESSAY
+            </Text>
+          </div>
 
-            <Col xs={24} md={14}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {/* 실제 에피소드 1-4 + 더보기 */}
-                {[
-                  {
-                    no: "01",
-                    title: "제1장 : 오전 8시",
-                    link: "https://cms.artivefor.me/8oclock/",
-                  },
-                  {
-                    no: "02",
-                    title: "제2장 : 정글로 돌아가는 호랑이",
-                    link: "https://cms.artivefor.me/tiger/",
-                  },
-                  {
-                    no: "03",
-                    title: "제3장 : 메일함에 도착한 ‘닫힌 문’",
-                    link: "https://cms.artivefor.me/atelier/",
-                  },
-                  {
-                    no: "04",
-                    title: "제4장 : 서촌, 예고없이 마주한 심야미술관",
-                    link: "https://cms.artivefor.me/midnight-museum/",
-                  },
-                  {
-                    no: "MORE",
-                    title: "Just-Art : 전체 기록 보기",
-                    link: "https://cms.artivefor.me/category/just-art/",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    onClick={() => window.open(item.link, "_blank")}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {[
+              {
+                no: "01",
+                title: "제1장 : 오전 8시",
+                link: "https://cms.artivefor.me/8oclock/",
+              },
+              {
+                no: "02",
+                title: "제2장 : 정글로 돌아가는 호랑이",
+                link: "https://cms.artivefor.me/tiger/",
+              },
+              {
+                no: "03",
+                title: "제3장 : 메일함에 도착한 ‘닫힌 문’",
+                link: "https://cms.artivefor.me/atelier/",
+              },
+              {
+                no: "04",
+                title: "제4장 : 서촌, 예고없이 마주한 심야미술관",
+                link: "https://cms.artivefor.me/midnight-museum/",
+              },
+              {
+                no: "MORE",
+                title: "Just-Art : 전체 기록 보기",
+                link: "https://cms.artivefor.me/category/just-art/",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                onClick={() => window.open(item.link, "_blank")}
+                style={{
+                  padding: "25px 0",
+                  borderBottom: "1px solid #f0f0f0",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.paddingLeft = "10px";
+                  e.currentTarget.style.borderBottomColor = "#000";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.paddingLeft = "0";
+                  e.currentTarget.style.borderBottomColor = "#f0f0f0";
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Text
                     style={{
-                      padding: "40px 0",
-                      borderBottom: "1px solid #eee",
-                      cursor: "pointer",
-                      transition: "all 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.paddingLeft = "20px";
-                      e.currentTarget.style.borderBottomColor = "#000";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.paddingLeft = "0";
-                      e.currentTarget.style.borderBottomColor = "#eee";
+                      fontFamily: "'Helvetica Neue', sans-serif",
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      color: item.no === "MORE" ? "#000" : "#ccc",
+                      width: "50px",
                     }}
                   >
-                    <Row align="middle">
-                      <Col span={4}>
-                        <Text
-                          style={{
-                            fontFamily: "'Helvetica Neue', sans-serif",
-                            fontSize: "0.9rem",
-                            fontWeight: 900,
-                            color: item.no === "MORE" ? "#000" : "#ccc",
-                          }}
-                        >
-                          {item.no}
-                        </Text>
-                      </Col>
-                      <Col span={18}>
-                        <Title
-                          level={3}
-                          style={{
-                            margin: 0,
-                            fontSize: "1.6rem",
-                            fontWeight: 800,
-                            letterSpacing: "-1px",
-                            color: "#000",
-                          }}
-                        >
-                          {item.title}
-                        </Title>
-                      </Col>
-                      <Col span={2} style={{ textAlign: "right" }}>
-                        <ArrowRightOutlined
-                          style={{ fontSize: "1.2rem", color: "#000" }}
-                        />
-                      </Col>
-                    </Row>
-                  </div>
-                ))}
+                    {item.no}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: "1.1rem", // 기존 Paragraph와 동일한 사이즈
+                      fontWeight: item.no === "MORE" ? 700 : 500,
+                      color: "#444",
+                      letterSpacing: "-0.5px",
+                    }}
+                  >
+                    {item.title}
+                  </Text>
+                </div>
+                <ArrowRightOutlined
+                  style={{ fontSize: "1rem", color: "#ccc" }}
+                />
               </div>
-            </Col>
-          </Row>
+            ))}
+          </div>
         </div>
       </section>
 
