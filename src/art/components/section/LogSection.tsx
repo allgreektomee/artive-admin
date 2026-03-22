@@ -212,7 +212,7 @@ const LogSection = ({ lang = "ko" }: { lang?: "ko" | "en" }) => {
       </div>
 
       <ViewMoreButton
-        label="VIEW MORE LOGS"
+        label="VIEW MORE LOG"
         onClick={() => navigate("/art/log")}
       />
     </section>
