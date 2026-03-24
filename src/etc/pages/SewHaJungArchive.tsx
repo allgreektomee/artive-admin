@@ -49,10 +49,19 @@ const SewHaJungArchive: React.FC = () => {
 
   return (
     <div style={{ background: "#fff", minHeight: "100vh", fontFamily: "'Noto Serif KR', serif" }}>
-      <Helmet>
-        <title>Sew Ha Jung | Artist Archive | Artive</title>
-        <meta name="description" content="Sew Ha Jung 작가의 11점 주요 작품 아카이브입니다. 압축된 썸네일로 빠르게 확인하고 원본을 감상하세요." />
-      </Helmet>
+<Helmet>
+  {/* 카카오톡/페이스북 공유용 */}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sew Ha Jung - Artist Portfolio" />
+  <meta property="og:description" content="HONG KONG - AFFORDABLE ART FAIR 2026" />
+  <meta property="og:image" content="https://artive-uploads.s3.ap-southeast-2.amazonaws.com/jsh/sewha/1.jpeg" />
+  <meta property="og:url" content="https://artivefor.me/sewhajung" />
+
+  {/* 트위터 공유용 */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sew Ha Jung | HONG KONG - AFFORDABLE ART FAIR 2026" />
+  <meta name="twitter:image" content="https://artive-uploads.s3.ap-southeast-2.amazonaws.com/jsh/sewha/1.jpeg" />
+</Helmet>
 
       {/* 상단 바 (Sticky) */}
       <nav style={{ 

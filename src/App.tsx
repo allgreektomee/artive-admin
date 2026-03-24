@@ -55,6 +55,8 @@ import TestPage from "./etc/pages/TestProjectPage";
 //test
 import ArtHomeNew from "./03.presentation/pages/ArtHomeNew";
 
+import SewHaJungArchive from "./etc/pages/SewHaJungArchive";
+
 declare global {
   interface Window {
     webkit?: {
@@ -90,7 +92,9 @@ const App: React.FC = () => {
 
           {/* 🚀 [TEST] 신규 아키텍처 테스트 경로 추가 */}
           <Route path="/test-art" element={<ArtHomeNew />} />
+          <Route path="/archive" element={<SewHaJungArchive />} />
 
+                
           {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
           {/* [변경] 매거진 전용 레이아웃 또는 독립 페이지 */}
           <Route path="/art" element={<ArtLayout />}>
