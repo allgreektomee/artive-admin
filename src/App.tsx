@@ -139,7 +139,7 @@ const App: React.FC = () => {
               <Route path="artworks/edit/:id" element={<ArtworkPost />} />
 
                 {/* Insight index */}
-              <Route path="index" element={<IndexPageList />} />
+              <Route path="indexpage" element={<IndexPageList />} />
 
               {/* Insight Routes */}
               <Route path="insight" element={<InsightList />} />
