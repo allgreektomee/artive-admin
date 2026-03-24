@@ -66,6 +66,11 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             label: "카테고리 관리",
           },
           {
+            key: "/admin/index",
+            icon: <TagsOutlined />,
+            label: "목차 관리",
+          },
+          {
             key: "/admin/settings",
             icon: <SettingOutlined />,
             label: "시스템 설정",
