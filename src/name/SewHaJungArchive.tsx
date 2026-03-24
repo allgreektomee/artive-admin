@@ -7,11 +7,9 @@ import {
   InstagramOutlined 
 } from "@ant-design/icons";
 
-
 const { Title, Text } = Typography;
 
 const SewHaJungArchive: React.FC = () => {
- 
 
   // 1. 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,71 +45,75 @@ const SewHaJungArchive: React.FC = () => {
   const currentArt = artworks.find(art => art.id === selectedArtId);
 
   return (
-    <div style={{ background: "#fff", minHeight: "100vh", fontFamily: "'Noto Serif KR', serif" }}>
+    <div style={{ background: "#fff", minHeight: "100vh", fontFamily: "'Noto Serif KR', serif", overflowX: 'hidden' }}>
       <Helmet>
+        {/* 모바일 핏을 위한 핵심 뷰포트 설정 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        
         <title>Sew Ha Jung | Hong Kong Affordable Art Fair 2026</title>
+        <meta property="og:title" content="Sew Ha Jung - Artist Portfolio" />
         <meta property="og:description" content="HONG KONG - AFFORDABLE ART FAIR 2026" />
         <meta property="og:image" content={`${baseS3Url}1.jpeg`} />
+        <meta property="og:url" content="https://www.artivefor.me/sewhajung" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
-    
-
-      <main style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 40px 100px" }}>
+      {/* 좌우 패딩을 모바일 20px / 데스크탑 40px로 가변 조절 */}
+      <main style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 clamp(20px, 5vw, 40px) 100px" }}>
         <header style={{ 
-          /* 핵심 보완: 상하단 여백 대폭 확대 (120px 0 -> 180px 0) */
-          padding: "180px 0 160px", 
+          // 상하 여백을 모바일에서는 120px, 데스크탑에서는 180px로 조절
+          padding: "clamp(120px, 15vh, 180px) 0 clamp(100px, 10vh, 160px)", 
           textAlign: "center",
-          backgroundColor: "#fff" // 배경색 명시
+          backgroundColor: "#fff"
         }}>
           <div style={{ maxWidth: "800px", margin: "0 auto" }}>
             
-            {/* 1. 상단 미니멀 문구: 자간을 매우 넓게 줌 */}
+            {/* 1. 상단 미니멀 문구 */}
             <Text style={{ 
-              letterSpacing: "14px", // 자간 확대
-              color: "#aaa", // 조금 더 연하게
-              fontSize: "0.8rem", // 크기 축소
+              letterSpacing: "8px", // 모바일 가독성 고려 자간 축소
+              color: "#aaa", 
+              fontSize: "0.75rem", 
               fontWeight: 400,
               display: "block", 
-              marginBottom: "50px", // 아래 제목과의 간격
-              fontFamily: "'Noto Serif KR', serif", // 명조 계열로 고급스럽게
-              textTransform: "uppercase" // 대문자로
+              marginBottom: "30px", 
+              fontFamily: "'Noto Serif KR', serif", 
+              textTransform: "uppercase" 
             }}>
               Art forest 2026
             </Text>
             
-            {/* 2. 주 제목: 작가명 (강렬한 볼드) */}
+            {/* 2. 주 제목: 작가명 */}
             <Title level={1} style={{ 
-              fontFamily: "'Helvetica Neue', Arial, sans-serif", // 현대적인 산세리프
-              fontSize: "clamp(3rem, 12vw, 6.5rem)", // 반응형 크기
-              fontWeight: 900, // 최상위 굵기
-              letterSpacing: "-4px", // 굵은 폰트는 자간을 좁혀야 이쁨
-              margin: "0 0 50px 0",
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+              // 폰트 크기를 화면 폭에 맞춰 최적화 (모바일 2.8rem ~ 데스크탑 6.5rem)
+              fontSize: "clamp(2.8rem, 15vw, 6.5rem)", 
+              fontWeight: 900, 
+              letterSpacing: "-2px", 
+              margin: "0 0 30px 0",
               color: "#000",
               lineHeight: 1
             }}>
               Sew Ha Jung
             </Title>
             
-            {/* 3. 하단 페어 문구: 명확히 두 줄로 나눔 */}
-            <div style={{ marginTop: "20px" }}>
+            {/* 3. 하단 페어 문구 */}
+            <div style={{ marginTop: "10px" }}>
               <Text style={{ 
                 display: "block",
-                fontSize: "1.2rem", 
-                letterSpacing: "4px",
+                fontSize: "1rem", 
+                letterSpacing: "3px",
                 color: "#666", 
-                fontWeight: 500,
                 fontFamily: "'Noto Serif KR', serif",
                 textTransform: "uppercase",
-                marginBottom: "10px"
+                marginBottom: "5px"
               }}>
                 Hong Kong
               </Text>
               <Text style={{ 
                 display: "block",
-                fontSize: "1.2rem", 
-                letterSpacing: "4px",
+                fontSize: "1rem", 
+                letterSpacing: "3px",
                 color: "#666", 
-                fontWeight: 500,
                 fontFamily: "'Noto Serif KR', serif",
                 textTransform: "uppercase"
               }}>
@@ -121,8 +123,8 @@ const SewHaJungArchive: React.FC = () => {
           </div>
         </header>
 
-        {/* 그리드 리스트 */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: "80px 40px", alignItems: "start" }}>
+        {/* 그리드 리스트: CSS 클래스로 모바일 1열 / 데스크탑 가변열 처리 */}
+        <div className="artwork-grid">
           {artworks.map((art) => (
             <article key={art.id} style={{ cursor: "pointer" }} onClick={() => openModal(art.id)}>
               <div style={{ backgroundColor: "#f9f9f9", overflow: "hidden", position: 'relative' }}>
@@ -135,18 +137,18 @@ const SewHaJungArchive: React.FC = () => {
                   <ZoomInOutlined />
                 </div>
               </div>
-              <div style={{ marginTop: "25px" }}>
-                <Text style={{ color: "#ddd", fontSize: "0.7rem" }}>No. {String(art.id).padStart(2, '0')}</Text>
-                <Title level={4} style={{ margin: "5px 0 10px", fontSize: "1.2rem", fontWeight: 700 }}>{art.title}</Title>
-                <Text style={{ fontSize: "0.85rem", color: "#777" }}>{art.medium} | {art.size}</Text>
+              <div style={{ marginTop: "20px" }}>
+                <Text style={{ color: "#ddd", fontSize: "0.65rem" }}>No. {String(art.id).padStart(2, '0')}</Text>
+                <Title level={4} style={{ margin: "3px 0 8px", fontSize: "1.1rem", fontWeight: 700 }}>{art.title}</Title>
+                <Text style={{ fontSize: "0.8rem", color: "#888" }}>{art.medium} | {art.size}</Text>
               </div>
             </article>
           ))}
         </div>
 
-        <Divider style={{ marginTop: "150px", opacity: 0.1 }} />
+        <Divider style={{ marginTop: "100px", opacity: 0.1 }} />
 
-        {/* 푸터 영역: 인스타그램 링크 추가 */}
+        {/* 푸터 영역 */}
         <footer style={{ textAlign: "center", paddingBottom: "40px" }}>
           <div style={{ marginBottom: "30px" }}>
             <Button 
@@ -154,15 +156,15 @@ const SewHaJungArchive: React.FC = () => {
               href="https://www.instagram.com/sewhajung/" 
               target="_blank" 
               rel="noopener noreferrer"
-              style={{ color: "#000", height: "auto", padding: "10px 20px" }}
+              style={{ color: "#000", height: "auto", padding: "10px" }}
             >
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-                <InstagramOutlined style={{ fontSize: "2rem" }} />
-                <Text style={{ fontSize: "0.75rem", letterSpacing: "2px", fontWeight: 600 }}>FOLLOW ON INSTAGRAM</Text>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                <InstagramOutlined style={{ fontSize: "1.8rem" }} />
+                <Text style={{ fontSize: "0.7rem", letterSpacing: "1.5px", fontWeight: 600 }}>FOLLOW ON INSTAGRAM</Text>
               </div>
             </Button>
           </div>
-          <Text style={{ letterSpacing: "5px", color: "#ddd", fontSize: "0.7rem", fontWeight: 'bold' }}>
+          <Text style={{ letterSpacing: "3px", color: "#ddd", fontSize: "0.6rem", fontWeight: 'bold' }}>
             © 2026 SEW HA JUNG .
           </Text>
         </footer>
@@ -170,7 +172,7 @@ const SewHaJungArchive: React.FC = () => {
 
       {/* 원본 팝업 모달 */}
       <Modal
-        open={isModalOpen} onCancel={closeModal} footer={null} centered width="auto" className="art-original-modal"
+        open={isModalOpen} onCancel={closeModal} footer={null} centered width="100%" className="art-original-modal"
         closeIcon={<CloseOutlined style={{ fontSize: '1.5rem', color: '#fff' }} />}
         styles={{
           mask: { backdropFilter: "blur(5px)", background: "rgba(0,0,0,0.8)" },
@@ -181,27 +183,43 @@ const SewHaJungArchive: React.FC = () => {
           <div style={{ position: 'relative' }}>
             {isOriginalLoading && (
               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 10 }}>
-                <Spin size="large" tip="Loading original..." />
+                <Spin size="large" tip="Loading..." />
               </div>
             )}
             <img 
               src={currentArt.originalUrl} alt={currentArt.title}
-              style={{ maxWidth: "90vw", maxHeight: "90vh", height: "auto", display: "block", border: '4px solid #fff', opacity: isOriginalLoading ? 0.3 : 1 }} 
+              style={{ maxWidth: "95vw", maxHeight: "90vh", height: "auto", display: "block", border: '2px solid #fff', opacity: isOriginalLoading ? 0.3 : 1 }} 
               onLoad={() => setIsOriginalLoading(false)}
             />
             {!isOriginalLoading && (
-              <div style={{ position: 'absolute', bottom: '-70px', left: 0, width: '100%', textAlign: 'center', color: '#fff' }}>
-                <Title level={4} style={{ color: '#fff', margin: 0 }}>{currentArt.title}</Title>
+              <div style={{ position: 'absolute', bottom: '-60px', left: 0, width: '100%', textAlign: 'center', color: '#fff' }}>
+                <Title level={4} style={{ color: '#fff', margin: 0, fontSize: '0.9rem', fontWeight: 600 }}>{currentArt.title}</Title>
               </div>
             )}
           </div>
         )}
       </Modal>
 
+      {/* 전역 스타일: 모바일 / 데스크탑 분기 처리 */}
       <style>{`
+        /* 1. 모바일 (기본): 1열 배치 / 좁은 간격 */
+        .artwork-grid {
+          display: grid;
+          grid-template-columns: 1fr; 
+          gap: 60px 0;
+        }
+
+        /* 2. 데스크탑 (768px 이상): 가변열 배치 / 넓은 간격 */
+        @media (min-width: 768px) {
+          .artwork-grid {
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 80px 40px;
+          }
+        }
+
         article:hover .hover-overlay { opacity: 1 !important; }
         .art-original-modal .ant-modal-content { background: transparent !important; box-shadow: none !important; padding: 0 !important; }
-        .art-original-modal .ant-modal-close { top: -40px; right: -10px; }
+        .art-original-modal .ant-modal-close { top: -40px; right: 0px; }
       `}</style>
     </div>
   );
