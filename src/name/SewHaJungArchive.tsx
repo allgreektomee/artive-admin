@@ -31,7 +31,7 @@ const SewHaJungArchive: React.FC = () => {
     thumbUrl: `${baseS3Url}s${i + 1}.jpg`,
     title: `Landscape of Memory #${String(i + 1).padStart(2, '0')}`,
     medium: "Acrylic on canvas",
-    size: i % 2 === 0 ? "60호" : "120호"
+    size: i % 2 === 0 ? "" : ""
   }));
 
   return (
@@ -134,7 +134,14 @@ const SewHaJungArchive: React.FC = () => {
         .location-tag { margin-top: 40px; font-size: 0.85rem; letter-spacing: 2px; color: #999; text-transform: uppercase; }
 
         .statement-section { padding: 100px 0; text-align: center; }
-        .statement-title { font-size: 11px; letter-spacing: 5px; color: #f0f0f0; margin-bottom: 50px; }
+        .statement-title { 
+          font-size: 11px; 
+          letter-spacing: 5px; 
+          color: #333; /* ✅ 연한 회색에서 짙은 블랙으로 변경 */
+          margin-bottom: 50px; 
+          text-transform: uppercase; /* 대문자 고정 */
+          font-weight: 700; /* 조금 더 두껍게 */
+        }
         
         .statement-body .en-text { font-size: 1.15rem; line-height: 2; color: #222; font-weight: 300; margin-bottom: 35px; word-break: keep-all; }
         .statement-body .kr-text { font-size: 0.9rem; line-height: 1.8; color: #aaa; font-weight: 300; word-break: keep-all; }
