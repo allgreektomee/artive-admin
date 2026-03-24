@@ -92,7 +92,7 @@ const App: React.FC = () => {
 
           {/* 🚀 [TEST] 신규 아키텍처 테스트 경로 추가 */}
           <Route path="/test-art" element={<ArtHomeNew />} />
-          <Route path="/SewHaJung" element={<SewHaJungArchive />} />
+          <Route path="/sewhajung" element={<SewHaJungArchive />} />
 
 
           {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
