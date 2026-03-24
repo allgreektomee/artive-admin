@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Typography, Divider, Modal, Spin, Button } from "antd";
 import { Helmet } from "react-helmet-async";
 import { 
-  ArrowLeftOutlined, 
   CloseOutlined, 
   ZoomInOutlined, 
   InstagramOutlined 
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+
 
 const { Title, Text, Paragraph } = Typography;
 
 const SewHaJungArchive: React.FC = () => {
-  const navigate = useNavigate();
+ 
 
   // 1. 상태 관리
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,26 +54,18 @@ const SewHaJungArchive: React.FC = () => {
         <meta property="og:image" content={`${baseS3Url}1.jpeg`} />
       </Helmet>
 
-      {/* 상단 네비게이션 */}
-      <nav style={{ 
-        padding: "25px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", 
-        position: "sticky", top: 0, background: "rgba(255,255,255,0.95)", zIndex: 100, backdropFilter: "blur(10px)", borderBottom: "1px solid #f0f0f0"
-      }}>
-        <div onClick={() => navigate(-1)} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
-          <ArrowLeftOutlined style={{ fontSize: "1rem" }} /> 
-          <Text style={{ fontSize: "0.85rem", letterSpacing: "1px", fontWeight: 500 }}>EXIT</Text>
-        </div>
-        <Title level={4} style={{ margin: 0, letterSpacing: "4px", fontSize: "1.1rem", fontWeight: 700 }}>SEW HA JUNG</Title>
-      </nav>
+    
 
       <main style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 40px 100px" }}>
         <header style={{ padding: "120px 0 100px", textAlign: "center" }}>
-          <Text style={{ letterSpacing: "10px", color: "#ccc", display: "block", marginBottom: "20px" }}>ARCHIVE 2026</Text>
+          <Text style={{ letterSpacing: "10px", color: "#ccc", display: "block", marginBottom: "20px" }}>Art forest 2026</Text>
           <Title level={1} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, letterSpacing: "-3px", margin: 0 }}>
-            Masterpieces
+            Sew Ha Jung 
           </Title>
           <Paragraph style={{ color: "#888", fontSize: "1.1rem", marginTop: "20px" }}>
-            Sew Ha Jung 작가님의 시선이 머문 11가지 기록
+            HONG KONG 
+            <br />
+            AFFORDABLE ART FAIR 
           </Paragraph>
         </header>
 
