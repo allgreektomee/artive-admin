@@ -163,7 +163,7 @@ const SewHaJungArchive: React.FC = () => {
             </Button>
           </div>
           <Text style={{ letterSpacing: "5px", color: "#ddd", fontSize: "0.7rem", fontWeight: 'bold' }}>
-            © 2026 SEW HA JUNG AT ARTIVE.
+            © 2026 SEW HA JUNG .
           </Text>
         </footer>
       </main>
