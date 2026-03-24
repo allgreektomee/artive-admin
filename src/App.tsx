@@ -55,7 +55,7 @@ import TestPage from "./etc/pages/TestProjectPage";
 //test
 import ArtHomeNew from "./03.presentation/pages/ArtHomeNew";
 
-import SewHaJungArchive from "./etc/pages/SewHaJungArchive";
+import SewHaJungArchive from "./name/SewHaJungArchive";
 
 declare global {
   interface Window {
