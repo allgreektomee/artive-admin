@@ -111,7 +111,7 @@ const SewHaJungArchive: React.FC = () => {
               화면은 살아 있는 긴장을 갖는다.
             </p>
           </div>
-          <Text className="series-name">- Landscape of Memory -</Text>
+          <Text className="en-text">- Landscape of Memory -</Text>
         </section>
 
         {/* --- 6. Footer: 초기 스타일 복구 --- */}
