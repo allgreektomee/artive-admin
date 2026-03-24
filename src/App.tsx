@@ -47,6 +47,7 @@ import InsightPost from "./etc/pages/InsightPost";
 import LogList from "./etc/pages/LogList";
 import LogPost from "./etc/pages/LogPost";
 import LoginPage from "./etc/pages/LoginPage";
+import IndexPageList from "./etc/pages/IndexPageList";
 
 // Standalone
 import NotFound from "./etc/pages/NotFound";
@@ -136,6 +137,9 @@ const App: React.FC = () => {
               <Route path="artworks" element={<ArtworkList />} />
               <Route path="artworks/post" element={<ArtworkPost />} />
               <Route path="artworks/edit/:id" element={<ArtworkPost />} />
+
+                {/* Insight index */}
+              <Route path="index" element={<IndexPageList />} />
 
               {/* Insight Routes */}
               <Route path="insight" element={<InsightList />} />
