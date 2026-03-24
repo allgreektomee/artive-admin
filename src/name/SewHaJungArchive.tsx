@@ -44,13 +44,13 @@ const SewHaJungArchive: React.FC = () => {
         
         {/* --- 1. Header --- */}
         <header className="main-header">
-          <Text className="sub-tag">Art Forest 2026</Text>
+          <Text className="sub-statement">Landscape of Memory</Text>
           <Title level={1} className="main-name">Sewha Jung</Title>
           <div className="location-tag">
             <Text>Hong Kong | Affordable Art Fair</Text>
           </div>
         </header>
-
+ 
         {/* --- 2. 첫 이미지 --- */}
         <section className="intro-section">
           <ArtCard art={artworks[0]} isLarge={true} />
@@ -58,7 +58,7 @@ const SewHaJungArchive: React.FC = () => {
 
         {/* --- 3. 작가 노트 (영문 우선 + 모바일 최적화) --- */}
         <section className="statement-section">
-          <h2 className="statement-title">Landscape of Memory</h2>
+         
           <div className="statement-body">
             <p className="en-text">
               In free and sensory brushstrokes, <br/>
