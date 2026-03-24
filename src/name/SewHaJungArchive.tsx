@@ -26,8 +26,8 @@ const SewHaJungArchive: React.FC = () => {
     id: i + 1,
     thumbUrl: `${baseS3Url}s${i + 1}.jpg`,
     originalUrl: `${baseS3Url}${i + 1}.jpeg`, 
-    title: `Sew Ha Jung Archive #${String(i + 1).padStart(2, '0')}`,
-    medium: "Oil on Canvas",
+    title: `Sewha Jung - Landscape of Memory #${String(i + 1).padStart(2, '0')}`,
+    medium: "Acrylic on canvas.",
     size: i % 2 === 0 ? "60호" : "120호"
   }));
 
@@ -50,8 +50,8 @@ const SewHaJungArchive: React.FC = () => {
         {/* 모바일 핏을 위한 핵심 뷰포트 설정 */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         
-        <title>Sew Ha Jung | Hong Kong Affordable Art Fair 2026</title>
-        <meta property="og:title" content="Sew Ha Jung - Artist Portfolio" />
+        <title>Sewha Jung | Hong Kong Affordable Art Fair 2026</title>
+        <meta property="og:title" content="Sewha Jung - Artist Portfolio" />
         <meta property="og:description" content="HONG KONG - AFFORDABLE ART FAIR 2026" />
         <meta property="og:image" content={`${baseS3Url}1.jpeg`} />
         <meta property="og:url" content="https://www.artivefor.me/sewhajung" />
@@ -93,7 +93,7 @@ const SewHaJungArchive: React.FC = () => {
               color: "#000",
               lineHeight: 1
             }}>
-              Sew Ha Jung
+              Sewha Jung
             </Title>
             
             {/* 3. 하단 페어 문구 */}
@@ -122,6 +122,52 @@ const SewHaJungArchive: React.FC = () => {
             </div>
           </div>
         </header>
+        
+        {/* 작품 소개 (Headline) */}
+        <div style={{
+          maxWidth: "700px",
+          margin: "100px auto",
+          textAlign: "center",
+          padding: "0 20px"
+        }}>
+          {/* 작품 소개 (Headline) */}
+          <h2 style={{
+            fontSize: "14px",
+            letterSpacing: "4px",
+            color: "#333",
+            marginBottom: "40px",
+            fontWeight: 700,
+            textTransform: "uppercase"
+          }}>
+            Landscape of Memory
+          </h2>
+
+          {/* 본문 (Statement) */}
+          <div style={{
+            fontSize: "16px",
+            lineHeight: "2",
+            color: "#444",
+            wordBreak: "keep-all",
+            fontFamily: "'Noto Serif KR', serif", // 세리프체 권장
+            fontWeight: 300
+          }}>
+            <p style={{ marginBottom: "20px" }}>
+              나는 자유롭고 감각적인 붓질 속에서 끊임없이 혼돈을 마주한다. <br />
+              화면은 소용돌이와 같은 선과 색으로 가득하지만, 그 안에서 나는 질서를 찾으려 한다.
+            </p>
+            <p>
+              질서가 지나치면 자유가 사라지고, 자유만 넘치면 공허한 메아리만 남는다. <br />
+              나의 회화는 이 모순의 경계 위에서 이루어진다.
+            </p>
+            {/* 중간 구분선 */}
+            <div style={{ width: "20px", height: "1px", backgroundColor: "#ccc", margin: "40px auto" }}></div>
+            <p style={{ fontSize: "15px", color: "#666" }}>
+              혼돈과 질서가 서로 부딪히며 잠시 균형을 이룰 때, <br />
+              화면은 살아 있는 긴장을 갖는다. 나는 그 순간을 포착하려 한다. <br />
+              그것은 시대가 품은 복잡성과 닮아 있는 감각적 언어다.
+            </p>
+          </div>
+        </div>
 
         {/* 그리드 리스트: CSS 클래스로 모바일 1열 / 데스크탑 가변열 처리 */}
         <div className="artwork-grid">
@@ -165,7 +211,7 @@ const SewHaJungArchive: React.FC = () => {
             </Button>
           </div>
           <Text style={{ letterSpacing: "3px", color: "#ddd", fontSize: "0.6rem", fontWeight: 'bold' }}>
-            © 2026 SEW HA JUNG .
+            © 2026 Sewha JUNG .
           </Text>
         </footer>
       </main>
