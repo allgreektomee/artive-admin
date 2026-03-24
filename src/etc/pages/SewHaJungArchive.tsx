@@ -151,11 +151,18 @@ const SewHaJungArchive: React.FC = () => {
         width="auto" // 이미지 크기에 맞춤
         className="art-original-modal"
         closeIcon={<CloseOutlined style={{ fontSize: '1.5rem', color: '#fff' }} />} // 흰색 닫기 아이콘
+        style={{ top: 20 }} // 모달 자체의 상단 여백
         styles={{
-          mask: { backdropFilter: "blur(5px)", background: "rgba(0,0,0,0.8)" }, // 배경 흐리게
-          content: { background: 'transparent', padding: 0, boxShadow: 'none' }, // 모달 배경 투명
-          body: { padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }
-        }}
+          mask: { backdropFilter: "blur(5px)", background: "rgba(0,0,0,0.8)" },
+          body: { 
+            padding: 0, 
+            background: 'transparent', // 배경 투명
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            position: 'relative' 
+          }
+      }}    
       >
         {currentArt && (
           <div style={{ position: 'relative' }}>
