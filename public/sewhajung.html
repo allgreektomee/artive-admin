@@ -2,12 +2,7 @@
 <html lang="ko">
   <head>
 
-  <script>
-    // 리액트 라우터가 경로를 오해하지 않도록 현재 경로를 강제로 주입합니다.
-    if (window.location.pathname === '/sewhajung.html') {
-      window.history.replaceState(null, '', '/sewhajung');
-    }
-  </script>
+  
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -21,7 +16,12 @@
     <meta property="og:image" content="https://artive-uploads.s3.ap-southeast-2.amazonaws.com/jsh/sewha/1.jpeg" />
     <meta property="og:url" content="https://artivefor.me/sewhajung" />
     <meta property="og:type" content="website" />
-    
+    <script>
+        // 리액트 라우터가 경로를 오해하지 않도록 현재 경로를 강제로 주입합니다.
+        if (window.location.pathname === '/sewhajung.html') {
+        window.history.replaceState(null, '', '/sewhajung');
+        }
+    </script>
   </head>
   <body>
     <div id="root"></div>
