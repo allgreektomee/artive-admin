@@ -57,16 +57,68 @@ const SewHaJungArchive: React.FC = () => {
     
 
       <main style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 40px 100px" }}>
-        <header style={{ padding: "120px 0 100px", textAlign: "center" }}>
-          <Text style={{ letterSpacing: "10px", color: "#ccc", display: "block", marginBottom: "20px" }}>Art forest 2026</Text>
-          <Title level={1} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, letterSpacing: "-3px", margin: 0 }}>
-            Sew Ha Jung 
-          </Title>
-          <Paragraph style={{ color: "#888", fontSize: "1.1rem", marginTop: "20px" }}>
-            HONG KONG 
-            <br />
-            AFFORDABLE ART FAIR 
-          </Paragraph>
+        <header style={{ 
+          /* 핵심 보완: 상하단 여백 대폭 확대 (120px 0 -> 180px 0) */
+          padding: "180px 0 160px", 
+          textAlign: "center",
+          backgroundColor: "#fff" // 배경색 명시
+        }}>
+          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+            
+            {/* 1. 상단 미니멀 문구: 자간을 매우 넓게 줌 */}
+            <Text style={{ 
+              letterSpacing: "14px", // 자간 확대
+              color: "#aaa", // 조금 더 연하게
+              fontSize: "0.8rem", // 크기 축소
+              fontWeight: 400,
+              display: "block", 
+              marginBottom: "50px", // 아래 제목과의 간격
+              fontFamily: "'Noto Serif KR', serif", // 명조 계열로 고급스럽게
+              textTransform: "uppercase" // 대문자로
+            }}>
+              Art forest 2026
+            </Text>
+            
+            {/* 2. 주 제목: 작가명 (강렬한 볼드) */}
+            <Title level={1} style={{ 
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", // 현대적인 산세리프
+              fontSize: "clamp(3rem, 12vw, 6.5rem)", // 반응형 크기
+              fontWeight: 900, // 최상위 굵기
+              letterSpacing: "-4px", // 굵은 폰트는 자간을 좁혀야 이쁨
+              margin: "0 0 50px 0",
+              color: "#000",
+              lineHeight: 1
+            }}>
+              Sew Ha Jung
+            </Title>
+            
+            {/* 3. 하단 페어 문구: 명확히 두 줄로 나눔 */}
+            <div style={{ marginTop: "20px" }}>
+              <Text style={{ 
+                display: "block",
+                fontSize: "1.2rem", 
+                letterSpacing: "4px",
+                color: "#666", 
+                fontWeight: 500,
+                fontFamily: "'Noto Serif KR', serif",
+                textTransform: "uppercase",
+                marginBottom: "10px"
+              }}>
+                Hong Kong
+              </Text>
+              <Text style={{ 
+                display: "block",
+                fontSize: "1.2rem", 
+                letterSpacing: "4px",
+                color: "#666", 
+                fontWeight: 500,
+                fontFamily: "'Noto Serif KR', serif",
+                textTransform: "uppercase"
+              }}>
+                Affordable Art Fair
+              </Text>
+            </div>
+          </div>
         </header>
 
         {/* 그리드 리스트 */}
