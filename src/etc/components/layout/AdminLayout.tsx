@@ -55,7 +55,11 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     },
     { key: "/admin/insight", icon: <ReadOutlined />, label: "인사이트" },
     { key: "/admin/log", icon: <FileTextOutlined />, label: "로그 (Log)" },
-
+    {
+      key: "/admin/indexpage",
+      icon: <TagsOutlined />,
+      label: "목차 관리",
+    },
     ...(isAdmin
       ? [
           { type: "divider" as const },
@@ -64,7 +68,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
             key: "/admin/categories",
             icon: <TagsOutlined />,
             label: "카테고리 관리",
-          },
+          },  
           {
             key: "/admin/settings",
             icon: <SettingOutlined />,

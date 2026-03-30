@@ -47,6 +47,7 @@ import InsightPost from "./etc/pages/InsightPost";
 import LogList from "./etc/pages/LogList";
 import LogPost from "./etc/pages/LogPost";
 import LoginPage from "./etc/pages/LoginPage";
+import IndexPageList from "./etc/pages/IndexPageList";
 
 // Standalone
 import NotFound from "./etc/pages/NotFound";
@@ -54,6 +55,8 @@ import TestPage from "./etc/pages/TestProjectPage";
 
 //test
 import ArtHomeNew from "./03.presentation/pages/ArtHomeNew";
+
+import SewHaJungArchive from "./name/SewHaJungArchive";
 
 declare global {
   interface Window {
@@ -90,6 +93,8 @@ const App: React.FC = () => {
 
           {/* 🚀 [TEST] 신규 아키텍처 테스트 경로 추가 */}
           <Route path="/test-art" element={<ArtHomeNew />} />
+          <Route path="/sewhajung" element={<SewHaJungArchive />} />
+
 
           {/* [NEW] ART 도메인 - 워드프레스 데이터 기반 */}
           {/* [변경] 매거진 전용 레이아웃 또는 독립 페이지 */}
@@ -132,6 +137,9 @@ const App: React.FC = () => {
               <Route path="artworks" element={<ArtworkList />} />
               <Route path="artworks/post" element={<ArtworkPost />} />
               <Route path="artworks/edit/:id" element={<ArtworkPost />} />
+
+                {/* Insight index */}
+              <Route path="indexpage" element={<IndexPageList />} />
 
               {/* Insight Routes */}
               <Route path="insight" element={<InsightList />} />
