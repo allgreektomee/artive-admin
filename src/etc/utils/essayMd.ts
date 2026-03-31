@@ -49,7 +49,7 @@ const modules = import.meta.glob("../file/*.md", {
 
 const essays: Essay[] = Object.entries(modules)
   .map(([path, raw]) => parseEssay(filenameToSlug(path), raw))
-  // deterministic order: by slug (files are named ch01..ch05)
+  // deterministic order: by slug (e.g. ch01..ch06)
   .sort((a, b) => a.slug.localeCompare(b.slug, "en"));
 
 export function getEssays(): Essay[] {

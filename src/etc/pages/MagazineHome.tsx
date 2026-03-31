@@ -613,7 +613,7 @@ const MagazineHome: React.FC = () => {
                     letterSpacing: "-0.5px",
                   }}
                 >
-                  Just-Art : 5편 카드 목록 보기
+                  Just-Art : {essays.length}편 카드 목록 보기
                 </Text>
               </div>
               <ArrowRightOutlined style={{ fontSize: "1rem", color: "#ccc" }} />

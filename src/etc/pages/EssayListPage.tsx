@@ -49,11 +49,11 @@ const EssayListPage: React.FC = () => {
           JUST ART
         </Title>
         <Paragraph style={{ color: "#666", marginBottom: 34, lineHeight: 1.9 }}>
-          저장된 마크다운 원고를 그대로 불러와 보여줍니다.
+          『JUST ART』 작업 중인 원고를 보여 드립니다.
         </Paragraph>
 
         <Row gutter={[16, 16]}>
-          {essays.slice(0, 5).map((essay) => (
+          {essays.map((essay) => (
             <Col key={essay.slug} xs={24} sm={12} md={12} lg={8}>
               <Card
                 hoverable
