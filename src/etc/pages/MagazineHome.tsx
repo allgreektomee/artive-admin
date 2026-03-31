@@ -6,6 +6,7 @@ import {
   ArrowRightOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { getEssays } from "../utils/essayMd";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -15,6 +16,7 @@ const MagazineHome: React.FC = () => {
   }, []);
 
   const navigate = useNavigate();
+  const essays = getEssays();
 
   const snsLinks = {
     instagram: "https://www.instagram.com/artivefor.me",
@@ -519,36 +521,12 @@ const MagazineHome: React.FC = () => {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {[
-              {
-                no: "01",
-                title: "제1장 : 오전 8시",
-                link: "https://cms.artivefor.me/8oclock/",
-              },
-              {
-                no: "02",
-                title: "제2장 : 정글로 돌아가는 호랑이",
-                link: "https://cms.artivefor.me/tiger/",
-              },
-              {
-                no: "03",
-                title: "제3장 : 메일함에 도착한 ‘닫힌 문’",
-                link: "https://cms.artivefor.me/atelier/",
-              },
-              {
-                no: "04",
-                title: "제4장 : 서촌, 예고없이 마주한 심야미술관",
-                link: "https://cms.artivefor.me/midnight-museum/",
-              },
-              {
-                no: "MORE",
-                title: "Just-Art : 전체 기록 보기",
-                link: "https://cms.artivefor.me/category/just-art/",
-              },
-            ].map((item, index) => (
+            {essays.map((essay, index) => (
               <div
-                key={index}
-                onClick={() => window.open(item.link, "_blank")}
+                key={essay.slug}
+                onClick={() =>
+                  navigate(`/essay/${encodeURIComponent(essay.slug)}`)
+                }
                 style={{
                   padding: "25px 0",
                   borderBottom: "1px solid #f0f0f0",
@@ -573,21 +551,21 @@ const MagazineHome: React.FC = () => {
                       fontFamily: "'Helvetica Neue', sans-serif",
                       fontSize: "0.75rem",
                       fontWeight: 700,
-                      color: item.no === "MORE" ? "#000" : "#ccc",
+                      color: "#ccc",
                       width: "50px",
                     }}
                   >
-                    {item.no}
+                    {String(index + 1).padStart(2, "0")}
                   </Text>
                   <Text
                     style={{
-                      fontSize: "1.1rem", // 기존 Paragraph와 동일한 사이즈
-                      fontWeight: item.no === "MORE" ? 700 : 500,
+                      fontSize: "1.1rem",
+                      fontWeight: 500,
                       color: "#444",
                       letterSpacing: "-0.5px",
                     }}
                   >
-                    {item.title}
+                    {essay.title}
                   </Text>
                 </div>
                 <ArrowRightOutlined
@@ -595,6 +573,51 @@ const MagazineHome: React.FC = () => {
                 />
               </div>
             ))}
+            <div
+              onClick={() => navigate("/essay")}
+              style={{
+                padding: "25px 0",
+                borderBottom: "1px solid #f0f0f0",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.paddingLeft = "10px";
+                e.currentTarget.style.borderBottomColor = "#000";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.paddingLeft = "0";
+                e.currentTarget.style.borderBottomColor = "#f0f0f0";
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontFamily: "'Helvetica Neue', sans-serif",
+                    fontSize: "0.75rem",
+                    fontWeight: 700,
+                    color: "#000",
+                    width: "50px",
+                  }}
+                >
+                  MORE
+                </Text>
+                <Text
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 700,
+                    color: "#444",
+                    letterSpacing: "-0.5px",
+                  }}
+                >
+                  Just-Art : 5편 카드 목록 보기
+                </Text>
+              </div>
+              <ArrowRightOutlined style={{ fontSize: "1rem", color: "#ccc" }} />
+            </div>
           </div>
         </div>
       </section>

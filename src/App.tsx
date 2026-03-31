@@ -11,6 +11,8 @@ import PublicLayout from "./etc/pages/PublicLayout";
 // =========================================
 import MagazineHome from "./etc/pages/MagazineHome"; // 하드코딩 홈 유지
 import ProfilePage from "./etc/pages/ProfileTest"; // 에필로그
+import EssayListPage from "./etc/pages/EssayListPage";
+import EssayViewerPage from "./etc/pages/EssayViewerPage";
 
 // =========================================
 // 2. [NEW] ART 도메인 (워드프레스 연동 및 실전 전시)
@@ -89,6 +91,8 @@ const App: React.FC = () => {
             {/* [기존] 하드코딩된 루트 홈 */}
             <Route index element={<MagazineHome />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="essay" element={<EssayListPage />} />
+            <Route path="essay/:slug" element={<EssayViewerPage />} />
           </Route>
 
           {/* 🚀 [TEST] 신규 아키텍처 테스트 경로 추가 */}
