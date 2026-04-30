@@ -21,7 +21,7 @@ function ExecutionResultBlock({ code, info }: { code: string; info: string }) {
           background: "#fafafa",
           fontSize: "0.875rem",
           fontWeight: 600,
-          color: #3f3f46,
+          color: "#3f3f46",
         }}
       >
         <span style={{ marginRight: "0.35rem", color: "#a1a1aa" }} aria-hidden>
