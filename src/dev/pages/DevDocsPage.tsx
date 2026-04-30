@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Card, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
@@ -32,9 +32,16 @@ function parseTab(raw: string | null): TabId {
 }
 
 function excerptFromPartBody(body: string, maxLen = 220): string {
-  const lines = body.split("\n").filter((l) => l.trim().length > 0);
-  const skipHeading = lines[0]?.startsWith("##") ? lines.slice(1) : lines;
-  const text = skipHeading.join(" ").replace(/\s+/g, " ").trim();
+  const lines = body.split("\n").map((line) => line.trim());
+  const startIndex = lines.findIndex((line) => line.length > 0 && !line.startsWith("##"));
+  const paragraphLines: string[] = [];
+
+  for (const line of lines.slice(startIndex === -1 ? 0 : startIndex)) {
+    if (line.length === 0 || /^\d+\.\s/.test(line)) break;
+    paragraphLines.push(line);
+  }
+
+  const text = paragraphLines.join(" ").replace(/\s+/g, " ").trim();
   if (text.length <= maxLen) return text;
   return `${text.slice(0, maxLen)}…`;
 }
@@ -59,6 +66,11 @@ const DevDocsPage: React.FC = () => {
   const article = useMemo(() => {
     if (!ps || !as) return null;
     return getJavaScriptArticle(ps, as);
+  }, [ps, as]);
+
+  useEffect(() => {
+    if (!ps || !as) return;
+    window.scrollTo({ top: 0 });
   }, [ps, as]);
 
   const adjacentArticles = useMemo(() => {
