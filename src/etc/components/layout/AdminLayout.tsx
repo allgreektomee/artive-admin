@@ -11,6 +11,7 @@ import {
   TagsOutlined,
   ReadOutlined,
   FileTextOutlined,
+  MessageOutlined,
   MenuOutlined, // 햄버거 버튼용
 } from "@ant-design/icons";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
@@ -42,6 +43,7 @@ const AdminLayout: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   // 2. 권한별 메뉴 구성
   const menuItems = [
     { key: "/admin/dashboard", icon: <DesktopOutlined />, label: "대시보드" },
+    { key: "/admin/chat", icon: <MessageOutlined />, label: "채팅" },
     { key: "/admin/profile", icon: <UserOutlined />, label: "내 프로필" },
     {
       key: "/admin/artworks",

@@ -40,6 +40,7 @@ const EssayViewerPage: React.FC = () => {
     ? buildMetaDescription(essay.excerpt, essay.title, essay.content)
     : "";
   const fullTitle = essay ? `${essay.title} | JUST ART` : "JUST ART";
+  const ogImage = essay?.coverImage ?? DEFAULT_OG_IMAGE;
 
   const jsonLd = essay
     ? JSON.stringify(
@@ -76,12 +77,12 @@ const EssayViewerPage: React.FC = () => {
           <meta property="og:description" content={description} />
           <meta property="og:url" content={pageUrl} />
           <meta property="og:locale" content="ko_KR" />
-          <meta property="og:image" content={DEFAULT_OG_IMAGE} />
+          <meta property="og:image" content={ogImage} />
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content={essay.title} />
           <meta name="twitter:description" content={description} />
-          <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
+          <meta name="twitter:image" content={ogImage} />
 
           {jsonLd ? (
             <script type="application/ld+json">{jsonLd}</script>
@@ -105,6 +106,22 @@ const EssayViewerPage: React.FC = () => {
             <Title level={2} style={{ marginTop: 0, marginBottom: 28 }}>
               {essay.title}
             </Title>
+
+            {essay.coverImage ? (
+              <div style={{ marginBottom: 28 }}>
+                <img
+                  src={essay.coverImage}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    maxHeight: "min(70vh, 520px)",
+                    objectFit: "contain",
+                    display: "block",
+                    background: "#f7f7f7",
+                  }}
+                />
+              </div>
+            ) : null}
 
             {/* 원고(.md) 줄바꿈·빈 줄을 그대로 반영 (마크다운 단일 개행 병합 없음) */}
             <article

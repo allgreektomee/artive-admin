@@ -50,6 +50,7 @@ import LogList from "./etc/pages/LogList";
 import LogPost from "./etc/pages/LogPost";
 import LoginPage from "./etc/pages/LoginPage";
 import IndexPageList from "./etc/pages/IndexPageList";
+import AdminChatPage from "./etc/pages/AdminChatPage";
 
 // Standalone
 import NotFound from "./etc/pages/NotFound";
@@ -136,6 +137,7 @@ const App: React.FC = () => {
             <Route element={<AdminLayout onLogout={handleLogout} />}>
               <Route index element={<Navigate to="dashboard" replace />} />
               <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="chat" element={<AdminChatPage />} />
               <Route path="profile" element={<ProfileSetting />} />
               <Route path="users" element={<UserManagement />} />
               <Route path="artworks" element={<ArtworkList />} />

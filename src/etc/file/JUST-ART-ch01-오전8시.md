@@ -1,4 +1,5 @@
 『JUST ART』 제1장: 오전 8시
+![JUST ART 제1장](https://artive-uploads.s3.ap-southeast-2.amazonaws.com/artworks/art/display/justart-01.webp)
 오전 8시.
 벽 너머에서 옆 사무실 사람들의 출근 소리가 들려온다.
 쿵쿵 걸어오는 발소리, 문이 열리고 닫히는 금속성 소음들.

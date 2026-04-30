@@ -58,10 +58,26 @@ const EssayListPage: React.FC = () => {
               <Card
                 hoverable
                 onClick={() => navigate(`/essay/${encodeURIComponent(essay.slug)}`)}
+                cover={
+                  essay.coverImage ? (
+                    <div style={{ height: 200, overflow: "hidden", background: "#f5f5f5" }}>
+                      <img
+                        alt=""
+                        src={essay.coverImage}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                        }}
+                      />
+                    </div>
+                  ) : undefined
+                }
                 styles={{
                   body: {
                     padding: 20,
-                    minHeight: 180,
+                    minHeight: essay.coverImage ? 140 : 180,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
