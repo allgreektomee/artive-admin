@@ -60,6 +60,7 @@ import TestPage from "./etc/pages/TestProjectPage";
 import ArtHomeNew from "./03.presentation/pages/ArtHomeNew";
 
 import SewHaJungArchive from "./name/SewHaJungArchive";
+import DevDocsPage from "./dev/pages/DevDocsPage";
 
 declare global {
   interface Window {
@@ -128,6 +129,9 @@ const App: React.FC = () => {
               STANDALONE & TEST
              ========================================= */}
           <Route path="/testpage" element={<TestPage />} />
+
+          {/* 학습 정리 (마크다운): /dev */}
+          <Route path="/dev" element={<DevDocsPage />} />
 
           {/* =========================================
               ADMIN 영역

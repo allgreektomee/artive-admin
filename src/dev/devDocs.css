@@ -1,0 +1,88 @@
+/* /dev 학습 페이지용 가벼운 “프로즈” 스타일 (Tailwind 없음) */
+.dev-docs-prose {
+  max-width: 42rem;
+  color: #27272a;
+  line-height: 1.65;
+  font-size: 0.9375rem;
+}
+
+.dev-docs-prose h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.dev-docs-prose h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem;
+}
+
+.dev-docs-prose h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.4rem;
+}
+
+.dev-docs-prose p {
+  margin: 0.5rem 0;
+}
+
+.dev-docs-prose ul,
+.dev-docs-prose ol {
+  margin: 0.5rem 0;
+  padding-left: 1.35rem;
+}
+
+.dev-docs-prose pre {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+  background: #f4f4f5;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+}
+
+.dev-docs-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.84em;
+}
+
+.dev-docs-prose p > code,
+.dev-docs-prose li > code {
+  padding: 0.1em 0.35em;
+  border-radius: 0.25rem;
+  background: #f4f4f5;
+}
+
+.dev-docs-prose pre code {
+  font-size: inherit;
+  background: none;
+  padding: 0;
+}
+
+.dev-docs-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin: 1rem 0;
+}
+
+.dev-docs-prose th,
+.dev-docs-prose td {
+  border: 1px solid #e4e4e7;
+  padding: 0.4rem 0.6rem;
+}
+
+.dev-docs-prose th {
+  background: #fafafa;
+}
+
+.dev-docs-exec summary {
+  list-style: none;
+}
+
+.dev-docs-exec summary::-webkit-details-marker {
+  display: none;
+}
