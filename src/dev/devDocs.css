@@ -62,6 +62,11 @@
   padding: 0;
 }
 
+.dev-docs-prose pre code.hljs {
+  overflow: visible;
+  background: transparent;
+}
+
 .dev-docs-prose table {
   width: 100%;
   border-collapse: collapse;

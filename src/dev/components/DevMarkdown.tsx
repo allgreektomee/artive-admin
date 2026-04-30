@@ -1,12 +1,19 @@
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+import "highlight.js/styles/github.css";
 import { splitMarkdownByExecutionResults } from "../lib/splitMarkdownByExecutionResults";
 
 type Props = {
   source: string;
   className?: string;
   collapseExecutionResults?: boolean;
+};
+
+const markdownPlugins = {
+  remark: [remarkGfm],
+  rehype: [rehypeHighlight],
 };
 
 function ExecutionResultBlock({ code, info }: { code: string; info: string }) {
@@ -76,7 +83,12 @@ export function DevMarkdown({
   if (!collapseExecutionResults) {
     return (
       <article className={className}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{source}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={markdownPlugins.remark}
+          rehypePlugins={markdownPlugins.rehype}
+        >
+          {source}
+        </ReactMarkdown>
       </article>
     );
   }
@@ -86,7 +98,10 @@ export function DevMarkdown({
   if (segments.length === 1 && segments[0].type === "markdown") {
     return (
       <article className={className}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          remarkPlugins={markdownPlugins.remark}
+          rehypePlugins={markdownPlugins.rehype}
+        >
           {segments[0].body}
         </ReactMarkdown>
       </article>
@@ -99,7 +114,10 @@ export function DevMarkdown({
         <Fragment key={i}>
           {seg.type === "markdown" ? (
             seg.body.trim() ? (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown
+                remarkPlugins={markdownPlugins.remark}
+                rehypePlugins={markdownPlugins.rehype}
+              >
                 {seg.body}
               </ReactMarkdown>
             ) : null

@@ -10,6 +10,7 @@ import {
   listJavaScriptArticleGroups,
   listParts,
   readOutlineMarkdown,
+  type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
 } from "../lib/devOutline";
@@ -59,6 +60,22 @@ const DevDocsPage: React.FC = () => {
     if (!ps || !as) return null;
     return getJavaScriptArticle(ps, as);
   }, [ps, as]);
+
+  const adjacentArticles = useMemo(() => {
+    if (!article) return { prev: null, next: null };
+
+    const articles = articleGroups.flatMap((group) => group.articles);
+    const currentIndex = articles.findIndex(
+      (item) => item.partSlug === article.partSlug && item.slug === article.slug,
+    );
+
+    if (currentIndex === -1) return { prev: null, next: null };
+
+    return {
+      prev: articles[currentIndex - 1] ?? null,
+      next: articles[currentIndex + 1] ?? null,
+    };
+  }, [article, articleGroups]);
 
   const outlineSection = useMemo(() => {
     if (!outlineId) return null;
@@ -214,6 +231,10 @@ const DevDocsPage: React.FC = () => {
             <Card>
               <DevMarkdown source={article.body} />
             </Card>
+            <ArticleNavigationCards
+              prev={adjacentArticles.prev}
+              next={adjacentArticles.next}
+            />
           </div>
         )}
 
@@ -239,7 +260,6 @@ const DevDocsPage: React.FC = () => {
             preamble={preamble}
             parts={parts}
             articleGroups={articleGroups}
-            setQuery={setQuery}
           />
         )}
       </div>
@@ -274,12 +294,10 @@ function JavaScriptHome({
   preamble,
   parts,
   articleGroups,
-  setQuery,
 }: {
   preamble: string;
   parts: OutlinePart[];
   articleGroups: JavaScriptArticleGroup[];
-  setQuery: (next: Record<string, string | undefined>) => void;
 }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
@@ -300,71 +318,103 @@ function JavaScriptHome({
 
       <div>
         <Text strong style={{ fontSize: 12, letterSpacing: "0.08em", color: "#71717a" }}>
-          목차 (1 · 2 · 3부)
-        </Text>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: 16,
-            marginTop: 16,
-          }}
-        >
-          {parts.map((p) => (
-            <Card
-              key={p.id}
-              hoverable
-              onClick={() =>
-                setQuery({
-                  tab: "js",
-                  outline: String(p.id),
-                  ps: undefined,
-                  as: undefined,
-                })
-              }
-              size="small"
-              title={`${p.id}부`}
-            >
-              <Text type="secondary" style={{ fontSize: 13 }}>
-                {p.headingLine.replace(/^##\s*\d+부\.\s*/, "")}
-              </Text>
-              <ParagraphEllipsis text={excerptFromPartBody(p.body)} />
-              <Text style={{ fontSize: 12, marginTop: 8, display: "block" }}>
-                전체 보기 →
-              </Text>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <Text strong style={{ fontSize: 12, letterSpacing: "0.08em", color: "#71717a" }}>
           작성된 콘텐츠
         </Text>
         <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 16 }}>
-          {articleGroups.map((group) => (
-            <Card key={group.slug} size="small" title={`${group.id}부. ${group.title}`}>
-              {group.articles.length === 0 ? (
-                <Text type="secondary">아직 작성된 글이 없습니다.</Text>
-              ) : (
-                <ol style={{ margin: 0, paddingLeft: 18 }}>
-                  {group.articles.map((article) => (
-                    <li key={article.href} style={{ marginBottom: 6 }}>
-                      <Link to={article.href} style={{ fontSize: 14 }}>
-                        <Text code style={{ fontSize: 11, marginRight: 8 }}>
-                          {String(article.order).padStart(2, "0")}
-                        </Text>
-                        {article.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              )}
-            </Card>
-          ))}
+          {articleGroups.map((group) => {
+            const part = parts.find((p) => p.id === group.id);
+
+            return (
+              <Card key={group.slug} size="small" title={`${group.id}부. ${group.title}`}>
+                {part ? (
+                  <ParagraphEllipsis text={excerptFromPartBody(part.body, 140)} />
+                ) : null}
+                {group.articles.length === 0 ? (
+                  <Text type="secondary">아직 작성된 글이 없습니다.</Text>
+                ) : (
+                  <ol style={{ margin: "14px 0 0", paddingLeft: 18 }}>
+                    {group.articles.map((article) => (
+                      <li key={article.href} style={{ marginBottom: 6 }}>
+                        <Link to={article.href} style={{ fontSize: 14 }}>
+                          <Text code style={{ fontSize: 11, marginRight: 8 }}>
+                            {String(article.order).padStart(2, "0")}
+                          </Text>
+                          {article.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </Card>
+            );
+          })}
         </div>
       </div>
     </div>
+  );
+}
+
+function ArticleNavigationCards({
+  prev,
+  next,
+}: {
+  prev: JavaScriptArticle | null;
+  next: JavaScriptArticle | null;
+}) {
+  if (!prev && !next) return null;
+
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gap: 12,
+        marginTop: 20,
+      }}
+    >
+      {prev ? (
+        <ArticleNavigationCard label="이전 글" article={prev} direction="prev" />
+      ) : null}
+      {next ? (
+        <ArticleNavigationCard label="다음 글" article={next} direction="next" />
+      ) : null}
+    </div>
+  );
+}
+
+function ArticleNavigationCard({
+  label,
+  article,
+  direction,
+}: {
+  label: string;
+  article: JavaScriptArticle;
+  direction: "prev" | "next";
+}) {
+  return (
+    <Link to={article.href} style={{ textDecoration: "none" }}>
+      <Card hoverable size="small" style={{ height: "100%" }}>
+        <Text
+          type="secondary"
+          style={{
+            display: "block",
+            marginBottom: 8,
+            fontSize: 12,
+            fontWeight: 600,
+          }}
+        >
+          {direction === "prev" ? "← " : ""}
+          {label}
+          {direction === "next" ? " →" : ""}
+        </Text>
+        <Text strong style={{ color: "#27272a" }}>
+          {article.title}
+        </Text>
+        <Text type="secondary" style={{ display: "block", marginTop: 6, fontSize: 12 }}>
+          {article.partId}부 · {String(article.order).padStart(2, "0")}
+        </Text>
+      </Card>
+    </Link>
   );
 }
 
