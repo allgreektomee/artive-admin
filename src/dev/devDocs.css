@@ -3,19 +3,27 @@
 .live-example-grid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .live-example-code-pre {
   margin: 0;
-  padding: 0.85rem 1rem;
+  padding: 1rem 1.15rem;
   border-radius: 0.5rem;
   background: #f4f4f5;
   overflow: auto;
-  max-height: 22rem;
-  font-size: 0.75rem;
+  max-height: 26rem;
+  font-size: 0.8125rem;
   line-height: 1.5;
   border: 1px solid #e4e4e7;
+}
+
+.live-example-result-panel {
+  padding: 1.35rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #f4f4f5;
+  background: #fafafa;
+  min-height: 5.5rem;
 }
 
 .live-example-code-pre code.hljs {
@@ -31,14 +39,32 @@
 
 .react-outline-goal-box {
   margin-top: 16px;
-  padding: 14px 16px;
+  padding: 22px 24px;
   background: #f4f4f5;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid #e4e4e7;
+}
+
+.react-outline-goal-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #71717a;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.react-outline-goal-text {
+  font-size: 1.0625rem;
+  color: #27272a;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  font-family: ui-sans-serif, system-ui, sans-serif;
 }
 
 .react-outline-goal-box--clickable {
   cursor: pointer;
+  min-height: 5.5rem;
   transition:
     background 0.15s ease,
     border-color 0.15s ease,

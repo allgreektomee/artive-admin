@@ -1,6 +1,6 @@
 # reactTestProject (JavaScript, 아트워크 위주)
 
-`src/etc`와 같은 **폴더 역할**(`api`, `hooks`, `components/artwork`, `chat`)을 두고, **작품(아트워크) CRUD·이미지 업로드·DnD 정렬**에 쓰는 코드만 JavaScript로 옮긴 참고 트리입니다.
+`src/etc`와 비슷한 **폴더 역할**(`api`, `hooks`, `components/artwork`, `pages`)을 두고, **작품(아트워크) CRUD·이미지 업로드·DnD 정렬**에 쓰는 코드만 JavaScript로 옮긴 참고 트리입니다.
 
 ## 포함 범위와 확장자
 
@@ -21,7 +21,6 @@
 | `components/artwork/SortableItem.jsx` | `@dnd-kit` 정렬 행 |
 | `pages/ArtworkListPage.jsx` | 작품 목록 — **소스는 JS** |
 | `pages/ArtworkDetailPage.jsx` | 작품 상세 — **소스는 JS** |
-| `chat/chatWsTypes.js` · `hooks/useChatWebSocket.js` | admin 채팅과 동일 패턴 (작품과 무관, 구조 유지용) |
 
 ## 의존성
 
@@ -30,7 +29,6 @@
 ## 환경 변수
 
 - API 베이스: `VITE_API_BASE_URL` (미설정 시 `https://api.artivefor.me/api/v1`)
-- 채팅: `VITE_CHAT_WS_URL`, `VITE_CHAT_WS_AUTH` (`etc`와 동일)
 
 이 디렉터리는 **단독 빌드 대상이 아니라** 복사·참조·연재용으로 두었습니다.
 

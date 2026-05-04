@@ -22,7 +22,7 @@ import {
   type ReactDoc,
   type ServerDoc,
 } from "../lib/devOutline";
-import liveExamplesSource from "../liveExamples/reactExamples.jsx?raw";
+import { listReactTestProjectSourceFiles } from "../lib/reactTestProjectSources";
 import "../devDocs.css";
 
 const { Text, Title } = Typography;
@@ -285,11 +285,7 @@ const DevDocsPage: React.FC = () => {
           </div>
         )}
         {tab === "react" && !rd && (
-          <ReactHome
-            reactDocs={reactDocs}
-            outlineSource={reactOutline}
-            liveExamplesSource={liveExamplesSource}
-          />
+          <ReactHome reactDocs={reactDocs} outlineSource={reactOutline} />
         )}
         {tab === "spring" && (
           <Placeholder
@@ -581,11 +577,9 @@ function ArticleNavigationCard({
 function ReactHome({
   reactDocs,
   outlineSource,
-  liveExamplesSource,
 }: {
   reactDocs: ReactDoc[];
   outlineSource: string;
-  liveExamplesSource: string;
 }) {
   const chapters = useMemo(() => listReactOutlineChapters(outlineSource), [outlineSource]);
   const docByOrder = useMemo(() => {
@@ -595,6 +589,24 @@ function ReactHome({
     }
     return m;
   }, [reactDocs]);
+
+  const reactTestSources = useMemo(() => listReactTestProjectSourceFiles(), []);
+  const sourcesByTopFolder = useMemo(() => {
+    const groups = new Map<string, typeof reactTestSources>();
+    for (const f of reactTestSources) {
+      const top = f.relativePath.includes("/")
+        ? (f.relativePath.split("/")[0] ?? "(root)")
+        : "(root)";
+      const arr = groups.get(top) ?? [];
+      arr.push(f);
+      groups.set(top, arr);
+    }
+    return [...groups.entries()].sort((a, b) => {
+      if (a[0] === "(root)") return -1;
+      if (b[0] === "(root)") return 1;
+      return a[0].localeCompare(b[0], "en");
+    });
+  }, [reactTestSources]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
@@ -609,40 +621,87 @@ function ReactHome({
         </Text>
       </div>
 
-      <details className="react-live-source-details" style={{ marginBottom: 4 }}>
+      <details className="react-live-source-details react-test-project-sources" style={{ marginBottom: 4 }}>
         <summary
+          className="react-test-project-sources-summary"
           style={{
             cursor: "pointer",
             fontWeight: 600,
-            fontSize: 14,
+            fontSize: 15,
             color: "#27272a",
             listStyle: "none",
+            padding: "12px 14px",
+            borderRadius: 10,
+            border: "1px solid #e4e4e7",
+            background: "#fafafa",
           }}
         >
-          전체 Live 예제 소스 한 파일 보기 — <code>reactExamples.jsx</code>
+          <code>src/dev/reactTestProject</code> 전체 소스 보기 (폴더별 · chat 제외)
         </summary>
-        <Text type="secondary" style={{ display: "block", marginTop: 10, marginBottom: 8, fontSize: 12 }}>
-          목차의 <strong>예제 코드·링크</strong> 표와 같은 순서로 <code>ENTRIES</code>가 정의되어 있습니다.
-          실전 JS 트리는 <code>src/dev/reactTestProject/</code> · 데모{" "}
+        <Text type="secondary" style={{ display: "block", marginTop: 12, marginBottom: 10, fontSize: 12 }}>
+          연재용 JavaScript 참고 트리와 동일한 파일입니다. 실제 앱 데모:{" "}
           <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
         </Text>
-        <pre
-          className="react-live-source-pre"
+        <div
           style={{
-            margin: 0,
-            padding: 12,
-            maxHeight: "min(70vh, 720px)",
+            maxHeight: "min(75vh, 800px)",
             overflow: "auto",
-            fontSize: 11,
-            lineHeight: 1.45,
-            background: "#fafafa",
             border: "1px solid #e4e4e7",
-            borderRadius: 8,
-            whiteSpace: "pre",
+            borderRadius: 10,
+            padding: 10,
+            background: "#fff",
           }}
         >
-          {liveExamplesSource}
-        </pre>
+          {sourcesByTopFolder.map(([folder, files]) => (
+            <details key={folder} style={{ marginBottom: 8 }}>
+              <summary
+                style={{
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  fontSize: 13,
+                  padding: "6px 4px",
+                  color: "#3f3f46",
+                }}
+              >
+                {folder === "(root)" ? "(루트)" : `${folder}/`}
+              </summary>
+              <div style={{ paddingLeft: 8 }}>
+                {files.map((f) => (
+                  <details key={f.relativePath} style={{ marginBottom: 6 }}>
+                    <summary
+                      style={{
+                        cursor: "pointer",
+                        fontSize: 12,
+                        padding: "4px 0",
+                        fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                        color: "#18181b",
+                      }}
+                    >
+                      {f.relativePath}
+                    </summary>
+                    <pre
+                      className="react-live-source-pre"
+                      style={{
+                        margin: "8px 0 0",
+                        padding: 12,
+                        maxHeight: 320,
+                        overflow: "auto",
+                        fontSize: 11,
+                        lineHeight: 1.45,
+                        background: "#fafafa",
+                        border: "1px solid #e4e4e7",
+                        borderRadius: 8,
+                        whiteSpace: "pre",
+                      }}
+                    >
+                      {f.content}
+                    </pre>
+                  </details>
+                ))}
+              </div>
+            </details>
+          ))}
+        </div>
       </details>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -655,25 +714,10 @@ function ReactHome({
                 ch.exampleGoal?.trim() || "본문에서 상세히 다룹니다.";
               const goalInner = (
                 <>
-                  <div
-                    style={{
-                      fontSize: 12,
-                      fontWeight: 700,
-                      color: "#71717a",
-                      marginBottom: 8,
-                    }}
-                  >
+                  <div className="react-outline-goal-label">
                     예제 목표
                   </div>
-                  <div
-                    style={{
-                      fontSize: 14,
-                      color: "#27272a",
-                      lineHeight: 1.6,
-                      whiteSpace: "pre-wrap",
-                      fontFamily: "ui-sans-serif, system-ui, sans-serif",
-                    }}
-                  >
+                  <div className="react-outline-goal-text">
                     {goalText}
                   </div>
                   {!doc ? (

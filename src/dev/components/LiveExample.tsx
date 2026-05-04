@@ -79,28 +79,26 @@ export function LiveExample({ exampleId }: Props) {
     );
   }
 
-  const hasCode = Boolean(highlighted);
-
   return (
     <section
       style={{
         margin: "1.25rem 0",
-        padding: "1rem",
-        borderRadius: 10,
+        padding: "1.35rem 1.5rem",
+        borderRadius: 12,
         border: "1px solid #e4e4e7",
         background: "#fff",
         boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
       }}
     >
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.06em", color: "#71717a" }}>
+      <div style={{ marginBottom: 14 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", color: "#71717a" }}>
           LIVE 예제
         </div>
-        <div style={{ fontSize: 15, fontWeight: 600, color: "#18181b", marginTop: 4 }}>
+        <div style={{ fontSize: 17, fontWeight: 600, color: "#18181b", marginTop: 6 }}>
           {entry.title}
         </div>
         {entry.description ? (
-          <span style={{ display: "block", marginTop: 6, fontSize: 13, color: "#71717a" }}>
+          <span style={{ display: "block", marginTop: 8, fontSize: 14, color: "#71717a", lineHeight: 1.55 }}>
             {entry.description}
           </span>
         ) : null}
@@ -111,11 +109,11 @@ export function LiveExample({ exampleId }: Props) {
           <div>
             <div
               style={{
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: "0.08em",
                 color: "#71717a",
-                marginBottom: 8,
+                marginBottom: 10,
               }}
             >
               예제 코드
@@ -128,24 +126,16 @@ export function LiveExample({ exampleId }: Props) {
         <div>
           <div
             style={{
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 700,
               letterSpacing: "0.08em",
               color: "#71717a",
-              marginBottom: 8,
+              marginBottom: 10,
             }}
           >
             실행 결과
           </div>
-          <div
-            style={{
-              padding: "1rem",
-              borderRadius: 8,
-              border: "1px solid #f4f4f5",
-              background: "#fafafa",
-              minHeight: hasCode ? undefined : 48,
-            }}
-          >
+          <div className="live-example-result-panel">
             <LiveExampleErrorBoundary>
               <Example />
             </LiveExampleErrorBoundary>
