@@ -1,5 +1,7 @@
 # 13장. Redux Toolkit
 
+> **reactTestProject**: 본문 **맨 아래**에 이 장과 연결된 파일 **전체 원문**(색 구문 강조)이 붙습니다(실무 RTK는 `src/etc`와 대조). React 탭 홈 「소스 보기」에서도 같은 파일을 고를 수 있습니다.
+
 **전역 상태**가 필요한 순간: **여러 화면**이 같은 도메인 데이터를 쓰고, props drilling·Context만으로는 **갱신 추적·미들웨어·시간 여행 디버깅** 등이 버거울 때. **Redux**는 단일 **store** 안에서 **action → reducer**로 상태를 순수하게 갱신하는 패턴이다. **Redux Toolkit(RTK)** 는 보일러플레이트를 줄여 **`createSlice`**, **`configureStore`** 중심으로 쓰게 해 준다.
 
 ## 언제 RTK를 쓰고 언제 안 쓰나

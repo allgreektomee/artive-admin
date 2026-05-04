@@ -1,5 +1,7 @@
 # 9장. React Router
 
+> **reactTestProject**: 본문 **맨 아래**에 이 장과 연결된 파일 **전체 원문**(색 구문 강조)이 붙습니다. React 탭 홈 「소스 보기」에서도 같은 파일을 고를 수 있습니다.
+
 SPA(Single Page Application)는 **페이지 전체를 새로고침하지 않고** URL만 바꾸며 화면을 전환한다. **React Router**는 URL과 **컴포넌트 트리의 일부**를 매칭해, “지금 이 경로에서는 어떤 화면을 그릴지”를 선언적으로 적게 해 준다. 이 장은 v6 계열 기준 개념이다(현재 프로젝트의 `react-router-dom` 버전에 맞춰 API 이름을 확인하면 된다).
 
 ## `BrowserRouter`

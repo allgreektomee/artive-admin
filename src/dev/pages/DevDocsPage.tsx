@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Card, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
 import { DevMarkdown } from "../components/DevMarkdown";
+import { ReactTestProjectChapterPanel } from "../components/ReactTestProjectChapterPanel";
 import {
   getJavaScriptArticle,
   getPart,
@@ -23,6 +24,8 @@ import {
   type ServerDoc,
 } from "../lib/devOutline";
 import { listReactTestProjectSourceFiles } from "../lib/reactTestProjectSources";
+import { highlightDevSource } from "../lib/highlightDevSource";
+import { REACT_TEST_PROJECT_SOURCE_GUIDE } from "../lib/reactTestProjectChapterRefs";
 import "../devDocs.css";
 
 const { Text, Title } = Typography;
@@ -277,6 +280,7 @@ const DevDocsPage: React.FC = () => {
             </nav>
             <Card>
               <DevMarkdown source={reactDoc.body} />
+              <ReactTestProjectChapterPanel docSlug={reactDoc.slug} />
             </Card>
             <ReactDocNavigationCards
               prev={adjacentReactDocs.prev}
@@ -624,6 +628,11 @@ function ReactHome({
     [reactTestSources, selectedSourcePath],
   );
 
+  const selectedSourceHtml = useMemo(() => {
+    if (!selectedSourceFile) return "";
+    return highlightDevSource(selectedSourceFile.relativePath, selectedSourceFile.content);
+  }, [selectedSourceFile]);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
       <div>
@@ -652,12 +661,39 @@ function ReactHome({
             background: "#fafafa",
           }}
         >
+          {/* 요약: JS 참고 트리 — 트리 클릭 시 아래 패널에만 원문 표시 · 장별 매핑은 목록 참고 */}
           <code>src/dev/reactTestProject</code> 소스 보기 (폴더 트리 · chat 제외)
         </summary>
         <Text type="secondary" style={{ display: "block", marginTop: 12, marginBottom: 10, fontSize: 12 }}>
-          트리에서 파일을 누르면 <strong>아래 한 곳</strong>에만 원문이 열립니다. 데모:{" "}
+          트리에서 파일을 누르면 <strong>아래 한 곳</strong>에만 원문이 열립니다(구문 강조). 데모:{" "}
           <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
         </Text>
+        <div
+          className="react-test-project-source-guide"
+          style={{
+            marginBottom: 14,
+            padding: "10px 12px",
+            borderRadius: 8,
+            background: "#fafafa",
+            border: "1px solid #e4e4e7",
+            fontSize: 12,
+            color: "#52525b",
+          }}
+        >
+          <div style={{ fontWeight: 600, color: "#3f3f46", marginBottom: 8 }}>
+            장별로 어디를 보면 좋은지 (간단 주석)
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
+            {REACT_TEST_PROJECT_SOURCE_GUIDE.map((row) => (
+              <li key={row.path} style={{ marginBottom: 4 }}>
+                <code style={{ fontSize: "0.92em" }}>{row.path}</code> — {row.hint}
+              </li>
+            ))}
+          </ul>
+          <Text type="secondary" style={{ display: "block", marginTop: 10, fontSize: 11 }}>
+            각 장 본문 맨 아래에도, 그 장에 맞는 파일 <strong>전체</strong>가 자동으로 붙습니다.
+          </Text>
+        </div>
         <div className="react-test-project-files-list">
           {sourcesByTopFolder.map(([folder, files]) => (
             <div key={folder} className="react-test-project-tree-block">
@@ -693,7 +729,7 @@ function ReactHome({
           </div>
           {selectedSourceFile ? (
             <pre className="react-live-source-file-pre react-test-project-source-pane-pre">
-              {selectedSourceFile.content}
+              <code className="hljs" dangerouslySetInnerHTML={{ __html: selectedSourceHtml }} />
             </pre>
           ) : (
             <Text type="secondary" style={{ display: "block", padding: "12px 0" }}>

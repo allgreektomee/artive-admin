@@ -139,6 +139,21 @@
   background: #fff;
 }
 
+.react-live-source-file-pre code.hljs {
+  padding: 0;
+  background: transparent;
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+}
+
+.react-test-project-chapter-pre code.hljs {
+  padding: 0;
+  background: transparent;
+}
+
 .react-docs-chapter-entry-card {
   transition:
     border-color 0.15s ease,

@@ -32,3 +32,13 @@ export function listReactTestProjectSourceFiles(): ReactTestProjectRawFile[] {
     a.relativePath.localeCompare(b.relativePath, "en", { sensitivity: "base" }),
   );
 }
+
+/** 장 패널·단일 조회용 — `api/client.js` 형태 */
+export function getReactTestProjectRawContent(relativePath: string): string | null {
+  const normalized = relativePath.replace(/^\.?\//, "");
+  for (const [vitePath, content] of Object.entries(rawModules)) {
+    if (!SOURCE_EXT.test(vitePath)) continue;
+    if (stripPrefix(vitePath) === normalized) return content;
+  }
+  return null;
+}
