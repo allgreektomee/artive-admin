@@ -376,7 +376,7 @@ src/etc/pages/AdminChatPage.tsx
 
 ## 16장. 샘플 예제 분석 (reactTestProject)
 
-1~15장 개념을 **한 바퀴 돌린 뒤**, 저장소의 JavaScript 참고 앱 `src/dev/reactTestProject` 를 파일 단위로 읽는다. 라우팅·API·훅·페이지·업로드·정렬이 어떻게 이어지는지, 화면 하단에서 **트리 + 원문 전체**(highlight.js)로 따라간다.
+1~15장 개념을 **한 바퀴 돌린 뒤**, 저장소의 JavaScript 참고 앱 `src/dev/reactTestProject` 를 파일 단위로 읽는다. 라우팅·API·훅·페이지·업로드·정렬이 어떻게 이어지는지, 화면 하단 **트리 + 원문**으로 따라간다. REST 명세는 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 와 맞춰 보면 된다.
 
 1. `App.jsx` 진입과 경로
 2. `pages/*` 화면과 이벤트·state
@@ -391,4 +391,4 @@ src/etc/pages/AdminChatPage.tsx
 16장 본문과 하단 트리를 보며 샘플 프로젝트 전체 동작을 verbal로 설명할 수 있다.
 ```
 
-**이 장에서 쓰는 문서**: [`/dev?tab=react&rd=16-sample-app-walkthrough`](/dev?tab=react&rd=16-sample-app-walkthrough) · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks)
+**이 장에서 쓰는 문서**: [`/dev?tab=react&rd=16-sample-app-walkthrough`](/dev?tab=react&rd=16-sample-app-walkthrough) · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) · API [Swagger UI](https://api.artivefor.me/swagger-ui/index.html)

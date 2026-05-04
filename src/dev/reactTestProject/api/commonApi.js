@@ -1,3 +1,6 @@
+/**
+ * 16장 · 공통 업로드 — `useImageUpload` 가 compress 후 여기로 넘김.
+ */
 import client from "./client.js";
 
 export const commonApi = {

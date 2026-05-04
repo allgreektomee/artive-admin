@@ -61,9 +61,16 @@ export function ReactTestProjectChapterPanel({ docSlug }: Props) {
         reactTestProject — 전체 소스 (샘플 예제 분석)
       </Title>
       <Text type="secondary" style={{ display: "block", marginBottom: 14 }}>
-        <code>src/dev/reactTestProject</code> 의 파일을 트리에서 고른 뒤 아래에{" "}
-        <strong>원문 전체</strong>가 열립니다. JavaScript·JSX·Markdown은 highlight.js로 색을 입혔다. 데모
-        실행: <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
+        <code>src/dev/reactTestProject</code> 의 파일을 트리에서 고른 뒤 아래에 <strong>원문 전체</strong>가
+        열립니다. API 스펙:{" "}
+        <a
+          href="https://api.artivefor.me/swagger-ui/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Swagger UI
+        </a>
+        . 데모: <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
       </Text>
 
       <div className="react-test-project-files-list">

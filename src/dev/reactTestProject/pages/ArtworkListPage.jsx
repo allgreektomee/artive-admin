@@ -7,15 +7,17 @@ import { useArtwork } from "../hooks/useArtwork.js";
 const LIST_BASE = "/dev/react-test/artworks";
 
 /**
- * reactTestProject: 실제 목록·페이지 조회만 동작.
- * 등록·수정·삭제는 운영 API를 건드리지 않도록 막고 alert 만 띄움 (실제 호출 코드는 주석).
+ * 16장 · 작품 목록 화면
  *
- * 확장자 .jsx = 자바스크립트 + JSX (타입스크립트 아님). Vite/배포 시 JSX 변환 대상.
+ * - 마운트 시 `useArtwork().fetchArtworks(0)` → 테이블·페이지네이션.
+ * - 상세만 라우팅 허용; 등록/수정/삭제 버튼은 연재용 alert (실무 경로는 alert 문구에 적음).
+ * - `.jsx` = JS + JSX (TS 아님).
  */
 export default function ArtworkListPage() {
   const navigate = useNavigate();
   const { artworks, loading, error, fetchArtworks, totalElements, currentPage } = useArtwork();
 
+  // 16장: 첫 진입 시 목록 0페이지 로드
   useEffect(() => {
     fetchArtworks(0);
   }, [fetchArtworks]);

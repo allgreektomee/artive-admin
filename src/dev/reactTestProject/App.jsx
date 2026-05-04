@@ -3,17 +3,19 @@ import ArtworkDetailPage from "./pages/ArtworkDetailPage";
 import ArtworkListPage from "./pages/ArtworkListPage";
 
 /**
- * 연재·복사용 참고 앱 껍데기.
- * monorepo에서는 `src/App.tsx`에 동일 경로가 붙어 있고, 여기 파일은
- * 이 폴더만 따로 떼어 쓸 때의 최소 라우팅 예시다.
+ * 연재 16장(reactTestProject 샘플) 진입점 — 라우팅만 담당.
  *
- * 합류 시: HelmetProvider·AdminLayout 등은 생략하고 아래 두 Route만 보면 된다.
+ * - monorepo 실서비스: `src/App.tsx`에 동일 path 가 붙음.
+ * - 이 폴더만 복사해 쓸 때: 이 `App.jsx`가 루트 컴포넌트.
+ * - HelmetProvider·AdminLayout 등은 생략(샘플 범위 밖).
  */
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* 16장: 목록 — ArtworkListPage + useArtwork 로 첫 fetch */}
         <Route path="/dev/react-test/artworks" element={<ArtworkListPage />} />
+        {/* 16장: 상세 — URL의 :id 로 GET 상세 (페이지 내 직접 artworkApi 호출) */}
         <Route path="/dev/react-test/artworks/:id" element={<ArtworkDetailPage />} />
         <Route
           path="*"

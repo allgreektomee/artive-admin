@@ -4,6 +4,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 /**
+ * 16장 · 드래그 가능한 이미지 한 줄 (@dnd-kit/sortable).
+ * 부모는 `DndContext`+`SortableContext` 안에서 id 로 감싼다. listeners 는 손잡이 영역만.
+ *
  * @param {{ id: string, url: string, onRemove: () => void }} props
  */
 export default function SortableItem({ id, url, onRemove }) {

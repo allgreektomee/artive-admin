@@ -1,3 +1,10 @@
+/**
+ * 16장 · HTTP 공용 클라이언트
+ *
+ * - baseURL: `VITE_API_BASE_URL` 또는 기본 운영 API.
+ * - 요청: accessToken 있으면 Bearer(로그인 없이도 공개 조회는 백엔드 정책에 따름).
+ * - 응답: 401 시 로그인 페이지로 보냄(샘플과 운영 공용 interceptor).
+ */
 import axios from "axios";
 import { message } from "antd";
 
@@ -13,6 +20,7 @@ const client = axios.create({
   withCredentials: true,
 });
 
+// 16장: 모든 API 모듈이 이 client 를 공유 — 헤더·로그·FormData 처리 일원화
 client.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
@@ -36,6 +44,7 @@ client.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+// 16장: 공통 에러 피드백 — 403 메시지, 401 시 토큰 제거 후 /admin/login
 client.interceptors.response.use(
   (response) => {
     if (SHOW_API_LOG) {

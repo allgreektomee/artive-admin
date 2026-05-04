@@ -2,6 +2,8 @@
 
 `src/etc`와 비슷한 **폴더 역할**(`api`, `hooks`, `components/artwork`, `pages`)을 두고, **작품(아트워크) CRUD·이미지 업로드·DnD 정렬**에 쓰는 코드만 JavaScript로 옮긴 참고 트리입니다.
 
+**연재 16장**에서 이 트리 전체를 분석한다. 주요 파일 상단·구간에 `16장` 맥락의 주석을 달아 두었다.
+
 ## 포함 범위와 확장자
 
 ### 확장자 규칙 (배포 vs 연재)
@@ -31,6 +33,7 @@
 ## 환경 변수
 
 - API 베이스: `VITE_API_BASE_URL` (미설정 시 `https://api.artivefor.me/api/v1`)
+- REST 명세 확인: [Swagger UI](https://api.artivefor.me/swagger-ui/index.html)
 
 이 디렉터리는 **단독 빌드 대상이 아니라** 복사·참조·연재용으로 두었습니다.
 

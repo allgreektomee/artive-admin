@@ -1,7 +1,15 @@
+/**
+ * 16장 · 데이터 레이어 커스텀 훅 — 목록/상세 로드·저장·삭제를 한곳에 모음.
+ *
+ * 목록 페이지는 주로 `fetchArtworks` 만 쓰고,
+ * 상세는 ArtworkDetailPage 가 `artworkApi` 직접 호출(같은 API 계층, 다른 사용 패턴 비교용).
+ * save/delete 는 운영 폼 예제와 맞춰 두었고, 목록 UI에서는 alert 로 막을 수 있음.
+ */
 import { useState, useCallback } from "react";
 import { message } from "antd";
 import { artworkApi } from "../api/artworkApi.js";
 
+/** 폼 기간(dayjs 등) → API 가 기대하는 ISO 문자열 쌍 */
 function periodToIsoStrings(workPeriod) {
   if (!workPeriod || workPeriod.length !== 2) return { startedAt: "", finishedAt: "" };
   const [a, b] = workPeriod;
@@ -22,6 +30,7 @@ export function useArtwork() {
   const [imageList, setImageList] = useState([]);
   const [error, setError] = useState(false);
 
+  // 16장: 목록 — GET /artworks?page
   const fetchArtworks = useCallback(async (page = 0) => {
     setLoading(true);
     setError(false);
@@ -41,6 +50,7 @@ export function useArtwork() {
     }
   }, []);
 
+  // 16장: 편집 초기값 — 상세 + 이미지 목록(실제 폼 연동 시 사용)
   const getArtworkForEdit = useCallback(async (id) => {
     setLoading(true);
     setError(false);
@@ -62,6 +72,7 @@ export function useArtwork() {
     return null;
   }, []);
 
+  // 16장: 생성/수정 공통 — payload 가공 후 POST 또는 PUT
   const saveArtwork = useCallback(
     async (id, values) => {
       if (!imageList || imageList.length === 0) {
@@ -103,6 +114,7 @@ export function useArtwork() {
     [imageList],
   );
 
+  // 16장: 삭제 후 목록 갱신(페이지 유지)
   const deleteArtwork = useCallback(
     async (artworkId) => {
       setLoading(true);
