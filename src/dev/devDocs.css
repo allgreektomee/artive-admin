@@ -31,17 +31,90 @@
   background: transparent;
 }
 
-/* reactTestProject 탭 안: 레이아웃 JS는 잘리지 않게(페이지 스크롤) */
-.react-test-project-source-tabs .live-example-code-pre {
-  max-height: none;
-  overflow: visible;
-}
-
 .react-test-project-files-list {
   border: 1px solid #e4e4e7;
   border-radius: 10px;
   padding: 10px 12px 12px;
   background: #fff;
+}
+
+.react-test-project-tree-block {
+  margin-bottom: 1.25rem;
+}
+
+.react-test-project-tree-block:last-child {
+  margin-bottom: 0;
+}
+
+.react-test-project-tree-folder {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: #3f3f46;
+  margin-bottom: 0.5rem;
+  padding: 4px 0;
+}
+
+.react-test-project-tree-files {
+  padding-left: 0.75rem;
+  border-left: 2px solid #e4e4e7;
+}
+
+.react-test-project-tree-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  color: #18181b;
+  padding: 6px 8px;
+  margin: 0 0 2px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+.react-test-project-tree-item:hover {
+  background: #f4f4f5;
+}
+
+.react-test-project-tree-item:focus {
+  outline: none;
+}
+
+.react-test-project-tree-item:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 1px;
+}
+
+.react-test-project-tree-item--selected {
+  background: #e4e4e7;
+  font-weight: 600;
+}
+
+.react-test-project-source-pane {
+  margin-top: 14px;
+  border: 1px solid #e4e4e7;
+  border-radius: 10px;
+  padding: 12px 14px 14px;
+  background: #fafafa;
+}
+
+.react-test-project-source-pane-head {
+  font-size: 0.8125rem;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.react-test-project-source-pane-head code {
+  font-size: inherit;
+  color: #27272a;
+}
+
+.react-test-project-source-pane-placeholder {
+  color: #71717a;
 }
 
 /* 파일 하나 펼침: 긴 소스만 뷰포트 기준으로 스크롤 */
@@ -57,6 +130,13 @@
   white-space: pre;
   overflow: auto;
   max-height: min(75vh, 42rem);
+}
+
+/* 선택 패널: 단일 원문만 — 위 규칙보다 우선 */
+.react-live-source-file-pre.react-test-project-source-pane-pre {
+  margin-top: 0;
+  max-height: min(80vh, 50rem);
+  background: #fff;
 }
 
 .react-docs-chapter-entry-card {
