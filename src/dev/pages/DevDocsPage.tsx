@@ -7,27 +7,31 @@ import {
   getJavaScriptArticle,
   getPart,
   getPreamble,
+  getServerDoc,
   listJavaScriptArticleGroups,
   listParts,
+  listServerDocs,
   readOutlineMarkdown,
   type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
+  type ServerDoc,
 } from "../lib/devOutline";
 import "../devDocs.css";
 
 const { Text, Title } = Typography;
 
-type TabId = "js" | "react" | "spring";
+type TabId = "js" | "react" | "spring" | "server";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "js", label: "JavaScript" },
   { id: "react", label: "React" },
   { id: "spring", label: "Spring" },
+  { id: "server", label: "Server" },
 ];
 
 function parseTab(raw: string | null): TabId {
-  if (raw === "react" || raw === "spring") return raw;
+  if (raw === "react" || raw === "spring" || raw === "server") return raw;
   return "js";
 }
 
@@ -53,6 +57,7 @@ const DevDocsPage: React.FC = () => {
   const preamble = useMemo(() => getPreamble(md), [md]);
   const parts = useMemo(() => listParts(md), [md]);
   const articleGroups = useMemo(() => listJavaScriptArticleGroups(), []);
+  const serverDocs = useMemo(() => listServerDocs(), []);
 
   const tab = parseTab(searchParams.get("tab"));
   const outlineRaw = searchParams.get("outline");
@@ -62,16 +67,22 @@ const DevDocsPage: React.FC = () => {
       : null;
   const ps = searchParams.get("ps");
   const as = searchParams.get("as");
+  const sd = searchParams.get("sd");
 
   const article = useMemo(() => {
     if (!ps || !as) return null;
     return getJavaScriptArticle(ps, as);
   }, [ps, as]);
 
+  const serverDoc = useMemo(() => {
+    if (!sd) return null;
+    return getServerDoc(sd);
+  }, [sd]);
+
   useEffect(() => {
-    if (!ps || !as) return;
+    if ((!ps || !as) && !sd) return;
     window.scrollTo({ top: 0 });
-  }, [ps, as]);
+  }, [ps, as, sd]);
 
   const adjacentArticles = useMemo(() => {
     if (!article) return { prev: null, next: null };
@@ -112,6 +123,17 @@ const DevDocsPage: React.FC = () => {
       outline: undefined,
       ps: undefined,
       as: undefined,
+      sd: undefined,
+    });
+  }, [setQuery]);
+
+  const goHomeServer = useCallback(() => {
+    setQuery({
+      tab: "server",
+      outline: undefined,
+      ps: undefined,
+      as: undefined,
+      sd: undefined,
     });
   }, [setQuery]);
 
@@ -122,6 +144,7 @@ const DevDocsPage: React.FC = () => {
         outline: undefined,
         ps: undefined,
         as: undefined,
+        sd: undefined,
       });
     } else {
       setQuery({
@@ -129,6 +152,7 @@ const DevDocsPage: React.FC = () => {
         outline: undefined,
         ps: undefined,
         as: undefined,
+        sd: undefined,
       });
     }
   };
@@ -155,7 +179,7 @@ const DevDocsPage: React.FC = () => {
           학습 정리
         </Title>
         <Text type="secondary" style={{ display: "block", marginBottom: 28 }}>
-          JavaScript·React·Spring을 한 페이지에서 탭으로 전환합니다.
+          JavaScript·React·Spring·Server를 한 페이지에서 탭으로 전환합니다.
         </Text>
 
         <div
@@ -204,6 +228,29 @@ const DevDocsPage: React.FC = () => {
             body="Spring Boot 등 백엔드 정리를 이 탭에 추가할 예정입니다."
           />
         )}
+        {tab === "server" && sd && !serverDoc && (
+          <Card size="small" style={{ marginBottom: 16 }}>
+            <Text>요청한 서버 문서를 찾을 수 없습니다.</Text>
+            <div style={{ marginTop: 12 }}>
+              <button type="button" onClick={goHomeServer} style={linkBtn}>
+                Server 홈으로
+              </button>
+            </div>
+          </Card>
+        )}
+        {tab === "server" && serverDoc && (
+          <div>
+            <nav style={{ marginBottom: 16, fontSize: 14 }}>
+              <button type="button" onClick={goHomeServer} style={linkBtn}>
+                ← Server 홈
+              </button>
+            </nav>
+            <Card>
+              <DevMarkdown source={serverDoc.body} />
+            </Card>
+          </div>
+        )}
+        {tab === "server" && !sd && <ServerHome docs={serverDocs} />}
 
         {tab === "js" && ps && as && !article && (
           <Card size="small" style={{ marginBottom: 16 }}>
@@ -233,6 +280,7 @@ const DevDocsPage: React.FC = () => {
                     outline: String(article.partId),
                     ps: undefined,
                     as: undefined,
+                    sd: undefined,
                   })
                 }
                 style={linkBtn}
@@ -299,6 +347,36 @@ function Placeholder({ title, body }: { title: string; body: string }) {
       <Title level={4}>{title}</Title>
       <Text type="secondary">{body}</Text>
     </Card>
+  );
+}
+
+function ServerHome({ docs }: { docs: ServerDoc[] }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Title level={3} style={{ marginTop: 0 }}>
+          Server 설치 가이드
+        </Title>
+        <Text type="secondary" style={{ display: "block" }}>
+          Tomcat, Nginx, Redis 설치 및 설정 문서를 분리해서 정리합니다.
+        </Text>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
+        {docs.map((doc) => (
+          <Link key={doc.slug} to={doc.href} style={{ textDecoration: "none" }}>
+            <Card hoverable size="small">
+              <Text code style={{ fontSize: 11, marginRight: 8 }}>
+                {String(doc.order).padStart(2, "0")}
+              </Text>
+              <Text strong style={{ color: "#27272a" }}>
+                {doc.title}
+              </Text>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 

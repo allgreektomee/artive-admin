@@ -10,6 +10,12 @@ const articleModules = import.meta.glob("../content/javascript/**/*.md", {
   eager: true,
 }) as Record<string, string>;
 
+const serverDocModules = import.meta.glob("../content/server/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
 const JAVASCRIPT_PARTS = [
   { id: 1 as const, slug: "part-1-basics", title: "JavaScript 기본기" },
   {
@@ -48,6 +54,14 @@ export type JavaScriptArticleGroup = {
   slug: JavaScriptPartSlug;
   title: string;
   articles: JavaScriptArticle[];
+};
+
+export type ServerDoc = {
+  slug: string;
+  title: string;
+  order: number;
+  body: string;
+  href: string;
 };
 
 function getOutlineRaw(): string {
@@ -109,6 +123,7 @@ function orderFromSlug(slug: string): number {
 }
 
 let articlesCache: JavaScriptArticle[] | null = null;
+let serverDocsCache: ServerDoc[] | null = null;
 
 function buildArticles(): JavaScriptArticle[] {
   const list: JavaScriptArticle[] = [];
@@ -166,4 +181,47 @@ export function getJavaScriptArticle(
       (a) => a.partSlug === partSlug && a.slug === articleSlug,
     ) ?? null
   );
+}
+
+function serverDocOrder(slug: string): number {
+  if (slug.includes("tomcat")) return 1;
+  if (slug.includes("nginx")) return 2;
+  if (slug.includes("redis")) return 3;
+  return Number.MAX_SAFE_INTEGER;
+}
+
+function buildServerDocs(): ServerDoc[] {
+  const docs: ServerDoc[] = [];
+  for (const [path, raw] of Object.entries(serverDocModules)) {
+    if (path.includes("README.md")) continue;
+    const m = path.match(/server\/([^/]+)\.md$/i);
+    if (!m) continue;
+
+    const slug = m[1]!;
+    const body = raw as string;
+    docs.push({
+      slug,
+      title: titleFromMarkdown(body, slug),
+      order: serverDocOrder(slug),
+      body,
+      href: `/dev?tab=server&sd=${encodeURIComponent(slug)}`,
+    });
+  }
+
+  return docs.sort(
+    (a, b) => a.order - b.order || a.slug.localeCompare(b.slug, "en"),
+  );
+}
+
+function allServerDocs(): ServerDoc[] {
+  if (!serverDocsCache) serverDocsCache = buildServerDocs();
+  return serverDocsCache;
+}
+
+export function listServerDocs(): ServerDoc[] {
+  return allServerDocs();
+}
+
+export function getServerDoc(slug: string): ServerDoc | null {
+  return allServerDocs().find((doc) => doc.slug === slug) ?? null;
 }
