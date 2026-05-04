@@ -41,7 +41,7 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 | 4장 | `react.event.click` | [`/dev?tab=react&rd=04-react-events`](/dev?tab=react&rd=04-react-events) |
 | 5장 | `react.state.counter` | [`/dev?tab=react&rd=05-state-usestate`](/dev?tab=react&rd=05-state-usestate) |
 | 6장 | `react.module.artworkExplorer` | [`/dev?tab=react&rd=06-component-modularization`](/dev?tab=react&rd=06-component-modularization) |
-| 7장 | `react.effect.lifecycle` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
+| 7장 | `react.effect.lifecycle`, `react.effect.depsCompare` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
 | 8장 | `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
 
 소스 파일(저장소): `src/dev/liveExamples/reactExamples.jsx` · JS 참고 트리: `src/dev/reactTestProject/` (README에 경로 설명).
@@ -173,7 +173,7 @@ React에서 화면을 바꾸는 핵심인 상태를 다룬다.
 의존 배열·cleanup으로 로딩 시뮬레이션과 타이머를 다룬다.
 ```
 
-**이 장에서 쓰는 Live 예제**: ID `react.effect.lifecycle` — [본문·실행](/dev?tab=react&rd=07-lifecycle-useeffect)
+**이 장에서 쓰는 Live 예제**: ID `react.effect.lifecycle`(로딩·인터벌), `react.effect.depsCompare`(의존 배열 세 가지 비교) — [본문·실행](/dev?tab=react&rd=07-lifecycle-useeffect)
 
 ## 8장. React 훅 종류별 정리
 

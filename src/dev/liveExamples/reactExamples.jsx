@@ -293,11 +293,141 @@ const LiveModularArtworkExplorer = () => {
   );
 };
 
+/** 의존 배열 생략 / [] / [state] 를 같은 화면에서 횟수로 비교한다. */
+const LiveEffectDepsCompare = () => {
+  const [bump, setBump] = useState(0);
+  const [dep, setDep] = useState(0);
+
+  const noDepsRuns = useRef(0);
+  const emptyDepsRuns = useRef(0);
+  const stateDepsRuns = useRef(0);
+
+  // ① 배열 생략: (실무에서 거의 쓰지 않음) 커밋이 일어날 때마다 다시 실행
+  useEffect(() => {
+    noDepsRuns.current += 1;
+  });
+
+  // ② []: 마운트 직후 한 번(개발 Strict Mode에서는 mount 시뮬로 더 늘 수 있음)
+  useEffect(() => {
+    emptyDepsRuns.current += 1;
+  }, []);
+
+  // ③ [dep]: dep가 이전과 달라진 커밋마다 실행
+  useEffect(() => {
+    stateDepsRuns.current += 1;
+  }, [dep]);
+
+  const col = {
+    padding: "10px 12px",
+    borderRadius: 8,
+    border: "1px solid #e4e4e7",
+    background: "#fff",
+    flex: "1 1 200px",
+    minWidth: 180,
+  };
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <strong>세 가지 의존성만 다릅니다.</strong> 아래 숫자는 각 effect 본문이 지금까지 실행된
+        횟수( ref 누적 )입니다. 화면은 <code>bump</code>나 <code>dep</code>가 바뀔 때 다시 그려지며, 그
+        시점의 ref 값이 보입니다.
+        <ul style={{ margin: "8px 0 0", paddingLeft: 18 }}>
+          <li>
+            <strong>배열 생략</strong> — 리렌더만 나도( <code>bump</code> 또는 <code>dep</code> 변경 ) 매번
+            실행됩니다.
+          </li>
+          <li>
+            <strong>[]</strong> — 이 카드가 붙은 뒤로는 <code>bump</code>만으로는 다시 실행되지 않습니다.
+          </li>
+          <li>
+            <strong>[dep]</strong> — 마운트 때 한 번 + <code>dep</code>가 바뀔 때마다 실행됩니다.
+          </li>
+        </ul>
+      </div>
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 12 }}>
+        <button
+          type="button"
+          onClick={() => setBump((b) => b + 1)}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            background: "#fff",
+            cursor: "pointer",
+            fontSize: 13,
+          }}
+        >
+          다른 state만 리렌더 (bump +1, dep 그대로)
+        </button>
+        <button
+          type="button"
+          onClick={() => setDep((d) => d + 1)}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 8,
+            border: "1px solid #9333ea",
+            background: "#f5f3ff",
+            cursor: "pointer",
+            fontSize: 13,
+            color: "#5b21b6",
+          }}
+        >
+          의존 대상 state (dep +1)
+        </button>
+      </div>
+
+      <div style={{ fontSize: 12, marginBottom: 10, color: "#71717a" }}>
+        현재 <code>bump</code>={bump}, <code>dep</code>={dep}
+      </div>
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "stretch" }}>
+        <div style={col}>
+          <div style={{ fontWeight: 600, marginBottom: 6 }}>① 배열 생략</div>
+          <code style={{ fontSize: 11, display: "block" }}>useEffect(() =&gt; {"{ ... }"})</code>
+          <div style={{ marginTop: 10 }}>
+            실행 횟수: <strong>{noDepsRuns.current}</strong>
+          </div>
+        </div>
+        <div style={col}>
+          <div style={{ fontWeight: 600, marginBottom: 6 }}>② 빈 배열</div>
+          <code style={{ fontSize: 11, display: "block" }}>useEffect(() =&gt; {"{ ... }"}, [])</code>
+          <div style={{ marginTop: 10 }}>
+            실행 횟수: <strong>{emptyDepsRuns.current}</strong>
+          </div>
+          <div style={{ marginTop: 8, fontSize: 11, color: "#71717a" }}>
+            개발 모드 Strict에서는 마운트 시뮬로 2가 될 수 있음
+          </div>
+        </div>
+        <div style={col}>
+          <div style={{ fontWeight: 600, marginBottom: 6 }}>③ [dep] 상태 의존</div>
+          <code style={{ fontSize: 11, display: "block" }}>useEffect(() =&gt; {"{ ... }"}, [dep])</code>
+          <div style={{ marginTop: 10 }}>
+            실행 횟수: <strong>{stateDepsRuns.current}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const LiveEffectLifecycle = () => {
   const [items, setItems] = useState(null);
   const [loadVersion, setLoadVersion] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
+  // ① 의존성 [loadVersion]: 값이 바뀔 때마다 → 이전 cleanup → effect 다시 실행 (DidUpdate에 가깝다)
   useEffect(() => {
     let cancelled = false;
     setItems(null);
@@ -315,6 +445,7 @@ const LiveEffectLifecycle = () => {
     };
   }, [loadVersion]);
 
+  // ② 의존성 []: 이 컴포넌트가 화면에 처음 붙었을 때만 실행 → 언마운트 시 cleanup까지 한 세트
   useEffect(() => {
     const id = window.setInterval(() => setSeconds((s) => s + 1), 1000);
     return () => window.clearInterval(id);
@@ -322,6 +453,42 @@ const LiveEffectLifecycle = () => {
 
   return (
     <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <div style={{ fontWeight: 600, marginBottom: 6 }}>이 화면에 useEffect가 두 개</div>
+        <ul style={{ margin: "0 0 8px", paddingLeft: 18 }}>
+          <li>
+            <strong>첫 번째</strong> — 의존성 <code style={{ fontSize: 11 }}>[loadVersion]</code>. 아래
+            「목록만 다시 불러오기」로 <code>loadVersion</code>만 바꾸면, <strong>타이머·요청 cleanup</strong> 후
+            로딩부터 다시 시뮬레이션합니다. (
+            <span style={{ color: "#52525b" }}>클래스의 componentDidUpdate(특정 props/state 변경)에 가까움</span>)
+          </li>
+          <li style={{ marginTop: 6 }}>
+            <strong>두 번째</strong> — 의존성 <code style={{ fontSize: 11 }}>[]</code>. 컴포넌트가{' '}
+            <strong>처음 마운트될 때 한 번만</strong> 1초 인터벌을 걸고, 이 카드 전체가 사라질 때(unmount){' '}
+            <strong>clearInterval</strong>합니다. (
+            <span style={{ color: "#52525b" }}>componentDidMount + componentWillUnmount 쌍</span>)
+          </li>
+        </ul>
+        <div style={{ color: "#71717a", fontSize: 11 }}>
+          그래서 「목록만 다시 불러오기」를 여러 번 눌러도 <strong>경과 초는 멈추지 않고 계속 증가</strong>합니다.
+          부모가 이 Live 블록 전체를 없애지 않는 한 두 번째 effect는 다시 안 돌기 때문입니다.
+        </div>
+      </div>
+
+      <div style={{ marginBottom: 8, fontSize: 12 }}>
+        <code>loadVersion</code>: <strong>{loadVersion}</strong>
+      </div>
+
       <button
         type="button"
         onClick={() => {
@@ -336,10 +503,10 @@ const LiveEffectLifecycle = () => {
           marginBottom: 10,
         }}
       >
-        다시 불러오기 (마운트 유사)
+        목록만 다시 불러오기 (loadVersion +1 → 첫 effect만 재실행)
       </button>
       <div style={{ marginBottom: 8 }}>
-        경과 초: <strong>{seconds}</strong> — 훅 cleanup으로 언마운트 시 인터벌 정리
+        경과 초: <strong>{seconds}</strong> — 두 번째 effect(<code>[]</code>). 컴포넌트가 사라질 때 인터벌 정리.
       </div>
       <div>
         목록:{" "}
@@ -567,21 +734,47 @@ function LiveModularArtworkExplorer() {
   {
     id: "react.effect.lifecycle",
     title: "useEffect: 로딩·인터벌·cleanup",
-    description: "의존 배열로 재요청, cleanup으로 타이머·요청 취소를 시뮬레이션합니다.",
-    sourceCode: `useEffect(() => {
+    description:
+      "의존성이 바뀔 때만 다시 도는 effect와, []로 마운트 때만 도는 effect를 나란히 둡니다. 「목록만 다시 불러오기」는 첫 effect만 재실행 — 초 시계는 계속 돕니다.",
+    sourceCode: `// ① [loadVersion] — 버튼으로 loadVersion만 바꾸면 cleanup 후 로딩·setTimeout 다시
+useEffect(() => {
   let cancelled = false;
   setItems(null);
-  const t = setTimeout(() => {
-    if (!cancelled) setItems([...]);
-  }, 400);
+  const t = setTimeout(() => { if (!cancelled) setItems([...]); }, 400);
   return () => { cancelled = true; clearTimeout(t); };
 }, [loadVersion]);
 
+// ② [] — 컴포넌트 첫 마운트에만 인터벌 시작, 언마운트에 clearInterval
 useEffect(() => {
   const id = setInterval(() => setSeconds((s) => s + 1), 1000);
   return () => clearInterval(id);
 }, []);`,
     Component: LiveEffectLifecycle,
+  },
+  {
+    id: "react.effect.depsCompare",
+    title: "useEffect: 의존 배열 생략 · [] · [state] 비교",
+    description:
+      "같은 컴포넌트에서 effect 실행 횟수만 세서 비교합니다. 배열 생략은 리렌더마다, []는 마운트 때만, [dep]은 dep 변경 시에만 추가 실행됩니다.",
+    sourceCode: `const noDepsRuns = useRef(0);
+const emptyDepsRuns = useRef(0);
+const stateDepsRuns = useRef(0);
+
+// ① 생략 — 커밋이 날 때마다
+useEffect(() => {
+  noDepsRuns.current += 1;
+});
+
+// ② [] — 마운트 시( Strict 개발에선 2번일 수 있음 )
+useEffect(() => {
+  emptyDepsRuns.current += 1;
+}, []);
+
+// ③ dep가 바뀔 때마다
+useEffect(() => {
+  stateDepsRuns.current += 1;
+}, [dep]);`,
+    Component: LiveEffectDepsCompare,
   },
   {
     id: "react.hooks.showcase",
