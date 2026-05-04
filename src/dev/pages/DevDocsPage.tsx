@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { Card, Typography } from "antd";
+import { Card, Tabs, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
 import { DevMarkdown } from "../components/DevMarkdown";
 import {
@@ -22,8 +22,16 @@ import {
   type ReactDoc,
   type ServerDoc,
 } from "../lib/devOutline";
-import { listReactTestProjectSourceFiles } from "../lib/reactTestProjectSources";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import "highlight.js/styles/github.css";
+import {
+  formatReactTestProjectLayoutAsModule,
+  listReactTestProjectSourceFiles,
+} from "../lib/reactTestProjectSources";
 import "../devDocs.css";
+
+hljs.registerLanguage("javascript", javascript);
 
 const { Text, Title } = Typography;
 
@@ -608,6 +616,18 @@ function ReactHome({
     });
   }, [reactTestSources]);
 
+  const layoutModuleSource = useMemo(
+    () => formatReactTestProjectLayoutAsModule(reactTestSources),
+    [reactTestSources],
+  );
+  const layoutModuleHtml = useMemo(() => {
+    try {
+      return hljs.highlight(layoutModuleSource, { language: "javascript" }).value;
+    } catch {
+      return hljs.highlight(layoutModuleSource, { language: "plaintext" }).value;
+    }
+  }, [layoutModuleSource]);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
       <div>
@@ -638,70 +658,74 @@ function ReactHome({
         >
           <code>src/dev/reactTestProject</code> 전체 소스 보기 (폴더별 · chat 제외)
         </summary>
-        <Text type="secondary" style={{ display: "block", marginTop: 12, marginBottom: 10, fontSize: 12 }}>
+        <Text type="secondary" style={{ display: "block", marginTop: 12, marginBottom: 6, fontSize: 12 }}>
           연재용 JavaScript 참고 트리와 동일한 파일입니다. 실제 앱 데모:{" "}
           <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
         </Text>
-        <div
-          style={{
-            maxHeight: "min(75vh, 800px)",
-            overflow: "auto",
-            border: "1px solid #e4e4e7",
-            borderRadius: 10,
-            padding: 10,
-            background: "#fff",
-          }}
-        >
-          {sourcesByTopFolder.map(([folder, files]) => (
-            <details key={folder} style={{ marginBottom: 8 }}>
-              <summary
-                style={{
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: 13,
-                  padding: "6px 4px",
-                  color: "#3f3f46",
-                }}
-              >
-                {folder === "(root)" ? "(루트)" : `${folder}/`}
-              </summary>
-              <div style={{ paddingLeft: 8 }}>
-                {files.map((f) => (
-                  <details key={f.relativePath} style={{ marginBottom: 6 }}>
-                    <summary
-                      style={{
-                        cursor: "pointer",
-                        fontSize: 12,
-                        padding: "4px 0",
-                        fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-                        color: "#18181b",
-                      }}
-                    >
-                      {f.relativePath}
-                    </summary>
-                    <pre
-                      className="react-live-source-pre"
-                      style={{
-                        margin: "8px 0 0",
-                        padding: 12,
-                        maxHeight: 320,
-                        overflow: "auto",
-                        fontSize: 11,
-                        lineHeight: 1.45,
-                        background: "#fafafa",
-                        border: "1px solid #e4e4e7",
-                        borderRadius: 8,
-                        whiteSpace: "pre",
-                      }}
-                    >
-                      {f.content}
-                    </pre>
-                  </details>
-                ))}
-              </div>
-            </details>
-          ))}
-        </div>
+        <Tabs
+          className="react-test-project-source-tabs"
+          size="small"
+          items={[
+            {
+              key: "layout",
+              label: "폴더 구조 (JS)",
+              children: (
+                <div style={{ paddingTop: 4 }}>
+                  <Text type="secondary" style={{ display: "block", marginBottom: 12, fontSize: 12 }}>
+                    고정 높이 없이 한 블록으로 표시합니다. 아래 장 목록까지 이어서 스크롤하면 됩니다.
+                  </Text>
+                  <pre className="live-example-code-pre">
+                    <code className="hljs" dangerouslySetInnerHTML={{ __html: layoutModuleHtml }} />
+                  </pre>
+                </div>
+              ),
+            },
+            {
+              key: "files",
+              label: "파일별 원문",
+              children: (
+                <div className="react-test-project-files-list">
+                  <Text type="secondary" style={{ display: "block", marginBottom: 10, fontSize: 12 }}>
+                    바깥은 더 이상 잘리지 않습니다. 긴 파일만 펼쳤을 때 안쪽만 스크롤됩니다.
+                  </Text>
+                  {sourcesByTopFolder.map(([folder, files]) => (
+                    <details key={folder} style={{ marginBottom: 8 }}>
+                      <summary
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: 600,
+                          fontSize: 13,
+                          padding: "6px 4px",
+                          color: "#3f3f46",
+                        }}
+                      >
+                        {folder === "(root)" ? "(루트)" : `${folder}/`}
+                      </summary>
+                      <div style={{ paddingLeft: 8 }}>
+                        {files.map((f) => (
+                          <details key={f.relativePath} style={{ marginBottom: 6 }}>
+                            <summary
+                              style={{
+                                cursor: "pointer",
+                                fontSize: 12,
+                                padding: "4px 0",
+                                fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                                color: "#18181b",
+                              }}
+                            >
+                              {f.relativePath}
+                            </summary>
+                            <pre className="react-live-source-file-pre">{f.content}</pre>
+                          </details>
+                        ))}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              ),
+            },
+          ]}
+        />
       </details>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
