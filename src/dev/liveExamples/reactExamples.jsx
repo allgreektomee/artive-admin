@@ -426,16 +426,18 @@ const LiveEffectLifecycle = () => {
   const [items, setItems] = useState(null);
   const [loadVersion, setLoadVersion] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [loadEffectRuns, setLoadEffectRuns] = useState(0);
 
   // ① 의존성 [loadVersion]: 값이 바뀔 때마다 → 이전 cleanup → effect 다시 실행 (DidUpdate에 가깝다)
   useEffect(() => {
     let cancelled = false;
+    setLoadEffectRuns((n) => n + 1);
     setItems(null);
     const timer = setTimeout(() => {
       if (!cancelled) {
         setItems([
-          { id: "a", label: "첫 데이터" },
-          { id: "b", label: "둘째 데이터" },
+          { id: "a", label: `첫 데이터 (불러오기 #${loadVersion})` },
+          { id: "b", label: `둘째 데이터 (불러오기 #${loadVersion})` },
         ]);
       }
     }, 400);
@@ -480,13 +482,23 @@ const LiveEffectLifecycle = () => {
           </li>
         </ul>
         <div style={{ color: "#71717a", fontSize: 11 }}>
-          그래서 「목록만 다시 불러오기」를 여러 번 눌러도 <strong>경과 초는 멈추지 않고 계속 증가</strong>합니다.
+          그래서 「목록만 다시 불러오기」를 여러 번 해도 <strong>경과 초는 멈추지 않고 계속 증가</strong>합니다.
           부모가 이 Live 블록 전체를 없애지 않는 한 두 번째 effect는 다시 안 돌기 때문입니다.
+        </div>
+        <div style={{ marginTop: 10, fontSize: 11, color: "#52525b" }}>
+          <strong>①의 결과</strong>는 화면에 “항상 같은 두 줄 목록”만 있어서 헷갈리기 쉽습니다. 실제로는{' '}
+          <strong>잠깐 로딩 → 0.4초 뒤 다시 그리기</strong>를 반복하고, 아래 목록의{' '}
+          <strong>(불러오기 #N)</strong>과 <strong>① 실행 횟수</strong>가 늘어나는지로 재실행 여부를 확인하면 됩니다.
         </div>
       </div>
 
       <div style={{ marginBottom: 8, fontSize: 12 }}>
         <code>loadVersion</code>: <strong>{loadVersion}</strong>
+        {' · '}
+        <span style={{ color: "#71717a" }}>
+          ① effect가 돈 횟수(마운트 포함): <strong>{loadEffectRuns}</strong>
+          <span style={{ fontWeight: 400 }}> — 개발 Strict Mode에선 시작 시 2일 수 있음</span>
+        </span>
       </div>
 
       <button
@@ -736,15 +748,24 @@ function LiveModularArtworkExplorer() {
     title: "useEffect: 로딩·인터벌·cleanup",
     description:
       "의존성이 바뀔 때만 다시 도는 effect와, []로 마운트 때만 도는 effect를 나란히 둡니다. 「목록만 다시 불러오기」는 첫 effect만 재실행 — 초 시계는 계속 돕니다.",
-    sourceCode: `// ① [loadVersion] — 버튼으로 loadVersion만 바꾸면 cleanup 후 로딩·setTimeout 다시
+    sourceCode: `// ① [loadVersion] — loadVersion이 바뀔 때마다 cleanup 후
+//    setItems(null) → 400ms 뒤 목록 채움 (화면은 "로딩…" 깜빡임 + #N 갱신)
 useEffect(() => {
   let cancelled = false;
+  setLoadEffectRuns((n) => n + 1);
   setItems(null);
-  const t = setTimeout(() => { if (!cancelled) setItems([...]); }, 400);
+  const t = setTimeout(() => {
+    if (!cancelled) {
+      setItems([
+        { id: "a", label: \`첫 데이터 (불러오기 #\${loadVersion})\` },
+        { id: "b", label: \`둘째 데이터 (불러오기 #\${loadVersion})\` },
+      ]);
+    }
+  }, 400);
   return () => { cancelled = true; clearTimeout(t); };
 }, [loadVersion]);
 
-// ② [] — 컴포넌트 첫 마운트에만 인터벌 시작, 언마운트에 clearInterval
+// ② [] — 첫 마운트에만 1초 인터벌, 언마운트 때 clearInterval
 useEffect(() => {
   const id = setInterval(() => setSeconds((s) => s + 1), 1000);
   return () => clearInterval(id);
