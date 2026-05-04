@@ -36,7 +36,7 @@
 
 ## 앱에서 열기 (목록·상세)
 
-로그인 후 `accessToken`이 있으면 운영 API와 동일하게 동작합니다.
+`VITE_API_BASE_URL`(미설정 시 위 기본값)으로 목록·상세 요청이 나간다. `localStorage`의 `accessToken`이 있으면 `api/client.js` 인터셉터가 Authorization 헤더에 붙인다(토큰 없이도 공개 조회가 허용되면 같은 데모 경로로 확인 가능).
 
 - 목록: [`/dev/react-test/artworks`](/dev/react-test/artworks)
 - 상세: `/dev/react-test/artworks/:id`

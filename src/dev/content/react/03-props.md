@@ -1,6 +1,6 @@
 # 3장. props
 
-> **reactTestProject**: 본문 **맨 아래**에 이 장과 연결된 파일 **전체 원문**(색 구문 강조)이 붙습니다. React 탭 홈 「소스 보기」에서도 같은 파일을 고를 수 있습니다.
+> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 **props**(properties)는 **부모 컴포넌트가 자식 컴포넌트에게 넘기는 입력값**이다. React가 자식 함수를 호출할 때, JSX에 적어 둔 속성들을 **하나의 객체**로 모아 첫 번째 인자로 넘긴다. 그 객체가 곧 `props`다.
 

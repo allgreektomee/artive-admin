@@ -1,6 +1,6 @@
 # 4장. React 이벤트
 
-> **reactTestProject**: 본문 **맨 아래**에 이 장과 연결된 파일 **전체 원문**(색 구문 강조)이 붙습니다. React 탭 홈 「소스 보기」에서도 같은 파일을 고를 수 있습니다.
+> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 사용자가 클릭·입력·키보드·포커스 등으로 브라우저 이벤트를 일으키면, React는 **props 형태의 `on*` 핸들러**로 그것을 연결할 수 있게 한다. DOM 표준 이벤트를 비슷하게 감싼 객체를 넘기는데, 이를 **합성 이벤트(SyntheticEvent)** 라고 부른다. 직접 DOM에 `addEventListener`를 붙이지 않고, JSX에서 **`onClick={...}`** 처럼 선언하는 방식이 기본이다.
 

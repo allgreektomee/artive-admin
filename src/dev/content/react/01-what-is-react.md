@@ -1,6 +1,6 @@
 # 1장. React가 무엇인지 이해하기
 
-> **reactTestProject**: 본문 **맨 아래**에 이 장과 연결된 파일 **전체 원문**(색 구문 강조)이 붙습니다. React 탭 홈 「소스 보기」에서도 같은 파일을 고를 수 있습니다.
+> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 React는 사용자 인터페이스를 만들기 위한 **JavaScript 라이브러리**이다. Angular처럼 라우팅·폼·HTTP까지 한 번에 정해 주는 **프레임워크**가 아니라, 화면을 **컴포넌트**라는 작은 단위로 나누어 조립하는 데 초점을 둔다. 라우팅(`react-router`)이나 상태 관리(예: Redux)는 필요할 때 별도 라이브러리로 덧붙인다.
 

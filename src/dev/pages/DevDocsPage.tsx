@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Card, Typography } from "antd";
 import { Helmet } from "react-helmet-async";
@@ -23,9 +23,10 @@ import {
   type ReactDoc,
   type ServerDoc,
 } from "../lib/devOutline";
-import { listReactTestProjectSourceFiles } from "../lib/reactTestProjectSources";
-import { highlightDevSource } from "../lib/highlightDevSource";
-import { REACT_TEST_PROJECT_SOURCE_GUIDE } from "../lib/reactTestProjectChapterRefs";
+import {
+  REACT_TEST_PROJECT_WALKTHROUGH_HREF,
+  REACT_TEST_PROJECT_WALKTHROUGH_SLUG,
+} from "../lib/reactTestProjectChapterRefs";
 import "../devDocs.css";
 
 const { Text, Title } = Typography;
@@ -594,44 +595,10 @@ function ReactHome({
     return m;
   }, [reactDocs]);
 
-  const reactTestSources = useMemo(() => listReactTestProjectSourceFiles(), []);
-  const sourcesByTopFolder = useMemo(() => {
-    const groups = new Map<string, typeof reactTestSources>();
-    for (const f of reactTestSources) {
-      const top = f.relativePath.includes("/")
-        ? (f.relativePath.split("/")[0] ?? "(root)")
-        : "(root)";
-      const arr = groups.get(top) ?? [];
-      arr.push(f);
-      groups.set(top, arr);
-    }
-    return [...groups.entries()].sort((a, b) => {
-      if (a[0] === "(root)") return -1;
-      if (b[0] === "(root)") return 1;
-      return a[0].localeCompare(b[0], "en");
-    });
-  }, [reactTestSources]);
-
-  const [selectedSourcePath, setSelectedSourcePath] = useState<string | null>(null);
-
-  useEffect(() => {
-    setSelectedSourcePath((prev) => {
-      if (prev != null && reactTestSources.some((f) => f.relativePath === prev)) {
-        return prev;
-      }
-      return reactTestSources[0]?.relativePath ?? null;
-    });
-  }, [reactTestSources]);
-
-  const selectedSourceFile = useMemo(
-    () => reactTestSources.find((f) => f.relativePath === selectedSourcePath) ?? null,
-    [reactTestSources, selectedSourcePath],
+  const walkthroughDoc = useMemo(
+    () => reactDocs.find((d) => d.slug === REACT_TEST_PROJECT_WALKTHROUGH_SLUG) ?? null,
+    [reactDocs],
   );
-
-  const selectedSourceHtml = useMemo(() => {
-    if (!selectedSourceFile) return "";
-    return highlightDevSource(selectedSourceFile.relativePath, selectedSourceFile.content);
-  }, [selectedSourceFile]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
@@ -644,100 +611,14 @@ function ReactHome({
           <strong>예제 목표</strong> 회색 박스를 누르면 본문(설명 + Live 예제 코드·실행 결과)으로
           들어갑니다. <strong>로그인 없이도</strong> 1~8장 Live만으로 기본 축을 따라갈 수 있습니다.
         </Text>
-      </div>
-
-      <details className="react-live-source-details react-test-project-sources" style={{ marginBottom: 4 }}>
-        <summary
-          className="react-test-project-sources-summary"
-          style={{
-            cursor: "pointer",
-            fontWeight: 600,
-            fontSize: 15,
-            color: "#27272a",
-            listStyle: "none",
-            padding: "12px 14px",
-            borderRadius: 10,
-            border: "1px solid #e4e4e7",
-            background: "#fafafa",
-          }}
-        >
-          {/* 요약: JS 참고 트리 — 트리 클릭 시 아래 패널에만 원문 표시 · 장별 매핑은 목록 참고 */}
-          <code>src/dev/reactTestProject</code> 소스 보기 (폴더 트리 · chat 제외)
-        </summary>
-        <Text type="secondary" style={{ display: "block", marginTop: 12, marginBottom: 10, fontSize: 12 }}>
-          트리에서 파일을 누르면 <strong>아래 한 곳</strong>에만 원문이 열립니다(구문 강조). 데모:{" "}
-          <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
+        <Text type="secondary" style={{ display: "block", marginTop: 12 }}>
+          JavaScript 샘플 전체 소스 트리·원문은{" "}
+          <Link to={walkthroughDoc?.href ?? REACT_TEST_PROJECT_WALKTHROUGH_HREF}>
+            16장 · 샘플 예제 분석 (reactTestProject)
+          </Link>
+          에서만 펼칩니다. (1~15장 홈에서는 목차·링크만.)
         </Text>
-        <div
-          className="react-test-project-source-guide"
-          style={{
-            marginBottom: 14,
-            padding: "10px 12px",
-            borderRadius: 8,
-            background: "#fafafa",
-            border: "1px solid #e4e4e7",
-            fontSize: 12,
-            color: "#52525b",
-          }}
-        >
-          <div style={{ fontWeight: 600, color: "#3f3f46", marginBottom: 8 }}>
-            장별로 어디를 보면 좋은지 (간단 주석)
-          </div>
-          <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
-            {REACT_TEST_PROJECT_SOURCE_GUIDE.map((row) => (
-              <li key={row.path} style={{ marginBottom: 4 }}>
-                <code style={{ fontSize: "0.92em" }}>{row.path}</code> — {row.hint}
-              </li>
-            ))}
-          </ul>
-          <Text type="secondary" style={{ display: "block", marginTop: 10, fontSize: 11 }}>
-            각 장 본문 맨 아래에도, 그 장에 맞는 파일 <strong>전체</strong>가 자동으로 붙습니다.
-          </Text>
-        </div>
-        <div className="react-test-project-files-list">
-          {sourcesByTopFolder.map(([folder, files]) => (
-            <div key={folder} className="react-test-project-tree-block">
-              <div className="react-test-project-tree-folder">
-                {folder === "(root)" ? "(루트)" : `${folder}/`}
-              </div>
-              <div className="react-test-project-tree-files">
-                {files.map((f) => (
-                  <button
-                    key={f.relativePath}
-                    type="button"
-                    className={
-                      selectedSourcePath === f.relativePath
-                        ? "react-test-project-tree-item react-test-project-tree-item--selected"
-                        : "react-test-project-tree-item"
-                    }
-                    onClick={() => setSelectedSourcePath(f.relativePath)}
-                  >
-                    {f.relativePath}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="react-test-project-source-pane">
-          <div className="react-test-project-source-pane-head">
-            {selectedSourceFile ? (
-              <code>{selectedSourceFile.relativePath}</code>
-            ) : (
-              <span className="react-test-project-source-pane-placeholder">선택된 파일 없음</span>
-            )}
-          </div>
-          {selectedSourceFile ? (
-            <pre className="react-live-source-file-pre react-test-project-source-pane-pre">
-              <code className="hljs" dangerouslySetInnerHTML={{ __html: selectedSourceHtml }} />
-            </pre>
-          ) : (
-            <Text type="secondary" style={{ display: "block", padding: "12px 0" }}>
-              트리에서 파일을 선택하세요.
-            </Text>
-          )}
-        </div>
-      </details>
+      </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         {chapters.length === 0 ? (
