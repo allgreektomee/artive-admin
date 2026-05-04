@@ -518,7 +518,7 @@ const LiveEffectLifecycle = () => {
         목록만 다시 불러오기 (loadVersion +1 → 첫 effect만 재실행)
       </button>
       <div style={{ marginBottom: 8 }}>
-        경과 초: <strong>{seconds}</strong> — 두 번째 effect(<code>[]</code>). 컴포넌트가 사라질 때 인터벌 정리.
+        경과 초: <strong>{seconds}</strong> — <strong>② effect(<code>[]</code>)가 만드는 화면 결과</strong>(1초마다 +1). 인터벌 정리(<code>clearInterval</code>)는 이 카드가 언마운트될 때.
       </div>
       <div>
         목록:{" "}
