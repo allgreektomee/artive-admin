@@ -15,6 +15,7 @@ import {
   listServerDocs,
   readOutlineMarkdown,
   readReactOutlineMarkdown,
+  excerptFromMarkdownLead,
   type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
@@ -208,7 +209,7 @@ const DevDocsPage: React.FC = () => {
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
 
-      <div style={{ maxWidth: 768, margin: "0 auto", padding: "1.5rem 1rem" }}>
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: "1.5rem 1rem" }}>
         <Text type="secondary" style={{ fontSize: 11, letterSpacing: "0.15em" }}>
           ARTIVE
         </Text>
@@ -580,13 +581,14 @@ function ReactHome({
   outlineSource: string;
 }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
       <div>
         <Title level={3} style={{ marginTop: 0 }}>
           React 연재
         </Title>
         <Text type="secondary" style={{ display: "block" }}>
-          JavaScript 예제와 등록형 Live 예제로 16장까지 진행합니다.
+          전체 목차를 확인한 뒤, 장 카드(번호·제목)를 눌러 본문으로 들어갑니다. 본문 속 Live 예제는{" "}
+          <strong>예제 코드</strong>와 <strong>실행 결과</strong>를 나란히 봅니다.
         </Text>
       </div>
 
@@ -596,24 +598,72 @@ function ReactHome({
 
       <div>
         <Text strong style={{ fontSize: 12, letterSpacing: "0.08em", color: "#71717a" }}>
-          작성된 장
+          장별로 보기
         </Text>
-        <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+        <Text type="secondary" style={{ display: "block", marginTop: 6, fontSize: 13 }}>
+          각 장 앞부분 요약 아래 흰 카드를 누르면 해당 장 전체(마크다운 + Live)로 이동합니다.
+        </Text>
+        <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 20 }}>
           {reactDocs.length === 0 ? (
             <Text type="secondary">아직 개별 장 문서가 없습니다.</Text>
           ) : (
-            reactDocs.map((doc) => (
-              <Link key={doc.href} to={doc.href} style={{ textDecoration: "none" }}>
-                <Card hoverable size="small">
-                  <Text code style={{ fontSize: 11, marginRight: 8 }}>
-                    {String(doc.order).padStart(2, "0")}
-                  </Text>
-                  <Text strong style={{ color: "#27272a" }}>
-                    {doc.title}
-                  </Text>
-                </Card>
-              </Link>
-            ))
+            reactDocs.map((doc) => {
+              const lead = excerptFromMarkdownLead(doc.body, 220);
+              return (
+                <div key={doc.slug} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {lead ? (
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: 14,
+                        color: "#52525b",
+                        lineHeight: 1.65,
+                      }}
+                    >
+                      {lead}
+                    </p>
+                  ) : null}
+                  <Link to={doc.href} style={{ textDecoration: "none", color: "inherit" }}>
+                    <div
+                      className="react-docs-chapter-entry-card"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 14,
+                        padding: "14px 16px",
+                        borderRadius: 10,
+                        border: "1px solid #e4e4e7",
+                        background: "#fff",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div
+                        style={{
+                          flexShrink: 0,
+                          width: 40,
+                          height: 40,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: 8,
+                          border: "1px solid #e4e4e7",
+                          background: "#fafafa",
+                          fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                          fontSize: 13,
+                          fontWeight: 600,
+                          color: "#27272a",
+                        }}
+                      >
+                        {String(doc.order).padStart(2, "0")}
+                      </div>
+                      <Text strong style={{ fontSize: 15, color: "#18181b", margin: 0 }}>
+                        {doc.title}
+                      </Text>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })
           )}
         </div>
       </div>

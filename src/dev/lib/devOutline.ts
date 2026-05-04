@@ -222,6 +222,44 @@ function serverDocOrder(slug: string): number {
   return Number.MAX_SAFE_INTEGER;
 }
 
+export function excerptFromMarkdownLead(body: string, maxLen = 200): string {
+  const lines = body.split("\n");
+  let i = 0;
+  while (i < lines.length) {
+    const t = lines[i].trim();
+    if (t === "") {
+      i++;
+      continue;
+    }
+    if (t.startsWith("#")) {
+      i++;
+      continue;
+    }
+    break;
+  }
+
+  const paragraph: string[] = [];
+  for (; i < lines.length; i++) {
+    const t = lines[i].trim();
+    if (t === "") break;
+    if (
+      t.startsWith("#") ||
+      t.startsWith("```") ||
+      t.startsWith("|") ||
+      /^[-*]\s/.test(t) ||
+      /^\d+\.\s/.test(t)
+    ) {
+      break;
+    }
+    paragraph.push(t);
+  }
+
+  const text = paragraph.join(" ").replace(/\s+/g, " ").trim();
+  if (text.length === 0) return "";
+  if (text.length <= maxLen) return text;
+  return `${text.slice(0, maxLen)}…`;
+}
+
 function buildServerDocs(): ServerDoc[] {
   const docs: ServerDoc[] = [];
   for (const [path, raw] of Object.entries(serverDocModules)) {

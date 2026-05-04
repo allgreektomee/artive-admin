@@ -1,5 +1,10 @@
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode, useMemo } from "react";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import "highlight.js/styles/github.css";
 import { getLiveExampleEntry } from "../liveExamples/reactExamples";
+
+hljs.registerLanguage("javascript", javascript);
 
 type Props = {
   exampleId: string;
@@ -47,6 +52,15 @@ export function LiveExample({ exampleId }: Props) {
   const entry = getLiveExampleEntry(exampleId.trim());
   const Example = entry?.Component;
 
+  const highlighted = useMemo(() => {
+    if (!entry?.sourceCode?.trim()) return null;
+    try {
+      return hljs.highlight(entry.sourceCode, { language: "javascript" }).value;
+    } catch {
+      return hljs.highlight(entry.sourceCode, { language: "plaintext" }).value;
+    }
+  }, [entry?.sourceCode]);
+
   if (!entry || !Example) {
     return (
       <div
@@ -65,6 +79,8 @@ export function LiveExample({ exampleId }: Props) {
     );
   }
 
+  const split = Boolean(highlighted);
+
   return (
     <section
       style={{
@@ -76,7 +92,7 @@ export function LiveExample({ exampleId }: Props) {
         boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
       }}
     >
-      <div style={{ marginBottom: 10 }}>
+      <div style={{ marginBottom: 12 }}>
         <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.06em", color: "#71717a" }}>
           LIVE 예제
         </div>
@@ -84,26 +100,59 @@ export function LiveExample({ exampleId }: Props) {
           {entry.title}
         </div>
         {entry.description ? (
-          <span
-            style={{ display: "block", marginTop: 6, fontSize: 13, color: "#71717a" }}
-          >
+          <span style={{ display: "block", marginTop: 6, fontSize: 13, color: "#71717a" }}>
             {entry.description}
           </span>
         ) : null}
       </div>
-      <div
-        style={{
-          padding: "1rem",
-          borderRadius: 8,
-          border: "1px solid #f4f4f5",
-          background: "#fafafa",
-        }}
-      >
-        <LiveExampleErrorBoundary>
-          <Example />
-        </LiveExampleErrorBoundary>
+
+      <div className={`live-example-grid ${split ? "live-example-grid--split" : ""}`}>
+        {highlighted ? (
+          <div>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.08em",
+                color: "#71717a",
+                marginBottom: 8,
+              }}
+            >
+              예제 코드
+            </div>
+            <pre className="live-example-code-pre">
+              <code className="hljs" dangerouslySetInnerHTML={{ __html: highlighted }} />
+            </pre>
+          </div>
+        ) : null}
+        <div>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              color: "#71717a",
+              marginBottom: 8,
+            }}
+          >
+            실행 결과
+          </div>
+          <div
+            style={{
+              padding: "1rem",
+              borderRadius: 8,
+              border: "1px solid #f4f4f5",
+              background: "#fafafa",
+              minHeight: split ? undefined : 48,
+            }}
+          >
+            <LiveExampleErrorBoundary>
+              <Example />
+            </LiveExampleErrorBoundary>
+          </div>
+        </div>
       </div>
-      <div style={{ marginTop: 10 }}>
+      <div style={{ marginTop: 12 }}>
         <code
           style={{
             fontSize: 11,
