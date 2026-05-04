@@ -158,6 +158,8 @@ const user = {
 
 콜백 함수 안에서 `this`가 바뀌어 헷갈리는 경우도 많다.
 
+콜백 함수는 다른 함수에 인자로 전달되어 나중에 실행되는 함수다. `setTimeout`은 일정 시간이 지난 뒤 콜백을 실행하는 브라우저와 Node.js의 타이머 API다.
+
 ```js
 const user = {
   name: "Kim",

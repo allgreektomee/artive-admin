@@ -14,6 +14,38 @@
 - 필요한 값만 `export`하고 필요한 곳에서 `import`한다.
 - Node.js에서는 CommonJS와 ES 모듈을 모두 만날 수 있다.
 
+## 용어 먼저 정리
+
+모듈은 하나의 파일이 자기 코드와 값을 독립된 범위로 갖는 단위다. 파일 안에서 만든 변수나 함수는 기본적으로 그 파일 안에서만 쓰고, 외부에 공개할 값만 `export`한다.
+
+ES 모듈은 `import`와 `export`를 사용하는 표준 모듈 문법이다.
+
+```js
+// math.js
+// export function add(a, b) {
+//   return a + b;
+// }
+
+// app.js
+// import { add } from './math.js';
+```
+
+CommonJS는 Node.js에서 오래 사용된 모듈 방식이다. `require()`로 가져오고 `module.exports`로 내보낸다.
+
+```js
+// math.cjs
+// module.exports = {
+//   add(a, b) {
+//     return a + b;
+//   },
+// };
+
+// app.cjs
+// const { add } = require('./math.cjs');
+```
+
+요즘 프론트엔드와 최신 Node.js 코드에서는 ES 모듈을 자주 사용하지만, 기존 Node.js 패키지나 설정 파일에서는 CommonJS도 여전히 만날 수 있다.
+
 ## 심화 내용
 
 실제 모듈 코드는 여러 파일이 필요하므로 예제에서는 주석으로 표현했다. 핵심은 파일이 맡은 역할을 작게 유지하는 것이다.

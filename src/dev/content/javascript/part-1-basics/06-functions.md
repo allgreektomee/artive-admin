@@ -162,6 +162,34 @@ greet();
 
 인자를 전달하지 않으면 기본값이 사용된다.
 
+## 나머지 매개변수
+
+나머지 매개변수는 정해지지 않은 개수의 인자를 배열로 모아 받는 문법이다. 매개변수 이름 앞에 `...`을 붙인다.
+
+```js
+function sum(...numbers) {
+  let total = 0;
+
+  for (const number of numbers) {
+    total += number;
+  }
+
+  return total;
+}
+
+console.log(sum(1, 2));
+console.log(sum(1, 2, 3, 4));
+```
+
+실행 결과:
+
+```text
+3
+10
+```
+
+`...numbers`는 인자를 하나씩 받는 것이 아니라, 남은 인자들을 `numbers` 배열에 모아준다. 2부의 템플릿 태그 예제에서 나오는 `...values`도 같은 문법이다.
+
 ## 함수는 값이다
 
 JavaScript에서 함수는 값처럼 다룰 수 있다. 변수에 담을 수 있고, 다른 함수에 전달할 수도 있다.
@@ -183,6 +211,30 @@ hello
 ```
 
 이 특징 덕분에 JavaScript에서는 콜백 함수, 이벤트 처리, 배열 메서드 같은 기능을 자연스럽게 사용할 수 있다.
+
+## 콜백 함수
+
+콜백 함수는 다른 함수에 인자로 전달되어, 나중에 그 함수 안에서 호출되는 함수다.
+
+```js
+function runTwice(callback) {
+  callback();
+  callback();
+}
+
+runTwice(() => {
+  console.log('hello');
+});
+```
+
+실행 결과:
+
+```text
+hello
+hello
+```
+
+배열 메서드와 이벤트 처리, 비동기 처리에서 콜백을 자주 만난다. 핵심은 "함수를 값처럼 넘기고, 필요한 시점에 호출한다"는 점이다.
 
 ## 정리
 
