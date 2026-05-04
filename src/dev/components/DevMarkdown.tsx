@@ -3,7 +3,8 @@ import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "highlight.js/styles/github.css";
-import { splitMarkdownByExecutionResults } from "../lib/splitMarkdownByExecutionResults";
+import { LiveExample } from "./LiveExample";
+import { splitDevMarkdownSegments } from "../lib/splitDevMarkdownSegments";
 
 type Props = {
   source: string;
@@ -93,7 +94,7 @@ export function DevMarkdown({
     );
   }
 
-  const segments = splitMarkdownByExecutionResults(source);
+  const segments = splitDevMarkdownSegments(source);
 
   if (segments.length === 1 && segments[0].type === "markdown") {
     return (
@@ -121,8 +122,10 @@ export function DevMarkdown({
                 {seg.body}
               </ReactMarkdown>
             ) : null
-          ) : (
+          ) : seg.type === "executionResult" ? (
             <ExecutionResultBlock code={seg.code} info={seg.info} />
+          ) : (
+            <LiveExample exampleId={seg.id} />
           )}
         </Fragment>
       ))}

@@ -7,14 +7,18 @@ import {
   getJavaScriptArticle,
   getPart,
   getPreamble,
+  getReactDoc,
   getServerDoc,
   listJavaScriptArticleGroups,
   listParts,
+  listReactDocs,
   listServerDocs,
   readOutlineMarkdown,
+  readReactOutlineMarkdown,
   type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
+  type ReactDoc,
   type ServerDoc,
 } from "../lib/devOutline";
 import "../devDocs.css";
@@ -54,10 +58,12 @@ const DevDocsPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const md = useMemo(() => readOutlineMarkdown(), []);
+  const reactOutline = useMemo(() => readReactOutlineMarkdown(), []);
   const preamble = useMemo(() => getPreamble(md), [md]);
   const parts = useMemo(() => listParts(md), [md]);
   const articleGroups = useMemo(() => listJavaScriptArticleGroups(), []);
   const serverDocs = useMemo(() => listServerDocs(), []);
+  const reactDocs = useMemo(() => listReactDocs(), []);
 
   const tab = parseTab(searchParams.get("tab"));
   const outlineRaw = searchParams.get("outline");
@@ -68,6 +74,7 @@ const DevDocsPage: React.FC = () => {
   const ps = searchParams.get("ps");
   const as = searchParams.get("as");
   const sd = searchParams.get("sd");
+  const rd = searchParams.get("rd");
 
   const article = useMemo(() => {
     if (!ps || !as) return null;
@@ -79,10 +86,25 @@ const DevDocsPage: React.FC = () => {
     return getServerDoc(sd);
   }, [sd]);
 
+  const reactDoc = useMemo(() => {
+    if (!rd) return null;
+    return getReactDoc(rd);
+  }, [rd]);
+
   useEffect(() => {
-    if ((!ps || !as) && !sd) return;
+    if ((!ps || !as) && !sd && !rd) return;
     window.scrollTo({ top: 0 });
-  }, [ps, as, sd]);
+  }, [ps, as, sd, rd]);
+
+  const adjacentReactDocs = useMemo(() => {
+    if (!reactDoc) return { prev: null, next: null };
+    const idx = reactDocs.findIndex((d) => d.slug === reactDoc.slug);
+    if (idx === -1) return { prev: null, next: null };
+    return {
+      prev: reactDocs[idx - 1] ?? null,
+      next: reactDocs[idx + 1] ?? null,
+    };
+  }, [reactDoc, reactDocs]);
 
   const adjacentArticles = useMemo(() => {
     if (!article) return { prev: null, next: null };
@@ -124,6 +146,7 @@ const DevDocsPage: React.FC = () => {
       ps: undefined,
       as: undefined,
       sd: undefined,
+      rd: undefined,
     });
   }, [setQuery]);
 
@@ -134,6 +157,18 @@ const DevDocsPage: React.FC = () => {
       ps: undefined,
       as: undefined,
       sd: undefined,
+      rd: undefined,
+    });
+  }, [setQuery]);
+
+  const goHomeReact = useCallback(() => {
+    setQuery({
+      tab: "react",
+      outline: undefined,
+      ps: undefined,
+      as: undefined,
+      sd: undefined,
+      rd: undefined,
     });
   }, [setQuery]);
 
@@ -145,6 +180,7 @@ const DevDocsPage: React.FC = () => {
         ps: undefined,
         as: undefined,
         sd: undefined,
+        rd: undefined,
       });
     } else {
       setQuery({
@@ -153,6 +189,7 @@ const DevDocsPage: React.FC = () => {
         ps: undefined,
         as: undefined,
         sd: undefined,
+        rd: undefined,
       });
     }
   };
@@ -219,8 +256,34 @@ const DevDocsPage: React.FC = () => {
           })}
         </div>
 
-        {tab === "react" && (
-          <Placeholder title="React" body="React 정리 문서를 이 탭에 추가할 예정입니다." />
+        {tab === "react" && rd && !reactDoc && (
+          <Card size="small" style={{ marginBottom: 16 }}>
+            <Text>요청한 React 문서를 찾을 수 없습니다.</Text>
+            <div style={{ marginTop: 12 }}>
+              <button type="button" onClick={goHomeReact} style={linkBtn}>
+                React 홈으로
+              </button>
+            </div>
+          </Card>
+        )}
+        {tab === "react" && reactDoc && (
+          <div>
+            <nav style={{ marginBottom: 16, fontSize: 14 }}>
+              <button type="button" onClick={goHomeReact} style={linkBtn}>
+                ← React 홈
+              </button>
+            </nav>
+            <Card>
+              <DevMarkdown source={reactDoc.body} />
+            </Card>
+            <ReactDocNavigationCards
+              prev={adjacentReactDocs.prev}
+              next={adjacentReactDocs.next}
+            />
+          </div>
+        )}
+        {tab === "react" && !rd && (
+          <ReactHome reactDocs={reactDocs} outlineSource={reactOutline} />
         )}
         {tab === "spring" && (
           <Placeholder
@@ -281,6 +344,7 @@ const DevDocsPage: React.FC = () => {
                     ps: undefined,
                     as: undefined,
                     sd: undefined,
+                    rd: undefined,
                   })
                 }
                 style={linkBtn}
@@ -502,6 +566,115 @@ function ArticleNavigationCard({
         </Text>
         <Text type="secondary" style={{ display: "block", marginTop: 6, fontSize: 12 }}>
           {article.partId}부 · {String(article.order).padStart(2, "0")}
+        </Text>
+      </Card>
+    </Link>
+  );
+}
+
+function ReactHome({
+  reactDocs,
+  outlineSource,
+}: {
+  reactDocs: ReactDoc[];
+  outlineSource: string;
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Title level={3} style={{ marginTop: 0 }}>
+          React 연재
+        </Title>
+        <Text type="secondary" style={{ display: "block" }}>
+          JavaScript 예제와 등록형 Live 예제로 16장까지 진행합니다.
+        </Text>
+      </div>
+
+      <Card title="전체 목차" size="small">
+        <DevMarkdown source={outlineSource} />
+      </Card>
+
+      <div>
+        <Text strong style={{ fontSize: 12, letterSpacing: "0.08em", color: "#71717a" }}>
+          작성된 장
+        </Text>
+        <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+          {reactDocs.length === 0 ? (
+            <Text type="secondary">아직 개별 장 문서가 없습니다.</Text>
+          ) : (
+            reactDocs.map((doc) => (
+              <Link key={doc.href} to={doc.href} style={{ textDecoration: "none" }}>
+                <Card hoverable size="small">
+                  <Text code style={{ fontSize: 11, marginRight: 8 }}>
+                    {String(doc.order).padStart(2, "0")}
+                  </Text>
+                  <Text strong style={{ color: "#27272a" }}>
+                    {doc.title}
+                  </Text>
+                </Card>
+              </Link>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ReactDocNavigationCards({
+  prev,
+  next,
+}: {
+  prev: ReactDoc | null;
+  next: ReactDoc | null;
+}) {
+  if (!prev && !next) return null;
+
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gap: 12,
+        marginTop: 20,
+      }}
+    >
+      {prev ? <ReactDocNavigationCard label="이전 장" doc={prev} direction="prev" /> : null}
+      {next ? <ReactDocNavigationCard label="다음 장" doc={next} direction="next" /> : null}
+    </div>
+  );
+}
+
+function ReactDocNavigationCard({
+  label,
+  doc,
+  direction,
+}: {
+  label: string;
+  doc: ReactDoc;
+  direction: "prev" | "next";
+}) {
+  return (
+    <Link to={doc.href} style={{ textDecoration: "none" }}>
+      <Card hoverable size="small" style={{ height: "100%" }}>
+        <Text
+          type="secondary"
+          style={{
+            display: "block",
+            marginBottom: 8,
+            fontSize: 12,
+            fontWeight: 600,
+          }}
+        >
+          {direction === "prev" ? "← " : ""}
+          {label}
+          {direction === "next" ? " →" : ""}
+        </Text>
+        <Text strong style={{ color: "#27272a" }}>
+          {doc.title}
+        </Text>
+        <Text type="secondary" style={{ display: "block", marginTop: 6, fontSize: 12 }}>
+          {String(doc.order).padStart(2, "0")}
         </Text>
       </Card>
     </Link>

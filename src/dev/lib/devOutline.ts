@@ -16,6 +16,18 @@ const serverDocModules = import.meta.glob("../content/server/*.md", {
   eager: true,
 }) as Record<string, string>;
 
+const reactOutlineModules = import.meta.glob("../content/react/react-admin-series-outline.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+const reactDocModules = import.meta.glob("../content/react/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
 const JAVASCRIPT_PARTS = [
   { id: 1 as const, slug: "part-1-basics", title: "JavaScript 기본기" },
   {
@@ -64,6 +76,14 @@ export type ServerDoc = {
   href: string;
 };
 
+export type ReactDoc = {
+  slug: string;
+  title: string;
+  order: number;
+  body: string;
+  href: string;
+};
+
 function getOutlineRaw(): string {
   const keys = Object.keys(outlineModules);
   if (keys.length === 0) return "# 목차\n\n내용이 없습니다.\n";
@@ -84,6 +104,13 @@ function endOfCurrentSection(md: string, start: number): number {
 
 export function readOutlineMarkdown(): string {
   return getOutlineRaw();
+}
+
+export function readReactOutlineMarkdown(): string {
+  const keys = Object.keys(reactOutlineModules);
+  if (keys.length === 0) return "# React 연재\n\n목차가 없습니다.\n";
+  const first = keys[0];
+  return first ? reactOutlineModules[first] : "";
 }
 
 export function getPreamble(md: string): string {
@@ -124,6 +151,11 @@ function orderFromSlug(slug: string): number {
 
 let articlesCache: JavaScriptArticle[] | null = null;
 let serverDocsCache: ServerDoc[] | null = null;
+let reactDocsCache: ReactDoc[] | null = null;
+
+const REACT_DOC_EXCLUDE = new Set(
+  ["README.md", "react-admin-series-outline.md"].map((f) => f.toLowerCase()),
+);
 
 function buildArticles(): JavaScriptArticle[] {
   const list: JavaScriptArticle[] = [];
@@ -224,4 +256,41 @@ export function listServerDocs(): ServerDoc[] {
 
 export function getServerDoc(slug: string): ServerDoc | null {
   return allServerDocs().find((doc) => doc.slug === slug) ?? null;
+}
+
+function buildReactDocs(): ReactDoc[] {
+  const docs: ReactDoc[] = [];
+  for (const [path, raw] of Object.entries(reactDocModules)) {
+    const m = path.match(/\/([^/]+)\.md$/i);
+    if (!m) continue;
+    const filename = m[1]!;
+    if (REACT_DOC_EXCLUDE.has(`${filename}.md`.toLowerCase())) continue;
+
+    const slug = filename;
+    const body = raw as string;
+    docs.push({
+      slug,
+      title: titleFromMarkdown(body, slug),
+      order: orderFromSlug(slug),
+      body,
+      href: `/dev?tab=react&rd=${encodeURIComponent(slug)}`,
+    });
+  }
+
+  return docs.sort(
+    (a, b) => a.order - b.order || a.slug.localeCompare(b.slug, "en"),
+  );
+}
+
+function allReactDocs(): ReactDoc[] {
+  if (!reactDocsCache) reactDocsCache = buildReactDocs();
+  return reactDocsCache;
+}
+
+export function listReactDocs(): ReactDoc[] {
+  return allReactDocs();
+}
+
+export function getReactDoc(slug: string): ReactDoc | null {
+  return allReactDocs().find((doc) => doc.slug === slug) ?? null;
 }
