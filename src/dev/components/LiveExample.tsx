@@ -79,7 +79,7 @@ export function LiveExample({ exampleId }: Props) {
     );
   }
 
-  const split = Boolean(highlighted);
+  const hasCode = Boolean(highlighted);
 
   return (
     <section
@@ -106,7 +106,7 @@ export function LiveExample({ exampleId }: Props) {
         ) : null}
       </div>
 
-      <div className={`live-example-grid ${split ? "live-example-grid--split" : ""}`}>
+      <div className="live-example-grid">
         {highlighted ? (
           <div>
             <div
@@ -143,7 +143,7 @@ export function LiveExample({ exampleId }: Props) {
               borderRadius: 8,
               border: "1px solid #f4f4f5",
               background: "#fafafa",
-              minHeight: split ? undefined : 48,
+              minHeight: hasCode ? undefined : 48,
             }}
           >
             <LiveExampleErrorBoundary>

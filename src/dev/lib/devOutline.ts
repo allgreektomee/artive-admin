@@ -332,3 +332,111 @@ export function listReactDocs(): ReactDoc[] {
 export function getReactDoc(slug: string): ReactDoc | null {
   return allReactDocs().find((doc) => doc.slug === slug) ?? null;
 }
+
+export type ReactOutlineChapter = {
+  order: number;
+  heading: string;
+  intro: string;
+  topics: string[];
+  exampleGoal: string | null;
+};
+
+export function listReactOutlineChapters(outlineMd: string): ReactOutlineChapter[] {
+  const re = /^## (\d+)장\.[^\n]*/gm;
+  const matches = [...outlineMd.matchAll(re)];
+  const chapters: ReactOutlineChapter[] = [];
+
+  for (let idx = 0; idx < matches.length; idx++) {
+    const m = matches[idx]!;
+    const order = Number(m[1]);
+    if (!Number.isFinite(order)) continue;
+
+    const heading = m[0]!.replace(/^##\s+/, "").trim();
+    const start = (m.index ?? 0) + m[0]!.length;
+    const next = matches[idx + 1];
+    const end = next?.index ?? outlineMd.length;
+    const block = outlineMd.slice(start, end).trim();
+    const parsed = parseReactOutlineChapterBody(block);
+    chapters.push({ order, heading, ...parsed });
+  }
+
+  return chapters.sort((a, b) => a.order - b.order);
+}
+
+function parseReactOutlineChapterBody(block: string): {
+  intro: string;
+  topics: string[];
+  exampleGoal: string | null;
+} {
+  const lines = block.split(/\r?\n/);
+  let i = 0;
+  while (i < lines.length && lines[i].trim() === "") i++;
+
+  const introParts: string[] = [];
+  while (i < lines.length) {
+    const t = lines[i].trim();
+    if (t === "") break;
+    if (t === "구성:") break;
+    if (/^\d+\.\s/.test(t)) break;
+    if (t === "예제 목표:") break;
+    if (t.startsWith("참고 코드:")) break;
+    introParts.push(t);
+    i++;
+  }
+  const intro = introParts.join(" ");
+
+  while (i < lines.length && lines[i].trim() === "") i++;
+
+  if (lines[i]?.trim() === "구성:") {
+    i++;
+    while (i < lines.length && lines[i].trim() === "") i++;
+  }
+
+  const topics: string[] = [];
+  while (i < lines.length) {
+    const t = lines[i].trim();
+    if (t === "" || t === "예제 목표:" || t.startsWith("참고 코드:")) break;
+    if (/^\d+\.\s/.test(t)) {
+      topics.push(lines[i].trim());
+      i++;
+      continue;
+    }
+    break;
+  }
+
+  while (i < lines.length && lines[i].trim() === "") i++;
+
+  let exampleGoal: string | null = null;
+
+  if (lines[i]?.trim() === "예제 목표:") {
+    i++;
+    while (i < lines.length && lines[i].trim() === "") i++;
+    if (lines[i]?.trim().startsWith("```")) {
+      i++;
+      const body: string[] = [];
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
+        body.push(lines[i]);
+        i++;
+      }
+      exampleGoal = body.join("\n").trim();
+      if (lines[i]?.trim().startsWith("```")) i++;
+    }
+  } else {
+    const buf: string[] = [];
+    while (i < lines.length) {
+      const tr = lines[i].trim();
+      if (tr.startsWith("참고 코드:")) break;
+      if (tr.startsWith("```")) {
+        i++;
+        while (i < lines.length && !lines[i].trim().startsWith("```")) i++;
+        if (i < lines.length) i++;
+        continue;
+      }
+      buf.push(lines[i]);
+      i++;
+    }
+    exampleGoal = buf.join("\n").trim().replace(/\n{3,}/g, "\n\n") || null;
+  }
+
+  return { intro, topics, exampleGoal };
+}

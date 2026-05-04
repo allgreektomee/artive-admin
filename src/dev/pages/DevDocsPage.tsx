@@ -12,10 +12,10 @@ import {
   listJavaScriptArticleGroups,
   listParts,
   listReactDocs,
+  listReactOutlineChapters,
   listServerDocs,
   readOutlineMarkdown,
   readReactOutlineMarkdown,
-  excerptFromMarkdownLead,
   type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
@@ -209,7 +209,7 @@ const DevDocsPage: React.FC = () => {
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
 
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "1.5rem 1rem" }}>
+      <div style={{ maxWidth: 768, margin: "0 auto", padding: "1.5rem 1rem" }}>
         <Text type="secondary" style={{ fontSize: 11, letterSpacing: "0.15em" }}>
           ARTIVE
         </Text>
@@ -580,6 +580,15 @@ function ReactHome({
   reactDocs: ReactDoc[];
   outlineSource: string;
 }) {
+  const chapters = useMemo(() => listReactOutlineChapters(outlineSource), [outlineSource]);
+  const docByOrder = useMemo(() => {
+    const m = new Map<number, ReactDoc>();
+    for (const d of reactDocs) {
+      m.set(d.order, d);
+    }
+    return m;
+  }, [reactDocs]);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
       <div>
@@ -587,80 +596,113 @@ function ReactHome({
           React 연재
         </Title>
         <Text type="secondary" style={{ display: "block" }}>
-          전체 목차를 확인한 뒤, 장 카드(번호·제목)를 눌러 본문으로 들어갑니다. 본문 속 Live 예제는{" "}
-          <strong>예제 코드</strong>와 <strong>실행 결과</strong>를 나란히 봅니다.
+          아래는 연재 목차와 동일한 구성입니다. 각 장 하단의 <strong>회색 예제 목표</strong> 박스를 누르면
+          본문(설명 + Live 코드·실행 결과)으로 들어갑니다.
         </Text>
       </div>
 
-      <Card title="전체 목차" size="small">
+      <Card title="전체 목차(펼침)" size="small">
         <DevMarkdown source={outlineSource} />
       </Card>
 
       <div>
         <Text strong style={{ fontSize: 12, letterSpacing: "0.08em", color: "#71717a" }}>
-          장별로 보기
+          장별 미리보기
         </Text>
         <Text type="secondary" style={{ display: "block", marginTop: 6, fontSize: 13 }}>
-          각 장 앞부분 요약 아래 흰 카드를 누르면 해당 장 전체(마크다운 + Live)로 이동합니다.
+          제목·항목은 목차와 같습니다. 예제 목표 박스가 해당 장 본문으로 연결됩니다.
         </Text>
-        <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 20 }}>
-          {reactDocs.length === 0 ? (
-            <Text type="secondary">아직 개별 장 문서가 없습니다.</Text>
+        <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 24 }}>
+          {chapters.length === 0 ? (
+            <Text type="secondary">목차에서 장 헤더를 찾지 못했습니다.</Text>
           ) : (
-            reactDocs.map((doc) => {
-              const lead = excerptFromMarkdownLead(doc.body, 220);
+            chapters.map((ch) => {
+              const doc = docByOrder.get(ch.order);
+              const goalText =
+                ch.exampleGoal?.trim() || "본문에서 상세히 다룹니다.";
+              const goalInner = (
+                <>
+                  <div
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: "#71717a",
+                      marginBottom: 8,
+                    }}
+                  >
+                    예제 목표
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 14,
+                      color: "#27272a",
+                      lineHeight: 1.6,
+                      whiteSpace: "pre-wrap",
+                      fontFamily: "ui-sans-serif, system-ui, sans-serif",
+                    }}
+                  >
+                    {goalText}
+                  </div>
+                  {!doc ? (
+                    <Text type="secondary" style={{ display: "block", marginTop: 8, fontSize: 12 }}>
+                      본문 문서 준비 중입니다.
+                    </Text>
+                  ) : null}
+                </>
+              );
+
               return (
-                <div key={doc.slug} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {lead ? (
+                <div key={ch.order} className="react-outline-chapter-block">
+                  <Title level={4} style={{ marginTop: 0, marginBottom: 12, fontSize: 18 }}>
+                    {ch.heading}
+                  </Title>
+                  {ch.intro ? (
                     <p
                       style={{
-                        margin: 0,
+                        margin: "0 0 14px",
                         fontSize: 14,
-                        color: "#52525b",
+                        color: "#3f3f46",
                         lineHeight: 1.65,
                       }}
                     >
-                      {lead}
+                      {ch.intro}
                     </p>
                   ) : null}
-                  <Link to={doc.href} style={{ textDecoration: "none", color: "inherit" }}>
-                    <div
-                      className="react-docs-chapter-entry-card"
+                  {ch.topics.length > 0 ? (
+                    <ol
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 14,
-                        padding: "14px 16px",
-                        borderRadius: 10,
-                        border: "1px solid #e4e4e7",
-                        background: "#fff",
-                        cursor: "pointer",
+                        margin: "0 0 4px",
+                        paddingLeft: 22,
+                        fontSize: 14,
+                        color: "#27272a",
+                        lineHeight: 1.65,
                       }}
                     >
-                      <div
-                        style={{
-                          flexShrink: 0,
-                          width: 40,
-                          height: 40,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          borderRadius: 8,
-                          border: "1px solid #e4e4e7",
-                          background: "#fafafa",
-                          fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-                          fontSize: 13,
-                          fontWeight: 600,
-                          color: "#27272a",
-                        }}
-                      >
-                        {String(doc.order).padStart(2, "0")}
+                      {ch.topics.map((topic, topicIdx) => (
+                        <li key={topicIdx} style={{ marginBottom: 6 }}>
+                          {topic.replace(/^\d+\.\s*/, "")}
+                        </li>
+                      ))}
+                    </ol>
+                  ) : null}
+                  {doc ? (
+                    <Link
+                      to={doc.href}
+                      style={{ textDecoration: "none", color: "inherit", display: "block" }}
+                      aria-label={`${ch.heading} 본문으로 이동`}
+                    >
+                      <div className="react-outline-goal-box react-outline-goal-box--clickable">
+                        {goalInner}
                       </div>
-                      <Text strong style={{ fontSize: 15, color: "#18181b", margin: 0 }}>
-                        {doc.title}
-                      </Text>
+                    </Link>
+                  ) : (
+                    <div
+                      className="react-outline-goal-box"
+                      style={{ opacity: 0.85, cursor: "default" }}
+                    >
+                      {goalInner}
                     </div>
-                  </Link>
+                  )}
                 </div>
               );
             })

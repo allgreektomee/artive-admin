@@ -28,17 +28,6 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 실무 파트: 현재 프로젝트 src/etc 흐름 참고
 ```
 
-현재 프로젝트에서 참고할 실제 코드 위치:
-
-```text
-src/App.tsx
-src/etc/api
-src/etc/hooks
-src/etc/pages
-src/etc/components
-src/etc/chat
-```
-
 ## 1장. React가 무엇인지 이해하기
 
 React를 시작하기 전에 필요한 개념을 잡는다.
