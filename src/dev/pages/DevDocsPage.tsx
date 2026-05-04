@@ -596,27 +596,17 @@ function ReactHome({
           React 연재
         </Title>
         <Text type="secondary" style={{ display: "block" }}>
-          아래는 연재 목차와 동일한 구성입니다. 각 장 하단의 <strong>회색 예제 목표</strong> 박스를 누르면
-          본문(설명 + Live 코드·실행 결과)으로 들어갑니다.
+          <strong>장별 미리보기</strong>로 각 장 제목·소개·항목을 확인하고, 하단{" "}
+          <strong>예제 목표</strong> 회색 박스를 누르면 본문(설명 + Live 코드·실행 결과)으로
+          들어갑니다.
         </Text>
       </div>
 
-      <Card title="전체 목차(펼침)" size="small">
-        <DevMarkdown source={outlineSource} />
-      </Card>
-
-      <div>
-        <Text strong style={{ fontSize: 12, letterSpacing: "0.08em", color: "#71717a" }}>
-          장별 미리보기
-        </Text>
-        <Text type="secondary" style={{ display: "block", marginTop: 6, fontSize: 13 }}>
-          제목·항목은 목차와 같습니다. 예제 목표 박스가 해당 장 본문으로 연결됩니다.
-        </Text>
-        <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 24 }}>
-          {chapters.length === 0 ? (
-            <Text type="secondary">목차에서 장 헤더를 찾지 못했습니다.</Text>
-          ) : (
-            chapters.map((ch) => {
+      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        {chapters.length === 0 ? (
+          <Text type="secondary">목차에서 장 헤더를 찾지 못했습니다.</Text>
+        ) : (
+          chapters.map((ch) => {
               const doc = docByOrder.get(ch.order);
               const goalText =
                 ch.exampleGoal?.trim() || "본문에서 상세히 다룹니다.";
