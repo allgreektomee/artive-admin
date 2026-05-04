@@ -1,5 +1,17 @@
 /// <reference types="vite/client" />
 
+declare module "*/reactTestProject/pages/ArtworkListPage.js" {
+  import type { ComponentType } from "react";
+  const ArtworkListPage: ComponentType<Record<string, never>>;
+  export default ArtworkListPage;
+}
+
+declare module "*/reactTestProject/pages/ArtworkDetailPage.js" {
+  import type { ComponentType } from "react";
+  const ArtworkDetailPage: ComponentType<Record<string, never>>;
+  export default ArtworkDetailPage;
+}
+
 interface ImportMetaEnv {
   /** 예: wss://api.artivefor.me/ws/chat (서버 WS 엔드포인트와 동일해야 함) */
   readonly VITE_CHAT_WS_URL?: string;

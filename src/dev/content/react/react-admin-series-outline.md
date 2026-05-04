@@ -1,21 +1,22 @@
 # React JavaScript 실무 연재 목차
 
-이 연재는 React를 처음 배우는 사람이 JavaScript만으로 따라올 수 있게 구성한다. 처음에는 컴포넌트, props, 이벤트, 상태, 생명주기, 훅을 작은 예제로 익히고, 뒤로 갈수록 현재 프로젝트의 `src/etc` 관리자 화면, 아트워크 관리, 이미지 업로드, WebSocket 채팅 흐름을 JavaScript 버전 예제로 풀어낸다.
+이 연재는 React를 처음 배우는 사람이 JavaScript만으로 따라올 수 있게 구성한다. **앞쪽 1~8장은 `/dev` React 탭의 Live 예제 순서와 맞춘다.** 개념을 짧게 짚은 뒤 “이번 장에서 쓰는 예제가 이렇게 연결된다”로 이어진다. 9장 이후는 라우팅·API·폼·이미지·전역 상태 등 `src/etc`·`reactTestProject` 흐름을 참고한 실무 파트다. WebSocket·실시간은 **선택(15장)** 으로 두어도 전체 이해에 지장 없다.
 
 ## 시리즈 목표
 
-React 문법을 외우는 것이 아니라 "화면을 컴포넌트로 나누고, 상태를 바꾸고, 서버와 연결하고, 여러 화면을 라우팅하는 방식"을 익힌다.
+React 문법을 외우는 것이 아니라 **“기본기 → 같은 맥락의 예제에서 어떻게 쓰이는지”**를 익힌다.
 
-총 16장 구성으로, 앞쪽은 React 기본기, 뒤쪽은 현재 프로젝트의 `src/etc` 흐름을 참고한 실무 예제로 이어진다.
+- **로그인까지 전부 돌려 보는 것은 필수가 아니다.** `/dev?tab=react`에서 각 장 본문·Live 실행·(같은 페이지에서 펼칠 수 있는) **전체 예제 소스**로 따라올 수 있다.
+- **실전에 가깝게 가고 싶을 때**: JavaScript 참고 트리 `src/dev/reactTestProject/`(README 참고) · 데모 경로 [`/dev/react-test/artworks`](/dev/react-test/artworks) (목록·상세 조회, 수정·삭제·등록은 alert 처리)를 쓴다. 토큰이 있으면 API 목록·상세가 동작한다.
+- 총 16장: **1~8장 = Live 예제 8개와 동일 순서**, 9~14장 = 라우터·API·인증(개념)·폼·Redux·이미지, **15장 WebSocket = 선택**, 16장 = 작은 앱으로 정리.
 
-- React 컴포넌트가 무엇인지 이해한다.
-- props로 부모에서 자식으로 값을 전달한다.
-- 이벤트와 상태로 화면을 바꾼다.
-- 컴포넌트를 파일 단위로 모듈화한다.
-- 생명주기와 훅의 관계를 이해한다.
+실제 운영 정적 사이트에서는 작품 **목록**과 **상세**가 이미 함께 제공된다. 서버 Read·라우팅을 말할 때는 “목록에서 찾고, 상세에서 본다”는 흐름을 기준으로 보면 된다.
+
+- React 컴포넌트·JSX·props·이벤트·상태·모듈 나누기·`useEffect`·훅 조합을 **예제 순서대로** 익힌다.
 - React Router로 여러 화면을 연결한다.
-- Redux Toolkit으로 전역 상태를 관리한다.
-- 마지막에는 `src/etc` 코드 흐름을 작은 관리자 앱 예제로 재현한다.
+- API 모듈·`axios`/인증 헤더 개념을 익힌다. (로그인 구현은 **장 11에서 다루되, 시리즈 완주 조건은 아님**.)
+- Redux Toolkit·이미지 업로드·정렬 등 관리자 패턴을 익힌다.
+- 마지막에는 배운 구조를 작은 JavaScript 앱 단위로 정리한다. (WebSocket은 생략 가능.)
 
 ## 예제 기준
 
@@ -27,6 +28,23 @@ React 문법을 외우는 것이 아니라 "화면을 컴포넌트로 나누고,
 UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 실무 파트: 현재 프로젝트 src/etc 흐름 참고
 ```
+
+## 예제 코드·링크 (1~8장 = Live 데모 순서)
+
+학습 페이지 **React 탭 홈**에서도 전체 Live 소스(`reactExamples.jsx`)를 펼쳐 볼 수 있다. 각 장 본문에는 해당 Live ID와 연결된 설명·실행 영역이 있다.
+
+| 장 | Live 예제 ID | 본문으로 이동 |
+|----|----------------|---------------|
+| 1장 | `react.component.basic` | [`/dev?tab=react&rd=01-what-is-react`](/dev?tab=react&rd=01-what-is-react) |
+| 2장 | `react.jsx.greeting` | [`/dev?tab=react&rd=02-jsx-and-components`](/dev?tab=react&rd=02-jsx-and-components) |
+| 3장 | `react.props.artworkCard` | [`/dev?tab=react&rd=03-props`](/dev?tab=react&rd=03-props) |
+| 4장 | `react.event.click` | [`/dev?tab=react&rd=04-react-events`](/dev?tab=react&rd=04-react-events) |
+| 5장 | `react.state.counter` | [`/dev?tab=react&rd=05-state-usestate`](/dev?tab=react&rd=05-state-usestate) |
+| 6장 | `react.module.artworkExplorer` | [`/dev?tab=react&rd=06-component-modularization`](/dev?tab=react&rd=06-component-modularization) |
+| 7장 | `react.effect.lifecycle` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
+| 8장 | `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
+
+소스 파일(저장소): `src/dev/liveExamples/reactExamples.jsx` · JS 참고 트리: `src/dev/reactTestProject/` (README에 경로 설명).
 
 ## 1장. React가 무엇인지 이해하기
 
@@ -44,6 +62,8 @@ React를 시작하기 전에 필요한 개념을 잡는다.
 빈 React 앱을 만들고 App 컴포넌트에 첫 화면을 출력한다.
 ```
 
+**이 장에서 쓰는 Live 예제**: ID `react.component.basic` — [본문·실행](/dev?tab=react&rd=01-what-is-react)
+
 ## 2장. JSX와 컴포넌트
 
 React의 기본 단위인 컴포넌트를 배운다.
@@ -59,6 +79,8 @@ React의 기본 단위인 컴포넌트를 배운다.
 ```text
 Header, ProfileCard, ArtworkCard 컴포넌트를 만든다.
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.jsx.greeting` — [본문·실행](/dev?tab=react&rd=02-jsx-and-components)
 
 ## 3장. props
 
@@ -77,6 +99,8 @@ Header, ProfileCard, ArtworkCard 컴포넌트를 만든다.
 ArtworkCard에 title, artist, imageUrl, isPublic 값을 props로 전달한다.
 ```
 
+**이 장에서 쓰는 Live 예제**: ID `react.props.artworkCard` — [본문·실행](/dev?tab=react&rd=03-props)
+
 ## 4장. React 이벤트
 
 사용자의 행동에 반응하는 방법을 배운다.
@@ -93,6 +117,8 @@ ArtworkCard에 title, artist, imageUrl, isPublic 값을 props로 전달한다.
 검색 input, 공개 여부 toggle, 삭제 버튼 이벤트를 만든다.
 ```
 
+**이 장에서 쓰는 Live 예제**: ID `react.event.click` — [본문·실행](/dev?tab=react&rd=04-react-events)
+
 ## 5장. 상태, `useState`
 
 React에서 화면을 바꾸는 핵심인 상태를 다룬다.
@@ -107,8 +133,10 @@ React에서 화면을 바꾸는 핵심인 상태를 다룬다.
 예제 목표:
 
 ```text
-아트워크 목록을 상태로 관리하고, 추가·삭제·검색을 구현한다.
+카운터처럼 상태가 바뀔 때 화면이 갱신되는 흐름을 확인한다.
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.state.counter` — [본문·실행](/dev?tab=react&rd=05-state-usestate)
 
 ## 6장. 컴포넌트 모듈화
 
@@ -123,8 +151,10 @@ React에서 화면을 바꾸는 핵심인 상태를 다룬다.
 예제 목표:
 
 ```text
-ArtworkListPage를 SearchBar, ArtworkList, ArtworkCard, EmptyState로 나눈다.
+검색·목록·빈 상태를 작은 컴포넌트로 나눈다 (파일 한 덩어리에서 패턴 연습).
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.module.artworkExplorer` — [본문·실행](/dev?tab=react&rd=06-component-modularization)
 
 ## 7장. 생명주기와 `useEffect`
 
@@ -140,8 +170,10 @@ ArtworkListPage를 SearchBar, ArtworkList, ArtworkCard, EmptyState로 나눈다.
 예제 목표:
 
 ```text
-페이지 진입 시 목록을 불러오고, 검색어가 바뀔 때 필터링한다.
+의존 배열·cleanup으로 로딩 시뮬레이션과 타이머를 다룬다.
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.effect.lifecycle` — [본문·실행](/dev?tab=react&rd=07-lifecycle-useeffect)
 
 ## 8장. React 훅 종류별 정리
 
@@ -159,8 +191,10 @@ React에서 자주 쓰는 훅을 목적별로 정리한다.
 예제 목표:
 
 ```text
-useArtworkList, useDebounce, usePrevious 같은 커스텀 훅을 만든다.
+useRef(포커스), useMemo(필터 합), useReducer(카운터)를 한 화면에서 확인한다.
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.hooks.showcase` — [본문·실행](/dev?tab=react&rd=08-hooks-overview)
 
 ## 9장. React Router
 
@@ -217,7 +251,7 @@ src/etc/hooks/useArtwork.ts
 
 ## 11장. 로그인과 인증 흐름
 
-실무 앱에서 가장 자주 필요한 로그인 흐름을 만든다.
+실무 앱에서 자주 필요한 로그인 흐름을 만든다. **연재 시리즈를 끝까지 ‘구동’하는 데 있어 로그인 구현은 필수는 아니다.** 다만 API·쿠키·토큰을 배울 때 참고로 두면 좋다.
 
 1. 로그인 폼
 2. 로그인 API 호출
@@ -312,7 +346,9 @@ src/etc/components/artwork/SortableItem.tsx
 src/etc/pages/ArtworkPost.tsx
 ```
 
-## 15장. WebSocket과 실시간 UI
+## 15장. (선택) WebSocket과 실시간 UI
+
+시리즈 필수는 아니다. 로그인·Live 예제·`reactTestProject` 만으로도 실무 입문 축은 충분하다. 실시간만 다루고 싶을 때 읽는다.
 
 채팅 또는 실시간 알림처럼 서버와 연결을 유지하는 기능을 다룬다.
 
@@ -342,14 +378,18 @@ src/etc/pages/AdminChatPage.tsx
 
 지금까지 배운 내용을 합쳐 작은 JavaScript 버전 관리자 앱을 만든다.
 
-구성:
+구성 (로그인·채팅은 **권장 선택** — 미니 앱만 정리해도 목표 달성):
 
-1. 로그인
+1. (선택) 로그인 — 장 11 참고
 2. 관리자 레이아웃
 3. 아트워크 목록
 4. 아트워크 등록·수정
 5. 이미지 업로드
 6. Redux Toolkit 상태 관리
-7. WebSocket 채팅 맛보기
+7. (선택) WebSocket 채팅 맛보기 — 15장
+
+**실제 구동 중인 공개 `/art` 코드(`src/art`)**는 zip으로 받을 수 있다: [`/dev/art/art-site-source.zip`](/dev/art/art-site-source.zip)
+
+위 7가지 주제만 적어 둔 **요약 문서**: [`/dev/react/16-capstone-topics.md`](/dev/react/16-capstone-topics.md)
 
 목표는 실제 프로젝트 코드를 그대로 복사하는 것이 아니라, 같은 구조를 더 작은 JavaScript 예제로 재현하는 것이다.

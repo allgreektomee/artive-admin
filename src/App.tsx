@@ -61,6 +61,8 @@ import ArtHomeNew from "./03.presentation/pages/ArtHomeNew";
 
 import SewHaJungArchive from "./name/SewHaJungArchive";
 import DevDocsPage from "./dev/pages/DevDocsPage";
+import ArtworkListPage from "./dev/reactTestProject/pages/ArtworkListPage.js";
+import ArtworkDetailPage from "./dev/reactTestProject/pages/ArtworkDetailPage.js";
 
 declare global {
   interface Window {
@@ -132,6 +134,16 @@ const App: React.FC = () => {
 
           {/* 학습 정리 (마크다운): /dev */}
           <Route path="/dev" element={<DevDocsPage />} />
+
+          {/* reactTestProject (JS): 목록·상세 조회만, 수정·삭제·등록은 alert */}
+          <Route
+            path="/dev/react-test/artworks"
+            element={<ArtworkListPage />}
+          />
+          <Route
+            path="/dev/react-test/artworks/:id"
+            element={<ArtworkDetailPage />}
+          />
 
           {/* =========================================
               ADMIN 영역

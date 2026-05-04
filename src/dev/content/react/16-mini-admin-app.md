@@ -1,5 +1,9 @@
 # 16장. 작은 관리자 앱으로 마무리
 
+**공개 사이트 실제 소스(`src/art`)**는 정적 경로에서 zip으로 받을 수 있다: [`/dev/art/art-site-source.zip`](/dev/art/art-site-source.zip) · [`/dev/art/README.md`](/dev/art/README.md) — `/art`에 올라가는 지금 코드와 동일한 트리다.
+
+**16장 7주제 요약만** 필요하면: [16-capstone-topics.md](/dev/react/16-capstone-topics.md) · [React 다운로드 폴더 안내](/dev/react/README.md)
+
 이 연재는 **실제 `src/etc`를 그대로 베끼는 것**이 목표가 아니라, 같은 **구조와 흐름**을 **자바스크립트와 작은 예제**로 몸에 익히는 것이다. 마지막 장에서는 그동안의 조각을 **한 앱**으로 엮을 때의 **체크리스트**를 정리한다.
 
 ## 권장 구성(미니 프로젝트)

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "package:art-public": "node scripts/package-art-public.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

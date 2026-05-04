@@ -22,6 +22,7 @@ import {
   type ReactDoc,
   type ServerDoc,
 } from "../lib/devOutline";
+import liveExamplesSource from "../liveExamples/reactExamples.jsx?raw";
 import "../devDocs.css";
 
 const { Text, Title } = Typography;
@@ -284,7 +285,11 @@ const DevDocsPage: React.FC = () => {
           </div>
         )}
         {tab === "react" && !rd && (
-          <ReactHome reactDocs={reactDocs} outlineSource={reactOutline} />
+          <ReactHome
+            reactDocs={reactDocs}
+            outlineSource={reactOutline}
+            liveExamplesSource={liveExamplesSource}
+          />
         )}
         {tab === "spring" && (
           <Placeholder
@@ -576,9 +581,11 @@ function ArticleNavigationCard({
 function ReactHome({
   reactDocs,
   outlineSource,
+  liveExamplesSource,
 }: {
   reactDocs: ReactDoc[];
   outlineSource: string;
+  liveExamplesSource: string;
 }) {
   const chapters = useMemo(() => listReactOutlineChapters(outlineSource), [outlineSource]);
   const docByOrder = useMemo(() => {
@@ -596,11 +603,47 @@ function ReactHome({
           React 연재
         </Title>
         <Text type="secondary" style={{ display: "block" }}>
-          <strong>장별 미리보기</strong>로 각 장 제목·소개·항목을 확인하고, 하단{" "}
-          <strong>예제 목표</strong> 회색 박스를 누르면 본문(설명 + Live 코드·실행 결과)으로
-          들어갑니다.
+          <strong>장별 미리보기</strong>로 각 장 제목·항목을 확인하고, 하단{" "}
+          <strong>예제 목표</strong> 회색 박스를 누르면 본문(설명 + Live 예제 코드·실행 결과)으로
+          들어갑니다. <strong>로그인 없이도</strong> 1~8장 Live만으로 기본 축을 따라갈 수 있습니다.
         </Text>
       </div>
+
+      <details className="react-live-source-details" style={{ marginBottom: 4 }}>
+        <summary
+          style={{
+            cursor: "pointer",
+            fontWeight: 600,
+            fontSize: 14,
+            color: "#27272a",
+            listStyle: "none",
+          }}
+        >
+          전체 Live 예제 소스 한 파일 보기 — <code>reactExamples.jsx</code>
+        </summary>
+        <Text type="secondary" style={{ display: "block", marginTop: 10, marginBottom: 8, fontSize: 12 }}>
+          목차의 <strong>예제 코드·링크</strong> 표와 같은 순서로 <code>ENTRIES</code>가 정의되어 있습니다.
+          실전 JS 트리는 <code>src/dev/reactTestProject/</code> · 데모{" "}
+          <Link to="/dev/react-test/artworks">/dev/react-test/artworks</Link>
+        </Text>
+        <pre
+          className="react-live-source-pre"
+          style={{
+            margin: 0,
+            padding: 12,
+            maxHeight: "min(70vh, 720px)",
+            overflow: "auto",
+            fontSize: 11,
+            lineHeight: 1.45,
+            background: "#fafafa",
+            border: "1px solid #e4e4e7",
+            borderRadius: 8,
+            whiteSpace: "pre",
+          }}
+        >
+          {liveExamplesSource}
+        </pre>
+      </details>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         {chapters.length === 0 ? (
@@ -697,7 +740,6 @@ function ReactHome({
               );
             })
           )}
-        </div>
       </div>
     </div>
   );
