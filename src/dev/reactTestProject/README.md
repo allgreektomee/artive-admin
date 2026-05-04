@@ -2,7 +2,14 @@
 
 `src/etc`와 같은 **폴더 역할**(`api`, `hooks`, `components/artwork`, `chat`)을 두고, **작품(아트워크) CRUD·이미지 업로드·DnD 정렬**에 쓰는 코드만 JavaScript로 옮긴 참고 트리입니다.
 
-## 포함 범위
+## 포함 범위와 확장자
+
+### 확장자 규칙 (배포 vs 연재)
+
+- **`.jsx`**: 타입 문법 없는 **자바스크립트 + JSX**. Vite가 JSX를 변환하므로 **배포·빌드에 적합**. 연재·복사용으로 보여 줄 때도 “JavaScript 예제”로 보면 된다.  
+  **주의**: UI가 있는 파일에 JSX를 쓸 때는 **`.js`가 아니라 `.jsx`** 로 둔다. (`.js` 안의 JSX는 rolldown 등 환경에서 파싱 오류가 날 수 있음.)
+- **`.js`**: 로직·API·훅처럼 **JSX가 없는** 순수 자바스크립트.
+- **`App.tsx`에서만** 이 페이지들을 import할 때 타입이 필요하면 `src/vite-env.d.ts`에 모듈 선언을 둔다. 연재·복사용으로 볼 때는 **`.jsx` / `.js`만** 보면 된다.
 
 | 경로 | 설명 |
 |------|------|
@@ -11,9 +18,9 @@
 | `api/artworkApi.js` | `/artworks` CRUD |
 | `hooks/useArtwork.js` | 목록·상세·저장·삭제 (등 타입스크립트 훅 JS 포트) |
 | `hooks/useImageUpload.js` | 압축 + 업로드 |
-| `components/artwork/SortableItem.js` | `@dnd-kit` 정렬 행 |
-| `pages/ArtworkListPage.js` | 작품 목록 (JavaScript) |
-| `pages/ArtworkDetailPage.js` | 작품 상세 (JavaScript) |
+| `components/artwork/SortableItem.jsx` | `@dnd-kit` 정렬 행 |
+| `pages/ArtworkListPage.jsx` | 작품 목록 — **소스는 JS** |
+| `pages/ArtworkDetailPage.jsx` | 작품 상세 — **소스는 JS** |
 | `chat/chatWsTypes.js` · `hooks/useChatWebSocket.js` | admin 채팅과 동일 패턴 (작품과 무관, 구조 유지용) |
 
 ## 의존성

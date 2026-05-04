@@ -9,6 +9,8 @@ const LIST_BASE = "/dev/react-test/artworks";
 /**
  * GET /artworks/:id 로 상세만 표시.
  * 수정 버튼은 alert 만 (실제 편집·PUT 비활성화).
+ *
+ * 확장자 .jsx = 자바스크립트 + JSX (타입스크립트 아님).
  */
 export default function ArtworkDetailPage() {
   const { id } = useParams();
@@ -100,7 +102,6 @@ export default function ArtworkDetailPage() {
             type="primary"
             icon={<EditOutlined />}
             onClick={() => {
-              // navigate(`/admin/artworks/edit/${numericId}`);
               window.alert(
                 "[reactTestProject]\n실제 수정 화면·저장은 비활성화입니다.\n(실제 코드: navigate(`/admin/artworks/edit/${id}`))",
               );

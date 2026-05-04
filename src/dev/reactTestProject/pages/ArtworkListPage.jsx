@@ -9,6 +9,8 @@ const LIST_BASE = "/dev/react-test/artworks";
 /**
  * reactTestProject: 실제 목록·페이지 조회만 동작.
  * 등록·수정·삭제는 운영 API를 건드리지 않도록 막고 alert 만 띄움 (실제 호출 코드는 주석).
+ *
+ * 확장자 .jsx = 자바스크립트 + JSX (타입스크립트 아님). Vite/배포 시 JSX 변환 대상.
  */
 export default function ArtworkListPage() {
   const navigate = useNavigate();
@@ -74,7 +76,6 @@ export default function ArtworkListPage() {
           <Button
             icon={<EditOutlined />}
             onClick={() => {
-              // navigate(`/admin/artworks/edit/${record.id}`);
               window.alert(
                 "[reactTestProject]\n실제 수정·저장은 비활성화되어 있습니다.\n(실제 코드: navigate(`/admin/artworks/edit/${id}`))",
               );
@@ -86,7 +87,6 @@ export default function ArtworkListPage() {
             danger
             icon={<DeleteOutlined />}
             onClick={() => {
-              // deleteArtwork(record.id);
               window.alert(
                 "[reactTestProject]\n실제 삭제 API는 호출하지 않습니다.\n(실제 코드: deleteArtwork(record.id))",
               );
@@ -132,7 +132,6 @@ export default function ArtworkListPage() {
           type="primary"
           icon={<PlusOutlined />}
           onClick={() => {
-            // navigate("/admin/artworks/post");
             window.alert(
               "[reactTestProject]\n실제 등록 화면으로 이동하지 않습니다.\n(실제 코드: navigate(`/admin/artworks/post`))",
             );

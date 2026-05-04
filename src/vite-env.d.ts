@@ -1,12 +1,13 @@
 /// <reference types="vite/client" />
 
-declare module "*/reactTestProject/pages/ArtworkListPage.js" {
+/** `App.tsx`가 JS로만 둔 reactTestProject 페이지를 import 할 때 타입 (소스는 `.jsx`) */
+declare module "./dev/reactTestProject/pages/ArtworkListPage" {
   import type { ComponentType } from "react";
   const ArtworkListPage: ComponentType<Record<string, never>>;
   export default ArtworkListPage;
 }
 
-declare module "*/reactTestProject/pages/ArtworkDetailPage.js" {
+declare module "./dev/reactTestProject/pages/ArtworkDetailPage" {
   import type { ComponentType } from "react";
   const ArtworkDetailPage: ComponentType<Record<string, never>>;
   export default ArtworkDetailPage;

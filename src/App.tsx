@@ -61,8 +61,8 @@ import ArtHomeNew from "./03.presentation/pages/ArtHomeNew";
 
 import SewHaJungArchive from "./name/SewHaJungArchive";
 import DevDocsPage from "./dev/pages/DevDocsPage";
-import ArtworkListPage from "./dev/reactTestProject/pages/ArtworkListPage.js";
-import ArtworkDetailPage from "./dev/reactTestProject/pages/ArtworkDetailPage.js";
+import ArtworkListPage from "./dev/reactTestProject/pages/ArtworkListPage";
+import ArtworkDetailPage from "./dev/reactTestProject/pages/ArtworkDetailPage";
 
 declare global {
   interface Window {
