@@ -295,11 +295,12 @@ src/etc/pages/HistoryPost.tsx
 7. `useDispatch`
 8. 비동기 요청과 `createAsyncThunk`
 9. 도메인별 slice 나누기 (예: 작품 목록). 인증 전역 상태가 필요하면 보관 원고·`src/etc` 코드를 참고한다.
+10. 앱당 스토어 하나(싱글톤 패턴과의 유사·차이), 테스트에서의 store 재생성
 
 예제 목표:
 
 ```text
-artworkSlice 등 도메인 slice를 만들고 목록·상세 상태를 전역으로 관리한다.
+artworkSlice 등 도메인 slice를 만들고, thunk로 목록을 불러와 로딩·에러·페이지 상태를 전역으로 관리한다.
 ```
 
 ## 13장. 이미지 업로드와 정렬
