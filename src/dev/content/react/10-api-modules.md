@@ -30,6 +30,26 @@
 react.api.jsonFetch
 ```
 
+## Artive 운영 API와 Swagger
+
+이 레포지토리와 같은 프로덕트의 실제 백엔드 명세는 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html)에 게시되어 있다. 머신이 읽기 좋은 OpenAPI JSON은 `https://api.artivefor.me/v3/api-docs`에서 받을 수 있다.
+
+예를 들어 작품 목록은 다음처럼 요청한다.
+
+```http
+GET https://api.artivefor.me/api/v1/artworks?page=0
+```
+
+응답 본문은 보통 **`success` / `message` / `data`** 형태의 래퍼(`ApiResponse`)를 거치고, 목록 데이터는 Spring **`Page`** 구조 안의 **`data.content`** 배열에 들어 있다. 따라서 화면에 리스트를 그리려면 `await res.json()` 이후 **`payload.data.content`**를 순회하면 된다.
+
+브라우저에서는 **CORS**가 허용된 출처에서만 요청이 성공한다. 다른 호스트에서 `/dev`를 연 경우 차단될 수 있으므로, 그때는 백엔드의 허용 Origin 목록을 조정하거나 개발 서버 프록시를 쓰는 편이 안전하다.
+
+실제 응답으로 카드를 채우는 Live는 아래와 같다.
+
+```react-live
+react.api.artiveArtworks
+```
+
 ## API 함수 분리
 
 ```jsx

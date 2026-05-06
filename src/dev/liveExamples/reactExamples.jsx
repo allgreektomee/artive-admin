@@ -726,6 +726,187 @@ const LiveJsonFetch = () => {
   );
 };
 
+const ARTIVE_API_ORIGIN = "https://api.artivefor.me";
+
+/** Artive 운영 API — Swagger: https://api.artivefor.me/swagger-ui/index.html */
+const LiveArtiveArtworksFetch = () => {
+  const [payload, setPayload] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const ac = new AbortController();
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    setPayload(null);
+
+    (async () => {
+      try {
+        const url = `${ARTIVE_API_ORIGIN}/api/v1/artworks?page=0`;
+        const res = await fetch(url, { signal: ac.signal });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        const json = await res.json();
+        if (!cancelled) setPayload(json);
+      } catch (e) {
+        if (e?.name === "AbortError") return;
+        if (!cancelled) setError(e instanceof Error ? e.message : String(e));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      ac.abort();
+    };
+  }, []);
+
+  const items =
+    payload?.success === true && Array.isArray(payload?.data?.content)
+      ? payload.data.content
+      : [];
+  const totalElements =
+    payload?.success === true && typeof payload?.data?.totalElements === "number"
+      ? payload.data.totalElements
+      : null;
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <strong>Artive API</strong> 작품 목록(<code>GET /api/v1/artworks?page=0</code>)을 불러옵니다.
+        응답은 OpenAPI 기준 <code>ApiResponse</code> 래퍼 안에 Spring Page 형태의{' '}
+        <code>data.content</code> 배열이 들어 있습니다. 명세는{" "}
+        <a
+          href="https://api.artivefor.me/swagger-ui/index.html"
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: "#4f46e5" }}
+        >
+          Swagger UI
+        </a>
+        에서 확인할 수 있습니다.
+      </div>
+
+      <div
+        style={{
+          padding: "12px 14px",
+          borderRadius: 8,
+          border: "1px solid #e4e4e7",
+          background: "#fafafa",
+          minHeight: 120,
+        }}
+      >
+        {loading ? (
+          <em>요청 중…</em>
+        ) : error ? (
+          <span style={{ color: "#991b1b" }}>
+            오류: {error}
+            <span style={{ display: "block", marginTop: 8, fontSize: 11, color: "#71717a" }}>
+              다른 출처(도메인)에서 열면 CORS 때문에 실패할 수 있습니다. 로컬 Vite에서는 보통 동작합니다.
+            </span>
+          </span>
+        ) : payload?.success === false ? (
+          <span style={{ color: "#991b1b" }}>
+            API가 실패 응답을 반환했습니다.
+            {payload?.message ? (
+              <>
+                {" "}
+                메시지: <code>{String(payload.message)}</code>
+              </>
+            ) : null}
+          </span>
+        ) : (
+          <div>
+            <div style={{ fontSize: 11, color: "#71717a", marginBottom: 10 }}>
+              <code>
+                GET {ARTIVE_API_ORIGIN}/api/v1/artworks?page=0
+              </code>
+              {totalElements != null ? (
+                <span style={{ marginLeft: 8 }}>
+                  전체 <strong>{totalElements}</strong>건 · 현재 페이지 항목 {items.length}개
+                </span>
+              ) : null}
+            </div>
+            {items.length === 0 ? (
+              <em>표시할 작품이 없습니다.</em>
+            ) : (
+              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {items.map((row) => (
+                  <li
+                    key={String(row.id)}
+                    style={{
+                      display: "flex",
+                      gap: 12,
+                      alignItems: "flex-start",
+                      padding: "10px 12px",
+                      borderRadius: 8,
+                      border: "1px solid #e4e4e7",
+                      background: "#fff",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 56,
+                        height: 56,
+                        flexShrink: 0,
+                        borderRadius: 6,
+                        overflow: "hidden",
+                        border: "1px solid #e4e4e7",
+                        background: "#e4e4e7",
+                      }}
+                    >
+                      {row.thumbnailUrl ? (
+                        <img
+                          src={String(row.thumbnailUrl)}
+                          alt={`작품 ${String(row.id)} 썸네일`}
+                          width={56}
+                          height={56}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                        />
+                      ) : null}
+                    </div>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontWeight: 700, fontSize: 14, lineHeight: 1.35 }}>
+                        {String(row.title ?? "")}
+                      </div>
+                      <div style={{ fontSize: 11, color: "#71717a", marginTop: 4 }}>
+                        id <code>{String(row.id)}</code>
+                        {row.status != null ? (
+                          <>
+                            {" "}
+                            · 상태 <code>{String(row.status)}</code>
+                          </>
+                        ) : null}
+                        {row.totalHistoryCount != null ? (
+                          <>
+                            {" "}
+                            · 히스토리 <code>{String(row.totalHistoryCount)}</code>
+                          </>
+                        ) : null}
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 /** @type {LiveExampleEntry[]} */
 const ENTRIES = [
   {
@@ -937,6 +1118,42 @@ useEffect(() => {
   return () => { cancelled = true; ac.abort(); };
 }, [postId]);`,
     Component: LiveJsonFetch,
+  },
+  {
+    id: "react.api.artiveArtworks",
+    title: "fetch + JSON: Artive 작품 목록 (운영 API)",
+    description:
+      "Swagger에 게시된 Artive API(https://api.artivefor.me)에서 작품 목록을 받아 ApiResponse 래퍼와 Spring Page(data.content)를 풀어 화면에 그립니다.",
+    sourceCode: `const ARTIVE_API_ORIGIN = "https://api.artivefor.me";
+
+useEffect(() => {
+  const ac = new AbortController();
+  let cancelled = false;
+  setLoading(true);
+  setError(null);
+  setPayload(null);
+  (async () => {
+    try {
+      const url = \`\${ARTIVE_API_ORIGIN}/api/v1/artworks?page=0\`;
+      const res = await fetch(url, { signal: ac.signal });
+      if (!res.ok) throw new Error(\`\${res.status} \${res.statusText}\`);
+      const json = await res.json();
+      if (!cancelled) setPayload(json);
+    } catch (e) {
+      if (e?.name === "AbortError") return;
+      if (!cancelled) setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      if (!cancelled) setLoading(false);
+    }
+  })();
+  return () => { cancelled = true; ac.abort(); };
+}, []);
+
+const items =
+  payload?.success === true && Array.isArray(payload?.data?.content)
+    ? payload.data.content
+    : [];`,
+    Component: LiveArtiveArtworksFetch,
   },
   {
     id: "react.hooks.showcase",
