@@ -16,6 +16,12 @@ const serverDocModules = import.meta.glob("../content/server/*.md", {
   eager: true,
 }) as Record<string, string>;
 
+const cicdDocModules = import.meta.glob("../content/cicd/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
 const reactOutlineModules = import.meta.glob("../content/react/react-admin-series-outline.md", {
   query: "?raw",
   import: "default",
@@ -69,6 +75,14 @@ export type JavaScriptArticleGroup = {
 };
 
 export type ServerDoc = {
+  slug: string;
+  title: string;
+  order: number;
+  body: string;
+  href: string;
+};
+
+export type CicdDoc = {
   slug: string;
   title: string;
   order: number;
@@ -151,6 +165,7 @@ function orderFromSlug(slug: string): number {
 
 let articlesCache: JavaScriptArticle[] | null = null;
 let serverDocsCache: ServerDoc[] | null = null;
+let cicdDocsCache: CicdDoc[] | null = null;
 let reactDocsCache: ReactDoc[] | null = null;
 
 const REACT_DOC_EXCLUDE = new Set(
@@ -219,6 +234,11 @@ function serverDocOrder(slug: string): number {
   if (slug.includes("tomcat")) return 1;
   if (slug.includes("nginx")) return 2;
   if (slug.includes("redis")) return 3;
+  return Number.MAX_SAFE_INTEGER;
+}
+
+function cicdDocOrder(slug: string): number {
+  if (slug.includes("docker-local-cicd")) return 1;
   return Number.MAX_SAFE_INTEGER;
 }
 
@@ -294,6 +314,42 @@ export function listServerDocs(): ServerDoc[] {
 
 export function getServerDoc(slug: string): ServerDoc | null {
   return allServerDocs().find((doc) => doc.slug === slug) ?? null;
+}
+
+function buildCicdDocs(): CicdDoc[] {
+  const docs: CicdDoc[] = [];
+  for (const [path, raw] of Object.entries(cicdDocModules)) {
+    if (path.includes("README.md")) continue;
+    const m = path.match(/cicd\/([^/]+)\.md$/i);
+    if (!m) continue;
+
+    const slug = m[1]!;
+    const body = raw as string;
+    docs.push({
+      slug,
+      title: titleFromMarkdown(body, slug),
+      order: cicdDocOrder(slug),
+      body,
+      href: `/dev?tab=cicd&cd=${encodeURIComponent(slug)}`,
+    });
+  }
+
+  return docs.sort(
+    (a, b) => a.order - b.order || a.slug.localeCompare(b.slug, "en"),
+  );
+}
+
+function allCicdDocs(): CicdDoc[] {
+  if (!cicdDocsCache) cicdDocsCache = buildCicdDocs();
+  return cicdDocsCache;
+}
+
+export function listCicdDocs(): CicdDoc[] {
+  return allCicdDocs();
+}
+
+export function getCicdDoc(slug: string): CicdDoc | null {
+  return allCicdDocs().find((doc) => doc.slug === slug) ?? null;
 }
 
 function buildReactDocs(): ReactDoc[] {

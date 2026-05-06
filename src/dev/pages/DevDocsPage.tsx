@@ -10,13 +10,16 @@ import {
   getPreamble,
   getReactDoc,
   getServerDoc,
+  getCicdDoc,
   listJavaScriptArticleGroups,
+  listCicdDocs,
   listParts,
   listReactDocs,
   listReactOutlineChapters,
   listServerDocs,
   readOutlineMarkdown,
   readReactOutlineMarkdown,
+  type CicdDoc,
   type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
@@ -31,17 +34,18 @@ import "../devDocs.css";
 
 const { Text, Title } = Typography;
 
-type TabId = "js" | "react" | "spring" | "server";
+type TabId = "js" | "react" | "spring" | "server" | "cicd";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "js", label: "JavaScript" },
   { id: "react", label: "React" },
   { id: "spring", label: "Spring" },
   { id: "server", label: "Server" },
+  { id: "cicd", label: "CI/CD" },
 ];
 
 function parseTab(raw: string | null): TabId {
-  if (raw === "react" || raw === "spring" || raw === "server") return raw;
+  if (raw === "react" || raw === "spring" || raw === "server" || raw === "cicd") return raw;
   return "js";
 }
 
@@ -70,6 +74,7 @@ const DevDocsPage: React.FC = () => {
   const articleGroups = useMemo(() => listJavaScriptArticleGroups(), []);
   const serverDocs = useMemo(() => listServerDocs(), []);
   const reactDocs = useMemo(() => listReactDocs(), []);
+  const cicdDocs = useMemo(() => listCicdDocs(), []);
 
   const tab = parseTab(searchParams.get("tab"));
   const outlineRaw = searchParams.get("outline");
@@ -81,6 +86,7 @@ const DevDocsPage: React.FC = () => {
   const as = searchParams.get("as");
   const sd = searchParams.get("sd");
   const rd = searchParams.get("rd");
+  const cd = searchParams.get("cd");
 
   const article = useMemo(() => {
     if (!ps || !as) return null;
@@ -97,10 +103,15 @@ const DevDocsPage: React.FC = () => {
     return getReactDoc(rd);
   }, [rd]);
 
+  const cicdDoc = useMemo(() => {
+    if (!cd) return null;
+    return getCicdDoc(cd);
+  }, [cd]);
+
   useEffect(() => {
-    if ((!ps || !as) && !sd && !rd) return;
+    if ((!ps || !as) && !sd && !rd && !cd) return;
     window.scrollTo({ top: 0 });
-  }, [ps, as, sd, rd]);
+  }, [ps, as, sd, rd, cd]);
 
   const adjacentReactDocs = useMemo(() => {
     if (!reactDoc) return { prev: null, next: null };
@@ -153,6 +164,7 @@ const DevDocsPage: React.FC = () => {
       as: undefined,
       sd: undefined,
       rd: undefined,
+      cd: undefined,
     });
   }, [setQuery]);
 
@@ -164,6 +176,7 @@ const DevDocsPage: React.FC = () => {
       as: undefined,
       sd: undefined,
       rd: undefined,
+      cd: undefined,
     });
   }, [setQuery]);
 
@@ -175,6 +188,19 @@ const DevDocsPage: React.FC = () => {
       as: undefined,
       sd: undefined,
       rd: undefined,
+      cd: undefined,
+    });
+  }, [setQuery]);
+
+  const goHomeCicd = useCallback(() => {
+    setQuery({
+      tab: "cicd",
+      outline: undefined,
+      ps: undefined,
+      as: undefined,
+      sd: undefined,
+      rd: undefined,
+      cd: undefined,
     });
   }, [setQuery]);
 
@@ -187,6 +213,7 @@ const DevDocsPage: React.FC = () => {
         as: undefined,
         sd: undefined,
         rd: undefined,
+        cd: undefined,
       });
     } else {
       setQuery({
@@ -196,6 +223,7 @@ const DevDocsPage: React.FC = () => {
         as: undefined,
         sd: undefined,
         rd: undefined,
+        cd: undefined,
       });
     }
   };
@@ -222,7 +250,7 @@ const DevDocsPage: React.FC = () => {
           학습 정리
         </Title>
         <Text type="secondary" style={{ display: "block", marginBottom: 28 }}>
-          JavaScript·React·Spring·Server를 한 페이지에서 탭으로 전환합니다.
+          JavaScript·React·Spring·Server·CI/CD를 한 페이지에서 탭으로 전환합니다.
         </Text>
 
         <div
@@ -322,6 +350,30 @@ const DevDocsPage: React.FC = () => {
         )}
         {tab === "server" && !sd && <ServerHome docs={serverDocs} />}
 
+        {tab === "cicd" && cd && !cicdDoc && (
+          <Card size="small" style={{ marginBottom: 16 }}>
+            <Text>요청한 CI/CD 문서를 찾을 수 없습니다.</Text>
+            <div style={{ marginTop: 12 }}>
+              <button type="button" onClick={goHomeCicd} style={linkBtn}>
+                CI/CD 홈으로
+              </button>
+            </div>
+          </Card>
+        )}
+        {tab === "cicd" && cicdDoc && (
+          <div>
+            <nav style={{ marginBottom: 16, fontSize: 14 }}>
+              <button type="button" onClick={goHomeCicd} style={linkBtn}>
+                ← CI/CD 홈
+              </button>
+            </nav>
+            <Card>
+              <DevMarkdown source={cicdDoc.body} />
+            </Card>
+          </div>
+        )}
+        {tab === "cicd" && !cd && <CicdHome docs={cicdDocs} />}
+
         {tab === "js" && ps && as && !article && (
           <Card size="small" style={{ marginBottom: 16 }}>
             <Text>요청한 글을 찾을 수 없습니다.</Text>
@@ -352,6 +404,7 @@ const DevDocsPage: React.FC = () => {
                     as: undefined,
                     sd: undefined,
                     rd: undefined,
+                    cd: undefined,
                   })
                 }
                 style={linkBtn}
@@ -430,6 +483,36 @@ function ServerHome({ docs }: { docs: ServerDoc[] }) {
         </Title>
         <Text type="secondary" style={{ display: "block" }}>
           Tomcat, Nginx, Redis 설치 및 설정 문서를 분리해서 정리합니다.
+        </Text>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
+        {docs.map((doc) => (
+          <Link key={doc.slug} to={doc.href} style={{ textDecoration: "none" }}>
+            <Card hoverable size="small">
+              <Text code style={{ fontSize: 11, marginRight: 8 }}>
+                {String(doc.order).padStart(2, "0")}
+              </Text>
+              <Text strong style={{ color: "#27272a" }}>
+                {doc.title}
+              </Text>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CicdHome({ docs }: { docs: CicdDoc[] }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Title level={3} style={{ marginTop: 0 }}>
+          CI/CD · 로컬 Docker
+        </Title>
+        <Text type="secondary" style={{ display: "block" }}>
+          GitLab, Jenkins, Nexus 등 로컬 스택 설치·연동 절차를 정리합니다. 비밀번호·토큰은 문서에 넣지 않습니다.
         </Text>
       </div>
 
