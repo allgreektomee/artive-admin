@@ -615,6 +615,117 @@ const LiveHooksShowcase = () => {
   );
 };
 
+const postUrl = (id) => `https://jsonplaceholder.typicode.com/posts/${id}`;
+
+const LiveJsonFetch = () => {
+  const [postId, setPostId] = useState(1);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const ac = new AbortController();
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    (async () => {
+      try {
+        const res = await fetch(postUrl(postId), { signal: ac.signal });
+        if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+        const json = await res.json();
+        if (!cancelled) setData(json);
+      } catch (e) {
+        if (e?.name === "AbortError") return;
+        if (!cancelled) setError(e instanceof Error ? e.message : String(e));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      ac.abort();
+    };
+  }, [postId]);
+
+  const btnStyle = {
+    padding: "6px 12px",
+    borderRadius: 8,
+    border: "1px solid #d4d4d8",
+    background: "#fff",
+    cursor: "pointer",
+    fontSize: 13,
+  };
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <strong>JSONPlaceholder</strong> 공개 API에 <code>fetch</code>로 요청합니다. 응답은{' '}
+        <code>Content-Type: application/json</code> 본문이며, <code>res.json()</code>으로 객체로
+        변환한 뒤 state에 넣습니다. <code>postId</code>가 바뀌면 이전 요청은{' '}
+        <code>AbortController</code>로 끊습니다.
+      </div>
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12, alignItems: "center" }}>
+        <span style={{ fontSize: 12, marginRight: 4 }}>글 id:</span>
+        {[1, 2, 5].map((id) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => setPostId(id)}
+            style={{
+              ...btnStyle,
+              borderColor: postId === id ? "#6366f1" : "#d4d4d8",
+              background: postId === id ? "#eef2ff" : "#fff",
+            }}
+          >
+            {id}
+          </button>
+        ))}
+      </div>
+
+      <div
+        style={{
+          padding: "12px 14px",
+          borderRadius: 8,
+          border: "1px solid #e4e4e7",
+          background: "#fafafa",
+          minHeight: 120,
+        }}
+      >
+        {loading ? (
+          <em>요청 중…</em>
+        ) : error ? (
+          <span style={{ color: "#991b1b" }}>오류: {error}</span>
+        ) : data ? (
+          <div>
+            <div style={{ fontSize: 11, color: "#71717a", marginBottom: 6 }}>
+              <code>GET {postUrl(postId)}</code>
+            </div>
+            <div style={{ fontWeight: 700, marginBottom: 6, fontSize: 15 }}>{String(data.title)}</div>
+            <div style={{ fontSize: 12, color: "#52525b", lineHeight: 1.5 }}>{String(data.body)}</div>
+            <div style={{ marginTop: 10, fontSize: 11, color: "#71717a" }}>
+              JSON 필드: <code>userId</code>={String(data.userId)}, <code>id</code>={String(data.id)}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
 /** @type {LiveExampleEntry[]} */
 const ENTRIES = [
   {
@@ -796,6 +907,36 @@ useEffect(() => {
   stateDepsRuns.current += 1;
 }, [dep]);`,
     Component: LiveEffectDepsCompare,
+  },
+  {
+    id: "react.api.jsonFetch",
+    title: "fetch + JSON: 공개 API에서 글 하나",
+    description:
+      "JSONPlaceholder에서 게시글 JSON을 받아 res.ok·res.json()·loading/error/data를 나눕니다. postId 변경 시 AbortController로 이전 요청을 취소합니다.",
+    sourceCode: `const postUrl = (id) => \`https://jsonplaceholder.typicode.com/posts/\${id}\`;
+
+useEffect(() => {
+  const ac = new AbortController();
+  let cancelled = false;
+  setLoading(true);
+  setError(null);
+  setData(null);
+  (async () => {
+    try {
+      const res = await fetch(postUrl(postId), { signal: ac.signal });
+      if (!res.ok) throw new Error(\`\${res.status} \${res.statusText}\`);
+      const json = await res.json();
+      if (!cancelled) setData(json);
+    } catch (e) {
+      if (e?.name === "AbortError") return;
+      if (!cancelled) setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      if (!cancelled) setLoading(false);
+    }
+  })();
+  return () => { cancelled = true; ac.abort(); };
+}, [postId]);`,
+    Component: LiveJsonFetch,
   },
   {
     id: "react.hooks.showcase",

@@ -8,7 +8,7 @@ React 문법을 외우는 것이 아니라 **“기본기 → 같은 맥락의 �
 
 - **로그인까지 전부 돌려 보는 것은 필수가 아니다.** `/dev?tab=react`에서 각 장 본문·Live 실행으로 따라올 수 있다. **JavaScript 샘플 전체 원문·파일 트리**는 **[16장](/dev?tab=react&rd=16-sample-app-walkthrough)** 에만 모아 두었다.
 - **실전에 가깝게 가고 싶을 때**: `reactTestProject` · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) (목록·상세 조회, 일부 버튼은 alert). 기본 API 베이스로 요청이 나가며, 로그인 없이도 읽기 흐름을 볼 수 있다.
-- 총 16장: **1~8장 = Live 예제 8개와 동일 순서**, 9~15장 = 라우터·API·인증(개념)·폼·Redux·이미지·WebSocket(선택), **16장 = `reactTestProject` 샘플 전체 분석**(소스 트리·원문).
+- 총 16장: **1~8장 = Live 예제 8개와 동일 순서**, 9~15장 = 라우터·API·인증(개념)·폼·Redux·이미지·WebSocket(선택), **10장 = 공개 JSON `fetch` Live 추가**, **16장 = `reactTestProject` 샘플 전체 분석**(소스 트리·원문).
 
 실제 운영 정적 사이트에서는 작품 **목록**과 **상세**가 이미 함께 제공된다. 서버 Read·라우팅을 말할 때는 “목록에서 찾고, 상세에서 본다”는 흐름을 기준으로 보면 된다.
 
@@ -43,6 +43,7 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 | 6장 | `react.module.artworkExplorer` | [`/dev?tab=react&rd=06-component-modularization`](/dev?tab=react&rd=06-component-modularization) |
 | 7장 | `react.effect.lifecycle`, `react.effect.depsCompare` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
 | 8장 | `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
+| 10장 | `react.api.jsonFetch` | [`/dev?tab=react&rd=10-api-modules`](/dev?tab=react&rd=10-api-modules) |
 
 소스 파일(저장소): `src/dev/liveExamples/reactExamples.jsx` · JS 참고 트리: `src/dev/reactTestProject/` (README에 경로 설명).
 
@@ -228,17 +229,21 @@ src/etc/components/layout/AdminLayout.tsx
 화면 컴포넌트에서 API 호출 코드를 분리한다.
 
 1. `fetch`와 `axios` 차이
-2. API 함수 분리
-3. loading, error, data 상태
-4. 요청 실패 처리
-5. `FormData` 업로드 요청
-6. 토큰을 요청 헤더에 붙이기
+2. **브라우저에서 JSON 처리 순서**(`res.ok`, `res.json()`)
+3. API 함수 분리
+4. loading, error, data 상태
+5. **TanStack Query(React Query)와 SWR** — 캐시·재조회
+6. 요청 실패 처리
+7. `FormData` 업로드 요청
+8. 토큰을 요청 헤더에 붙이기
 
 예제 목표:
 
 ```text
 artworkApi.js와 useArtwork.js를 만들어 목록 조회, 저장, 삭제를 분리한다.
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.api.jsonFetch` — [본문·실행](/dev?tab=react&rd=10-api-modules)(JSONPlaceholder 실요청)
 
 참고 코드:
 
