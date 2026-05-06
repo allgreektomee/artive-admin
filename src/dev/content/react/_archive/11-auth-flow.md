@@ -1,6 +1,8 @@
-# 11장. 로그인과 인증 흐름
+# (보관) 11장. 로그인과 인증 흐름
 
-> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
+> **연재 공개 목차에서 제외.** 참고용으로만 보관합니다.
+
+> **reactTestProject** 전체 파일·트리·원문은 **[14장 샘플 예제 분석](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다.
 
 관리자 앱은 **로그인된 사용자만** 일부 라우트를 쓰게 하는 경우가 대부분이다. 흐름은 크게 **자격 증명 제출 → 토큰 수령·저장 → 이후 요청에 실어 보냄 → 만료·로그아웃 처리**다.
 
@@ -12,7 +14,7 @@
 
 ## 로그인 API 호출
 
-api 모듈에 `postLogin({ username, password })` 를 두고, 응답에서 **access token**(및 refresh 전략)을 받는다. 백엔드 계약에 맞춰 필드 이름을 맞춘다.
+api 모듈에 `postLogin({ username, password })` 를 두고, 응답에서 **access token**(및 refresh 전략)을 받는다. 백엔드 계약에 맞춰 필드 이름을 맞춘다. 명세는 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 의 `POST /api/v1/auth/login` 등과 대조한다.
 
 ## 토큰 저장 어디에
 

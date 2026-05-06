@@ -1,6 +1,6 @@
-# 16장. 샘플 예제 분석 (reactTestProject)
+# 14장. 샘플 예제 분석 (reactTestProject)
 
-1~15장까지는 **개념·Live 예제** 위주로 잡고, 여기서는 저장소 안의 **`src/dev/reactTestProject`** 한 덩어리를 **어떻게 돌아가는지** 파일 단위로 정리한다. 각 소스 파일에는 **16장**을 염두에 둔 한국어 주석이 들어 있다. 아래 본문을 읽은 뒤, 화면 하단의 **파일 트리**에서 같은 경로를 눌러 **원문 전체**를 열어 보면 된다.
+1~13장까지는 **개념·Live 예제** 위주로 잡고, 여기서는 저장소 안의 **`src/dev/reactTestProject`** 한 덩어리를 **어떻게 돌아가는지** 파일 단위로 정리한다. 각 소스 파일에는 **14장**을 염두에 둔 한국어 주석이 들어 있다. 아래 본문을 읽은 뒤, 화면 하단의 **파일 트리**에서 같은 경로를 눌러 **원문 전체**를 열어 보면 된다.
 
 ## API 스펙 (Swagger)
 
@@ -8,7 +8,7 @@
 
 - **Swagger UI**: [https://api.artivefor.me/swagger-ui/index.html](https://api.artivefor.me/swagger-ui/index.html)
 
-이 샘플 코드의 `api/artworkApi.js`(예: `GET/POST /artworks`, `GET/PUT/DELETE /artworks/{id}`)나 `api/commonApi.js`의 `POST /images/upload` 가 문서의 어떤 엔드포인트와 맞는지 펼쳐 보면, **화면에서 호출하는 함수 ↔ 서버 계약**을 한눈에 맞출 수 있다.
+이 샘플 코드의 `api/artworkApi.js`(예: `GET/POST /api/v1/artworks`, `GET/PUT/DELETE /api/v1/artworks/{id}`)나 `api/commonApi.js`의 `POST /api/v1/images/upload` 가 문서의 어떤 엔드포인트와 맞는지 펼쳐 보면, **화면에서 호출하는 함수 ↔ 서버 계약**을 한눈에 맞출 수 있다.
 
 ## 이 샘플이 하는 일
 
@@ -61,7 +61,7 @@
 - **`artworkApi.js`**
   - 위 `client` 에 대해 **경로와 메서드만** 얇게 감싼다: 목록, 생성, 수정, 상세, 삭제. 화면/훅은 이 객체의 함수만 알면 된다.
 - **`commonApi.js`**
-  - `uploadImage`: `FormData` 로 파일·category 를 실어 `POST /images/upload`. `useImageUpload` 와 짝을 이룬다.
+  - `uploadImage`: `FormData` 로 파일·category 를 실어 `POST /api/v1/images/upload`. `useImageUpload` 와 짝을 이룬다.
 
 ### 5. `hooks/useImageUpload.js`, `components/artwork/SortableItem.jsx` — 업로드·정렬
 

@@ -1,8 +1,8 @@
-# 14장. 이미지 업로드와 정렬
+# 13장. 이미지 업로드와 정렬
 
-> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
+> **`reactTestProject`** 원문·파일 트리는 **[14장 샘플 예제 분석](/dev?tab=react&rd=14-sample-app-walkthrough)** 에 모아 두었다. 이 장은 Live·개념 위주다.
 
-관리자에서 **다중 이미지**를 올리고 **순서**를 정해 저장하는 흐름은 흔하다. 브라우저는 **file input**과 **Blob URL**로 미리보기를 만들고, 서버는 **multipart** 또는 별도 업로드 API를 둔다.
+관리자에서 **다중 이미지**를 올리고 **순서**를 정해 저장하는 흐름은 흔하다. 브라우저는 **file input**과 **Blob URL**로 미리보기를 만들고, 서버는 **multipart** 또는 별도 업로드 API를 둔다. Artive 백엔드에서는 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 의 **`POST /api/v1/images/upload`** 와 작품 저장 시 이미지 필드(`ArtworkCreateRequest` 등)를 함께 맞춘다.
 
 ## file input
 

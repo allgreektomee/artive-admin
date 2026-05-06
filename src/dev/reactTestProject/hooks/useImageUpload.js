@@ -1,5 +1,5 @@
 /**
- * 16장 · 이미지 업로드 훅 — 브라우저에서 압축(webp) 후 `/images/upload` 로 전송.
+ * 14장 · 이미지 업로드 훅 — 브라우저에서 압축(webp) 후 `/images/upload` 로 전송.
  * 14장(업로드·정렬) 개념과 직결.
  */
 import { useState } from "react";

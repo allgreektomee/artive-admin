@@ -614,7 +614,7 @@ function ReactHome({
         <Text type="secondary" style={{ display: "block", marginTop: 12 }}>
           JavaScript 샘플 전체 소스 트리·원문은{" "}
           <Link to={walkthroughDoc?.href ?? REACT_TEST_PROJECT_WALKTHROUGH_HREF}>
-            16장 · 샘플 예제 분석 (reactTestProject)
+            14장 · 샘플 예제 분석 (reactTestProject)
           </Link>
           에서만 펼칩니다. (1~15장 홈에서는 목차·링크만.)
         </Text>

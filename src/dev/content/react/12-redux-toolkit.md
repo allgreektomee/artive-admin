@@ -1,13 +1,13 @@
-# 13장. Redux Toolkit
+# 12장. Redux Toolkit
 
-> **reactTestProject** 전체는 **[16장](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. RTK 실무 코드는 `src/etc` 와 대조한다.
+> **reactTestProject** 전체는 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. RTK 실무 코드는 `src/etc` 와 대조한다.
 
 **전역 상태**가 필요한 순간: **여러 화면**이 같은 도메인 데이터를 쓰고, props drilling·Context만으로는 **갱신 추적·미들웨어·시간 여행 디버깅** 등이 버거울 때. **Redux**는 단일 **store** 안에서 **action → reducer**로 상태를 순수하게 갱신하는 패턴이다. **Redux Toolkit(RTK)** 는 보일러플레이트를 줄여 **`createSlice`**, **`configureStore`** 중심으로 쓰게 해 준다.
 
 ## 언제 RTK를 쓰고 언제 안 쓰나
 
 - **안 써도 되는 경우** — 한 페이지 안의 폼·모달만의 state, 서버 캐시를 React Query에 맡기는 경우.
-- **쓰기 좋은 경우** — **로그인 사용자**, **장바구니급 전역 도메인**, 여러 기능이 같은 **아트워크 목록 캐시**를 공유하고 동기화해야 할 때.
+- **쓰기 좋은 경우** — **로그인 사용자**(보관 원고·실무 코드), 장바구니급 전역 도메인, 여러 기능이 같은 **아트워크 목록 캐시**를 공유하고 동기화해야 할 때.
 
 작은 앱은 Context+`useReducer`로도 충분하다가, 규칙·도구가 필요해지면 RTK로 옮기는 팀도 있다.
 

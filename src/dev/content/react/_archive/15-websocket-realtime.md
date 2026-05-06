@@ -1,6 +1,8 @@
-# 15장. WebSocket과 실시간 UI
+# (보관) 15장. WebSocket과 실시간 UI
 
-> WebSocket 예제는 **reactTestProject**에 없다. 샘플 앱 전체는 **[16장](/dev?tab=react&rd=16-sample-app-walkthrough)**, 실시간 코드는 `src/etc` 를 보면 된다.
+> **연재 공개 목차에서 제외.** 참고용으로만 보관합니다.
+
+> WebSocket 예제는 **reactTestProject**에 없다. 샘플 앱 전체는 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)**, 실시간 코드는 `src/etc` 를 보면 된다.
 
 HTTP 요청은 **한 번 보내고 응답**을 받는 패턴이 기본이다. 채팅·알림·실시간 대시보드는 **연결을 유지**한 채 서버가 **push** 해 주는 편이 낫다. **WebSocket**은 양방향 채널이다.
 

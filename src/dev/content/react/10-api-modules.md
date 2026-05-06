@@ -1,6 +1,6 @@
 # 10장. 서버 연동과 API 모듈
 
-> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
+> **reactTestProject** 전체 파일·트리·원문은 **[14장 샘플 예제 분석](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 화면 컴포넌트 안에 `fetch`/`axios` URL과 헤더를 길게 쓰면 **가독성·테스트·재사용**이 나빠진다. **API 모듈**은 “HTTP 요청을 어디서 어떻게 보낼지”를 **한 레이어**로 모으는 것이다. 이 프로젝트는 `src/etc/api` 패턴을 따른다.
 
@@ -166,6 +166,22 @@ function Post({ postId }) {
 
 이 연재 Live는 **의존성을 추가하지 않고** `fetch`만으로 흐름을 보여 준다. 실제 서비스 코드에서는 위 라이브러리 중 하나로 **같은 URL·같은 JSON**을 다루는 경우가 많다.
 
+## `useContext`와 공유 의존성
+
+API 레이어에서는 **한 번 만든 클라이언트 인스턴스**, **토글 가능한 디버그 플래그**, **현재 로케일·테마**처럼 여러 화면이 같이 쓰는 값을 Context로 내려 props drilling을 줄이는 경우가 많다. 아래는 “요청 로그 상세 여부”를 예시로 둔 최소 데모다.
+
+```react-live
+react.api.sharedContext
+```
+
+## `useCallback`과 `memo`가 API 화면과 맞닿는 지점
+
+목록·카드처럼 **`React.memo`로 감싼 자식**에 `onRetry`, `onOpenDetail` 같은 핸들러를 넘길 때, 부모만 다른 state 때문에 리렌더되면 **매 렌더마다 새로 만들어진 함수**는 자식 입장에서 항상 “새 props”가 된다. **`useCallback`**으로 참조를 고정하면 자식이 불필요하게 다시 그려지는 횟수를 줄일 수 있다(아래에서 “부모만 리렌더”를 눌러 두 행의 렌더 누적 차이를 비교해 본다).
+
+```react-live
+react.api.memoCallback
+```
+
 ## 실패 처리
 
 - **HTTP 상태** — 401이면 로그인으로 보내기, 403이면 권한 메시지, 5xx는 재시도 또는 토스트.
@@ -185,7 +201,7 @@ await apiClient.post("/upload", fd, {
 
 ## 토큰을 헤더에 붙이기
 
-`apiClient` 생성 시 **요청 인터셉터**에서 `Authorization: Bearer <token>` 을 넣는다. 토큰은 메모리·`sessionStorage` 등 팀 정책에 맞는 저장소에서 읽는다(11장).
+`apiClient` 생성 시 **요청 인터셉터**에서 `Authorization: Bearer <token>` 을 넣는다. 토큰은 메모리·`sessionStorage` 등 팀 정책에 맞는 저장소에서 읽는다(보관 [`react/_archive/11-auth-flow.md`](./_archive/11-auth-flow.md)·10장 개요).
 
 ## 요약
 

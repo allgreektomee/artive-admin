@@ -7,7 +7,7 @@ import { artworkApi } from "../api/artworkApi.js";
 const LIST_BASE = "/dev/react-test/artworks";
 
 /**
- * 16장 · 작품 상세 화면
+ * 14장 · 작품 상세 화면
  *
  * - `useParams().id` 가 바뀔 때마다 GET `/artworks/:id` (cleanup 으로 race 방지).
  * - 목록과 달리 훅 없이 페이지에서 직접 `artworkApi` 호출 — 레이어 비교용.
@@ -22,7 +22,7 @@ export default function ArtworkDetailPage() {
 
   const numericId = id != null ? Number(id) : NaN;
 
-  // 16장: id 변경 → 상세 재요청; 언마운트/빠른 이동 시 cancelled 로 stale set 방지
+  // 14장: id 변경 → 상세 재요청; 언마운트/빠른 이동 시 cancelled 로 stale set 방지
   useEffect(() => {
     if (!Number.isFinite(numericId)) {
       setLoading(false);

@@ -1,5 +1,5 @@
 /**
- * 16장 · 도메인 모양 참고(JSDoc) — 실제 런타임 타입 검사는 없음.
+ * 14장 · 도메인 모양 참고(JSDoc) — 실제 런타임 타입 검사는 없음.
  * 원본: `src/etc/types/artwork.ts` (작품 API 페이로드/응답)
  *
  * @typedef {'KO'|'EN'|'JP'|'CH'} LanguageCode

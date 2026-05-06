@@ -1,22 +1,22 @@
 # React JavaScript 실무 연재 목차
 
-이 연재는 React를 처음 배우는 사람이 JavaScript만으로 따라올 수 있게 구성한다. **앞쪽 1~8장은 `/dev` React 탭의 Live 예제 순서와 맞춘다.** 개념을 짧게 짚은 뒤 “이번 장에서 쓰는 예제가 이렇게 연결된다”로 이어진다. 9장 이후는 라우팅·API·폼·이미지·전역 상태 등 `src/etc`·`reactTestProject` 흐름을 참고한 실무 파트다. WebSocket·실시간은 **선택(15장)** 으로 두어도 전체 이해에 지장 없다.
+이 연재는 React를 처음 배우는 사람이 JavaScript만으로 따라올 수 있게 구성한다. **앞쪽 1~8장은 `/dev` React 탭의 Live 예제 순서와 맞춘다.** 개념을 짧게 짚은 뒤 “이번 장에서 쓰는 예제가 이렇게 연결된다”로 이어진다. 9장 이후는 라우팅·API·폼·이미지·전역 상태 등 `src/etc`·`reactTestProject` 흐름을 참고한 실무 파트다. 로그인·WebSocket 등 일부 주제는 **`react/_archive/`에만 보관**해 두었다.
 
 ## 시리즈 목표
 
 React 문법을 외우는 것이 아니라 **“기본기 → 같은 맥락의 예제에서 어떻게 쓰이는지”**를 익힌다.
 
-- **로그인까지 전부 돌려 보는 것은 필수가 아니다.** `/dev?tab=react`에서 각 장 본문·Live 실행으로 따라올 수 있다. **JavaScript 샘플 전체 원문·파일 트리**는 **[16장](/dev?tab=react&rd=16-sample-app-walkthrough)** 에만 모아 두었다.
+- **로그인까지 전부 돌려 보는 것은 필수가 아니다.** `/dev?tab=react`에서 각 장 본문·Live 실행으로 따라올 수 있다. **JavaScript 샘플 전체 원문·파일 트리**는 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)** 에만 모아 두었다.
 - **실전에 가깝게 가고 싶을 때**: `reactTestProject` · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) (목록·상세 조회, 일부 버튼은 alert). 기본 API 베이스로 요청이 나가며, 로그인 없이도 읽기 흐름을 볼 수 있다.
-- 총 16장: **1~8장 = Live 예제 8개와 동일 순서**, 9~15장 = 라우터·API·인증(개념)·폼·Redux·이미지·WebSocket(선택), **10장 = JSONPlaceholder `fetch` Live + Artive 운영 API(Swagger) 실데이터 Live**, **16장 = `reactTestProject` 샘플 전체 분석**(소스 트리·원문).
+- 총 **공개 14장**(본문 파일 `01`~`14`): **1~8장 = Live 예제 8개와 동일 순서**, 9장 이후는 라우터·API·폼·Redux·이미지·샘플 분석 순이다. **10장**에는 JSONPlaceholder `fetch` Live, Artive [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 실데이터 Live, 그리고 **`useContext`·`useCallback`/`memo`** 보조 Live가 있다. **14장**은 `reactTestProject` 샘플 전체 분석(소스 트리·원문). 로그인·WebSocket 원고는 [`react/_archive/`](./_archive/README.md) 에만 남긴다.
 
 실제 운영 정적 사이트에서는 작품 **목록**과 **상세**가 이미 함께 제공된다. 서버 Read·라우팅을 말할 때는 “목록에서 찾고, 상세에서 본다”는 흐름을 기준으로 보면 된다.
 
 - React 컴포넌트·JSX·props·이벤트·상태·모듈 나누기·`useEffect`·훅 조합을 **예제 순서대로** 익힌다.
 - React Router로 여러 화면을 연결한다.
-- API 모듈·`axios`/인증 헤더 개념을 익힌다. (로그인 구현은 **장 11에서 다루되, 시리즈 완주 조건은 아님**.)
+- API 모듈·`axios`/Bearer 헤더 개념을 익힌다. (로그인 구현은 공개 목차에서 빼 두었고, 필요하면 [`_archive/11-auth-flow.md`](./_archive/11-auth-flow.md)·`src/etc/pages/LoginPage.tsx`를 본다.)
 - Redux Toolkit·이미지 업로드·정렬 등 관리자 패턴을 익힌다.
-- 통합 흐름·전체 파일 원문은 [**16장**](/dev?tab=react&rd=16-sample-app-walkthrough)과 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks)로 묶어 본다.
+- 통합 흐름·전체 파일 원문은 [**14장**](/dev?tab=react&rd=14-sample-app-walkthrough)과 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks)로 묶어 본다.
 
 ## 예제 기준
 
@@ -31,7 +31,7 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 
 ## 예제 코드·링크 (1~8장 = Live 데모 순서)
 
-**React 탭 홈**에서는 장 목차·링크만 보이고, `reactTestProject` **파일 트리·전체 원문**은 **[16장](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 1~15장 본문에는 해당 Live ID와 연결된 설명·실행 영역이 있다.
+**React 탭 홈**에서는 장 목차·링크만 보이고, `reactTestProject` **파일 트리·전체 원문**은 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. 1~13장 본문에는 해당 Live ID와 연결된 설명·실행 영역이 있다.
 
 | 장 | Live 예제 ID | 본문으로 이동 |
 |----|----------------|---------------|
@@ -43,7 +43,8 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 | 6장 | `react.module.artworkExplorer` | [`/dev?tab=react&rd=06-component-modularization`](/dev?tab=react&rd=06-component-modularization) |
 | 7장 | `react.effect.lifecycle`, `react.effect.depsCompare` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
 | 8장 | `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
-| 10장 | `react.api.jsonFetch`, `react.api.artiveArtworks` | [`/dev?tab=react&rd=10-api-modules`](/dev?tab=react&rd=10-api-modules) |
+| 10장 | `react.api.jsonFetch`, `react.api.artiveArtworks`, `react.api.sharedContext`, `react.api.memoCallback` | [`/dev?tab=react&rd=10-api-modules`](/dev?tab=react&rd=10-api-modules) |
+| 11장 | `react.form.artworkDraft` | [`/dev?tab=react&rd=11-forms-crud`](/dev?tab=react&rd=11-forms-crud) |
 
 소스 파일(저장소): `src/dev/liveExamples/reactExamples.jsx` · JS 참고 트리: `src/dev/reactTestProject/` (README에 경로 설명).
 
@@ -243,7 +244,7 @@ src/etc/components/layout/AdminLayout.tsx
 artworkApi.js와 useArtwork.js를 만들어 목록 조회, 저장, 삭제를 분리한다.
 ```
 
-**이 장에서 쓰는 Live 예제**: ID `react.api.jsonFetch`(JSONPlaceholder) · `react.api.artiveArtworks`([Swagger UI](https://api.artivefor.me/swagger-ui/index.html)의 작품 목록 실요청) — [본문·실행](/dev?tab=react&rd=10-api-modules)
+**이 장에서 쓰는 Live 예제**: ID `react.api.jsonFetch`(JSONPlaceholder) · `react.api.artiveArtworks`([Swagger UI](https://api.artivefor.me/swagger-ui/index.html)의 작품 목록 실요청) · `react.api.sharedContext`(`useContext`) · `react.api.memoCallback`(`useCallback` + `memo`) — [본문·실행](/dev?tab=react&rd=10-api-modules)
 
 참고 코드:
 
@@ -254,49 +255,25 @@ src/etc/api/commonApi.ts
 src/etc/hooks/useArtwork.ts
 ```
 
-## 11장. 로그인과 인증 흐름
+## 11장. 폼과 등록·수정 화면
 
-실무 앱에서 자주 필요한 로그인 흐름을 만든다. **연재 시리즈를 끝까지 ‘구동’하는 데 있어 로그인 구현은 필수는 아니다.** 다만 API·쿠키·토큰을 배울 때 참고로 두면 좋다.
-
-1. 로그인 폼
-2. 로그인 API 호출
-3. 토큰 저장
-4. 새로고침 후 로그인 복원
-5. 로그아웃
-6. 인증이 필요한 라우트 보호
-7. 권한별 메뉴 표시
-
-예제 목표:
-
-```text
-LoginPage, AuthProvider, ProtectedRoute를 만든다.
-```
-
-참고 코드:
-
-```text
-src/etc/pages/LoginPage.tsx
-src/etc/hooks/useUser.ts
-src/etc/components/layout/AdminLayout.tsx
-```
-
-## 12장. 폼과 등록·수정 화면
-
-입력값이 많은 관리자 폼을 JavaScript 버전으로 만든다.
+입력값이 많은 관리자 폼을 JavaScript 버전으로 만든다. 저장 요청은 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html)의 `POST /api/v1/artworks`, `PUT /api/v1/artworks/{artworkId}` 등과 계약을 맞춘다.
 
 1. controlled input
 2. select, checkbox, textarea
 3. 검증 메시지
 4. 등록 모드와 수정 모드
 5. `useParams`로 id 읽기
-6. 수정 데이터 불러오기
-7. 저장 payload 만들기
+6. 수정 데이터 불러오기 — 응답 래퍼(`success`·`data`)를 풀어 state에 반영
+7. 저장 payload 만들기 — 필드명을 스펙의 `ArtworkCreateRequest`·`ArtworkUpdateRequest`와 맞춘다
 
 예제 목표:
 
 ```text
 ArtworkForm으로 등록과 수정을 같이 처리한다.
 ```
+
+**이 장에서 쓰는 Live 예제**: ID `react.form.artworkDraft` — [본문·실행](/dev?tab=react&rd=11-forms-crud)(Swagger 계약에 맞춘 payload 미리보기)
 
 참고 코드:
 
@@ -305,7 +282,7 @@ src/etc/pages/ArtworkPost.tsx
 src/etc/pages/HistoryPost.tsx
 ```
 
-## 13장. Redux Toolkit
+## 12장. Redux Toolkit
 
 컴포넌트 상태와 전역 상태를 구분하고, Redux Toolkit으로 전역 상태를 관리한다.
 
@@ -317,17 +294,17 @@ src/etc/pages/HistoryPost.tsx
 6. `useSelector`
 7. `useDispatch`
 8. 비동기 요청과 `createAsyncThunk`
-9. 인증 상태와 아트워크 목록 상태를 slice로 나누기
+9. 도메인별 slice 나누기 (예: 작품 목록). 인증 전역 상태가 필요하면 보관 원고·`src/etc` 코드를 참고한다.
 
 예제 목표:
 
 ```text
-authSlice와 artworkSlice를 만들고 로그인 상태와 아트워크 목록을 전역으로 관리한다.
+artworkSlice 등 도메인 slice를 만들고 목록·상세 상태를 전역으로 관리한다.
 ```
 
-## 14장. 이미지 업로드와 정렬
+## 13장. 이미지 업로드와 정렬
 
-관리자 화면의 실무 기능인 이미지 업로드와 순서 정렬을 만든다.
+관리자 화면의 실무 기능인 이미지 업로드와 순서 정렬을 만든다. 업로드 경로는 Swagger의 `POST /api/v1/images/upload` 와 맞춘다.
 
 1. file input
 2. 미리보기 URL
@@ -351,37 +328,9 @@ src/etc/components/artwork/SortableItem.tsx
 src/etc/pages/ArtworkPost.tsx
 ```
 
-## 15장. (선택) WebSocket과 실시간 UI
+## 14장. 샘플 예제 분석 (reactTestProject)
 
-시리즈 필수는 아니다. 로그인·Live 예제·`reactTestProject` 만으로도 실무 입문 축은 충분하다. 실시간만 다루고 싶을 때 읽는다.
-
-채팅 또는 실시간 알림처럼 서버와 연결을 유지하는 기능을 다룬다.
-
-1. WebSocket 기본
-2. 연결, 메시지 수신, 메시지 전송
-3. `useRef`로 socket 보관
-4. 연결 종료 처리
-5. 재연결 전략
-6. 메시지 목록 상태 관리
-7. 채팅 UI 만들기
-
-예제 목표:
-
-```text
-useChatSocket 훅과 AdminChatPage JavaScript 버전을 만든다.
-```
-
-참고 코드:
-
-```text
-src/etc/hooks/useChatWebSocket.ts
-src/etc/chat/chatWsTypes.ts
-src/etc/pages/AdminChatPage.tsx
-```
-
-## 16장. 샘플 예제 분석 (reactTestProject)
-
-1~15장 개념을 **한 바퀴 돌린 뒤**, 저장소의 JavaScript 참고 앱 `src/dev/reactTestProject` 를 파일 단위로 읽는다. 라우팅·API·훅·페이지·업로드·정렬이 어떻게 이어지는지, 화면 하단 **트리 + 원문**으로 따라간다. REST 명세는 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 와 맞춰 보면 된다.
+1~13장 개념을 **한 바퀴 돌린 뒤**, 저장소의 JavaScript 참고 앱 `src/dev/reactTestProject` 를 파일 단위로 읽는다. 라우팅·API·훅·페이지·업로드·정렬이 어떻게 이어지는지, 화면 하단 **트리 + 원문**으로 따라간다. REST 명세는 [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 와 맞춰 보면 된다.
 
 1. `App.jsx` 진입과 경로
 2. `pages/*` 화면과 이벤트·state
@@ -393,7 +342,14 @@ src/etc/pages/AdminChatPage.tsx
 예제 목표:
 
 ```text
-16장 본문과 하단 트리를 보며 샘플 프로젝트 전체 동작을 verbal로 설명할 수 있다.
+14장 본문과 하단 트리를 보며 샘플 프로젝트 전체 동작을 verbal로 설명할 수 있다.
 ```
 
-**이 장에서 쓰는 문서**: [`/dev?tab=react&rd=16-sample-app-walkthrough`](/dev?tab=react&rd=16-sample-app-walkthrough) · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) · API [Swagger UI](https://api.artivefor.me/swagger-ui/index.html)
+**이 장에서 쓰는 문서**: [`/dev?tab=react&rd=14-sample-app-walkthrough`](/dev?tab=react&rd=14-sample-app-walkthrough) · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) · API [Swagger UI](https://api.artivefor.me/swagger-ui/index.html)
+
+## 부록. 로그인·WebSocket 보관 원고
+
+`/dev` React 장 목차 번호에는 넣지 않고 **`react/_archive/`** 에만 둔다. 요약은 [`_archive/README.md`](./_archive/README.md) 참고.
+
+- 로그인·인증: [`react/_archive/11-auth-flow.md`](./_archive/11-auth-flow.md) · 코드 참고 `src/etc/pages/LoginPage.tsx`
+- WebSocket: [`react/_archive/15-websocket-realtime.md`](./_archive/15-websocket-realtime.md) · 코드 참고 `src/etc/hooks/useChatWebSocket.ts`

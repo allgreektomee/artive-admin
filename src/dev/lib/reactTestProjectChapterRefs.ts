@@ -2,8 +2,8 @@ import { listReactTestProjectSourceFiles } from "./reactTestProjectSources";
 
 export type ReactTestProjectChapterRef = { path: string; note: string };
 
-/** 16장 본문과 매칭 — `listReactTestProjectRefsForDocSlug`는 이 슬러그에서만 목록을 반환한다. */
-export const REACT_TEST_PROJECT_WALKTHROUGH_SLUG = "16-sample-app-walkthrough";
+/** 14장 본문과 매칭 — `listReactTestProjectRefsForDocSlug`는 이 슬러그에서만 목록을 반환한다. */
+export const REACT_TEST_PROJECT_WALKTHROUGH_SLUG = "14-sample-app-walkthrough";
 
 export const REACT_TEST_PROJECT_WALKTHROUGH_HREF = `/dev?tab=react&rd=${encodeURIComponent(REACT_TEST_PROJECT_WALKTHROUGH_SLUG)}`;
 

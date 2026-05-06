@@ -1,6 +1,6 @@
 # 6장. 컴포넌트 모듈화
 
-> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
+> **reactTestProject** 전체 파일·트리·원문은 **[14장 샘플 예제 분석](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 화면이 커질수록 **한 파일·한 함수에 모든 JSX를 넣는 방식**은 읽기·수정·테스트가 어려워진다. **모듈화**는 “UI 조각을 어디까지 하나의 단위로 묶을지”와 “파일·폴더에 어떻게 나눌지”를 정하는 작업이다. 이번 장에서는 나누는 **이유·기준·폴더 감각·export 규칙·props drilling** 까지 정리한다.
 
@@ -69,8 +69,8 @@ export { ArtworkRow } from "./ArtworkRow.jsx";
 
 - **합성(composition)** — `children`이나 슬롯처럼 중간 단계를 건너뛰게 배치(React 공식 문서의 “children 패턴”).
 - **상태 끌어올리기** — 이미 5장에서: 공통 부모에서 state를 두고 필요한 자식에만 나눠 준다.
-- **Context** — 테마, 로그인 사용자 등 **진짜로 여러 깊이에 필요한 값**(8장, 11장).
-- **전역 스토어(Redux 등)** — 많은 화면이 같은 도메인 데이터를 공유할 때(13장).
+- **Context** — 테마, 로그인 사용자 등 **진짜로 여러 깊이에 필요한 값**(8장, 보관 [`react/_archive/11-auth-flow.md`](./_archive/11-auth-flow.md)·실무 코드 참고).
+- **전역 스토어(Redux 등)** — 많은 화면이 같은 도메인 데이터를 공유할 때(12장).
 
 drilling이 **2~3단** 정도면 그대로 두는 경우가 많고, **고통스러워질 때** 위 도구를 꺼낸다.
 

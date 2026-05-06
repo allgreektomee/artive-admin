@@ -6,8 +6,69 @@ import { useArtwork } from "../hooks/useArtwork.js";
 
 const LIST_BASE = "/dev/react-test/artworks";
 
+/** 테이블 셀 JSX를 분리해 rolldown-vite 내장 변환기가 `columns.render` 안의 다중 줄 JSX를 파싱하지 못하는 경우를 피한다. */
+function ArtworkThumbnailCell({ url }) {
+  return (
+    <Image
+      src={url}
+      width={50}
+      height={50}
+      style={{ objectFit: "cover", borderRadius: 4 }}
+      fallback="https://via.placeholder.com/50?text=No+Img"
+    />
+  );
+}
+
+function ArtworkStatusCell({ status }) {
+  return <Tag color={status === "COMPLETED" ? "green" : "blue"}>{status}</Tag>;
+}
+
+function ArtworkHistoryCell({ record }) {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <div style={{ marginBottom: 4, fontWeight: "bold" }}>{record.totalHistoryCount || 0}개</div>
+      <Tooltip title="reactTestProject에서는 히스토리 화면으로 이동하지 않습니다.">
+        <Button size="small" disabled>
+          (비활성)
+        </Button>
+      </Tooltip>
+    </div>
+  );
+}
+
+function ArtworkRowActions({ record, navigate }) {
+  return (
+    <Space size="middle">
+      <Button type="primary" icon={<EyeOutlined />} onClick={() => navigate(`${LIST_BASE}/${record.id}`)}>
+        상세
+      </Button>
+      <Button
+        icon={<EditOutlined />}
+        onClick={() => {
+          window.alert(
+            "[reactTestProject]\n실제 수정·저장은 비활성화되어 있습니다.\n(실제 코드: navigate(`/admin/artworks/edit/${id}`))",
+          );
+        }}
+      >
+        수정
+      </Button>
+      <Button
+        danger
+        icon={<DeleteOutlined />}
+        onClick={() => {
+          window.alert(
+            "[reactTestProject]\n실제 삭제 API는 호출하지 않습니다.\n(실제 코드: deleteArtwork(record.id))",
+          );
+        }}
+      >
+        삭제
+      </Button>
+    </Space>
+  );
+}
+
 /**
- * 16장 · 작품 목록 화면
+ * 14장 · 작품 목록 화면
  *
  * - 마운트 시 `useArtwork().fetchArtworks(0)` → 테이블·페이지네이션.
  * - 상세만 라우팅 허용; 등록/수정/삭제 버튼은 연재용 alert (실무 경로는 alert 문구에 적음).
@@ -17,7 +78,7 @@ export default function ArtworkListPage() {
   const navigate = useNavigate();
   const { artworks, loading, error, fetchArtworks, totalElements, currentPage } = useArtwork();
 
-  // 16장: 첫 진입 시 목록 0페이지 로드
+  // 14장: 첫 진입 시 목록 0페이지 로드
   useEffect(() => {
     fetchArtworks(0);
   }, [fetchArtworks]);
@@ -27,15 +88,7 @@ export default function ArtworkListPage() {
       title: "이미지",
       dataIndex: "thumbnailUrl",
       key: "thumbnailUrl",
-      render: (url) => (
-        <Image
-          src={url}
-          width={50}
-          height={50}
-          style={{ objectFit: "cover", borderRadius: 4 }}
-          fallback="https://via.placeholder.com/50?text=No+Img"
-        />
-      ),
+      render: (url) => <ArtworkThumbnailCell url={url} />,
     },
     {
       title: "제목",
@@ -46,58 +99,18 @@ export default function ArtworkListPage() {
       title: "상태",
       dataIndex: "status",
       key: "status",
-      render: (status) => <Tag color={status === "COMPLETED" ? "green" : "blue"}>{status}</Tag>,
+      render: (status) => <ArtworkStatusCell status={status} />,
     },
     {
       title: "히스토리",
       dataIndex: "totalHistoryCount",
       key: "totalHistoryCount",
-      render: (_, record) => (
-        <div style={{ textAlign: "center" }}>
-          <div style={{ marginBottom: 4, fontWeight: "bold" }}>{record.totalHistoryCount || 0}개</div>
-          <Tooltip title="reactTestProject에서는 히스토리 화면으로 이동하지 않습니다.">
-            <Button size="small" disabled>
-              (비활성)
-            </Button>
-          </Tooltip>
-        </div>
-      ),
+      render: (_, record) => <ArtworkHistoryCell record={record} />,
     },
     {
       title: "관리",
       key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            icon={<EyeOutlined />}
-            onClick={() => navigate(`${LIST_BASE}/${record.id}`)}
-          >
-            상세
-          </Button>
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => {
-              window.alert(
-                "[reactTestProject]\n실제 수정·저장은 비활성화되어 있습니다.\n(실제 코드: navigate(`/admin/artworks/edit/${id}`))",
-              );
-            }}
-          >
-            수정
-          </Button>
-          <Button
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => {
-              window.alert(
-                "[reactTestProject]\n실제 삭제 API는 호출하지 않습니다.\n(실제 코드: deleteArtwork(record.id))",
-              );
-            }}
-          >
-            삭제
-          </Button>
-        </Space>
-      ),
+      render: (_, record) => <ArtworkRowActions record={record} navigate={navigate} />,
     },
   ];
 

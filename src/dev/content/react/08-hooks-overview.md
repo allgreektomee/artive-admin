@@ -1,6 +1,6 @@
 # 8장. React 훅 종류별 정리
 
-> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
+> **reactTestProject** 전체 파일·트리·원문은 **[14장 샘플 예제 분석](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 **훅**은 함수 컴포넌트 안에서만 호출되는 React API 모음이다. `use`로 시작하는 이름 규칙이 있고, **컴포넌트 최상위**에서 호출해야 한다(조건문·반복문 안에서 호출 금지). 이 장에서는 자주 쓰는 훅의 **목적·때·주의점**을 정리한다.
 
@@ -61,13 +61,13 @@ const [state, dispatch] = useReducer(reducer, initialState);
 dispatch({ type: "increment" });
 ```
 
-Redux와 개념이 비슷하지만 **컴포넌트 로컬**에 둔다. 전역은 13장.
+Redux와 개념이 비슷하지만 **컴포넌트 로컬**에 둔다. 전역은 12장.
 
 ## `useContext`
 
 **트리 상위 `Provider`가 준 값을** 깊은 자식이 props drilling 없이 읽는다.
 
-- 테마, 로케일, **인증 사용자**(단순하면 Provider+Context, 복잡하면 11장·13장).
+- 테마, 로케일, **인증 사용자**(단순하면 Provider+Context, 복잡하면 보관 [`11-auth-flow`](./_archive/11-auth-flow.md)·12장).
 - Context 값이 바뀌면 **그 Consumer를 구독하는 컴포넌트는 리렌더**된다. 큰 객체를 매 렌더 새로 만들면 하위 전부가 흔들릴 수 있어 **value를 `useMemo`로 안정화**하는 패턴이 있다.
 
 ## 커스텀 훅

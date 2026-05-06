@@ -1,4 +1,14 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import {
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
 /**
  * @typedef {Object} LiveExampleEntry
@@ -907,6 +917,351 @@ const LiveArtiveArtworksFetch = () => {
   );
 };
 
+function LiveArtworkFormDraft() {
+  const [form, setForm] = useState({
+    koTitle: "",
+    koDescription: "",
+    visibility: "PUBLIC",
+    medium: "",
+    status: "IN_PROGRESS",
+  });
+  const [preview, setPreview] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const payload = {
+      koTitle: form.koTitle.trim(),
+      koDescription: form.koDescription.trim(),
+      visibility: form.visibility,
+      medium: form.medium.trim() || undefined,
+      status: form.status,
+      images: [],
+      thumbnailUrl: "",
+    };
+    setPreview(JSON.stringify(payload, null, 2));
+    setSubmitting(false);
+  };
+
+  const fieldStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: 6,
+    marginBottom: 12,
+    fontSize: 13,
+  };
+  const inputStyle = {
+    padding: "8px 10px",
+    borderRadius: 8,
+    border: "1px solid #d4d4d8",
+    fontSize: 14,
+  };
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <strong>Artive Swagger</strong> 의{' '}
+        <a
+          href="https://api.artivefor.me/swagger-ui/index.html"
+          target="_blank"
+          rel="noreferrer"
+          style={{ color: "#4f46e5" }}
+        >
+          Swagger UI
+        </a>
+        에서 <code>ArtworkCreateRequest</code> / <code>ArtworkUpdateRequest</code> 에 가까운 필드만 모았다. 실제{' '}
+        <code>POST /api/v1/artworks</code> 는 Bearer 등 서버 정책이 필요하므로 여기서는{' '}
+        <strong>전송 직전 JSON</strong>만 확인한다.
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <label style={fieldStyle}>
+          <span style={{ fontWeight: 600 }}>koTitle</span>
+          <input
+            style={inputStyle}
+            value={form.koTitle}
+            onChange={(e) => setForm((s) => ({ ...s, koTitle: e.target.value }))}
+            placeholder="한글 제목"
+          />
+        </label>
+        <label style={fieldStyle}>
+          <span style={{ fontWeight: 600 }}>koDescription</span>
+          <textarea
+            style={{ ...inputStyle, minHeight: 72, resize: "vertical" }}
+            value={form.koDescription}
+            onChange={(e) => setForm((s) => ({ ...s, koDescription: e.target.value }))}
+            placeholder="한글 설명"
+            rows={3}
+          />
+        </label>
+        <label style={fieldStyle}>
+          <span style={{ fontWeight: 600 }}>visibility</span>
+          <select
+            style={inputStyle}
+            value={form.visibility}
+            onChange={(e) => setForm((s) => ({ ...s, visibility: e.target.value }))}
+          >
+            <option value="PUBLIC">PUBLIC</option>
+            <option value="PRIVATE">PRIVATE</option>
+          </select>
+        </label>
+        <label style={fieldStyle}>
+          <span style={{ fontWeight: 600 }}>medium (선택)</span>
+          <input
+            style={inputStyle}
+            value={form.medium}
+            onChange={(e) => setForm((s) => ({ ...s, medium: e.target.value }))}
+            placeholder="예: oil on canvas"
+          />
+        </label>
+        <label style={fieldStyle}>
+          <span style={{ fontWeight: 600 }}>status</span>
+          <select
+            style={inputStyle}
+            value={form.status}
+            onChange={(e) => setForm((s) => ({ ...s, status: e.target.value }))}
+          >
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="FOR_SALE">FOR_SALE</option>
+            <option value="SOLD_OUT">SOLD_OUT</option>
+          </select>
+        </label>
+
+        <button
+          type="submit"
+          disabled={submitting}
+          style={{
+            padding: "8px 14px",
+            borderRadius: 8,
+            border: "1px solid #6366f1",
+            background: submitting ? "#e4e4e7" : "#eef2ff",
+            cursor: submitting ? "not-allowed" : "pointer",
+            fontWeight: 600,
+            fontSize: 13,
+            color: "#312e81",
+          }}
+        >
+          payload 미리보기
+        </button>
+      </form>
+
+      {preview ? (
+        <div style={{ marginTop: 16 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "#71717a", marginBottom: 8 }}>
+            JSON (실제 전송 전)
+          </div>
+          <pre
+            style={{
+              margin: 0,
+              padding: "12px 14px",
+              borderRadius: 8,
+              border: "1px solid #e4e4e7",
+              background: "#fafafa",
+              fontSize: 12,
+              lineHeight: 1.5,
+              overflow: "auto",
+            }}
+          >
+            <code>{preview}</code>
+          </pre>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+const ApiVerboseContext = createContext(null);
+
+function ApiVerboseProvider({ children }) {
+  const [verbose, setVerbose] = useState(false);
+  const toggleVerbose = useCallback(() => {
+    setVerbose((v) => !v);
+  }, []);
+
+  const value = useMemo(() => ({ verbose, toggleVerbose }), [verbose, toggleVerbose]);
+
+  return <ApiVerboseContext.Provider value={value}>{children}</ApiVerboseContext.Provider>;
+}
+
+function VerboseToggleToolbar() {
+  const ctx = useContext(ApiVerboseContext);
+  if (ctx == null) return null;
+  return (
+    <div
+      style={{
+        padding: "8px 10px",
+        borderRadius: 8,
+        border: "1px solid #e4e4e7",
+        background: "#fff",
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        flexWrap: "wrap",
+      }}
+    >
+      <span style={{ fontSize: 13, fontWeight: 600 }}>
+        API 로그 상세: <code>{String(ctx.verbose)}</code>
+      </span>
+      <button
+        type="button"
+        onClick={ctx.toggleVerbose}
+        style={{
+          padding: "6px 12px",
+          borderRadius: 8,
+          border: "1px solid #6366f1",
+          background: "#eef2ff",
+          cursor: "pointer",
+          fontSize: 12,
+          fontWeight: 600,
+          color: "#312e81",
+        }}
+      >
+        토글
+      </button>
+    </div>
+  );
+}
+
+function NestedStatusBadge() {
+  const ctx = useContext(ApiVerboseContext);
+  if (ctx == null) return null;
+  return (
+    <div style={{ marginTop: 10, fontSize: 12, color: "#52525b", lineHeight: 1.5 }}>
+      깊은 자식도 같은 Context를 읽습니다(현재 상세 로그: <strong>{String(ctx.verbose)}</strong>). 실무에서는 axios 인터셉터 옵션,
+      요청 추적 플래그, 현재 환경(dev/staging) 같은 값을 Provider 한 번으로 묶어 내려보냅니다.
+    </div>
+  );
+}
+
+const LiveApiVerboseContext = () => (
+  <ApiVerboseProvider>
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <strong>useContext</strong>는 트리 위쪽 <code>Provider</code>가 준 값을 props drilling 없이 읽습니다.
+        여기서는 “요청 로그 상세 여부”를 예시로 둡니다.
+      </div>
+      <VerboseToggleToolbar />
+      <NestedStatusBadge />
+    </div>
+  </ApiVerboseProvider>
+);
+
+const MemoActionRow = memo(function MemoActionRow({ label, onAction }) {
+  const renders = useRef(0);
+  renders.current += 1;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        flexWrap: "wrap",
+        padding: "8px 10px",
+        borderRadius: 8,
+        border: "1px solid #e4e4e7",
+        background: "#fff",
+        marginBottom: 8,
+      }}
+    >
+      <button
+        type="button"
+        onClick={onAction}
+        style={{
+          padding: "6px 12px",
+          borderRadius: 8,
+          border: "1px solid #d4d4d8",
+          background: "#fafafa",
+          cursor: "pointer",
+          fontSize: 13,
+        }}
+      >
+        {label}
+      </button>
+      <span style={{ fontSize: 11, color: "#71717a" }}>
+        이 행 렌더 누적: <strong>{renders.current}</strong>
+      </span>
+    </div>
+  );
+});
+
+const LiveApiCallbackMemo = () => {
+  const [parentBump, setParentBump] = useState(0);
+
+  const stableRetry = useCallback(() => {
+    window.alert("같은 함수 참조 — memo 자식은 불필요 리렌더를 줄일 수 있음");
+  }, []);
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        부모만 바뀌는 state(<code>parentBump</code>)가 있을 때, 자식이 <code>memo</code>로 감싸져 있으면{' '}
+        <strong>props 참조가 같을 때</strong> 리렌더를 건너뜁니다.{' '}
+        <code>useCallback</code>으로 핸들러 참조를 고정하면 그 조건을 만들기 쉽습니다.
+      </div>
+
+      <div style={{ marginBottom: 10 }}>
+        부모 카운터: <strong>{parentBump}</strong>
+        <button
+          type="button"
+          onClick={() => setParentBump((n) => n + 1)}
+          style={{
+            marginLeft: 10,
+            padding: "6px 12px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            background: "#fff",
+            cursor: "pointer",
+            fontSize: 12,
+          }}
+        >
+          부모만 리렌더
+        </button>
+      </div>
+
+      <MemoActionRow
+        label="매 렌더 새 함수 (언제나 리렌더)"
+        onAction={() => {
+          window.alert("인라인 핸들러는 참조가 매번 달라짐");
+        }}
+      />
+      <MemoActionRow label="useCallback 고정 핸들러" onAction={stableRetry} />
+    </div>
+  );
+};
+
 /** @type {LiveExampleEntry[]} */
 const ENTRIES = [
   {
@@ -1154,6 +1509,88 @@ const items =
     ? payload.data.content
     : [];`,
     Component: LiveArtiveArtworksFetch,
+  },
+  {
+    id: "react.api.sharedContext",
+    title: "useContext: 공유 설정(예: 로그 상세)",
+    description:
+      "Provider 아래 깊은 컴포넌트가 같은 값을 props 없이 읽습니다. API 클라이언트 옵션·환경 플래그 등을 묶을 때 자주 씁니다.",
+    sourceCode: `const ApiVerboseContext = createContext(null);
+
+function ApiVerboseProvider({ children }) {
+  const [verbose, setVerbose] = useState(false);
+  const toggleVerbose = useCallback(() => setVerbose((v) => !v), []);
+  const value = useMemo(() => ({ verbose, toggleVerbose }), [verbose, toggleVerbose]);
+  return <ApiVerboseContext.Provider value={value}>{children}</ApiVerboseContext.Provider>;
+}
+
+function Toolbar() {
+  const ctx = useContext(ApiVerboseContext);
+  return (
+    <>
+      <span>상세 로그: {String(ctx.verbose)}</span>
+      <button type="button" onClick={ctx.toggleVerbose}>토글</button>
+    </>
+  );
+}`,
+    Component: LiveApiVerboseContext,
+  },
+  {
+    id: "react.api.memoCallback",
+    title: "useCallback + memo: 불필요 리렌더 줄이기",
+    description:
+      "부모 state만 바뀔 때 memo 자식은 props 참조가 같으면 건너뜁니다. 자식에 넘기는 핸들러는 useCallback으로 고정하는 경우가 많습니다.",
+    sourceCode: `const Row = memo(function Row({ label, onAction }) {
+  const n = useRef(0);
+  n.current += 1;
+  return (
+    <div>
+      <button type="button" onClick={onAction}>{label}</button>
+      <span>렌더 누적: {n.current}</span>
+    </div>
+  );
+});
+
+function Parent() {
+  const [bump, setBump] = useState(0);
+  const stable = useCallback(() => alert("stable"), []);
+  return (
+    <>
+      <button type="button" onClick={() => setBump((x) => x + 1)}>부모만 갱신</button>
+      <Row label="인라인 핸들러" onAction={() => alert("new ref each render")} />
+      <Row label="useCallback" onAction={stable} />
+    </>
+  );
+}`,
+    Component: LiveApiCallbackMemo,
+  },
+  {
+    id: "react.form.artworkDraft",
+    title: "폼 → Swagger 계약에 맞는 작품 payload",
+    description:
+      "ArtworkCreateRequest에 가까운 필드를 채우고 전송 직전 JSON을 확인합니다. 실제 POST는 토큰 등 정책 때문에 실행하지 않습니다.",
+    sourceCode: `const [form, setForm] = useState({
+  koTitle: "",
+  koDescription: "",
+  visibility: "PUBLIC",
+  medium: "",
+  status: "IN_PROGRESS",
+});
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const payload = {
+    koTitle: form.koTitle.trim(),
+    koDescription: form.koDescription.trim(),
+    visibility: form.visibility,
+    medium: form.medium.trim() || undefined,
+    status: form.status,
+    images: [],
+    thumbnailUrl: "",
+  };
+  setPreview(JSON.stringify(payload, null, 2));
+}`,
+    Component: LiveArtworkFormDraft,
   },
   {
     id: "react.hooks.showcase",

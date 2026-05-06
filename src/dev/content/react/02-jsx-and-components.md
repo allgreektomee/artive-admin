@@ -1,6 +1,6 @@
 # 2장. JSX와 컴포넌트
 
-> **reactTestProject** 전체 파일·트리·원문은 **[16장 샘플 예제 분석](/dev?tab=react&rd=16-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
+> **reactTestProject** 전체 파일·트리·원문은 **[14장 샘플 예제 분석](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. 이 장은 Live·개념 위주다.
 
 **JSX**는 JavaScript 안에서 HTML과 비슷한 문법으로 UI를 적을 수 있게 해 주는 확장 문법이다. 파일에서는 보통 `.jsx` 확장자를 쓴다. 빌드 도구(Babel, Vite 내장 변환 등)가 JSX를 내부적으로 `React.createElement(타입, props, ...자식)` 호출로 바꿔 준다. 즉 “태그를 적는 것”과 “요소를 만드는 함수 호출”이 같은 의미가 된다.
 
