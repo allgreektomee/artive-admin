@@ -90,7 +90,19 @@ Redux와 개념이 비슷하지만 **컴포넌트 로컬**에 둔다. 전역은 
 
 ## Live 예제
 
-`useRef`(포커스), `useMemo`(합 계산), `useReducer`(카운터)를 한 화면에서 확인한다. `useEffect`는 7장 예제를 참고한다.
+아래 세 개는 8장에서 다룬 훅을 **동작 위주**로 확인합니다. `useEffect`는 7장 예제를 참고한다.
+
+1. **`useContext`** — Provider와 깊은 자식에서 같은 테마 값 읽기  
+2. **`useCallback`과 `memo`** — 부모만 리렌더될 때 자식 렌더 횟수 비교  
+3. **`useRef` · `useMemo` · `useReducer`** — 한 화면 쇼케이스  
+
+```react-live
+react.hooks.contextBasic
+```
+
+```react-live
+react.hooks.callbackMemoBasic
+```
 
 ```react-live
 react.hooks.showcase

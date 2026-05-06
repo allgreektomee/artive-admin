@@ -1,6 +1,6 @@
 # React JavaScript 실무 연재 목차
 
-이 연재는 React를 처음 배우는 사람이 JavaScript만으로 따라올 수 있게 구성한다. **앞쪽 1~8장은 `/dev` React 탭의 Live 예제 순서와 맞춘다.** 개념을 짧게 짚은 뒤 “이번 장에서 쓰는 예제가 이렇게 연결된다”로 이어진다. 9장 이후는 라우팅·API·폼·이미지·전역 상태 등 `src/etc`·`reactTestProject` 흐름을 참고한 실무 파트다. 로그인·WebSocket 등 일부 주제는 **`react/_archive/`에만 보관**해 두었다.
+이 연재는 React를 처음 배우는 사람이 JavaScript만으로 따라올 수 있게 구성한다. **앞쪽 1~7장은 `/dev` React 탭 Live 예제와 1:1로 짝을 맞추고, 8장은 훅별 기본 Live가 여러 블록이다.** 개념을 짧게 짚은 뒤 “이번 장에서 쓰는 예제가 이렇게 연결된다”로 이어진다. 9장 이후는 라우팅·API·폼·이미지·전역 상태 등 `src/etc`·`reactTestProject` 흐름을 참고한 실무 파트다. 로그인·WebSocket 등 일부 주제는 **`react/_archive/`에만 보관**해 두었다.
 
 ## 시리즈 목표
 
@@ -8,7 +8,7 @@ React 문법을 외우는 것이 아니라 **“기본기 → 같은 맥락의 �
 
 - **로그인까지 전부 돌려 보는 것은 필수가 아니다.** `/dev?tab=react`에서 각 장 본문·Live 실행으로 따라올 수 있다. **JavaScript 샘플 전체 원문·파일 트리**는 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)** 에만 모아 두었다.
 - **실전에 가깝게 가고 싶을 때**: `reactTestProject` · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) (목록·상세 조회, 일부 버튼은 alert). 기본 API 베이스로 요청이 나가며, 로그인 없이도 읽기 흐름을 볼 수 있다.
-- 총 **공개 14장**(본문 파일 `01`~`14`): **1~8장 = Live 예제 8개와 동일 순서**, 9장 이후는 라우터·API·폼·Redux·이미지·샘플 분석 순이다. **10장**에는 JSONPlaceholder `fetch` Live, Artive [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 실데이터 Live, 그리고 **`useContext`·`useCallback`/`memo`** 보조 Live가 있다. **14장**은 `reactTestProject` 샘플 전체 분석(소스 트리·원문). 로그인·WebSocket 원고는 [`react/_archive/`](./_archive/README.md) 에만 남긴다.
+- 총 **공개 14장**(본문 파일 `01`~`14`): **1~7장은 Live 예제 순서와 1:1**, **8장은 훅 정리용 Live가 세 블록**(context·callback/memo·ref/memo/reducer 쇼케이스), 9장 이후는 라우터·API·폼·Redux·이미지·샘플 분석 순이다. **10장**에는 JSONPlaceholder `fetch` Live, Artive [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 실데이터 Live, 그리고 API 맥락의 **`useContext`·`useCallback`/`memo`** 보조 Live가 있다. **14장**은 `reactTestProject` 샘플 전체 분석(소스 트리·원문). 로그인·WebSocket 원고는 [`react/_archive/`](./_archive/README.md) 에만 남긴다.
 
 실제 운영 정적 사이트에서는 작품 **목록**과 **상세**가 이미 함께 제공된다. 서버 Read·라우팅을 말할 때는 “목록에서 찾고, 상세에서 본다”는 흐름을 기준으로 보면 된다.
 
@@ -29,7 +29,7 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 실무 파트: 현재 프로젝트 src/etc 흐름 참고
 ```
 
-## 예제 코드·링크 (1~8장 = Live 데모 순서)
+## 예제 코드·링크 (1~8장 Live 데모)
 
 **React 탭 홈**에서는 장 목차·링크만 보이고, `reactTestProject` **파일 트리·전체 원문**은 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)** 에서 본다. 1~13장 본문에는 해당 Live ID와 연결된 설명·실행 영역이 있다.
 
@@ -42,7 +42,7 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 | 5장 | `react.state.counter` | [`/dev?tab=react&rd=05-state-usestate`](/dev?tab=react&rd=05-state-usestate) |
 | 6장 | `react.module.artworkExplorer` | [`/dev?tab=react&rd=06-component-modularization`](/dev?tab=react&rd=06-component-modularization) |
 | 7장 | `react.effect.lifecycle`, `react.effect.depsCompare` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
-| 8장 | `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
+| 8장 | `react.hooks.contextBasic`, `react.hooks.callbackMemoBasic`, `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
 | 10장 | `react.api.jsonFetch`, `react.api.artiveArtworks`, `react.api.sharedContext`, `react.api.memoCallback` | [`/dev?tab=react&rd=10-api-modules`](/dev?tab=react&rd=10-api-modules) |
 | 11장 | `react.form.artworkDraft` | [`/dev?tab=react&rd=11-forms-crud`](/dev?tab=react&rd=11-forms-crud) |
 
@@ -193,10 +193,10 @@ React에서 자주 쓰는 훅을 목적별로 정리한다.
 예제 목표:
 
 ```text
-useRef(포커스), useMemo(필터 합), useReducer(카운터)를 한 화면에서 확인한다.
+useContext(테마), useCallback+memo(리렌더 비교), useRef·useMemo·useReducer(쇼케이스)를 Live로 확인한다.
 ```
 
-**이 장에서 쓰는 Live 예제**: ID `react.hooks.showcase` — [본문·실행](/dev?tab=react&rd=08-hooks-overview)
+**이 장에서 쓰는 Live 예제**: ID `react.hooks.contextBasic` · `react.hooks.callbackMemoBasic` · `react.hooks.showcase` — [본문·실행](/dev?tab=react&rd=08-hooks-overview)
 
 ## 9장. React Router
 

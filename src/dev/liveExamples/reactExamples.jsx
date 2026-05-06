@@ -625,6 +625,88 @@ const LiveHooksShowcase = () => {
   );
 };
 
+const HooksThemeContext = createContext(null);
+
+function HooksThemeProvider({ children }) {
+  const [dark, setDark] = useState(false);
+  const toggleTheme = useCallback(() => setDark((d) => !d), []);
+  const value = useMemo(() => ({ dark, toggleTheme }), [dark, toggleTheme]);
+
+  return <HooksThemeContext.Provider value={value}>{children}</HooksThemeContext.Provider>;
+}
+
+function HooksThemeToolbar() {
+  const ctx = useContext(HooksThemeContext);
+  if (ctx == null) return null;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+      <span style={{ fontSize: 13, fontWeight: 600 }}>
+        테마: <code>{ctx.dark ? "dark" : "light"}</code>
+      </span>
+      <button
+        type="button"
+        onClick={ctx.toggleTheme}
+        style={{
+          padding: "6px 12px",
+          borderRadius: 8,
+          border: "1px solid #6366f1",
+          background: "#eef2ff",
+          cursor: "pointer",
+          fontSize: 12,
+          fontWeight: 600,
+          color: "#312e81",
+        }}
+      >
+        토글
+      </button>
+    </div>
+  );
+}
+
+function HooksThemeDeepChild() {
+  const ctx = useContext(HooksThemeContext);
+  if (ctx == null) return null;
+  return (
+    <div
+      style={{
+        marginTop: 10,
+        padding: 12,
+        borderRadius: 8,
+        border: "1px solid #e4e4e7",
+        background: ctx.dark ? "#27272a" : "#fafafa",
+        color: ctx.dark ? "#fafafa" : "#18181b",
+        fontSize: 12,
+        lineHeight: 1.55,
+      }}
+    >
+      더 깊은 자식도 같은 Context를 읽어 배경색을 맞춥니다. 실무에서는 테마·로케일·인증 요약 등을 이렇게 공유합니다.
+    </div>
+  );
+}
+
+const LiveHooksContextBasic = () => (
+  <HooksThemeProvider>
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <strong>useContext</strong>는 상위 <code>Provider</code>가 넘긴 값을 props drilling 없이 읽습니다. 값 바구니는 보통{' '}
+        <code>useMemo</code>로 안정화합니다.
+      </div>
+      <HooksThemeToolbar />
+      <HooksThemeDeepChild />
+    </div>
+  </HooksThemeProvider>
+);
+
 const postUrl = (id) => `https://jsonplaceholder.typicode.com/posts/${id}`;
 
 const LiveJsonFetch = () => {
@@ -1262,6 +1344,55 @@ const LiveApiCallbackMemo = () => {
   );
 };
 
+const LiveHooksCallbackMemoBasic = () => {
+  const [parentBump, setParentBump] = useState(0);
+
+  const stablePing = useCallback(() => {
+    window.alert("이 핸들러 참조는 부모가 리렌더돼도 유지됩니다.");
+  }, []);
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46" }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        <code>memo</code>로 감싼 자식은 props가 같으면 리렌더를 건너뜁니다. 버튼의 <code>onAction</code>을 매 렌더 새 함수로
+        넘기면 항상 “다른 props”가 되고, <code>useCallback</code>으로 참조를 고정하면 건너뛰기 쉬워집니다.
+      </div>
+
+      <div style={{ marginBottom: 10 }}>
+        부모 숫자: <strong>{parentBump}</strong>
+        <button
+          type="button"
+          onClick={() => setParentBump((n) => n + 1)}
+          style={{
+            marginLeft: 10,
+            padding: "6px 12px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            background: "#fff",
+            cursor: "pointer",
+            fontSize: 12,
+          }}
+        >
+          부모만 리렌더
+        </button>
+      </div>
+
+      <MemoActionRow label="인라인 함수 (매번 새 참조)" onAction={() => window.alert("새 함수 참조")} />
+      <MemoActionRow label="useCallback 고정" onAction={stablePing} />
+    </div>
+  );
+};
+
 /** @type {LiveExampleEntry[]} */
 const ENTRIES = [
   {
@@ -1591,6 +1722,58 @@ function handleSubmit(e) {
   setPreview(JSON.stringify(payload, null, 2));
 }`,
     Component: LiveArtworkFormDraft,
+  },
+  {
+    id: "react.hooks.contextBasic",
+    title: "useContext 기본 (테마)",
+    description: "Provider·useContext·value 안정화(useMemo)를 테마 토글 최소 예제로 확인합니다.",
+    sourceCode: `const ThemeContext = createContext(null);
+
+function ThemeProvider({ children }) {
+  const [dark, setDark] = useState(false);
+  const toggleTheme = useCallback(() => setDark((d) => !d), []);
+  const value = useMemo(() => ({ dark, toggleTheme }), [dark, toggleTheme]);
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+}
+
+function Toolbar() {
+  const ctx = useContext(ThemeContext);
+  return (
+    <>
+      <span>{ctx.dark ? "dark" : "light"}</span>
+      <button type="button" onClick={ctx.toggleTheme}>토글</button>
+    </>
+  );
+}`,
+    Component: LiveHooksContextBasic,
+  },
+  {
+    id: "react.hooks.callbackMemoBasic",
+    title: "useCallback + memo 기본",
+    description: "부모 state만 바뀔 때 memo 자식의 렌더 누적 차이를 인라인 핸들러와 useCallback으로 비교합니다.",
+    sourceCode: `const Row = memo(function Row({ label, onClick }) {
+  const n = useRef(0);
+  n.current += 1;
+  return (
+    <div>
+      <button type="button" onClick={onClick}>{label}</button>
+      <span>렌더 누적: {n.current}</span>
+    </div>
+  );
+});
+
+function Parent() {
+  const [bump, setBump] = useState(0);
+  const stable = useCallback(() => {}, []);
+  return (
+    <>
+      <button type="button" onClick={() => setBump((x) => x + 1)}>부모만 갱신</button>
+      <Row label="인라인" onClick={() => {}} />
+      <Row label="useCallback" onClick={stable} />
+    </>
+  );
+}`,
+    Component: LiveHooksCallbackMemoBasic,
   },
   {
     id: "react.hooks.showcase",

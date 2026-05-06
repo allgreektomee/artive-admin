@@ -2,6 +2,8 @@
 
 RHEL 계열 WEB 서버에 Nginx 설치 파일과 SSL 인증서를 업로드한 뒤, Tomcat WAS로 프록시하는 설정 절차입니다. 실제 IP, 도메인, 포트 번호는 문서에 적지 않고 아래 자리표시자로 표기합니다.
 
+`nginx.conf`는 보통 `/etc/nginx/conf.d/*.conf`를 읽습니다. SSL·`server_name`·`location`은 **사이트별 `.conf` 한 파일**에 두면 됩니다. 이 문서의 예시 파일명은 `app.conf`이며, 운영에서는 **`pnmbiz.conf` 등 실제로 쓰는 파일명**을 써도 동일합니다. 절차에서 `vi` 대상 경로만 환경에 맞게 바꿉니다.
+
 ```text
 <WEB_SERVER_IP>
 <WAS_SERVER_IP>
@@ -9,7 +11,10 @@ RHEL 계열 WEB 서버에 Nginx 설치 파일과 SSL 인증서를 업로드한 �
 <HTTP_PORT>
 <HTTPS_PORT>
 <TOMCAT_HTTP_PORT>
+<NGINX_SITE_CONF>
 ```
+
+`<NGINX_SITE_CONF>` 는 `conf.d` 아래 파일명만 넣습니다. 예: `app.conf`, `pnmbiz.conf` → 편집 경로는 `/etc/nginx/conf.d/pnmbiz.conf` 형태입니다.
 
 ## 1. 설치 파일 준비
 
@@ -73,7 +78,7 @@ IPv6 listen 줄이 있으면 주석 처리합니다.
 # listen [::]:<HTTP_PORT>;
 ```
 
-SSL 설정 파일에도 IPv6 listen 줄이 있으면 주석 처리합니다.
+사이트별 SSL 설정 파일(`/etc/nginx/conf.d/<NGINX_SITE_CONF>` 등)에도 IPv6 listen 줄이 있으면 주석 처리합니다.
 
 ```nginx
 listen <HTTPS_PORT> ssl;
@@ -138,7 +143,7 @@ chmod 644 fullchain.crt
 WAS 연동 전에는 Nginx SSL만 먼저 확인합니다.
 
 ```bash
-vi /etc/nginx/conf.d/app.conf
+vi /etc/nginx/conf.d/<NGINX_SITE_CONF>
 ```
 
 내용:
@@ -180,7 +185,7 @@ curl -Ik https://localhost:<HTTPS_PORT>
 
 ## 7. WAS 프록시 설정
 
-Tomcat 기동 확인 후 임시 응답을 WAS 프록시로 변경합니다.
+Tomcat 기동 확인 후, 6절에서 편집한 **같은 파일**(`/etc/nginx/conf.d/<NGINX_SITE_CONF>`)의 HTTPS `server` 블록 안 **임시 `location /`** 를 아래 내용으로 바꿉니다.
 
 ```nginx
 location / {

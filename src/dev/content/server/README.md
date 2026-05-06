@@ -5,5 +5,5 @@ RHEL 계열 서버에서 WEB/WAS/Redis를 구성할 때 참고하는 문서입�
 ## 문서 목록
 
 - [Tomcat 설치 및 설정](./tomcat-tar-install-config-guide.md)
-- [Nginx 설치 및 SSL 프록시 설정](./nginx-upload-ssl-proxy-guide.md)
+- [Nginx 설치 및 SSL 프록시 설정](./nginx-upload-ssl-proxy-guide.md) — `conf.d` 사이트별 `.conf`(예: `pnmbiz.conf`) 기준
 - [Redis 설치 및 설정](./redis-upload-config-guide.md)

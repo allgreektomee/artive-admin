@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EOS — WAS 동작 테스트</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f6f7fb;
+      --card: #fff;
+      --text: #1a1d26;
+      --muted6: #5c6473;
+      --accent: #2563eb;
+      --ok: #059669;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1117;
+        --card: #181c27;
+        --text: #e8eaf0;
+        --muted6: #9aa3b5;
+        --accent: #60a5fa;
+        --ok: #34d399;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    main {
+      width: min(36rem, 100%);
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.75rem 1.75rem 1.5rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ok);
+      margin-bottom: 1rem;
+    }
+    .badge::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    p {
+      margin: 0 0 0.65rem;
+      line-height: 1.55;
+      color: var(--muted6);
+      font-size: 0.9375rem;
+    }
+    dl {
+      margin: 1.1rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(127, 127, 127, 0.25);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 1rem;
+      font-size: 0.8125rem;
+    }
+    dt {
+      color: var(--muted6);
+      font-weight: 500;
+    }
+    dd {
+      margin: 0;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>EOS WAS 테스트 페이지</h1>
+    <div class="badge">Tomcat에서 정상 응답</div>
+    <p>
+      이 화면이 보이면 WAS(Tomcat)가 <strong>index.html</strong>을 서빙하고 있습니다.
+      Nginx SSL(443) 뒤에 두었다면 리버스 프록시까지 연동된 상태입니다.
+    </p>
+    <dl>
+      <dt>문서 로드 시각</dt>
+      <dd id="ts">—</dd>
+      <dt>브라우저</dt>
+      <dd id="ua">—</dd>
+    </dl>
+  </main>
+  <script>
+    document.getElementById("ts").textContent = new Date().toISOString();
+    document.getElementById("ua").textContent = navigator.userAgent || "(알 수 없음)";
+  </script>
+</body>
+</html>
