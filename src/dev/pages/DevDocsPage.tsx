@@ -10,16 +10,13 @@ import {
   getPreamble,
   getReactDoc,
   getServerDoc,
-  getCicdDoc,
   listJavaScriptArticleGroups,
-  listCicdDocs,
   listParts,
   listReactDocs,
   listReactOutlineChapters,
   listServerDocs,
   readOutlineMarkdown,
   readReactOutlineMarkdown,
-  type CicdDoc,
   type JavaScriptArticle,
   type JavaScriptArticleGroup,
   type OutlinePart,
@@ -34,18 +31,20 @@ import "../devDocs.css";
 
 const { Text, Title } = Typography;
 
-type TabId = "js" | "react" | "spring" | "server" | "cicd";
+type TabId = "js" | "react" | "spring" | "server";
+
+const LANGUAGE_TAB_LABEL = "lang";
 
 const TABS: { id: TabId; label: string }[] = [
-  { id: "js", label: "JavaScript" },
+  { id: "js", label: LANGUAGE_TAB_LABEL },
   { id: "react", label: "React" },
   { id: "spring", label: "Spring" },
   { id: "server", label: "Server" },
-  { id: "cicd", label: "CI/CD" },
 ];
 
 function parseTab(raw: string | null): TabId {
-  if (raw === "react" || raw === "spring" || raw === "server" || raw === "cicd") return raw;
+  if (raw === "cicd") return "server"; // 과거 북마크; URL 정규화 effect가 tab=server로 교체함
+  if (raw === "react" || raw === "spring" || raw === "server") return raw;
   return "js";
 }
 
@@ -74,9 +73,9 @@ const DevDocsPage: React.FC = () => {
   const articleGroups = useMemo(() => listJavaScriptArticleGroups(), []);
   const serverDocs = useMemo(() => listServerDocs(), []);
   const reactDocs = useMemo(() => listReactDocs(), []);
-  const cicdDocs = useMemo(() => listCicdDocs(), []);
 
-  const tab = parseTab(searchParams.get("tab"));
+  const tabParam = searchParams.get("tab");
+  const tab = parseTab(tabParam);
   const outlineRaw = searchParams.get("outline");
   const outlineId =
     outlineRaw === "1" || outlineRaw === "2" || outlineRaw === "3"
@@ -84,9 +83,10 @@ const DevDocsPage: React.FC = () => {
       : null;
   const ps = searchParams.get("ps");
   const as = searchParams.get("as");
-  const sd = searchParams.get("sd");
+  const sd =
+    searchParams.get("sd") ??
+    (tabParam === "cicd" ? searchParams.get("cd") : null);
   const rd = searchParams.get("rd");
-  const cd = searchParams.get("cd");
 
   const article = useMemo(() => {
     if (!ps || !as) return null;
@@ -103,15 +103,20 @@ const DevDocsPage: React.FC = () => {
     return getReactDoc(rd);
   }, [rd]);
 
-  const cicdDoc = useMemo(() => {
-    if (!cd) return null;
-    return getCicdDoc(cd);
-  }, [cd]);
+  useEffect(() => {
+    if (tabParam !== "cicd") return;
+    const q = new URLSearchParams(searchParams);
+    q.set("tab", "server");
+    const legacyCd = q.get("cd");
+    if (legacyCd && !q.get("sd")) q.set("sd", legacyCd);
+    q.delete("cd");
+    setSearchParams(q, { replace: true });
+  }, [tabParam, searchParams, setSearchParams]);
 
   useEffect(() => {
-    if ((!ps || !as) && !sd && !rd && !cd) return;
+    if ((!ps || !as) && !sd && !rd) return;
     window.scrollTo({ top: 0 });
-  }, [ps, as, sd, rd, cd]);
+  }, [ps, as, sd, rd]);
 
   const adjacentReactDocs = useMemo(() => {
     if (!reactDoc) return { prev: null, next: null };
@@ -192,18 +197,6 @@ const DevDocsPage: React.FC = () => {
     });
   }, [setQuery]);
 
-  const goHomeCicd = useCallback(() => {
-    setQuery({
-      tab: "cicd",
-      outline: undefined,
-      ps: undefined,
-      as: undefined,
-      sd: undefined,
-      rd: undefined,
-      cd: undefined,
-    });
-  }, [setQuery]);
-
   const onTab = (id: TabId) => {
     if (id === "js") {
       setQuery({
@@ -246,48 +239,38 @@ const DevDocsPage: React.FC = () => {
         <Text type="secondary" style={{ fontSize: 11, letterSpacing: "0.15em" }}>
           ARTIVE
         </Text>
-        <Title level={2} style={{ marginTop: 8, marginBottom: 8 }}>
+        <Title level={2} style={{ marginTop: 8, marginBottom: 28 }}>
           학습 정리
         </Title>
-        <Text type="secondary" style={{ display: "block", marginBottom: 28 }}>
-          JavaScript·React·Spring·Server·CI/CD를 한 페이지에서 탭으로 전환합니다.
-        </Text>
 
-        <div
-          role="tablist"
-          aria-label="문서 종류"
-          style={{
-            display: "flex",
-            gap: 4,
-            borderBottom: "1px solid #e4e4e7",
-            marginBottom: 32,
-          }}
-        >
-          {TABS.map((t) => {
-            const active = tab === t.id;
-            return (
-              <button
-                key={t.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => onTab(t.id)}
-                style={{
-                  padding: "10px 16px",
-                  marginBottom: -1,
-                  border: "none",
-                  borderBottom: active ? "2px solid #18181b" : "2px solid transparent",
-                  background: "transparent",
-                  fontWeight: active ? 600 : 500,
-                  color: active ? "#18181b" : "#71717a",
-                  cursor: "pointer",
-                  fontSize: 14,
-                }}
-              >
-                {t.label}
-              </button>
-            );
-          })}
+        <div className="dev-docs-tablist-scroll" style={{ marginBottom: 32 }}>
+          <div role="tablist" aria-label="문서 종류" className="dev-docs-tablist">
+            {TABS.map((t) => {
+              const active = tab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => onTab(t.id)}
+                  style={{
+                    padding: "10px 14px",
+                    marginBottom: -1,
+                    border: "none",
+                    borderBottom: active ? "2px solid #18181b" : "2px solid transparent",
+                    background: "transparent",
+                    fontWeight: active ? 600 : 500,
+                    color: active ? "#18181b" : "#71717a",
+                    cursor: "pointer",
+                    fontSize: 14,
+                  }}
+                >
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {tab === "react" && rd && !reactDoc && (
@@ -350,36 +333,12 @@ const DevDocsPage: React.FC = () => {
         )}
         {tab === "server" && !sd && <ServerHome docs={serverDocs} />}
 
-        {tab === "cicd" && cd && !cicdDoc && (
-          <Card size="small" style={{ marginBottom: 16 }}>
-            <Text>요청한 CI/CD 문서를 찾을 수 없습니다.</Text>
-            <div style={{ marginTop: 12 }}>
-              <button type="button" onClick={goHomeCicd} style={linkBtn}>
-                CI/CD 홈으로
-              </button>
-            </div>
-          </Card>
-        )}
-        {tab === "cicd" && cicdDoc && (
-          <div>
-            <nav style={{ marginBottom: 16, fontSize: 14 }}>
-              <button type="button" onClick={goHomeCicd} style={linkBtn}>
-                ← CI/CD 홈
-              </button>
-            </nav>
-            <Card>
-              <DevMarkdown source={cicdDoc.body} />
-            </Card>
-          </div>
-        )}
-        {tab === "cicd" && !cd && <CicdHome docs={cicdDocs} />}
-
         {tab === "js" && ps && as && !article && (
           <Card size="small" style={{ marginBottom: 16 }}>
             <Text>요청한 글을 찾을 수 없습니다.</Text>
             <div style={{ marginTop: 12 }}>
               <button type="button" onClick={goHomeJs} style={linkBtn}>
-                JavaScript 홈으로
+                {LANGUAGE_TAB_LABEL} 목차로
               </button>
             </div>
           </Card>
@@ -389,7 +348,7 @@ const DevDocsPage: React.FC = () => {
           <div>
             <nav style={{ marginBottom: 16, fontSize: 14 }}>
               <button type="button" onClick={goHomeJs} style={linkBtn}>
-                ← JavaScript 홈
+                ← {LANGUAGE_TAB_LABEL}
               </button>
               <Text type="secondary" style={{ margin: "0 8px" }}>
                 ·
@@ -426,7 +385,7 @@ const DevDocsPage: React.FC = () => {
           <div>
             <nav style={{ marginBottom: 16, fontSize: 14 }}>
               <button type="button" onClick={goHomeJs} style={linkBtn}>
-                ← JavaScript 홈
+                ← {LANGUAGE_TAB_LABEL}
               </button>
               <Text type="secondary" style={{ margin: "0 8px" }}>
                 |
@@ -440,7 +399,7 @@ const DevDocsPage: React.FC = () => {
         )}
 
         {tab === "js" && !article && !outlineSection && (
-          <JavaScriptHome
+          <LanguageGrammarHome
             preamble={preamble}
             parts={parts}
             articleGroups={articleGroups}
@@ -461,6 +420,14 @@ const linkBtn: React.CSSProperties = {
   fontSize: 14,
 };
 
+function LanguageSectionPlaceholder({ body }: { body: string }) {
+  return (
+    <Card style={{ borderStyle: "dashed" }} size="small">
+      <Text type="secondary">{body}</Text>
+    </Card>
+  );
+}
+
 function Placeholder({ title, body }: { title: string; body: string }) {
   return (
     <Card
@@ -475,6 +442,26 @@ function Placeholder({ title, body }: { title: string; body: string }) {
 }
 
 function ServerHome({ docs }: { docs: ServerDoc[] }) {
+  const infraDocs = docs.filter((d) => !d.slug.includes("docker-local-cicd"));
+  const cicdDockerDocs = docs.filter((d) => d.slug.includes("docker-local-cicd"));
+
+  const renderDocGrid = (list: ServerDoc[]) => (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
+      {list.map((doc) => (
+        <Link key={doc.slug} to={doc.href} style={{ textDecoration: "none" }}>
+          <Card hoverable size="small">
+            <Text code style={{ fontSize: 11, marginRight: 8 }}>
+              {String(doc.order).padStart(2, "0")}
+            </Text>
+            <Text strong style={{ color: "#27272a" }}>
+              {doc.title}
+            </Text>
+          </Card>
+        </Link>
+      ))}
+    </div>
+  );
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       <div>
@@ -486,55 +473,26 @@ function ServerHome({ docs }: { docs: ServerDoc[] }) {
         </Text>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
-        {docs.map((doc) => (
-          <Link key={doc.slug} to={doc.href} style={{ textDecoration: "none" }}>
-            <Card hoverable size="small">
-              <Text code style={{ fontSize: 11, marginRight: 8 }}>
-                {String(doc.order).padStart(2, "0")}
-              </Text>
-              <Text strong style={{ color: "#27272a" }}>
-                {doc.title}
-              </Text>
-            </Card>
-          </Link>
-        ))}
-      </div>
+      {renderDocGrid(infraDocs)}
+
+      {cicdDockerDocs.length > 0 ? (
+        <>
+          <div style={{ marginTop: 16 }}>
+            <Title level={4} style={{ marginTop: 0, marginBottom: 8 }}>
+              CI/CD · 로컬 Docker
+            </Title>
+            <Text type="secondary" style={{ display: "block" }}>
+              GitLab, Jenkins, Nexus 등 로컬 스택 설치·연동 절차입니다. 비밀번호·토큰은 문서에 넣지 않습니다.
+            </Text>
+          </div>
+          {renderDocGrid(cicdDockerDocs)}
+        </>
+      ) : null}
     </div>
   );
 }
 
-function CicdHome({ docs }: { docs: CicdDoc[] }) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-      <div>
-        <Title level={3} style={{ marginTop: 0 }}>
-          CI/CD · 로컬 Docker
-        </Title>
-        <Text type="secondary" style={{ display: "block" }}>
-          GitLab, Jenkins, Nexus 등 로컬 스택 설치·연동 절차를 정리합니다. 비밀번호·토큰은 문서에 넣지 않습니다.
-        </Text>
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14 }}>
-        {docs.map((doc) => (
-          <Link key={doc.slug} to={doc.href} style={{ textDecoration: "none" }}>
-            <Card hoverable size="small">
-              <Text code style={{ fontSize: 11, marginRight: 8 }}>
-                {String(doc.order).padStart(2, "0")}
-              </Text>
-              <Text strong style={{ color: "#27272a" }}>
-                {doc.title}
-              </Text>
-            </Card>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function JavaScriptHome({
+function LanguageGrammarHome({
   preamble,
   parts,
   articleGroups,
@@ -547,7 +505,58 @@ function JavaScriptHome({
     <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
       <div>
         <Title level={3} style={{ marginTop: 0 }}>
-          JavaScript ES6+ 시리즈 목차
+          {LANGUAGE_TAB_LABEL}
+        </Title>
+        <Text type="secondary" style={{ display: "block" }}>
+          JavaScript는 기존 ES6+ 시리즈를 유지하고, Kotlin·Swift·Java 문법 정리는 순차적으로 채웁니다.
+        </Text>
+      </div>
+
+      <section style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <Title level={4} style={{ marginTop: 0, marginBottom: 0 }}>
+          JavaScript
+        </Title>
+        <JavaScriptSeriesHome preamble={preamble} parts={parts} articleGroups={articleGroups} />
+      </section>
+
+      <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <Title level={4} style={{ marginTop: 0, marginBottom: 0 }}>
+          Kotlin
+        </Title>
+        <LanguageSectionPlaceholder body="문법·관용구 정리를 이 섹션에 추가할 예정입니다." />
+      </section>
+
+      <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <Title level={4} style={{ marginTop: 0, marginBottom: 0 }}>
+          Swift
+        </Title>
+        <LanguageSectionPlaceholder body="문법·관용구 정리를 이 섹션에 추가할 예정입니다." />
+      </section>
+
+      <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        <Title level={4} style={{ marginTop: 0, marginBottom: 0 }}>
+          Java
+        </Title>
+        <LanguageSectionPlaceholder body="문법·모던 Java 정리를 이 섹션에 추가할 예정입니다." />
+      </section>
+    </div>
+  );
+}
+
+function JavaScriptSeriesHome({
+  preamble,
+  parts,
+  articleGroups,
+}: {
+  preamble: string;
+  parts: OutlinePart[];
+  articleGroups: JavaScriptArticleGroup[];
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Title level={5} style={{ marginTop: 0, fontSize: 16 }}>
+          ES6+ 시리즈 목차
         </Title>
         <Text type="secondary" style={{ display: "block" }}>
           <code style={{ fontSize: 12, padding: "2px 6px", background: "#f4f4f5" }}>
