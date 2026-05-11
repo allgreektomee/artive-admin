@@ -8,7 +8,7 @@ React 문법을 외우는 것이 아니라 **“기본기 → 같은 맥락의 �
 
 - **로그인까지 전부 돌려 보는 것은 필수가 아니다.** `/dev?tab=react`에서 각 장 본문·Live 실행으로 따라올 수 있다. **JavaScript 샘플 전체 원문·파일 트리**는 **[14장](/dev?tab=react&rd=14-sample-app-walkthrough)** 에만 모아 두었다.
 - **실전에 가깝게 가고 싶을 때**: `reactTestProject` · 데모 [`/dev/react-test/artworks`](/dev/react-test/artworks) (목록·상세 조회, 일부 버튼은 alert). 기본 API 베이스로 요청이 나가며, 로그인 없이도 읽기 흐름을 볼 수 있다.
-- 총 **공개 14장**(본문 파일 `01`~`14`): **1~7장은 Live 예제 순서와 1:1**, **8장은 훅 정리용 Live가 세 블록**(context·callback/memo·ref/memo/reducer 쇼케이스), 9장 이후는 라우터·API·폼·Redux·이미지·샘플 분석 순이다. **10장**에는 JSONPlaceholder `fetch` Live, Artive [Swagger UI](https://api.artivefor.me/swagger-ui/index.html) 실데이터 Live, 그리고 API 맥락의 **`useContext`·`useCallback`/`memo`** 보조 Live가 있다. **14장**은 `reactTestProject` 샘플 전체 분석(소스 트리·원문). 로그인·WebSocket 원고는 [`react/_archive/`](./_archive/README.md) 에만 남긴다.
+- 총 **공개 14장**(본문 파일 `01`~`14`): **1~7장은 Live 예제 순서와 1:1**, **8장**은 테마 Context·callback/memo·`memo`/props 분리·Context+reducer·쇼케이스 등 **훅·최적화 패턴 확인용 Live가 여러 블록**, 9장 이후는 라우터·API·폼·Redux·이미지·샘플 분석 순이다. **10장**에는 JSONPlaceholder `fetch`, Artive 목록 요청, API 맥락 **`useContext`·`useCallback`/`memo`**, 그리고 **localStorage·JSON 저장** Live가 있다. **14장**은 `reactTestProject` 샘플 전체 분석(소스 트리·원문). 로그인·WebSocket 원고는 [`react/_archive/`](./_archive/README.md) 에만 남긴다.
 
 실제 운영 정적 사이트에서는 작품 **목록**과 **상세**가 이미 함께 제공된다. 서버 Read·라우팅을 말할 때는 “목록에서 찾고, 상세에서 본다”는 흐름을 기준으로 보면 된다.
 
@@ -42,8 +42,8 @@ UI 라이브러리: 처음에는 순수 HTML/CSS 중심
 | 5장 | `react.state.counter` | [`/dev?tab=react&rd=05-state-usestate`](/dev?tab=react&rd=05-state-usestate) |
 | 6장 | `react.module.artworkExplorer` | [`/dev?tab=react&rd=06-component-modularization`](/dev?tab=react&rd=06-component-modularization) |
 | 7장 | `react.effect.lifecycle`, `react.effect.depsCompare` | [`/dev?tab=react&rd=07-lifecycle-useeffect`](/dev?tab=react&rd=07-lifecycle-useeffect) |
-| 8장 | `react.hooks.contextBasic`, `react.hooks.callbackMemoBasic`, `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
-| 10장 | `react.api.jsonFetch`, `react.api.artiveArtworks`, `react.api.sharedContext`, `react.api.memoCallback` | [`/dev?tab=react&rd=10-api-modules`](/dev?tab=react&rd=10-api-modules) |
+| 8장 | `react.hooks.contextBasic`, `react.hooks.callbackMemoBasic`, `react.optimize.memoProp`, `react.pattern.contextReducer`, `react.hooks.showcase` | [`/dev?tab=react&rd=08-hooks-overview`](/dev?tab=react&rd=08-hooks-overview) |
+| 10장 | `react.api.jsonFetch`, `react.api.artiveArtworks`, `react.api.sharedContext`, `react.api.memoCallback`, `react.storage.draftTags` | [`/dev?tab=react&rd=10-api-modules`](/dev?tab=react&rd=10-api-modules) |
 | 11장 | `react.form.artworkDraft` | [`/dev?tab=react&rd=11-forms-crud`](/dev?tab=react&rd=11-forms-crud) |
 
 소스 파일(저장소): `src/dev/liveExamples/reactExamples.jsx` · JS 참고 트리: `src/dev/reactTestProject/` (README에 경로 설명).
@@ -189,14 +189,17 @@ React에서 자주 쓰는 훅을 목적별로 정리한다.
 6. `useReducer`: 복잡한 상태 전환
 7. `useContext`: 전역처럼 공유하는 값
 8. 커스텀 훅: 반복되는 상태 로직 분리
+9. `React.memo`와 props 얕은 비교(언제 리렌더를 건너뜀)
+10. Context에 `dispatch`만 싣는 패턴
 
 예제 목표:
 
 ```text
-useContext(테마), useCallback+memo(리렌더 비교), useRef·useMemo·useReducer(쇼케이스)를 Live로 확인한다.
+테마 Context, 인라인 vs useCallback+memo, noise/version으로 memo 건너뛰기,
+Context+useReducer 메모 목록, useRef·useMemo·useReducer 쇼케이스를 Live로 확인한다.
 ```
 
-**이 장에서 쓰는 Live 예제**: ID `react.hooks.contextBasic` · `react.hooks.callbackMemoBasic` · `react.hooks.showcase` — [본문·실행](/dev?tab=react&rd=08-hooks-overview)
+**이 장에서 쓰는 Live 예제**: ID `react.hooks.contextBasic` · `react.hooks.callbackMemoBasic` · `react.optimize.memoProp` · `react.pattern.contextReducer` · `react.hooks.showcase` — [본문·실행](/dev?tab=react&rd=08-hooks-overview)
 
 ## 9장. React Router
 
@@ -210,6 +213,7 @@ useContext(테마), useCallback+memo(리렌더 비교), useRef·useMemo·useRedu
 6. 중첩 라우트와 `Outlet`
 7. 없는 페이지와 리다이렉트
 8. 관리자 레이아웃 라우팅
+9. 정적 배포·SPA 폴백·`basename`과의 관계(개념)
 
 예제 목표:
 
@@ -237,14 +241,16 @@ src/etc/components/layout/AdminLayout.tsx
 6. 요청 실패 처리
 7. `FormData` 업로드 요청
 8. 토큰을 요청 헤더에 붙이기
+9. **브라우저 저장소**로 가벼운 UI 상태 보관(localStorage·JSON·보안 감각)
 
 예제 목표:
 
 ```text
 artworkApi.js와 useArtwork.js를 만들어 목록 조회, 저장, 삭제를 분리한다.
+localStorage 직렬화 Live로 저장·복원 흐름을 확인한다.
 ```
 
-**이 장에서 쓰는 Live 예제**: ID `react.api.jsonFetch`(JSONPlaceholder) · `react.api.artiveArtworks`([Swagger UI](https://api.artivefor.me/swagger-ui/index.html)의 작품 목록 실요청) · `react.api.sharedContext`(`useContext`) · `react.api.memoCallback`(`useCallback` + `memo`) — [본문·실행](/dev?tab=react&rd=10-api-modules)
+**이 장에서 쓰는 Live 예제**: ID `react.api.jsonFetch`(JSONPlaceholder) · `react.api.artiveArtworks`([Swagger UI](https://api.artivefor.me/swagger-ui/index.html)의 작품 목록 실요청) · `react.api.sharedContext`(`useContext`) · `react.api.memoCallback`(`useCallback` + `memo`) · `react.storage.draftTags`(localStorage·JSON) — [본문·실행](/dev?tab=react&rd=10-api-modules)
 
 참고 코드:
 

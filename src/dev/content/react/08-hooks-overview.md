@@ -52,6 +52,9 @@ const onSave = useCallback(() => doSave(id, draft), [id, draft]);
 
 주 목적은 **`memo`로 감싼 자식**에 넘기는 콜백이 **매 렌더마다 바뀌지 않게** 하여 불필요한 재렌더를 줄이는 것이다. 자식이 `memo`가 아니면 이득이 제한적일 수 있다.
 
+## `React.memo`가 일을 건너뛰는 조건
+
+`memo`로 감싼 컴포넌트는 **props에 대해 얕은 비교**를 한 뒤, **이전 렌더와 같다고 판단하면** 그리기(update)를 건너뜁니다. 따라서 “부모 안에 state가 아주 많아도”, **그 자식에게 내려가는 props 참조·원시 값이 그대로**이면 자식은 조용히 남습니다. 반대로 **객체·배열·인라인 함수**를 매 렌더 새로 만들어 넘기면, 내용이 같아도 **참조가 달라져** memo가 매번 다시 그립니다. 디버깅할 때는 “지금 리렌더를 유발한 props가 무엇인가”를 **`noise`(부모만의 값)와 자식이 받는 props**로 나누어 보면 이해가 빨라집니다.
 ## `useReducer`
 
 **`state + action → 새 state`** 패턴. 전이가 많거나, 다음 상태가 이전 상태에 강하게 묶이면 읽기 좋다.
@@ -62,6 +65,10 @@ dispatch({ type: "increment" });
 ```
 
 Redux와 개념이 비슷하지만 **컴포넌트 로컬**에 둔다. 전역은 12장.
+
+## Context에 `dispatch`만 싣는 패턴
+
+여러 화면에서 **같은 전이(add / remove / reset)** 를 호출해야 하는데, 깊이가 깊어져 props로 `dispatch`만 계속 파고들기 싫다면 **Context에 `dispatch`만 올리는** 방식이 있다. state 전체를 Context에 넣을 수도 있지만, 읽기와 쓰기를 **`StateContext` / `DispatchContext`** 로 쪼개면 불필요한 리렌더를 줄이기도 쉽다(읽기가 필요 없는 컴포넌트는 dispatch만 구독). 아래 Live는 **`useReducer` + Provider + 깊은 자식 한 블록**만 보여 준 최소 버전이다.
 
 ## `useContext`
 
@@ -90,11 +97,13 @@ Redux와 개념이 비슷하지만 **컴포넌트 로컬**에 둔다. 전역은 
 
 ## Live 예제
 
-아래 세 개는 8장에서 다룬 훅을 **동작 위주**로 확인합니다. `useEffect`는 7장 예제를 참고한다.
+아래는 8장 훅을 **동작 위주**로 나눈 것이다. `useEffect`는 7장 예제를 참고한다.
 
 1. **`useContext`** — Provider와 깊은 자식에서 같은 테마 값 읽기  
-2. **`useCallback`과 `memo`** — 부모만 리렌더될 때 자식 렌더 횟수 비교  
-3. **`useRef` · `useMemo` · `useReducer`** — 한 화면 쇼케이스  
+2. **`useCallback`과 `memo`** — 인라인 핸들러 vs 고정 참조로 자식 렌더 차이 보기  
+3. **`memo`와 props 분리** — 부모만의 state(`noise`)와 자식이 구독하는 prop(`version`)을 나눠 언제 건너뛰는지 확인  
+4. **`useReducer` + Context** — `dispatch`만 깊은 자식까지 내려 메모 목록 전이 실행  
+5. **`useRef` · `useMemo` · `useReducer`** — 한 화면 쇼케이스  
 
 ```react-live
 react.hooks.contextBasic
@@ -105,6 +114,14 @@ react.hooks.callbackMemoBasic
 ```
 
 ```react-live
+react.optimize.memoProp
+```
+
+```react-live
+react.pattern.contextReducer
+```
+
+```react-live
 react.hooks.showcase
 ```
 
@@ -112,4 +129,5 @@ react.hooks.showcase
 
 - 훅은 **최상위·고정 순서**로만 호출한다.
 - `useState` / `useEffect` / `useRef` / `useMemo` / `useCallback` / `useReducer` / `useContext` 는 **역할이 다르다** — “성능용” 훅을 습관적으로 남용하지 않는다.
-- **커스텀 훅**으로 로직을 재사용하고, 전역 공유는 Context·스토어로 옮긴다.
+- `memo`는 **props가 같은지**가 기준이므로 **참조가 매번 새로 만들어지지 않게** 만드는 게 핵심이다.
+- **커스텀 훅**으로 로직을 재사용하고, 깊은 트리에서 같은 전이라면 **`dispatch`만 Context로** 줄일 수 있다.

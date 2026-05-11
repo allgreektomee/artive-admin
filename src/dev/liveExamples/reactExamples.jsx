@@ -1393,6 +1393,405 @@ const LiveHooksCallbackMemoBasic = () => {
   );
 };
 
+const DRAFT_TAGS_STORAGE_KEY = "dev-live-artive-draft-tags-v1";
+
+function loadDraftTagsFromStorage() {
+  if (typeof window === "undefined" || !window.localStorage) return [];
+  try {
+    const raw = window.localStorage.getItem(DRAFT_TAGS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((x) => typeof x === "string" && x.length > 0);
+  } catch {
+    return [];
+  }
+}
+
+const LiveWebStorageDraftTags = () => {
+  const [tags, setTags] = useState(() => loadDraftTagsFromStorage());
+  const [input, setInput] = useState("");
+  const saveTimer = useRef(null);
+
+  useEffect(() => {
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      try {
+        window.localStorage?.setItem(DRAFT_TAGS_STORAGE_KEY, JSON.stringify(tags));
+      } catch {
+        /* quota / private mode */
+      }
+    }, 150);
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, [tags]);
+
+  const addTag = () => {
+    const t = input.trim();
+    if (!t) return;
+    setTags((prev) => [...prev, t]);
+    setInput("");
+  };
+
+  const removeAt = (index) => {
+    setTags((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const wipe = () => {
+    setTags([]);
+    try {
+      window.localStorage?.removeItem(DRAFT_TAGS_STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46", maxWidth: 420 }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        태그 배열을 <code>JSON.stringify</code> 해 <code>localStorage</code>에 둡니다. 새로고침 후에도 복원되는지 확인해
+        보세요. <strong>토큰·비밀번호</strong>는 넣지 않습니다(XSS에 그대로 노출될 수 있음).
+      </div>
+      <div style={{ display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") addTag();
+          }}
+          placeholder="태그 입력 후 Enter"
+          style={{
+            flex: "1 1 160px",
+            padding: "8px 10px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            fontSize: 13,
+          }}
+        />
+        <button
+          type="button"
+          onClick={addTag}
+          style={{
+            padding: "8px 14px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            background: "#fff",
+            cursor: "pointer",
+            fontSize: 12,
+          }}
+        >
+          추가
+        </button>
+        <button
+          type="button"
+          onClick={wipe}
+          style={{
+            padding: "8px 14px",
+            borderRadius: 8,
+            border: "1px solid #fecaca",
+            background: "#fef2f2",
+            cursor: "pointer",
+            fontSize: 12,
+            color: "#991b1b",
+          }}
+        >
+          스토리지 비우기
+        </button>
+      </div>
+      {tags.length === 0 ? (
+        <p style={{ margin: 0, color: "#71717a", fontSize: 12 }}>저장된 태그가 없습니다.</p>
+      ) : (
+        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7 }}>
+          {tags.map((t, i) => (
+            <li key={`${i}-${t}`}>
+              {t}{" "}
+              <button
+                type="button"
+                onClick={() => removeAt(i)}
+                style={{
+                  marginLeft: 6,
+                  padding: "2px 8px",
+                  fontSize: 11,
+                  borderRadius: 6,
+                  border: "1px solid #e4e4e7",
+                  background: "#fafafa",
+                  cursor: "pointer",
+                }}
+              >
+                삭제
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+const NotesStateContext = createContext(null);
+const NotesDispatchContext = createContext(null);
+
+function makeNoteId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `n-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function notesReducer(state, action) {
+  switch (action.type) {
+    case "add":
+      return {
+        items: [...state.items, { id: makeNoteId(), text: action.text }],
+      };
+    case "remove":
+      return { items: state.items.filter((n) => n.id !== action.id) };
+    case "clear":
+      return { items: [] };
+    default:
+      return state;
+  }
+}
+
+function NotesProvider({ children }) {
+  const [state, dispatch] = useReducer(notesReducer, { items: [] });
+  return (
+    <NotesStateContext.Provider value={state}>
+      <NotesDispatchContext.Provider value={dispatch}>{children}</NotesDispatchContext.Provider>
+    </NotesStateContext.Provider>
+  );
+}
+
+function NotesList() {
+  const state = useContext(NotesStateContext);
+  const dispatch = useContext(NotesDispatchContext);
+  if (!state || !dispatch) return null;
+  if (state.items.length === 0) {
+    return <p style={{ margin: "8px 0 0", fontSize: 12, color: "#71717a" }}>메모가 없습니다.</p>;
+  }
+  return (
+    <ul style={{ margin: "8px 0 0", paddingLeft: 18, lineHeight: 1.7 }}>
+      {state.items.map((n) => (
+        <li key={n.id}>
+          {n.text}{" "}
+          <button
+            type="button"
+            onClick={() => dispatch({ type: "remove", id: n.id })}
+            style={{
+              marginLeft: 6,
+              padding: "2px 8px",
+              fontSize: 11,
+              borderRadius: 6,
+              border: "1px solid #e4e4e7",
+              background: "#fafafa",
+              cursor: "pointer",
+            }}
+          >
+            삭제
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function DeepMemoToolbar() {
+  const dispatch = useContext(NotesDispatchContext);
+  const [local, setLocal] = useState("");
+  if (!dispatch) return null;
+
+  return (
+    <div
+      style={{
+        marginTop: 14,
+        padding: "12px 14px",
+        borderRadius: 8,
+        border: "1px dashed #a1a1aa",
+        background: "#fafafa",
+      }}
+    >
+      <div style={{ fontSize: 11, color: "#71717a", marginBottom: 8 }}>
+        이 블록은 트리 아래쪽을 가정한 자식입니다. props로 dispatch를 받지 않고 Context만 씁니다.
+      </div>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <input
+          type="text"
+          value={local}
+          onChange={(e) => setLocal(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              const t = local.trim();
+              if (!t) return;
+              dispatch({ type: "add", text: t });
+              setLocal("");
+            }
+          }}
+          placeholder="메모 — Enter 로 추가"
+          style={{
+            flex: "1 1 180px",
+            padding: "8px 10px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            fontSize: 13,
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => dispatch({ type: "clear" })}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: "1px solid #fecaca",
+            background: "#fef2f2",
+            fontSize: 12,
+            color: "#991b1b",
+            cursor: "pointer",
+          }}
+        >
+          전부 비우기
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const LiveContextReducerNotes = () => (
+  <div style={{ fontSize: 13, color: "#3f3f46", maxWidth: 440 }}>
+    <div
+      style={{
+        marginBottom: 12,
+        padding: "10px 12px",
+        borderRadius: 8,
+        background: "#f4f4f5",
+        border: "1px solid #e4e4e7",
+        fontSize: 12,
+        lineHeight: 1.55,
+      }}
+    >
+      <strong>상태 하나 + 여러 종류의 전이</strong>를 <code>useReducer</code>로 묶고,{' '}
+      <code>dispatch</code>만 Context로 깊게 내려보냅니다. Redux 들어가기 전에 “액션 타입 문자열로
+      줄 세우기” 감각을 잡기 좋습니다.
+    </div>
+    <NotesProvider>
+      <div style={{ padding: "10px 12px", borderRadius: 8, border: "1px solid #e4e4e7", background: "#fff" }}>
+        <strong style={{ fontSize: 13 }}>목록 (상위)</strong>
+        <NotesList />
+      </div>
+      <DeepMemoToolbar />
+    </NotesProvider>
+  </div>
+);
+
+const PlainRenderCounter = () => {
+  const n = useRef(0);
+  n.current += 1;
+  return (
+    <div
+      style={{
+        padding: "8px 10px",
+        borderRadius: 8,
+        border: "1px solid #e4e4e7",
+        background: "#fff",
+        marginBottom: 8,
+        fontSize: 12,
+      }}
+    >
+      <code>memo</code> 없음 — 부모가 리렌더될 때마다 증가: <strong>{n.current}</strong>
+    </div>
+  );
+};
+
+const MemoKeyedPanel = memo(function MemoKeyedPanel({ version }) {
+  const n = useRef(0);
+  n.current += 1;
+  return (
+    <div
+      style={{
+        padding: "8px 10px",
+        borderRadius: 8,
+        border: "1px solid #bbf7d0",
+        background: "#f0fdf4",
+        marginBottom: 8,
+        fontSize: 12,
+      }}
+    >
+      <code>memo</code> + props <code>version={version}</code> — 같은 버전이면 건너뜀: <strong>{n.current}</strong>
+    </div>
+  );
+});
+
+const LiveMemoPropCompare = () => {
+  const [noise, setNoise] = useState(0);
+  const [version, setVersion] = useState(1);
+
+  return (
+    <div style={{ fontSize: 13, color: "#3f3f46", maxWidth: 440 }}>
+      <div
+        style={{
+          marginBottom: 12,
+          padding: "10px 12px",
+          borderRadius: 8,
+          background: "#f4f4f5",
+          border: "1px solid #e4e4e7",
+          fontSize: 12,
+          lineHeight: 1.55,
+        }}
+      >
+        부모만 바뀌는 숫자(<code>noise</code>)와, 자식이 구독하는 <code>version</code> prop을 나눴습니다.
+        <code>noise</code>만 올리면 <strong>얕은 비교에서 memo 자식 props는 동일</strong>이라 자식 리렌더가
+        줄어듭니다. <code>version</code>을 올리면 memo 자식도 다시 그려집니다.
+      </div>
+      <div style={{ marginBottom: 10, fontSize: 12 }}>
+        noise: <strong>{noise}</strong> · version: <strong>{version}</strong>
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 12 }}>
+        <button
+          type="button"
+          onClick={() => setNoise((x) => x + 1)}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            background: "#fff",
+            cursor: "pointer",
+            fontSize: 12,
+          }}
+        >
+          noise만 +1
+        </button>
+        <button
+          type="button"
+          onClick={() => setVersion((v) => v + 1)}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 8,
+            border: "1px solid #d4d4d8",
+            background: "#eef2ff",
+            cursor: "pointer",
+            fontSize: 12,
+          }}
+        >
+          version +1 (memo 자식도 갱신)
+        </button>
+      </div>
+      <PlainRenderCounter />
+      <MemoKeyedPanel version={version} />
+    </div>
+  );
+};
+
 /** @type {LiveExampleEntry[]} */
 const ENTRIES = [
   {
@@ -1696,6 +2095,31 @@ function Parent() {
     Component: LiveApiCallbackMemo,
   },
   {
+    id: "react.storage.draftTags",
+    title: "localStorage: 태그 배열 저장·복원",
+    description:
+      "JSON 직렬화·역직렬화와 짧은 디바운스 저장을 보여 줍니다. 민감 데이터는 넣지 않는 것이 안전합니다.",
+    sourceCode: `const KEY = "dev-live-artive-draft-tags-v1";
+
+const [tags, setTags] = useState(() => {
+  try {
+    const raw = localStorage.getItem(KEY);
+    const p = raw ? JSON.parse(raw) : [];
+    return Array.isArray(p) ? p.filter((x) => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+});
+
+useEffect(() => {
+  const t = setTimeout(() => {
+    localStorage.setItem(KEY, JSON.stringify(tags));
+  }, 150);
+  return () => clearTimeout(t);
+}, [tags]);`,
+    Component: LiveWebStorageDraftTags,
+  },
+  {
     id: "react.form.artworkDraft",
     title: "폼 → Swagger 계약에 맞는 작품 payload",
     description:
@@ -1790,6 +2214,51 @@ const filteredSum = useMemo(() => {
 const [state, dispatch] = useReducer(counterReducer, { count: 0 });
 dispatch({ type: "inc" });`,
     Component: LiveHooksShowcase,
+  },
+  {
+    id: "react.pattern.contextReducer",
+    title: "Context + useReducer: 메모 목록",
+    description:
+      "dispatch를 Context로 내려 깊은 자식이 props drilling 없이 같은 전이를 호출합니다.",
+    sourceCode: `function notesReducer(state, action) {
+  switch (action.type) {
+    case "add":
+      return { items: [...state.items, { id: crypto.randomUUID(), text: action.text }] };
+    case "remove":
+      return { items: state.items.filter((n) => n.id !== action.id) };
+    case "clear":
+      return { items: [] };
+    default:
+      return state;
+  }
+}
+
+const [state, dispatch] = useReducer(notesReducer, { items: [] });
+<NotesDispatchContext.Provider value={dispatch}>
+  <DeepToolbar />
+</NotesDispatchContext.Provider>`,
+    Component: LiveContextReducerNotes,
+  },
+  {
+    id: "react.optimize.memoProp",
+    title: "memo와 props: noise vs version",
+    description:
+      "부모 state 중 자식에 전달되는 props가 변하지 않으면 memo는 리렌더를 건너뜁니다.",
+    sourceCode: `const MemoChild = memo(({ version }) => { /* ... */ });
+
+function Parent() {
+  const [noise, setNoise] = useState(0);
+  const [version, setVersion] = useState(1);
+  return (
+    <>
+      <button onClick={() => setNoise((n) => n + 1)}>noise만</button>
+      <button onClick={() => setVersion((v) => v + 1)}>version</button>
+      <PlainChild />
+      <MemoChild version={version} />
+    </>
+  );
+}`,
+    Component: LiveMemoPropCompare,
   },
 ];
 

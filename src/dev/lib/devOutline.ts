@@ -219,7 +219,8 @@ function serverDocOrder(slug: string): number {
   if (slug.includes("tomcat")) return 1;
   if (slug.includes("nginx")) return 2;
   if (slug.includes("redis")) return 3;
-  if (slug.includes("docker-local-cicd")) return 4;
+  if (slug.includes("jenkins")) return 4;
+  if (slug.includes("docker-local-cicd")) return 5;
   return Number.MAX_SAFE_INTEGER;
 }
 

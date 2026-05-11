@@ -79,6 +79,19 @@ const { id } = useParams();
 
 실제 코드는 `src/App.tsx`, 레이아웃은 `PublicLayout`, `AdminLayout` 등을 참고하면 “URL 한 단마다 어떤 트리가 깔리는지”를 추적할 수 있다.
 
+## 배포·정적 호스팅에서의 라우팅
+
+로컬에서는 `npm run dev`가 내부적으로 `index.html`을 골라 줘서 `/artworks/edit/3`처럼 새로고침해도 잘 나온다고 느낄 수 있다. **빌드 산출물**(`dist` 등)을 nginx, S3·CloudFront 정적 배킷, GitHub Pages처럼 **정적 파일 서버**만으로 올리면, 서버는 **요청 경로에 해당하는 파일이 없을 때 404**를 돌려 주는 경우가 많다. 그 상태에서 주소창에 깊은 경로를 직접 치거나 새로고침하면 **SPA가 아니라 404 HTML**이 뜰 수 있다.
+
+실무에서 흔한 대응은 다음과 같다.
+
+1. **`try_files` / SPA 폴백** — 존재하는 정적 파일이 없으면 **`index.html` 한 번 더 시도**(nginx `try_files $uri /index.html` 계열).
+2. **배포 플랫폼별 리라이트 규칙** — 같은 의미로 “모든 경로를 index로” 같은 설정을 둔다.
+3. **`<BrowserRouter basename={...}>`** — 자산이 **`https://예시.com/admin/`처럼 하위 경로**에 붙일 때 **`basename`** 을 맞추지 않으면 자산 URL·매칭이 어긋난다. `import.meta.env.BASE_URL`(Vite) 등 빌드 시스템이 주는 접두와 일치하는지 확인한다.
+4. **API 주소** — 프로덕션에서 `fetch` 대상이 **같은 출처**가 아니면 CORS·프록시를 이미 10장에서 다룬 것처럼 맞춘다. **환경 변수**(`VITE_API_ORIGIN` 등)로 개발/운영을 나누는 팀이 많다.
+
+이 연재는 배포 스크립트까지 자동화하지 않지만, “라우터를 쓰는 SPA를 올릴 때 **서버가 index를 돌려줘야 한다**”는 점만 기억해 두면 현장 이슈의 절반은 줄어든다.
+
 ## 요약
 
 - **BrowserRouter** + **Routes/Route** 로 URL ↔ 화면을 선언한다.
