@@ -466,14 +466,14 @@ function ServerHome({ docs }: { docs: ServerDoc[] }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
       <Card size="small" style={{ marginBottom: 4 }}>
         <Title level={4} style={{ marginTop: 0, marginBottom: 12 }}>
-          서버 구성 한눈에 (신입용)
+          서버 구성도
         </Title>
         <Text type="secondary" style={{ display: "block", marginBottom: 16, fontSize: 13 }}>
           Nginx · Tomcat · Redis · CI/CD만 넣은 <strong>가장 단순한 그림</strong>입니다. 실제 회사 환경은 DB,
           로드밸런서, 폐쇄망이 더 얹힙니다.
         </Text>
 
-        <pre className="dev-server-overview-diagram" aria-label="서버 역할 간단 구성도">
+        <pre className="dev-server-overview-diagram" aria-label="서버 구성도">
 {`
   [ 사용자 PC · 모바일 ]  (브라우저 앱)
             │
