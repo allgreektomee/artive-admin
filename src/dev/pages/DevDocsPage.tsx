@@ -464,6 +464,81 @@ function ServerHome({ docs }: { docs: ServerDoc[] }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <Card size="small" style={{ marginBottom: 4 }}>
+        <Title level={4} style={{ marginTop: 0, marginBottom: 12 }}>
+          서버 구성 한눈에 (신입용)
+        </Title>
+        <Text type="secondary" style={{ display: "block", marginBottom: 16, fontSize: 13 }}>
+          Nginx · Tomcat · Redis · CI/CD만 넣은 <strong>가장 단순한 그림</strong>입니다. 실제 회사 환경은 DB,
+          로드밸런서, 폐쇄망이 더 얹힙니다.
+        </Text>
+
+        <pre className="dev-server-overview-diagram" aria-label="서버 역할 간단 구성도">
+{`
+  [ 사용자 PC · 모바일 ]  (브라우저 앱)
+            │
+            │  인터넷 / 사내망
+            │  보통 HTTPS 443 또는 HTTP 80  ←── "웹 접속 포트"(방화벽에서 허용)
+            ▼
+  ┌─────────────────────────────┐
+  │ Nginx                       │   웹 최전방. SSL 종료·정적 파일·역방향 프록시
+  │ (리버스 프록시 / 웹 서버)     │   ──→ 받은 요청을 뒷단 앱 포트로 넘김
+  └─────────────┬───────────────┘
+                │ 예: 프록시 → http://127.0.0.1:8080
+                ▼
+  ┌─────────────────────────────┐        TCP (예: 6379 / Enterprise DB 포트 등)
+  │ Tomcat · WAS · Spring Boot │◄─────────────────────┐
+  │ (실제 비즈니스 앱 실행)      │                       │
+  └─────────────────────────────┘                       │
+                │ 세션 ID·토큰이 Redis에 저장될 수 있음 │  ┌───────────────┐
+                └──────────────────────────────────────►│ Redis         │
+                                                        │ 세션 · 캐시     │
+                                                        └───────────────┘
+
+
+  ┌─────────────────────────────┐
+  │ CI/CD (GitLab ↔ Jenkins…)   │   코드 push → 빌드·테스트 → 배포(SSH·패키지)
+  └─────────────┬───────────────┘
+                │ 새 WAR/JAR 또는 설정 반영 ──► Tomcat(또는 앱 서버)
+`}
+        </pre>
+
+        <Title level={5} style={{ marginTop: 20, marginBottom: 8, fontSize: 14 }}>
+          네트워크 말머리 (완전 처음일 때만)
+        </Title>
+        <ul
+          style={{
+            margin: 0,
+            paddingLeft: 20,
+            fontSize: 13,
+            color: "#3f3f46",
+            lineHeight: 1.65,
+          }}
+        >
+          <li style={{ marginBottom: 6 }}>
+            <Text strong style={{ fontSize: 13 }}>IP / 도메인</Text>: 서버 “집 주소”.
+            <Text strong style={{ fontSize: 13, marginLeft: 4 }}>포트</Text>: 그 주소의 “문 번호”. 같은 서버여도 포트마다 다른
+            프로그램이 받는다 (예: 443 Nginx, 8080 Tomcat).
+          </li>
+          <li style={{ marginBottom: 6 }}>
+            <Text strong style={{ fontSize: 13 }}>클라이언트 / 서버</Text>: 요청하는 쪽이 클라이언트(브라우저 등), 받아서 처리하는 게
+            서버(Nginx·Tomcat·Redis).
+          </li>
+          <li style={{ marginBottom: 6 }}>
+            <Text strong style={{ fontSize: 13 }}>localhost · 127.0.0.1</Text>: 같은 머신 안에서만 붙을 때 쓰는 주소.
+            Nginx와 Tomcat이 같은 서버에 있으면 프록시는 여기로 넘긴다고 보면 된다.
+          </li>
+          <li style={{ marginBottom: 6 }}>
+            <Text strong style={{ fontSize: 13 }}>방화벽</Text>: 허용한 포트로만 바깥에서 들어온다. 8443 같은 관리 포트도 별도
+            오픈이 필요할 수 있다.
+          </li>
+          <li>
+            <Text strong style={{ fontSize: 13 }}>HTTPS</Text>: 보통 사용자↔Nginx 구간만 암호화. Nginx 안쪽으로 Tomcat까지는
+            HTTP로 두는 패턴도 많다 (사설망).
+          </li>
+        </ul>
+      </Card>
+
       <div>
         <Title level={3} style={{ marginTop: 0 }}>
           Server 설치 가이드
